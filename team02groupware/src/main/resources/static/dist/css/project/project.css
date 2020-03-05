@@ -1,0 +1,61 @@
+@charset "UTF-8";
+/*
+작성자: 김연지
+적용페이지: project관련페이지
+*/
+/*---------------------------------------------- 프로젝트 추가 modal start---------------------------------------------- */
+
+.pr-add-modal{
+	font-size:16px;
+}
+
+
+
+/*---------------------------------------------- 프로젝트 추가 modal end---------------------------------------------- */
+
+.pr-btn-wrap{
+	width:100%;
+	height:50px;
+	
+}
+.pr-add-btn{
+	float:right;
+	height:50px;
+	width:180px;
+	font-size:16px;
+	font-weight:400;
+	margin-bottom:20px;
+}
+.project-card .mt-3, .my-3 {
+	margin-top: 3rem !important;
+}
+.project-list {
+	min-width:200px;
+	margin-right:10px;
+}
+
+.pr-title {
+	width:100%;
+	float: left;
+	font-size:1.5em;
+	line-height: 0.9em;
+}
+
+.project-list .card-subtitle{
+	font-size: 1.2em;
+}
+.pr-ikon {
+	position: absolute;
+	bottom:70px;
+	right: 23px;
+}
+
+.btn-icon{
+	line-height:0 !important;
+}
+.pr-setting-btn{
+	margin-right:7px;
+}
+
+
+
