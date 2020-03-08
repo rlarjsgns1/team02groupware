@@ -7,7 +7,7 @@
 	SELECT
 		COUNT(1)
 	FROM
-		tb_project
+		project_list
 
 	</select>
 	<!-- 게시판 리스트 조회 -->
@@ -15,7 +15,7 @@
 	<select id="getProjectlist" parameterType="map" resultType="Project">
 		SELECT
 			project_code AS pCode
-			,employee_code AS eCode
+			,employee_number AS eCode
 			,project_title AS pTitle
 			,project_desc AS pDesc
 			,project_access AS pAccess
@@ -24,7 +24,7 @@
 			,project_deadline AS pDeadline
 			,project_end AS pEnd
 		FROM
-			tb_project
+			project_list
 		LIMIT #{startRow},#{rowPerPage};
 	</select>
 </mapper>
