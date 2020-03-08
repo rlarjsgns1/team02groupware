@@ -28,35 +28,45 @@ public class ElectronicApprovalController {
 	 
 	
 	 /*
-	  * @method allOngoingDocumentList()
+	  * @method selectAllOngoingDocumentList()
 	  * @brief 전자결재 진행중인 전체문서 method
 	  * @author 김건훈
 	  */	
-	 @GetMapping("/allOngoingDocumentList")
-	 public String allOngoingDocumentList(Model model) {
+	 @GetMapping("/selectAllOngoingDocumentList")
+	 public String selectAllOngoingDocumentList(Model model) {
 		
-		model.addAttribute("approvalLine", eaService.approvalLine());
-		model.addAttribute("deleteDocument", eaService.deleteDocument());
-		model.addAttribute("eaReferrer", eaService.eaReferrer());
-		model.addAttribute("eaSecurity", eaService.eaSecurity());
+		model.addAttribute("approvalLine", eaService.selectApprovalLine());
+		model.addAttribute("deleteDocument", eaService.selectDeleteDocument());
+		model.addAttribute("eaReferrer", eaService.selectEaReferrer());
+		model.addAttribute("eaSecurity", eaService.selectEaSecurity());
 		
-		 //logger.info("approvalLine :: {}", eaService.approvalLine().toString());
-		 //logger.info("deleteDocument :: {}", eaService.deleteDocument());
-		 //logger.info("eaReferrer :: {}", eaService.eaReferrer());
-		 //logger.info("eaReferrer :: {}", eaService.eaSecurity());
+		 //logger.info("approvalLine :: {}", eaService.selectApprovalLine().toString());
+		 //logger.info("deleteDocument :: {}", eaService.selectDeleteDocument().toString());
+		 //logger.info("eaReferrer :: {}", eaService.selectEaReferrer().toString());
+		 //logger.info("eaReferrer :: {}", eaService.selectEaSecurity().toString());
 		 
 			return "eaDocument/allOngoingDocumentList";
 	}
 	 
 	 /*
-	  * @method documentFormList()
+	  * @method selectDocumentFormList()
 	  * @brief 양식함 리스트 method
 	  * @author 김건훈
 	  */
-	 @GetMapping("/documentFormList")
-	 public String documentFormList() {
+	 @GetMapping("/selectDocumentFormList")
+	 public String selectDocumentFormList() {
 		 return "eaDocument/documentFormList";
 	 }
 	 
-	
+	 /*
+	  * @method insertDocumentForm()
+	  * @brief 양식 생성 method
+	  * @author 김건훈
+	  */
+	 @GetMapping("/insertDocumentForm")
+	 public String insertDocumentForm() {
+		 return "eaDocument/documentForm";
+	 }
+	 
+	 
 }

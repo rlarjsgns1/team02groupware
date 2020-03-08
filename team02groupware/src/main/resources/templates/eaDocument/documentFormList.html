@@ -9,7 +9,7 @@
  -->	
 		<!-- CSS custom -->
 		<th:block layout:fragment="customCss">
-			<link rel="stylesheet" href="dist/css/electronic_approval.css">
+			<link rel="stylesheet" href="dist/css/electronicApproval/electronicApproval.css">
 		</th:block>
 		
 		<th:block layout:fragment="customTitle">
@@ -112,10 +112,10 @@
 	  							<div class="card-body">
 	                                <ul class="nav">
 	                                    <li class="nav-item">
-	                                        <a class="nav-link" href="#">양식생성</a>
+	                                        <a class="nav-link" th:href="@{/insertDocumentForm}">양식생성</a>
 	                                    </li>
 	                                    <li class="nav-item">
-	                                        <a class="nav-link" href="#">분류설정</a>
+	                                        <a class="nav-link" href="#" data-toggle="modal" data-target="#formTypeSetting">분류설정</a>
 	                                    </li>
 	                                    <li class="nav-item">
 	                                        <div class="nav-link"><span><a href="#">사내전자결재규정</a></span><i class="ik ik-help-circle"></i></div>
@@ -257,7 +257,58 @@
                                 	 </div>
                            		 </div>
                            	</div>
-                           <!-- 사내전자결재규정 물음표 아이콘 Modal View End -->                            	
+                           <!-- 사내전자결재규정 물음표 아이콘 Modal View End -->
+                           
+                           <!-- 양식함 페이지 분류설정 Modal View Start -->
+	                        <div class="modal fade show" id="formTypeSetting" tabindex="-1" role="dialog" aria-hidden="true">
+	                          <div class="modal-dialog modal-sm mt-0 mb-0 modal-dialog-centered" role="document">
+	                           <div class="modal-content">
+	                              <div class="modal-header">
+	                                  <h5 class="modal-title">분류 설정</h5>
+	                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                                      <span aria-hidden="true">&times;</span>
+	                                  </button>
+	                              </div>
+	                              <div class="modal-body">
+	                                  <div class="card-block widget-last-task">
+	                                        <div class="right-icon-control m-t-15">
+	                                            <div class="input-group input-group-button">
+	                                                <input type="text" class="form-control" placeholder="분류를 추가하십시오.">
+	                                                <div class="input-group-append">
+	                                                    <button class="btn btn-primary" type="button"><i class="ik ik-plus"></i></button>
+	                                                </div>
+	                                            </div>
+	                                        </div>
+	                                       	<p class="mb-10">공통 
+	                                       		<span class="float-right">
+	                                       			<a href="#">
+	                                       				<i class="ik ik-edit f-16 mr-15 text-green"></i>
+	                                       			</a>
+	                                       			<a href="#">
+	                                       				<i class="ik ik-trash-2 f-16 text-red"></i>
+	                                   				</a>
+	                                   			</span>
+	                                   		</p>
+	                                   		<p class="mb-10">프로젝트 
+	                                       		<span class="float-right">
+	                                       			<a href="#">
+	                                       				<i class="ik ik-edit f-16 mr-15 text-green"></i>
+	                                       			</a>
+	                                       			<a href="#">
+	                                       				<i class="ik ik-trash-2 f-16 text-red"></i>
+	                                   				</a>
+	                                   			</span>
+	                                   		</p>
+	                               	 </div>
+	                              </div>
+	                              <div class="modal-footer">
+	                                  <button type="button" class="btn btn-secondary">확인</button>
+	                                  <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+	                              </div>
+	                          	</div>
+	                         </div>
+	                       </div>  
+	                      <!-- 양식함 페이지 분류설정 Modal View End -->                           	
 		</th:block>
 
 	<th:block layout:fragment="customJs">        

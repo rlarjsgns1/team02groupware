@@ -20,10 +20,17 @@
 		cursor:pointer;
 	}
 	
-	.border-checkbox-label {
+	.border-checkbox-label { /* 양식함 테이블 row에 위치한 체크박스 css */
 		margin-bottom : 0px;
 	}
-	::after, ::before{
+	::after, ::before{ /* 양식함 테이블 row에 위치한 체크박스 css */
 		box-sizing : unset;
-		
+	}
+
+	.document-form-table input{ /* 양식생성 테이블 row에 위치한 input box css */
+		border-color : #343a40; 
+	}
+	
+	.document-form-checkbox{ /* 양식생성 테이블 row에 위치한 check box css */
+		margin-top: 15px;
 	}

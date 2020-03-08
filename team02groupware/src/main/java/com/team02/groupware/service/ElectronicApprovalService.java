@@ -24,30 +24,30 @@ public class ElectronicApprovalService {
 	 
 	 
 	//결재라인 조회 method
-	 public List<ElectronicApprovalDocument> approvalLine(){
+	 public List<ElectronicApprovalDocument> selectApprovalLine(){
 		
-		 List<ElectronicApprovalDocument> approvalLine = eaMapper.approvalLine();
+		 List<ElectronicApprovalDocument> approvalLine = eaMapper.selectApprovalLine();
 		 return approvalLine; 
 	 };
 	 
 	//임시삭제문서 조회 method 
-	 public List<ElectronicApprovalDocument> deleteDocument(){
+	 public List<ElectronicApprovalDocument> selectDeleteDocument(){
 		
-		 List<ElectronicApprovalDocument> deleteDocument = eaMapper.deleteDocument();
+		 List<ElectronicApprovalDocument> deleteDocument = eaMapper.selectDeleteDocument();
 		 return deleteDocument; 
 	 };
 	
 	//참조자 조회 method 
-	 public List<ElectronicApprovalDocument> eaReferrer(){
+	 public List<ElectronicApprovalDocument> selectEaReferrer(){
 		
-		 List<ElectronicApprovalDocument> eaReferrer = eaMapper.eaReferrer();
+		 List<ElectronicApprovalDocument> eaReferrer = eaMapper.selectEaReferrer();
 		 return eaReferrer;
 	 };
 		
 	//보안등급 조회 method 
-	 public List<ElectronicApprovalDocument> eaSecurity(){
+	 public List<ElectronicApprovalDocument> selectEaSecurity(){
 		
-		 List<ElectronicApprovalDocument> eaSecurity = eaMapper.eaSecurity();
+		 List<ElectronicApprovalDocument> eaSecurity = eaMapper.selectEaSecurity();
 		 return eaSecurity;
 	 };
 

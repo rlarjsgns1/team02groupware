@@ -15,15 +15,15 @@ public interface ElectronicApprovalMapper {
 	
 	
 	 	//결재라인 조회 method 
-	 public List<ElectronicApprovalDocument> approvalLine();
+	 public List<ElectronicApprovalDocument> selectApprovalLine();
 		
 		//임시삭제문서 조회 method 
-	 public List<ElectronicApprovalDocument> deleteDocument();
+	 public List<ElectronicApprovalDocument> selectDeleteDocument();
 		 
 	 	//참조자 조회 method 
-	 public List<ElectronicApprovalDocument> eaReferrer();
+	 public List<ElectronicApprovalDocument> selectEaReferrer();
 		
 	 	//보안등급 조회 method 
-	 public List<ElectronicApprovalDocument> eaSecurity();
+	 public List<ElectronicApprovalDocument> selectEaSecurity();
 		 
 }
