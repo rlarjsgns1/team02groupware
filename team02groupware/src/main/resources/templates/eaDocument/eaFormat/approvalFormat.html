@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+
+<!--
+   @file allOngoingDocumentList.html
+   @brief 결재 진행 중인 문서 전체 리스트 view
+   @author 김건훈
+ -->
+ 
+	<!-- CSS custom -->
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet" href="dist/css/electronicApproval/electronicApproval.css">
+</th:block>
+<th:block layout:fragment="customTitle">
+	<title>결재라인 포맷</title>
+</th:block>
+<th:block layout:fragment="customContents">
+	<!-- 결재라인 포맷 테이블 Start -->
+
+  <div class="table-responsive">	
+	<table style="height: 295px; width: 778px; table-layout: fixed; text-align: center;" border="1">
+		<tbody>
+			<tr style="height: 50px;">
+				<td class="table-active" style="width: 96px; height: 140px;" rowspan="3">
+				<div class="col-md-12">결재</div>
+				</td>
+				<td class="table-active"><i class="ik ik-plus-circle" style="font-size: 20px;"></i></td>
+				<td class="table-active"></td>
+				<td class="table-active"></td>
+				<td class="table-active"></td>
+				<td class="table-active"></td>
+				<td class="table-active"></td>
+				<td class="table-active"></td>
+			</tr>
+				<tr style="height: 100px;">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+				<tr style="height: 50px;">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr style="height: 50px;">
+				<td class="table-active">
+					<div class="col-md-12">합의</div>
+					
+				</td>
+				<td colspan="7"><input type="text" class="form-control form-bg-default" style="width: 97.6px" >
+								
+				</td>
+			</tr>
+			<tr style="height: 45px;">
+				<td class="table-active">참조</td>
+				<td colspan="7"><input type="text" class="form-control form-bg-default" style="width: 97.6px"></td>
+			</tr>
+		</tbody>
+	</table>
+  </div>
+	
+	<!-- 결재라인 포맷 테이블 Start -->
+	
+</th:block>
+<th:block layout:fragment="customJs">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script>window.jQuery || document.write('<script src="src/js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
+	<script src="plugins/popper.js/dist/umd/popper.min.js"></script>
+	<script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
+	<script src="plugins/screenfull/dist/screenfull.js"></script>
+	<script src="plugins/datatables.net/js/jquery.dataTables.min.js"></script>
+	<script src="plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+	<script
+		src="plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+	<script
+		src="plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+	
+	<script src="plugins/moment/moment.js"></script>
+	<script src="plugins/d3/dist/d3.min.js"></script>
+	<script src="plugins/c3/c3.min.js"></script>
+	<script src="js/tables.js"></script>
+	<script src="js/charts.js"></script>
+	<script src="dist/js/theme.min.js"></script>
+	<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+		<script>
+	    (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+	    function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+	    e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+	    e.src='https://www.google-analytics.com/analytics.js';
+	    r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+	    ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+		</script>
+</th:block>
+</html>

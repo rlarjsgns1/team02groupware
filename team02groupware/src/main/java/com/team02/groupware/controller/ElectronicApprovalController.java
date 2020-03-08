@@ -69,4 +69,13 @@ public class ElectronicApprovalController {
 	 }
 	 
 	 
+	 /*
+	  * @method approvalFormat()
+	  * @brief 결재라인 포맷  sample view
+	  * @author 김건훈
+	  */
+	 @GetMapping("/approvalFormat")
+	 public String approvalFormat() {
+		 return "eaDocument/eaFormat/approvalFormat";
+	 }
 }
