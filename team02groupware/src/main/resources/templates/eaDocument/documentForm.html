@@ -9,7 +9,8 @@
  -->	
 		<!-- CSS custom -->
 		<th:block layout:fragment="customCss">
-			<link rel="stylesheet" href="dist/css/electronicApproval/electronicApproval.css">
+			<link rel="stylesheet" href="/dist/css/electronicApproval/electronicApproval.css">
+			 <link rel="stylesheet" href="/plugins/summernote/dist/summernote-bs4.css">
 		</th:block>
 		
 		<th:block layout:fragment="customTitle">
@@ -21,7 +22,7 @@
 			<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 			<script type="text/javascript">
 				$(function(){
-
+				
 					/*
 					  * @brief 옵션 선택 드롭다운 키워드 변경 이벤트
 					  * @author 김건훈
@@ -34,6 +35,8 @@
 						$(this).parent().siblings('.dropdown-toggle').text(searchType);
 						$(this).parent().siblings('.dropdown-toggle').append(tag);
 					});
+					
+					
 					/*
 					  * @brief 각각 체크박스 체크 이벤트
 					  * @author 김건훈
@@ -47,15 +50,56 @@
 												$(this).siblings('input:checkbox').attr("checked", false);
 						};	
 					});
+					
+					 
+					/*
+					  * @brief 양식생성 페이지 테이블 내 약칭,보존연한,보안등급 물음표 아이콘 Modal Event
+					  * @author 김건훈
+					  */	
+					$('.ik-help-circle').on('mouseover',function(e){
+						//console.log('마우스오버');
+						var ruleTipType = $(this).siblings().text()
+						console.log(ruleTipType)
+						if(ruleTipType=='약칭'){
+							$('#modal-content-type').text('약칭은 문서 번호에 쓰이기 때문에 간단할 수록 좋습니다. 중복하여 사용할 수 있지만 구분하는 것이 좋습니다.');	
+						}else if(ruleTipType=='보존 연한'){
+							$('#modal-content-type').text('문서의 초기값으로 설정 할 보존연한을 선택합니다. 변경 금지 선택 시 기안자와 결재자가 이를 수정할 수 없습니다. 보존 연한이 만료되면 삭제 문서 목록으로 이동합니다.');
+						}else if(ruleTipType=='보안 등급'){
+							$('#modal-content-type').text('문서의 초기값으로 설정 할 보안등급을 선택합니다. 변경 금지 선택 시 기안자와 결재자가 이를 수정할 수 없습니다. 보안 등급에 따라 열람 권한이 제한됩니다.');
+						}
+  						var sWidth = window.innerWidth;
+						var sHeight = window.innerHeight;
+						var mWidth = $('.ruletip').width();
+						var mHeight = $('.ruletip').height();
+						var divLeft = e.clientX - 150;
+						var divTop = e.clientY - 48;
+						
+						if( divLeft + mWidth > sWidth ) divLeft -= mWidth;
+						if( divTop + mHeight > sHeight ) divTop -= mWidth;		
+						$('.ruletip').css({display:"block", "top": divTop, "left": divLeft});
+						
+						$(this).css("color","black");
+						
+					});
+				
+					$('.ik-help-circle').on('mouseleave',function(){
+						
+						$('.ruletip').css("display","none");
+						$(this).css("color","#bcc8d8");
+					});
 				});
 			</script>
 		</th:block>
 		<th:block layout:fragment="customContents">                    
 		               <div class="card">
 		              	  <!-- 테이블 상단 메뉴탭 Start-->
-			                 <div class="card-header"><h3>확인</h3></div>
+			                 <div class="card-header">
+			                 	<button type="button" class="btn btn-primary">
+			                 		<i class="ik ik-check-circle"></i>양식 생성
+			                 	</button>
+			                 </div>
 	                           <!-- 테이블 상단 메뉴탭 End-->                         
-                               <!-- 문서 양식 가본설정 테이블 Start -->
+                               <!-- 문서 양식 기본설정 테이블 Start -->
                                     <div class="card-header d-block">
                                         <h6>기본설정</h6> 
                                     </div>
@@ -64,7 +108,7 @@
                                             <table class="table document-form-table">                                          
                                                 <tbody>
                                                     <tr>
-                                                        <td class="table-active">분류</td>
+                                                        <td class="table-active document-form-table-td">분류</td>
                                                         <td>          
                                                         	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-7" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     		분류 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
@@ -74,17 +118,17 @@
 			                                                    <a class="dropdown-item">프로젝트</a>
 			                                                </div>
                                               		  </td>
-                                                        <td class="table-active">양식명</td>
+                                                        <td class="table-active document-form-table-td">양식명</td>
                                                         <td><input type="text" class="form-control col-sm-7"></td>
                                                     </tr>
                                                      <tr>
-                                                        <td class="table-active">약칭</td>
+                                                        <td class="table-active document-form-table-td"><span>약칭</span><i class="ik ik-help-circle"></i></td>
                                                         <td><input type="text" class="form-control col-sm-7"></td>
-                                                        <td class="table-active">설명</td>
+                                                        <td class="table-active document-form-table-td">설명</td>
                                                         <td><input type="text" class="form-control col-sm-7"></td>
                                                     </tr>
                                                      <tr>
-                                                        <td class="table-active">보존 연한</td>
+                                                        <td class="table-active document-form-table-td"><span>보존 연한</span><i class="ik ik-help-circle"></i></td>
                                                         <td>
                                                         	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-7" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     		보존연한 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
@@ -102,7 +146,7 @@
 	                                                    		</div>
 	                                                    	</div>
 			                                                </td>
-                                                        <td class="table-active">보안 등급</td>
+                                                        <td class="table-active document-form-table-td"><span>보안 등급</span><i class="ik ik-help-circle"></i></td>
                                                         <td>
                                                         	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-7" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     		보안등급 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
@@ -132,11 +176,78 @@
                                         </div>
                                     </div>
                                 
-                                 <!-- 문서 양식 가본설정 테이블  End -->  
-                                    <div class="card-header d-block">
-                                        <h6>결재 양식</h6> 
-                                    </div>                             
-                        		</div>	                                                            	
+                                 <!-- 문서 양식 기본설정 테이블  End -->
+                                 
+                                 <!-- 문서 양식 결재라인 포맷 설정 Start -->  
+                                    <div class="card-header d-block">                                   
+                                       <h6>결재 양식 </h6>
+                                       <button type="button" class="btn btn-link" data-toggle="modal" data-target="#approval-format">설정</button>
+                                    </div>
+                                 <!-- 문서 양식 결재라인 포맷 설정 End -->
+                                 
+                                 <!-- 문서 양식 상세내용 summer note editor Start -->    
+                                    <div class="card-body  table-border-style">
+                                        <textarea class="form-control html-editor" rows="10"></textarea>
+                                    </div>
+                        		</div>
+                        		<!-- 문서 양식 상세내용 summer note editor End -->    
+                        		
+                        		<!-- 양식생성 페이지 테이블 내 약칭,보존연한,보안등급 물음표 아이콘 Modal View Start --> 
+	                        	<div class="modal-dialog modal-sm mt-0 mb-0 ruletip" role="document">
+						        	<div class="modal-content">
+	                               		 <div class="modal-body">
+	                                   		 <p id="modal-content-type"></p>
+	                                	 </div>
+	                           		 </div>
+                           		</div>
+                        		<!-- 양식생성 페이지 테이블 내 약칭,보존연한,보안등급 물음표 아이콘 Modal View End -->
+                        		
+                        		<!-- 결재 포맷지정 Modal View Start -->
+		                        <div class="modal fade show" id="approval-format" tabindex="-1" role="dialog" aria-hidden="true">
+		                          <div class="modal-dialog modal-lg mt-0 mb-0 modal-dialog-centered" role="document">
+		                           <div class="modal-content">
+		                              <div class="modal-header">
+		                                  <h5 class="modal-title">결재 포맷을 선택하세요.</h5>
+		                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                                      <span aria-hidden="true">&times;</span>
+		                                  </button>
+		                              </div>
+		                              <div class="modal-body">
+		                                	<div class="card">
+		                                		<div class="card-header">
+		                                		1
+		                                		</div>
+		                                		<div class="card-body">
+		                                		2
+		                                		</div>
+		                                		<div class="card-header">
+		                                		3
+		                                		</div>
+		                                		<div class="card-body">
+		                                		4
+		                                		</div>
+		                                		<div class="card-header">
+		                                		5
+		                                		</div>
+		                                		<div class="card-body">
+		                                		6
+		                                		</div>
+		                                		<div class="card-header">
+		                                		7
+		                                		</div>
+		                                		<div class="card-body">
+		                                		8
+		                                		</div>
+		                                	</div>
+		                              </div>
+		                              <div class="modal-footer">
+		                                  <button type="button" class="btn btn-primary">다음</button>
+		                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+		                              </div>
+		                          	</div>
+		                         </div>
+		                       </div>
+	                     	<!-- 결재 포맷지정 Modal View Start --> 
 		</th:block>
 
 	<th:block layout:fragment="customJs">        

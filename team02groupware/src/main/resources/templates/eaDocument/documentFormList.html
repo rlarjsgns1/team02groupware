@@ -118,7 +118,7 @@
 	                                        <a class="nav-link" href="#" data-toggle="modal" data-target="#formTypeSetting">분류설정</a>
 	                                    </li>
 	                                    <li class="nav-item">
-	                                        <div class="nav-link"><span><a href="#">사내전자결재규정</a></span><i class="ik ik-help-circle"></i></div>
+	                                        <div class="nav-link"><span><a href="#" data-toggle="modal" data-target="#eaRule">사내전자결재규정</a></span><i class="ik ik-help-circle"></i></div>
 	                                    </li>
 	                                </ul>
 	                              </div>
@@ -240,7 +240,7 @@
 					                        <p>문서양식  미리보기</p>
 					                    </div>
 					                    <div class="modal-footer">
-					                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+					                        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 					                        <a href="#" class="btn btn-primary">수정</a>
 					                        <button type="button" class="btn btn-danger ea-list-delete">삭제</button>
 					                    </div>
@@ -302,13 +302,36 @@
 	                               	 </div>
 	                              </div>
 	                              <div class="modal-footer">
-	                                  <button type="button" class="btn btn-secondary">확인</button>
-	                                  <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+	                                  <button type="button" class="btn btn-primary">확인</button>
+	                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 	                              </div>
 	                          	</div>
 	                         </div>
 	                       </div>  
-	                      <!-- 양식함 페이지 분류설정 Modal View End -->                           	
+	                      <!-- 양식함 페이지 분류설정 Modal View End -->
+	                      
+	                      <!-- 전자결재 규정 Modal View Start -->
+	                        <div class="modal fade show" id="eaRule" tabindex="-1" role="dialog" aria-hidden="true">
+	                          <div class="modal-dialog modal-lg mt-0 mb-0 modal-dialog-centered" role="document">
+	                           <div class="modal-content">
+	                              <div class="modal-header">
+	                                  <h5 class="modal-title">사내 전자결재 규정</h5>
+	                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                                      <span aria-hidden="true">&times;</span>
+	                                  </button>
+	                              </div>
+	                              <div class="modal-body">
+	                                	<h5>전자결재규정을작성하시오.</h5>
+	                              </div>
+	                              <div class="modal-footer">
+	                                  <button type="button" class="btn btn-primary">수정</button>
+	                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+	                              </div>
+	                          	</div>
+	                         </div>
+	                       </div>
+	                     <!-- 전자결재 규정 Modal View End -->
+	                                                  	
 		</th:block>
 
 	<th:block layout:fragment="customJs">        

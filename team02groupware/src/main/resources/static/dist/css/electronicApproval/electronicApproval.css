@@ -34,3 +34,7 @@
 	.document-form-checkbox{ /* 양식생성 테이블 row에 위치한 check box css */
 		margin-top: 15px;
 	}
+	
+	.document-form-table-td{ /* 양식생성 테이블 td css */
+		text-align: center;
+	}
