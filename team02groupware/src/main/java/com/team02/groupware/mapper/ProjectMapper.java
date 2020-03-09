@@ -9,6 +9,7 @@ import com.team02.groupware.dto.Project;
 
 @Mapper
 public interface ProjectMapper {
+	public int projectInsert(Project project);
 	
 	public List<Project> getProjectlist(Map<String, Object> map);
 

@@ -9,27 +9,44 @@
 <th:block layout:fragment="customTitle">
 	<title>projectList</title>
 </th:block>
+<th:block layout:fragment="customScript">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
 
+$(function(){
+	$(".project-list").on('click',function(){
+		location.href='/taskList';
+	})
+	
+})
+
+
+</script>
+
+</th:block>
 <th:block layout:fragment="customContents">
+
 	<!--------------------------새 프로젝트 추가 버튼 --------------------------->
 	<div class="pr-btn-wrap mb-4">
 		<button type="button" class="pr-add-btn btn btn-success btn-rounded"
-			data-toggle="modal" data-target="#exampleModalCenter">+ 새 프로젝트 추가</button>
+			data-toggle="modal" data-target="#exampleModalCenter">+ 새
+			프로젝트 추가</button>
 	</div>
 	<!--------------------------프로젝트 리스트 start --------------------------->
-	<div class="project-card card-group mb-4">
+	<div class="project-card card-group mb-3">
 		<div class="project-list card">
 			<div class="card-body">
-				<div
+				<div th:each="l : ${projectList}"
 					class="pr-header d-flex justify-content-between align-items-center">
 					<div class="state">
-						<h3 class="pr-title text-success">쇼핑몰 웹사이트 개발</h3>
-						<p class="card-subtitle text-muted fw-500">A사 의류쇼핑몰</p>
+						<h3 class="pr-title text-success" th:text="${#strings.abbreviate(l.projectTitle,15)}"></h3>
+						<p class="card-subtitle text-muted fw-500" th:text="${#strings.abbreviate(l.projectDesc,15)}"></p>
 					</div>
 					<div class="pr-ikon icon">
 
 						<button type="button"
-							class="pr-setting-btn btn btn-icon btn-outline-secondary"  data-toggle="modal" data-target="#editLayoutItem">
+							class="pr-setting-btn btn btn-icon btn-outline-secondary"
+							data-toggle="modal" data-target="#editLayoutItem">
 							<i class="ik ik-settings"></i>
 						</button>
 
@@ -53,16 +70,17 @@
 		</div>
 		<div class="project-list card">
 			<div class="card-body">
-				<div
+				<div th:each="l : ${projectList}"
 					class="pr-header d-flex justify-content-between align-items-center">
 					<div class="state">
-						<h3 class="pr-title text-success">쇼핑몰 웹사이트 개발</h3>
-						<p class="card-subtitle text-muted fw-500">A사 의류쇼핑몰</p>
+						<h3 class="pr-title text-success" th:text="${#strings.abbreviate(l.projectTitle,15)}"></h3>
+						<p class="card-subtitle text-muted fw-500" th:text="${#strings.abbreviate(l.projectDesc,15)}"></p>
 					</div>
 					<div class="pr-ikon icon">
 
 						<button type="button"
-							class="pr-setting-btn btn btn-icon btn-outline-secondary" data-toggle="modal" data-target="#editLayoutItem">
+							class="pr-setting-btn btn btn-icon btn-outline-secondary"
+							data-toggle="modal" data-target="#editLayoutItem">
 							<i class="ik ik-settings"></i>
 						</button>
 
@@ -84,19 +102,19 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="project-list card">
 			<div class="card-body">
-				<div
+				<div th:each="l : ${projectList}"
 					class="pr-header d-flex justify-content-between align-items-center">
 					<div class="state">
-						<h3 class="pr-title text-success">쇼핑몰 웹사이트 개발</h3>
-						<p class="card-subtitle text-muted fw-500">A사 의류쇼핑몰</p>
+						<h3 class="pr-title text-success" th:text="${#strings.abbreviate(l.projectTitle,15)}"></h3>
+						<p class="card-subtitle text-muted fw-500" th:text="${#strings.abbreviate(l.projectDesc,15)}"></p>
 					</div>
 					<div class="pr-ikon icon">
 
 						<button type="button"
-							class="pr-setting-btn btn btn-icon btn-outline-secondary"  data-toggle="modal" data-target="#editLayoutItem">
+							class="pr-setting-btn btn btn-icon btn-outline-secondary"
+							data-toggle="modal" data-target="#editLayoutItem">
 							<i class="ik ik-settings"></i>
 						</button>
 
@@ -119,49 +137,62 @@
 			</div>
 		</div>
 	</div>
+
+
 	<!--------------------------프로젝트 리스트 end --------------------------->
-	
-	
-	
+
+
+
 	<!--------------------------새 프로젝트 추가 버튼 클릭시 모달창 start --------------------------->
 
 
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalCenterLabel">새 프로젝트</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    </div>
-                                    <div class="modal-body">
-                                    <form class="forms-sample">
-									<div class="form-group">
-										<label for="exampleInputUsername1">제목</label> <input
-											type="text" class="form-control" id="exampleInputUsername1"
-											placeholder="예) 웹사이트 개발">
-									</div>
-									<div class="form-group">
-										<label for="exampleInputEmail1">설명(선택사항)</label> <input type="email"
-											class="form-control" id="exampleInputEmail1"
-											placeholder="Email">
-									</div>
-									
-									<button type="submit" class="btn btn-primary mr-2">Submit</button>
-									<button class="btn btn-light">Cancel</button>
-								</form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalCenterLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalCenterLabel">새 프로젝트</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="pr-add-modal modal-body">
+					<form class="forms-sample" th:action="@{/projectInsert}" method="post">
+						<div class="form-group">
+							<label for="exampleInputUsername1">프로젝트 제목</label>
+							<input type="text" name="projectTitle"
+								class="form-control" id="projectTitle-input"
+								placeholder="예) 웹사이트 개발">
+							
+						</div>
+						<div class="form-group">
+							<label for="exampleInputEmail1">프로젝트 설명(선택사항)</label>
+							<input name="projectDesc"
+								type="#" class="form-control" id="exampleInputEmail1">
+						</div>
+						<!-- 
+						<button type="submit" class="btn btn-primary mr-2">추가하기</button>
+						<button class="btn btn-light">취소</button>
+						-->
+				<div class="project-add-btn modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">취소</button>
+					<button type="submit" class="btn btn-primary">추가하기</button>
+				</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!--------------------------새 프로젝트 추가 버튼 클릭시 모달창 end --------------------------->
 
 	<!--------------------------프로젝트 설정(수정) 버튼 클릭시 모달창 start --------------------------->
-	<div class="modal fade edit-layout-modal" id="editLayoutItem" tabindex="-1" role="dialog" aria-labelledby="editLayoutItemLabel" aria-hidden="true">
+	<div class="modal fade edit-layout-modal" id="editLayoutItem"
+		tabindex="-1" role="dialog" aria-labelledby="editLayoutItemLabel"
+		aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -171,11 +202,11 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				
+
 				<div class="modal-body">
 					<div class="row">
 						<div class="col-md-6">
-							<div class="pr-add-modal card-body">
+							<div class="pr-update-modal card-body">
 								<form class="forms-sample">
 									<div class="form-group">
 										<label for="exampleInputUsername1">제목</label> <input
@@ -183,11 +214,11 @@
 											placeholder="예) 웹사이트 개발">
 									</div>
 									<div class="form-group">
-										<label for="exampleInputEmail1">설명(선택사항)</label> <input type="email"
-											class="form-control" id="exampleInputEmail1"
+										<label for="exampleInputEmail1">설명(선택사항)</label> <input
+											type="email" class="form-control" id="exampleInputEmail1"
 											placeholder="Email">
 									</div>
-									
+
 									<div class="form-group">
 										<label class="custom-control custom-radio"> <input
 											type="radio" class="custom-control-input"> <span
@@ -210,43 +241,16 @@
 				</div>
 			</div>
 		</div>
-</div>
+	</div>
 	<!--------------------------프로젝트 설정(수정) 버튼 클릭시 모달창 end --------------------------->
-	
-	
-	
-	
-		<!-- 
-	<table class="table table-hover">
-		<thead>
-			<tr>
-				<th>프로젝트코드</th>
-				<th>사원코드</th>
-				<th>제목</th>
-				<th>설명</th>
-				<th>공개범위</th>
-				<th>상태</th>
-				<th>시작일</th>
-				<th>마감일</th>
-				<th>실제완료일</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="l : ${projectList}">
-				<td th:text="${#strings.abbreviate(l.pCode,10)}"></td>
-				<td th:text="${#strings.abbreviate(l.eCode,10)}"></td>
-				<td th:text="${#strings.abbreviate(l.pTitle,10)}"></td>
-				<td th:text="${#strings.abbreviate(l.pDesc,15)}"></td>
-				<td th:text="${#strings.abbreviate(l.pAccess,15)}"></td>
-				<td th:text="${#strings.abbreviate(l.pStatus,15)}"></td>
-				<td th:text="${	#strings.abbreviate(l.pStart,15)}"></td>
-				<td th:text="${#strings.abbreviate(l.pDeadline,15)}"></td>
-				<td th:text="${#strings.abbreviate(l.pEnd,15)}"></td>
-			</tr>
-		</tbody>
-	</table>
 
-	<div class="card">
+
+
+
+	
+	
+
+	<!-- <div class="card">
 		<div class="card-header">
 			<h3>Pagination Basic</h3>
 		</div>
@@ -272,7 +276,7 @@
 				</ul>
 			</nav>
 		</div>
-	</div>
+	</div> -->
 	맨처음
 	<a th:href="@{/projectList}">[맨처음]</a>
 	이전
@@ -290,7 +294,7 @@
 	마지막
 	<a th:href="@{/projectList(currentPage=${lastPage})}"> [마지막] </a>
 
- -->
+
 </th:block>
 <th:block layout:fragment="customJs">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

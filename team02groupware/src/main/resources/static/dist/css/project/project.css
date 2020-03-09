@@ -3,15 +3,21 @@
 작성자: 김연지
 적용페이지: project관련페이지
 */
+
 /*---------------------------------------------- 프로젝트 추가 modal start---------------------------------------------- */
 
-.pr-add-modal{
+.project-add-btn button{
+	margin:0 auto;
+}
+/*---------------------------------------------- 프로젝트 수정 modal start---------------------------------------------- */
+.pr-update-modal{
 	font-size:16px;
 }
 
 
-
 /*---------------------------------------------- 프로젝트 추가 modal end---------------------------------------------- */
+/*---------------------------------------------- 프로젝트 리스트 start ---------------------------------------------- */
+
 
 .pr-btn-wrap{
 	width:100%;
@@ -19,7 +25,7 @@
 	
 }
 .pr-add-btn{
-	float:right;
+	float:left;
 	height:50px;
 	width:180px;
 	font-size:16px;
@@ -32,15 +38,21 @@
 .project-list {
 	min-width:200px;
 	margin-right:10px;
+	margin-top:10px;
+	cursor:pointer;
 }
-
+.card-body{
+	margin-bottom:10px;
+}
 .pr-title {
 	width:100%;
 	float: left;
 	font-size:1.5em;
-	line-height: 0.9em;
+	line-height: 1.2em;
 }
-
+.card-subtitle{
+	line-height: 1.1em;
+}
 .project-list .card-subtitle{
 	font-size: 1.2em;
 }
@@ -57,5 +69,5 @@
 	margin-right:7px;
 }
 
-
+/*---------------------------------------------- 프로젝트 리스트 end ---------------------------------------------- */
 

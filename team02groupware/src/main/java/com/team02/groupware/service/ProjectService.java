@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.team02.groupware.dto.Project;
 import com.team02.groupware.mapper.ProjectMapper;
 
 @Service
@@ -15,6 +16,11 @@ public class ProjectService {
 	@Autowired
 	private ProjectMapper projectMapper;
 
+	public int projectInsert(Project project) {
+		return projectMapper.projectInsert(project);
+	}
+	
+	
 	public Map<String, Object> getProjectlist(int currentPage) {
 		// 몇개의 행을 보여줄지
 		final int ROW_PER_PAGE = 10;
