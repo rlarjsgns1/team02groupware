@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team02.groupware.mapper.ProjectMapper">
+	<!-- resultMap 을 효율적으로 사용하기 위함 -->
+	<resultMap type="com.team02.groupware.dto.Project" id="projectResultMap">
+		<result property="projectCode" column="project_code" />
+		<result property="employeeCode" column="employee_code" />
+		<result property="projectTitle" column="project_title" />
+		<result property="projectDate" column="project_date" />
+		<result property="projectStatus" column="project_status" />
+		<result property="projectAccess" column="project_access" />
+		<result property="projectDesc" column="project_desc" />
+		<result property="projectDeadline" column="project_deadline" />
+		<result property="projectStart" column="project_start" />
+		<result property="projectEnd" column="project_end" />
+	</resultMap>
+	<insert id="projectInsert" parameterType="com.team02.groupware.dto.Project" >
+		<!-- <selectKey keyProperty="projectCode" resultType="String"
+			order="BEFORE">>
+	
+		SELECT
+				CASE
+					WHEN
+						MAX(project_code) LIKE 'P%'
+					THEN
+						CONCAT('P', SUBSTRING(max(project_code),3)+1)
+					ELSE
+						ifnull (project_code, 'P001')
+				END AS projectCode
+			FROM
+				project_list
+	
+	
+	
+		</selectKey> -->
+	INSERT INTO
+		project_list
+		(project_code
+		,employee_code
+		,project_title
+		,project_date
+		,project_status
+		,project_access
+		,project_desc
+		,project_deadline
+		,project_start
+		,project_end
+		)
+	VALUES(
+		#{projectCode}
+		,#{employeeCode}
+		,#{projectTitle}
+		,now()
+		,#{projectStatus}
+		,#{projectAccess}
+		,#{projectDesc}
+		,#{projectDeadline}
+		,#{projectStart}
+		,#{projectEnd}
+		)
+	</insert>
+	
+	
+		
+	
+	<select id="getProjectRowCount" resultType="int">
+	SELECT
+		COUNT(1)
+	FROM
+		project_list
+
+	</select>
+	<!-- 게시판 리스트 조회 -->
+	<!--parametertype= "java.util.Map" --> 
+	<select id="getProjectlist" parameterType="map" resultType="Project">
+		SELECT
+			project_code AS projectCode
+			,employee_code AS employeeCode
+			,project_title AS projectTitle
+			,project_desc AS projectDesc
+			,project_access AS projectAccess
+			,project_status AS projectStatus
+			,project_start AS projectStart
+			,project_deadline AS projectDeadline
+			,project_end AS projectEnd
+		FROM
+			project_list
+		LIMIT #{startRow},#{rowPerPage};
+	</select>
+</mapper>

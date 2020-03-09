@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.team02.groupware.mapper.ElectronicApprovalMapper"> 
+ 
+  <resultMap type="ElectronicApprovalDocument" id="eaResultMap">
+  	<result property="dCode" column="d_code"/>
+  	<result property="dApprover" column="d_approver"/>
+  	<result property="dApprovalOrder" column="d_approval_order"/>
+  	<result property="dApprovalStatus" column="d_approval_status"/>
+  	<result property="dDeleteReason" column="d_delete_reason"/>
+  	<result property="dReferrer" column="d_referrer"/>
+  	<result property="dSecurityLevel" column="d_security_level"/>
+  	<result property="dViewLevel" column="d_view_level"/>
+  </resultMap>
+  
+ 	 <!-- 결재문서 조회  -->
+  <select id="selectApprovalLine" resultMap="eaResultMap">
+  /* 결재라인 조회 */  
+	SELECT 
+		*
+	FROM 
+		ea_approval_line;
+  </select>
+  
+      <!-- 임시 삭제문서 조회  -->
+  <select id="selectDeleteDocument" resultMap="eaResultMap">
+  /* 임시 삭제문서 조회 쿼리문 실행 */  
+	SELECT 
+		*
+	FROM 
+		ea_delete_document;
+  </select>
+ 
+       <!-- 참조자 조회  -->
+  <select id="selectEaReferrer" resultMap="eaResultMap">
+  /* 참조자 조회 쿼리문 실행 */  
+	SELECT 
+		*
+	FROM 
+		ea_referrer;
+  </select> 
+  
+        <!-- 보안등급 조회  -->
+  <select id="selectEaSecurity" resultMap="eaResultMap">
+  /* 보안등급 조회 쿼리문 실행 */  
+	SELECT 
+		*
+	FROM 
+		ea_security_level;
+  </select>
+  </mapper>

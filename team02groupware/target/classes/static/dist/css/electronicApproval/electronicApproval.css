@@ -1,0 +1,42 @@
+@charset "UTF-8";
+	 /*
+	  * @file electronic_approval.css
+	  * @brief 전자결재 관련 페이지 css
+	  * @author 김건훈
+	  */	
+	.ik-help-circle{	/* 사내전자결재규정 물음표아이콘 css */
+		color: #bcc8d8;
+		margin-left: 15px;
+		cursor:pointer;
+	}
+	
+	.ruletip{		/* 사내전자결재규정 Modal css */
+		position: absolute;
+		 display : none; 
+		z-index: 1;	
+	}
+	
+	.dropdown-item{		/* 검색키워드 드롭다운 선택항목 css */
+		cursor:pointer;
+	}
+	
+	.border-checkbox-label { /* 양식함 테이블 row에 위치한 체크박스 css */
+		margin-bottom : 0px;
+	}
+	::after, ::before{ /* 양식함 테이블 row에 위치한 체크박스 css */
+		box-sizing : unset;
+	}
+
+	.document-form-table input{ /* 양식생성 테이블 row에 위치한 input box css */
+		border-color : #343a40; 
+	}
+	
+	.document-form-checkbox{ /* 양식생성 테이블 row에 위치한 check box css */
+		margin-top: 15px;
+	}
+	
+	.document-form-table-td{ /* 양식생성 테이블 td css */
+		text-align: center;
+	}
+	
+	

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+		
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  		
+<mapper namespace="com.team02.groupware.mapper.BoardMapper">
+
+	<select id="getBoardCount" resultType="int" parameterType="map">
+		/* 게시글 총 개수 구하기  */
+		SELECT
+			COUNT(*)
+		FROM
+			board as b
+		<where>
+			board_category != '공지'
+		<if test="searchDto.boardCategory != null and searchDto.boardCategory != 'null' and searchDto.boardCategory != '전체'">
+			
+			and board_category = #{searchDto.boardCategory}
+		</if>
+		
+		<if test="searchDto.isSearchCheck == 'true'">
+			
+			
+			<if test="searchDto.searchBy == '제목내용'">
+				and (board_title LIKE '%${searchDto.searchInput}%' OR board_content_text LIKE '%${searchDto.searchInput}%')
+			</if>
+			<if test="searchDto.searchBy == '제목만'">
+				and board_title LIKE '%${searchDto.searchInput}%' 
+			</if>
+			<if test="searchDto.searchBy == '글작성자'">
+				and board_writer LIKE '%${searchDto.searchInput}%'
+			</if>
+					
+			
+			<if test="searchDto.searchDate != '전체기간'">
+				
+				and DATE(b.board_write_date) >= date(subdate(now(), INTERVAL ${searchDto.searchDate} DAY))
+			</if>
+		</if>
+		</where>
+		  
+	</select>
+	<!-- 게시글 셀렉트값 boardDto에 담기 -->
+	<resultMap id="getBoardResult" type="BoardDto">
+	
+    	<result property="boardCategory" column="board_category"/>
+    	<result property="boardNum" column="board_num"/>
+    	<result property="boardTitle" column="board_title"/>
+    	<result property="boardContentText" column="board_content_text"/>
+    	<result property="boardWriter" column="board_writer"/>
+    	<result property="boardWriteDate" column="board_write_date"/>
+    	<result property="boardViewCount" column="board_view_count"/>
+    	<result property="boardCommentCount" column="board_comment_count"/>
+    	<result property="boardTimeCheck" column="board_time_check"/>
+
+  	</resultMap>
+  	<!-- 부서 리스트 담기 -->
+  	<resultMap id="getDepartResult" type="PagingDto">
+	
+    	<result property="departList" column="depart_name"/>
+
+  	</resultMap>
+  	
+  	<select id="getDepartList" resultMap="getDepartResult">
+  		/* 부서 전체 셀렉트 */
+  		SELECT
+  			depart_name
+  		FROM
+  			department
+  	</select>
+  	
+  	<select id="getBoardNoticeList" resultMap="getBoardResult">
+  		/* 공지사항 셀렉트 */
+  		SELECT
+			board_category, 
+			board_title, 
+			board_content_text, 
+			board_writer, 
+			board_write_date, 
+			board_view_count, 
+			board_num, 
+			board_comment_count,
+			TIMESTAMPDIFF(MINUTE, b.board_write_date, NOW()) AS board_time_check 
+		FROM
+			board as b
+		WHERE
+			board_category = '공지'
+		ORDER BY 
+			board_num DESC
+  	</select>
+
+	<select id="getBoardList" resultMap="getBoardResult" parameterType="map">
+		/* 게시판 리스트 셀렉트 */
+		SELECT
+			board_category, 
+			board_title, 
+			board_content_text, 
+			board_writer, 
+			board_write_date, 
+			board_view_count, 
+			board_num, 
+			board_comment_count,
+			TIMESTAMPDIFF(MINUTE, b.board_write_date, NOW()) AS board_time_check 
+		FROM
+			board as b
+		
+		<where>
+			board_category != '공지'
+		<if test="searchDto.boardCategory != null and searchDto.boardCategory != 'null' and searchDto.boardCategory != '전체'">
+			and board_category = #{searchDto.boardCategory}
+		</if>
+		
+		<if test="searchDto.isSearchCheck == 'true'">
+			
+				
+			<if test="searchDto.searchBy == '제목내용'">
+				
+				and (board_title LIKE '%${searchDto.searchInput}%' OR board_content_text LIKE '%${searchDto.searchInput}%')
+			</if>
+			<if test="searchDto.searchBy == '제목만'">
+				
+				and board_title LIKE '%${searchDto.searchInput}%' 
+			</if>
+			<if test="searchDto.searchBy == '글작성자'">
+				
+				and board_writer LIKE '%${searchDto.searchInput}%'
+			</if>
+					
+			
+			<if test="searchDto.searchDate != '전체기간'">
+				
+				and DATE(b.board_write_date) >= date(subdate(now(), INTERVAL ${searchDto.searchDate} DAY))
+			</if>
+			
+		</if>
+		
+		</where>
+		
+		ORDER BY 
+			board_num DESC
+		LIMIT
+			${pagingDto.limitNum}, ${pagingDto.viewNum}
+		
+	</select>
+	
+	<select id="getMaxBoardNum" resultType="int">
+		SELECT 
+			max(board_num)
+		FROM 
+			board
+	</select>
+	
+	<insert id="boardInsert" parameterType="BoardDto">
+		INSERT 
+			INTO board
+			(board_category, 
+			board_title, 
+			board_content_text, 
+			board_writer, 
+			board_write_date, 
+			board_view_count, 
+			board_comment_count)
+		VALUES (#{boardCategory}, #{boardTitle}, #{boardContentText}, '관리자', NOW(), 0, 0)
+
+	</insert>
+	
+	
+</mapper>  
