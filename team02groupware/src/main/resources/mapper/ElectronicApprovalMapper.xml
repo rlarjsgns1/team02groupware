@@ -48,6 +48,6 @@
 	SELECT 
 		*
 	FROM 
-		ea_security;
+		ea_security_level;
   </select>
   </mapper>

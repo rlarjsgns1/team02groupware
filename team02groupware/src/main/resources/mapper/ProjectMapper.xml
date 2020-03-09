@@ -4,7 +4,7 @@
 	<!-- resultMap 을 효율적으로 사용하기 위함 -->
 	<resultMap type="com.team02.groupware.dto.Project" id="projectResultMap">
 		<result property="projectCode" column="project_code" />
-		<result property="employeeNum" column="employee_number" />
+		<result property="employeeCode" column="employee_code" />
 		<result property="projectTitle" column="project_title" />
 		<result property="projectDate" column="project_date" />
 		<result property="projectStatus" column="project_status" />
@@ -36,7 +36,7 @@
 	INSERT INTO
 		project_list
 		(project_code
-		,employee_number
+		,employee_code
 		,project_title
 		,project_date
 		,project_status
@@ -48,7 +48,7 @@
 		)
 	VALUES(
 		#{projectCode}
-		,#{employeeNum}
+		,#{employeeCode}
 		,#{projectTitle}
 		,now()
 		,#{projectStatus}
@@ -75,7 +75,7 @@
 	<select id="getProjectlist" parameterType="map" resultType="Project">
 		SELECT
 			project_code AS projectCode
-			,employee_number AS employeeNum
+			,employee_code AS employeeCode
 			,project_title AS projectTitle
 			,project_desc AS projectDesc
 			,project_access AS projectAccess

@@ -3,7 +3,7 @@ package com.team02.groupware.dto;
 public class Project {
 
 	private String projectCode;	// 프로젝트코드
-	private String employeeNum;	// 사원번호
+	private String employeeCode;	// 사원번호
 	private String projectTitle;	// 프로젝트제목
 	private String projectDate;	// 프로젝트작성일
 	private String projectDesc;	// 프로젝트설명
@@ -18,11 +18,11 @@ public class Project {
 	public void setProjectCode(String projectCode) {
 		this.projectCode = projectCode;
 	}
-	public String getEmployeeNum() {
-		return employeeNum;
+	public String getEmployeeCode() {
+		return employeeCode;
 	}
-	public void setEmployeeNum(String employeeNum) {
-		this.employeeNum = employeeNum;
+	public void setEmployeeCode(String employeeCode) {
+		this.employeeCode = employeeCode;
 	}
 	public String getProjectTitle() {
 		return projectTitle;
@@ -78,7 +78,7 @@ public class Project {
 		builder.append("Project [projectCode=");
 		builder.append(projectCode);
 		builder.append(", employeeNum=");
-		builder.append(employeeNum);
+		builder.append(employeeCode);
 		builder.append(", projectTitle=");
 		builder.append(projectTitle);
 		builder.append(", projectDate=");
