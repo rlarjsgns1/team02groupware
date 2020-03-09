@@ -2,69 +2,101 @@ package com.team02.groupware.dto;
 
 public class Project {
 
-	private String pCode;	// 프로젝트코드
-	private String eCode;	// 사원번호
-	private String pTitle;	// 프로젝트제목
-	private String pDesc;	// 프로젝트설명
-	private String pAccess;	// 프로젝트공개범위
-	private String pStatus;	// 프로젝트상태
-	private String pStart;	// 프로젝트시작일
-	private String pEnd;	// 프로젝트실제완료일
-	private String pDeadline;	// 프로젝트마감일
-	public String getpCode() {
-		return pCode;
+	private String projectCode;	// 프로젝트코드
+	private String employeeNum;	// 사원번호
+	private String projectTitle;	// 프로젝트제목
+	private String projectDate;	// 프로젝트작성일
+	private String projectDesc;	// 프로젝트설명
+	private String projectAccess;	// 프로젝트공개범위
+	private String projectStatus;	// 프로젝트상태
+	private String projectStart;	// 프로젝트시작일
+	private String projectEnd;	// 프로젝트실제완료일
+	private String projectDeadline;	// 프로젝트마감일
+	public String getProjectCode() {
+		return projectCode;
 	}
-	public void setpCode(String pCode) {
-		this.pCode = pCode;
+	public void setProjectCode(String projectCode) {
+		this.projectCode = projectCode;
 	}
-	public String geteCode() {
-		return eCode;
+	public String getEmployeeNum() {
+		return employeeNum;
 	}
-	public void seteCode(String eCode) {
-		this.eCode = eCode;
+	public void setEmployeeNum(String employeeNum) {
+		this.employeeNum = employeeNum;
 	}
-	public String getpTitle() {
-		return pTitle;
+	public String getProjectTitle() {
+		return projectTitle;
 	}
-	public void setpTitle(String pTitle) {
-		this.pTitle = pTitle;
+	public void setProjectTitle(String projectTitle) {
+		this.projectTitle = projectTitle;
 	}
-	public String getpDesc() {
-		return pDesc;
+	public String getProjectDesc() {
+		return projectDesc;
 	}
-	public void setpDesc(String pDesc) {
-		this.pDesc = pDesc;
+	public void setProjectDesc(String projectDesc) {
+		this.projectDesc = projectDesc;
 	}
-	public String getpAccess() {
-		return pAccess;
+	public String getProjectAccess() {
+		return projectAccess;
 	}
-	public void setpAccess(String pAccess) {
-		this.pAccess = pAccess;
+	public void setProjectAccess(String projectAccess) {
+		this.projectAccess = projectAccess;
 	}
-	public String getpStatus() {
-		return pStatus;
+	public String getProjectStatus() {
+		return projectStatus;
 	}
-	public void setpState(String pStatus) {
-		this.pStatus = pStatus;
+	public void setProjectStatus(String projectStatus) {
+		this.projectStatus = projectStatus;
 	}
-	public String getpStart() {
-		return pStart;
+	public String getProjectStart() {
+		return projectStart;
 	}
-	public void setpStart(String pStart) {
-		this.pStart = pStart;
+	public void setProjectStart(String projectStart) {
+		this.projectStart = projectStart;
 	}
-	public String getpEnd() {
-		return pEnd;
+	public String getProjectEnd() {
+		return projectEnd;
 	}
-	public void setpEnd(String pEnd) {
-		this.pEnd = pEnd;
+	public void setProjectEnd(String projectEnd) {
+		this.projectEnd = projectEnd;
 	}
-	public String getpDeadline() {
-		return pDeadline;
+	public String getProjectDeadline() {
+		return projectDeadline;
 	}
-	public void setpDeadline(String pDeadline) {
-		this.pDeadline = pDeadline;
+	public void setProjectDeadline(String projectDeadline) {
+		this.projectDeadline = projectDeadline;
 	}
-	
+	public String getProjectDate() {
+		return projectDate;
+	}
+	public void setProjectDate(String projectDate) {
+		this.projectDate = projectDate;
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Project [projectCode=");
+		builder.append(projectCode);
+		builder.append(", employeeNum=");
+		builder.append(employeeNum);
+		builder.append(", projectTitle=");
+		builder.append(projectTitle);
+		builder.append(", projectDate=");
+		builder.append(projectDate);
+		builder.append(", projectDesc=");
+		builder.append(projectDesc);
+		builder.append(", projectAccess=");
+		builder.append(projectAccess);
+		builder.append(", projectStatus=");
+		builder.append(projectStatus);
+		builder.append(", projectStart=");
+		builder.append(projectStart);
+		builder.append(", projectEnd=");
+		builder.append(projectEnd);
+		builder.append(", projectDeadline=");
+		builder.append(projectDeadline);
+		builder.append("]");
+		return builder.toString();
+	}
 	
 }
