@@ -16,7 +16,7 @@
   </resultMap>
   
  	 <!-- 결재문서 조회  -->
-  <select id="approvalLine" resultMap="eaResultMap">
+  <select id="selectApprovalLine" resultMap="eaResultMap">
   /* 결재라인 조회 */  
 	SELECT 
 		*
@@ -25,7 +25,7 @@
   </select>
   
       <!-- 임시 삭제문서 조회  -->
-  <select id="deleteDocument" resultMap="eaResultMap">
+  <select id="selectDeleteDocument" resultMap="eaResultMap">
   /* 임시 삭제문서 조회 쿼리문 실행 */  
 	SELECT 
 		*
@@ -34,7 +34,7 @@
   </select>
  
        <!-- 참조자 조회  -->
-  <select id="eaReferrer" resultMap="eaResultMap">
+  <select id="selectEaReferrer" resultMap="eaResultMap">
   /* 참조자 조회 쿼리문 실행 */  
 	SELECT 
 		*
@@ -43,7 +43,7 @@
   </select> 
   
         <!-- 보안등급 조회  -->
-  <select id="eaSecurity" resultMap="eaResultMap">
+  <select id="selectEaSecurity" resultMap="eaResultMap">
   /* 보안등급 조회 쿼리문 실행 */  
 	SELECT 
 		*

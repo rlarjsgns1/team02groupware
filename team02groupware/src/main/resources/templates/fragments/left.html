@@ -11,7 +11,7 @@
 </style>
 <div class="app-sidebar colored" th:fragment="leftFragment">
 	<div class="sidebar-header">
-		<a class="header-brand" href="index.html">
+		<a class="header-brand" href="/">
 			<div class="logo-img">
 				<img src="src/img/brand-white.svg" class="header-brand-img"
 					alt="lavalite">
@@ -28,7 +28,7 @@
 	<div class="sidebar-content">
 		<div class="nav-container">
 			<nav id="main-menu-navigation" class="navigation-main">
-				<div class="nav-lavel">인사관리</div>
+				<div class="nav-lavel">#1.인사관리 jung</div>
 				<div class="nav-item active">
 					<a href="index.html"><i class="ik ik-bar-chart-2"></i><span>Dashboard</span></a>
 				</div>
@@ -46,14 +46,14 @@
 							href="#" class="menu-item">Chart Widget</a>
 					</div>
 				</div>
-				<div class="nav-lavel">전자결재</div>
+				<div class="nav-lavel">!2.전자결재 geon</div>
 					<div class="nav-item">
 						<a href="#"><i class="ik ik-edit"></i><span>기안하기</span> </a>
 					</div>
 				<div class="nav-item has-sub">
 					<a href="#"><i class="ik ik-file-text"></i><span>진행 중인 문서</span></a>
 					<div class="submenu-content">
-						<a th:href="@{/allOngoingDocumentList}" class="menu-item">전체</a> <a
+						<a th:href="@{/selectAllOngoingDocumentList}" class="menu-item">전체</a> <a
 							href="#" class="menu-item">대기</a> <a
 							href="#" class="menu-item">확인</a> <a
 							href="#" class="menu-item">예정</a> <a
@@ -78,14 +78,14 @@
 					<a href="#"><i class="ik ik-settings"></i><span>전자결재 설정</span></a>
 					<div class="submenu-content">
 						<a href="#" class="menu-item">기본 설정</a>
-						<a th:href="@{/documentFormList}" class="menu-item">양식함 관리</a>
+						<a th:href="@{/selectDocumentFormList}" class="menu-item">양식함 관리</a>
 						<a href="#" class="menu-item">전체 문서 목록</a>
 						<a href="#" class="menu-item">삭제 문서 목록</a>
 						
 					</div>
 				</div>
 
-				<div class="nav-lavel">프로젝트관리</div>
+				<div class="nav-lavel">!3.프로젝트관리 yeon</div>
 				<div class="nav-item has-sub">
 					<a href="#"><i class="ik ik-folder"></i><span>프로젝트</span></a>
 					<div class="submenu-content">
@@ -97,14 +97,14 @@
 				<div class="nav-item">
 					<a href="pages/form-picker.html"><i class="ik ik-activity"></i><span>캘린더</span> <span class="badge badge-success">New</span></a>
 				</div>
-				<div class="nav-lavel">게시판</div>
+				<div class="nav-lavel">!4.게시판 won</div>
 				<div class="nav-item">
 					<a href="/boardList"><i
 						class="ik ik-edit"></i><span>게시판</span><span class="badge badge-success">New</span></a>
 				</div>
 				
 
-				<div class="nav-lavel">메신저</div>
+				<div class="nav-lavel">!5.메신저 won</div>
 				<div class="nav-item">
 					<a href="#"><i class="ik ik-message-square"></i><span>메신저</span>
 						<span class="badge badge-success">New</span></a>
