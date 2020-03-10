@@ -15,24 +15,21 @@
 		<result property="projectEnd" column="project_end" />
 	</resultMap>
 	<insert id="projectInsert" parameterType="com.team02.groupware.dto.Project" >
-		 <selectKey keyProperty="projectCode" resultType="String"
+		<!--  <selectKey keyProperty="projectCode" resultType="String"
 			order="BEFORE">>
 	
 		SELECT
 				CASE
 					WHEN
-						MAX(project_code) LIKE 'P%'
+						MAX(project_code) LIKE 'PS%'
 					THEN
-						CONCAT('PR', SUBSTRING(max(project_code),2)+1)
+						CONCAT('PS', SUBSTRING(max(project_code),2)+1)
 					ELSE
-						ifnull (project_code, 'PR1')
+						ifnull (project_code, 'PS001')
 				END AS projectCode
 			FROM
 				project_list
-	
-	
-	
-		</selectKey> 
+		</selectKey>  -->
 	INSERT INTO
 		project_list
 		(project_code
