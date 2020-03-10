@@ -17,7 +17,6 @@
 	<insert id="projectInsert" parameterType="com.team02.groupware.dto.Project" >
 		<!--  <selectKey keyProperty="projectCode" resultType="String"
 			order="BEFORE">>
-	
 		SELECT
 				CASE
 					WHEN
