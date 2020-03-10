@@ -15,7 +15,7 @@
 		<result property="projectEnd" column="project_end" />
 	</resultMap>
 	<insert id="projectInsert" parameterType="com.team02.groupware.dto.Project" >
-		<!-- <selectKey keyProperty="projectCode" resultType="String"
+		 <selectKey keyProperty="projectCode" resultType="String"
 			order="BEFORE">>
 	
 		SELECT
@@ -23,16 +23,16 @@
 					WHEN
 						MAX(project_code) LIKE 'P%'
 					THEN
-						CONCAT('P', SUBSTRING(max(project_code),3)+1)
+						CONCAT('PR', SUBSTRING(max(project_code),2)+1)
 					ELSE
-						ifnull (project_code, 'P001')
+						ifnull (project_code, 'PR1')
 				END AS projectCode
 			FROM
 				project_list
 	
 	
 	
-		</selectKey> -->
+		</selectKey> 
 	INSERT INTO
 		project_list
 		(project_code
@@ -77,6 +77,7 @@
 			project_code AS projectCode
 			,employee_code AS employeeCode
 			,project_title AS projectTitle
+			,project_date AS projectDate
 			,project_desc AS projectDesc
 			,project_access AS projectAccess
 			,project_status AS projectStatus
@@ -85,6 +86,7 @@
 			,project_end AS projectEnd
 		FROM
 			project_list
-		LIMIT #{startRow},#{rowPerPage};
+		ORDER BY
+			projectDate DESC;
 	</select>
 </mapper>

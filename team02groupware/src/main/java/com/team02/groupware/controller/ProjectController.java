@@ -39,7 +39,7 @@ public class ProjectController {
 	}
 	
 	@PostMapping("/projectInsert")
-	public String gInsert(Project project) {
+	public String projectInsert(Project project) {
 		System.out.println(project.toString());
 		int result = projectService.projectInsert(project);
 		System.out.println(result);
@@ -52,7 +52,8 @@ public class ProjectController {
 	
 	@GetMapping("/projectInsert")
 	public String projectInsert() {
-		return "projectlist/projectInsert";
+		System.out.println(" ------GetMapping  /projectInsert");
+		return "/projectInsert";
 	}
 	
 	
