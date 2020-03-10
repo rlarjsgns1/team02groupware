@@ -9,7 +9,7 @@
 		margin-left: 15px;
 		cursor:pointer;
 	}
-	
+
 	.ruletip{		/* 사내전자결재규정 Modal css */
 		position: absolute;
 		 display : none; 
@@ -23,8 +23,8 @@
 	.border-checkbox-label { /* 양식함 테이블 row에 위치한 체크박스 css */
 		margin-bottom : 0px;
 	}
-	::after, ::before{ /* 양식함 테이블 row에 위치한 체크박스 css */
-		box-sizing : unset;
+	.document-form-check-box{ /* 양식함 테이블 row에 위치한 체크박스 css */
+		margin-top: 3px;
 	}
 
 	.document-form-table input{ /* 양식생성 테이블 row에 위치한 input box css */
@@ -39,4 +39,10 @@
 		text-align: center;
 	}
 	
-	
+	.btn{/* 버튼 관련 css */
+		height: unset;
+	}
+
+	.select2-container {
+  		width: 100% !important;
+	}

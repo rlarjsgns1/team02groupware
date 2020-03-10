@@ -11,16 +11,17 @@
 
 <!-- CSS custom -->
 <th:block layout:fragment="customCss">
-	<link rel="stylesheet"
-		href="dist/css/electronicApproval/electronicApproval.css">
+	<link rel="stylesheet" href="dist/css/electronicApproval/electronicApproval.css">
+	<link rel="stylesheet" href="dist/css/electronicApproval/electronicApprovalSelect2.min.css">
+		
 </th:block>
 <th:block layout:fragment="customTitle">
 	<title>결재라인 포맷</title>
 </th:block>
 <th:block layout:fragment="customContents">
+	
 	<!-- 결재라인 포맷 테이블 Start -->
 	<div class="card">
-
 		<div class="table-responsive">
 			<table style="height: 295px; width: 778px; table-layout: fixed; text-align: center; border: 1px solid #cdcdcd;">
 				<tbody>
@@ -28,8 +29,10 @@
 						<td style="width: 96px; height: 140px; background: #f9f9f9; border: 1px solid #cdcdcd; "
 							rowspan="3">
 							<div class="col-md-12">
-								결재<img src="img/electronicApproval/add.png"
-									style="position: absolute; bottom: 80px; right: 5px; width: 20px; height: auto;"></img>
+								결재
+								<img src="img/electronicApproval/add.png"
+									style="position: absolute; bottom: 80px; right: 5px; width: 20px; height: auto; cursor: pointer;"
+									data-toggle="modal" data-target="#approvalLine">
 							</div>
 						</td>
 						<td style="background: #f9f9f9; border-: 1px solid #cdcdcd;"></td>
@@ -60,31 +63,129 @@
 					</tr>
 					<tr style="height: 50px; border: 1px solid #cdcdcd;">
 						<td style="background: #f9f9f9; border: 1px solid #cdcdcd;">
-							<div class="col-md-12">합의<img src="img/electronicApproval/add.png"
-									style="position: absolute; right: 5px; width: 20px; height: auto"></img></div>
-
+							<div class="col-md-12">합의
+								<img src="img/electronicApproval/add.png" style="position: absolute; right: 5px; width: 20px; height: auto"></img>
+							</div>
 						</td>
-						<td colspan="7"><input type="text"
-							class="form-control form-bg-default" style="width: 97.6px">
-
-						</td>
+						<td colspan="7"></td>
 					</tr>
 					<tr style="height: 45px;">
 						<td style="background: #f9f9f9; border: 1px solid #cdcdcd;">
-						<div class="col-md-12">참조
-							</div>
+						<div class="col-md-12">참조</div>
 						</td>
-						<td colspan="7"><input type="text"
-							class="form-control form-bg-default" style="width: 97.6px"></td>
+						<td colspan="7"> 
+							<form>
+				            	<select id="referrerSelect" class="form-control" multiple="multiple">
+					          		<option value=""></option>
+					          		<optgroup label="TEAM 02">
+						                <option value="김건훈">김건훈</option>
+						                <option value="김정훈">김정훈</option>
+						                <option value="이원준">이원준</option>
+						                <option value="김연지">김연지</option>
+					                </optgroup>
+					                <optgroup label="경영지원부">
+						             	<option value="사원1">사원1</option>
+						                <option value="사원2">사원2</option>
+						                <option value="사원3">사원3</option>
+					                </optgroup>
+					                <optgroup label="영업관리">
+						                <option value="사원4">사원4</option>
+						                <option value="사원5">사원5</option>
+						                <option value="사원6">사원6</option>
+					                </optgroup>
+					                <optgroup label="고객응대">
+						                <option value="사원7">사원7</option>
+						                <option value="사원8">사원8</option>
+					                </optgroup>
+				           		</select>
+				    		</form>
+ 						 </td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	</div>
-
 	<!-- 결재라인 포맷 테이블 Start -->
-
+	
+    <!-- 양식함 페이지 분류설정 Modal View Start -->
+	  <div class="modal fade show" id="approvalLine" role="dialog" aria-hidden="true">
+	    <div class="modal-dialog modal-sm mt-0 mb-0 modal-dialog-centered" role="document">
+	     <div class="modal-content">
+	        <div class="modal-header">
+	            <h5 class="modal-title">결재 설정</h5>
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                <span aria-hidden="true">&times;</span>
+	            </button>
+	        </div>
+	        <div class="modal-body">
+	        <table class="table-hover" style="height: 120px; width: 264px; border: 1px solid #cdcdcd;">
+	        	<thead>
+					<tr>
+						<th style="width: 156px; padding-left: 10px;">	
+							<select id="approverSelect" class="form-control">
+							    <option value="">클릭 후 입력</option>
+						   		<optgroup label="TEAM 02">
+						          <option value="김건훈">김건훈</option>
+						          <option value="김정훈">김정훈</option>
+						          <option value="이원준">이원준</option>
+						          <option value="김연지">김연지</option>
+						         </optgroup>
+						         <optgroup label="경영지원부">
+						       	  <option value="사원1">사원1</option>
+						          <option value="사원2">사원2</option>
+						          <option value="사원3">사원3</option>
+						         </optgroup>
+						         <optgroup label="영업관리">
+						          <option value="사원4">사원4</option>
+						          <option value="사원5">사원5</option>
+						          <option value="사원6">사원6</option>
+						         </optgroup>
+						         <optgroup label="고객응대">
+						          <option value="사원7">사원7</option>
+						          <option value="사원8">사원8</option>
+						         </optgroup>
+							  </select> 
+						 </th>
+						 <th style="width: 51px;">&nbsp;</th>
+						 <th style="width: 51px;">&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="width: 156px;">김건훈</td>
+						<td style="width: 51px;">&nbsp;</td>
+						<td style="width: 51px;">&nbsp;</td>
+					</tr>
+					<tr>
+						<td style="width: 156px;">김연지</td>
+						<td style="width: 51px;">&nbsp;</td>
+						<td style="width: 51px;">&nbsp;</td>
+					</tr>
+					<tr>
+						<td style="width: 156px;">김정훈</td>
+						<td style="width: 51px;"></td>
+						<td style="width: 51px;"></td>
+					</tr>
+					<tr>
+						<td style="width: 156px;">이원준</td>
+						<td style="width: 51px;"></td>
+						<td style="width: 51px;"></td>
+					</tr>
+				</tbody>
+			</table>
+   		 
+	        </div>
+	        <div class="modal-footer">
+	            <button type="button" class="btn btn-primary">확인</button>
+	            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+	        </div>
+	    	</div>
+	   </div>
+	 </div>  
+	<!-- 양식함 페이지 분류설정 Modal View End -->
+	 		
 </th:block>
+
 <th:block layout:fragment="customJs">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script>
@@ -98,19 +199,35 @@
 	<script src="plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
 	<script src="plugins/screenfull/dist/screenfull.js"></script>
 	<script src="plugins/datatables.net/js/jquery.dataTables.min.js"></script>
-	<script
-		src="plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-	<script
-		src="plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-	<script
-		src="plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-
+	<script src="plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+	<script src="plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+	<script src="plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 	<script src="plugins/moment/moment.js"></script>
 	<script src="plugins/d3/dist/d3.min.js"></script>
 	<script src="plugins/c3/c3.min.js"></script>
 	<script src="js/tables.js"></script>
 	<script src="js/charts.js"></script>
 	<script src="dist/js/theme.min.js"></script>
+	<script src="dist/js/electronicApproval/electronicApprovalSelect2.min.js"></script>
+	
+	<!-- select2 플러그인 사용 Start-->
+	<script type="text/javascript">
+	$(document).ready(function() { 
+		
+		$('#referrerSelect').select2({
+		    placeholder: "참조자를 추가하려면 입력하세요."    
+		});
+		
+		  $("#approverSelect").select2().on("select2:select", function (e){
+		      var selectedElement = $(e.currentTarget);
+		      var value = selectedElement.val();
+		      console.log(value);
+		  });		
+	});
+
+	</script>
+	<!-- select2 플러그인 사용 End-->
+	
 	<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 	<script>
 		(
