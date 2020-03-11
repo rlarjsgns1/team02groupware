@@ -51,3 +51,7 @@
 		border-color: #fff;
   		
 	}
+	.search-keyword-btn{ /* 양식함 관리 화면 검색 select box css */
+	 width: 100px;
+	 height: 32px;
+	}

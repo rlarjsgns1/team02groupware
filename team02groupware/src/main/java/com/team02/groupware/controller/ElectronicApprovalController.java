@@ -78,4 +78,14 @@ public class ElectronicApprovalController {
 	 public String approvalFormat() {
 		 return "eaDocument/eaFormat/approvalFormat";
 	 }
+	 
+	 /*
+	  * @method insertDocumentDraft()
+	  * @brief 문서 기안하기 method
+	  * @author 김건훈
+	  */
+	 @GetMapping("/insertDocumentDraft")
+	 public String insertDocumentDraft() {
+		 return "eaDocument/documentDraft";
+	 }
 }
