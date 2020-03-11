@@ -1,0 +1,209 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/loginLayout}">
+      
+<th:block layout:fragment="logincustomTitle">
+	<title>34기 2팀 그룹웨어</title>
+</th:block>
+
+<th:block layout:fragment="logincustomContents">
+
+	<div class="authentication-form mx-auto">
+		<div class="logo-centered">
+			<a href="../index.html"><img src="../src/img/brand.svg" alt="">
+			<h1>그룹웨어</h1></a>
+		</div>
+		<h3>34기 2팀 그룹웨어</h3>
+		<p>그룹웨어로 로그인하세요.</p>
+		<form action="/index" method="post">
+			<div class="form-group">
+				<input type="text" class="form-control" required=""
+					placeholder="ID를 입력하세요"> <i class="ik ik-user"></i>
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control" placeholder="암호를 입력하세요"
+					required=""> <i class="ik ik-lock"></i>
+			</div>
+			<div class="row">
+				<div class="col text-left">
+					<label class="custom-control custom-checkbox"> <input
+						type="checkbox" class="custom-control-input" id="item_checkbox"
+						name="item_checkbox" value="option1"> <span
+						class="custom-control-label">&nbsp;ID,PW 기억하기</span>
+					</label>
+				</div>
+				<div class="col text-right">
+					<a href="#" data-toggle="modal" data-target="#forgotPassword">암호를 잊어버리셨나요?</a>
+				</div>
+			</div>
+			<div class="sign-btn text-center">
+				<button class="btn btn-theme">로그인</button>
+			</div>
+		</form>
+		<div class="register">
+			<p>
+				계정이 없으시다면, <a href="#" data-toggle="modal" data-target="#userJoinModal">여기를 클릭하여 계정 생성을 신청하세요.</a>
+			</p>
+		</div>
+		
+		<div class="modal fade" id="userJoinModal" tabindex="-1" role="dialog"
+			aria-labelledby="demoModalLabel" style="display: none;"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="demoModalLabel">회원가입</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						
+						<div class="card">
+                                    <div class="card-header"><h3>회원가입 신청</h3></div>
+                                    <div class="card-body">
+                                        <form class="forms-sample">
+                                       		<div class="form-group">
+                                                <label for="exampleInputName1">ID</label>
+                                                <input type="text" class="form-control" id="exampleInputName1" required="" placeholder="ID">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword4">암호</label>
+                                                <input type="password" class="form-control" id="exampleInputPassword4" required="" placeholder="Password">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword4">암호 확인</label>
+                                                <input type="password" class="form-control" id="exampleInputPassword4" required="" placeholder="Password">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputName1">이름</label>
+                                                <input type="text" class="form-control" id="exampleInputName1" required="" placeholder="이름">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputName1">회사 연락처</label>
+                                                <input type="text" class="form-control" id="exampleInputName1" required="" placeholder="회사 연락처">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputName1">개인 연락처</label>
+                                                <input type="text" class="form-control" id="exampleInputName1" required="" placeholder="개인 연락처">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail3">이메일 주소</label>
+                                                        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="이메일">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="exampleSelectGender">성별</label>
+                                                        <select class="form-control" id="exampleSelectGender">
+                                                            <option>남자</option>
+                                                            <option>여자</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>                                            
+                                            <div class="form-group">
+                                                <label>사진 업로드</label>
+                                                <input type="file" name="img[]" class="file-upload-default">
+                                                <div class="input-group col-xs-12">
+                                                    <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Image">
+                                                    <span class="input-group-append">
+                                                    <button class="file-upload-browse btn btn-primary" type="button">업로드</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary mr-2">회원가입</button>
+                                        </form>
+                                    </div>
+                                </div>
+						
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="forgotPassword" tabindex="-1" role="dialog"
+			aria-labelledby="demoModalLabel" style="display: none;"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="demoModalLabel">비밀번호 찾기</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="card">
+                                    <div class="card-header"><h3>비밀번호 찾기</h3></div>
+                                    <div class="card-body">
+                                        <form class="forms-sample">
+                                            <div class="form-group row">
+                                                <label for="exampleInputUsername2" class="col-sm-3 col-form-label">ID</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="exampleInputUsername2" placeholder="ID 입력">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="exampleInputEmail2" class="col-sm-3 col-form-label">이메일</label>
+                                                <div class="col-sm-9">
+                                                    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email 입력">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary mr-2">비밀번호 찾기</button>
+                                        </form>
+                                    </div>
+                                </div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+<th:block layout:fragment="logincustomJs">
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script>
+		window.jQuery
+				|| document
+						.write(
+								'<script src="../src/js/vendor/jquery-3.3.1.min.js"><\/script>')
+	</script>
+	<script src="../plugins/popper.js/dist/umd/popper.min.js"></script>
+	<script src="../plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script
+		src="../plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
+	<script src="../plugins/screenfull/dist/screenfull.js"></script>
+	<script src="../dist/js/theme.js"></script>
+	<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+	<script>
+		(
+								function(b, o, i, l, e, r) {
+									b.GoogleAnalyticsObject = l;
+									b[l] || (b[l] = function() {
+										(b[l].q = b[l].q || []).push(arguments)
+									});
+									b[l].l = +new Date;
+									e = o.createElement(i);
+									r = o.getElementsByTagName(i)[0];
+									e.src = 'https://www.google-analytics.com/analytics.js';
+									r.parentNode.insertBefore(e, r)
+								}(window, document, 'script', 'ga'));
+		ga('create', 'UA-XXXXX-X', 'auto');
+		ga('send', 'pageview');
+	</script>
+</th:block>
+</html>
