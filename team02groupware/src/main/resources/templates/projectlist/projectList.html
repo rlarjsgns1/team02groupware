@@ -35,6 +35,7 @@
 			})
 		})
 	</script>
+	
 </th:block>
 <th:block layout:fragment="customContents">
 
@@ -43,8 +44,7 @@
 		<div class="pr-wrap-content">
 			<div class="pr-btn-wrap mb-4">
 				<button type="button" class="pr-add-btn btn btn-success btn-rounded"
-					data-toggle="modal" data-target="#exampleModalCenter">+ 새
-					프로젝트 추가</button>
+					data-toggle="modal" data-target="#exampleModalCenter">+ 새 프로젝트 추가</button>
 			</div>
 			<!--------------------------프로젝트 리스트 start --------------------------->
 			<div class="project-card card-group mb-4">
@@ -144,10 +144,10 @@
 						<div class="form-group">
 							<label>공개 범위 설정</label>
 							<div class="form-radio">
-								<div class="access-picker privacy-btn" role="button"
+								<div class="access-picker privacy-btn btn-light" role="button"
 									tabindex="0">
-									<label for="privacyProject">
-										<div class="radio-section radio radio-inline">
+									<label class="first-label" for="privacyProject">
+										<div class="radio radio-inline">
 											<div class="radio-btn">
 												<label for="privacyProject"> <input type="radio"
 													checked="checked" name="projectAccess" value="비공개"
@@ -161,9 +161,9 @@
 										</div>
 									</label>
 								</div>
-								<div class="access-picker public-btn" role="button" tabindex="0">
-									<label for="publicProject">
-										<div class="radio-section radio radio-inline">
+								<div class="access-picker public-btn btn-light" role="button" tabindex="0">
+									<label class="first-label" for="publicProject">
+										<div class="radio radio-inline">
 											<div class="radio-btn">
 												<label for="publicProject"> <input type="radio"
 													name="projectAccess" value="공개" id="publicProject">
@@ -277,51 +277,7 @@
 	</div>
 	<!--------------------------프로젝트 설정(수정) 버튼 클릭시 모달창 end --------------------------->
 
-	<!-- <div class="card">
-		<div class="card-header">
-			<h3>Pagination Basic</h3>
-		</div>
-		<div class="card-body">
-			<nav aria-label="Page navigation example">
-				<ul class="pagination mb-0">
-					<li class="page-item"><a class="page-link first" href="#">
-							<i class="ik ik-chevrons-left"></i>
-					</a></li>
-					<li class="page-item"><a class="page-link prev" href="#">
-							<i class="ik ik-chevron-left"></i>
-					</a></li>
-					<li class="page-item"><a class="page-link" href="#">1</a></li>
-					<li class="page-item active"><a class="page-link" href="#">2</a>
-					</li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item"><a class="page-link next" href="#"
-						aria-label="Next"> <i class="ik ik-chevron-right"></i>
-					</a></li>
-					<li class="page-item"><a class="page-link last" href="#">
-							<i class="ik ik-chevrons-right"></i>
-					</a></li>
-				</ul>
-			</nav>
-		</div>
-	</div> 
-	맨처음
-	<a th:href="@{/projectList}">[맨처음]</a>
-	이전
-	<a th:if="${currentPage > 1}"
-		th:href="@{/projectList(currentPage=${currentPage - 1})}"> [이전] </a>
-	<th:block th:each="num:${#numbers.sequence(startPageNum,endPageNum)}"
-		th:unless="${num>lastPage}">
-		<span th:if="${currentPage == num}" th:text="${'['+ num +']'}"></span>
-		<a th:unless="${currentPage == num}" th:text="${'['+ num +']'}"
-			th:href="@{/projectList(currentPage=${num})}"></a>
-	</th:block>
-	다음
-	<a th:if="${currentPage < lastPage}"
-		th:href="@{/projectList(currentPage=${currentPage + 1})}"> [다음] </a>
-	마지막
-	<a th:href="@{/projectList(currentPage=${lastPage})}"> [마지막] </a>
-
-	-->
+	
 </th:block>
 <th:block layout:fragment="customJs">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

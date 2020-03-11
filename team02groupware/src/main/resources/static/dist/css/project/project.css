@@ -13,15 +13,13 @@
 	display:flex;
 }
 .access-picker{
-	height:auto;
 	min-height:60px;
 	border:1px solid #eaeaea;
 	border-radius:3px;
-	padding:0 10px;
-	width:100%;
 	margin:0 5px;
-	
+	width:100%;
 }
+
 
 .privacy-btn{
 	margin-left:0px;
@@ -29,31 +27,33 @@
 .public-btn{
 	margin-right:0px;
 }
-.radion-section{
+.first-label{
 	height:100%;
 	cursor:pointer;
 }
 
+
 .radio-btn{
-	margin-top:10px;
+	margin-top:5px;
 	position:absolute;
 	top:8px;
 	left:5px;
-	
+	margin-left:10px;
 }
 
 .btn-text{
 	float:left;
-	margin-left:10px;
+	margin-left:20px;
+	padding-top:15px;
 }
 .btn-value{
-	padding-top:18px;
 	font-size:14px;
 	line-height: 18px;
 }
 
 .btn-desc{
-	font-size:13px;
+	font-size:12px;
+	line-height: 16px;
 	color:#6c757d;
 }
 /*---------------------------------------------- 프로젝트 수정 modal start---------------------------------------------- */
