@@ -68,7 +68,7 @@
 					  * @author 김건훈
 					  */
 					  
-					$('.ea-checkbox').on('click',function(){
+					$(document).on('click','.ea-checkbox',function(){
 						//console.log('체크박스클릭');
 						if($(this).siblings('input:checkbox').is(":checked")==false){	
 												$(this).siblings('input:checkbox').attr("checked", true);
@@ -92,13 +92,12 @@
 					  * @author 김건훈
 					  */
 					  
-					$('#all-ea-checkbox').on('click',function(){
+					  $(document).on('click','#all-ea-checkbox',function(){
 						//console.log('체크박스클릭');
 						if($(this).siblings('input:checkbox').is(":checked")==false){
 												$(this).siblings('input:checkbox').attr("checked", true);
 												$('.ea-checkbox').siblings('input:checkbox').attr("checked", true);
-						}
-						else{			
+						}else{			
 												$('.ea-checkbox').siblings('input:checkbox').attr("checked", false);
 												$(this).siblings('input:checkbox').attr("checked", false);
 						}	

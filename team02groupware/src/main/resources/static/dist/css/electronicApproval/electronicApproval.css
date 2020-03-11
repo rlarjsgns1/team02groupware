@@ -43,6 +43,11 @@
 		height: unset;
 	}
 
-	.select2-container {
+	.select2-container { /* select2 box css */
   		width: 100% !important;
+	}
+	
+	.list-group li{ /* 결재자 설정부분 리스트 css */
+		border-color: #fff;
+  		
 	}
