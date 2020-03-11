@@ -58,16 +58,18 @@
   	<!-- 부서 리스트 담기 -->
   	<resultMap id="getDepartResult" type="PagingDto">
 	
-    	<result property="departList" column="depart_name"/>
+    	<result property="departList" column="group_name"/>
 
   	</resultMap>
   	
   	<select id="getDepartList" resultMap="getDepartResult">
   		/* 부서 전체 셀렉트 */
   		SELECT
-  			depart_name
+  			group_name
   		FROM
-  			department
+  			employee_group
+  		WHERE
+  			group_level != 1
   	</select>
   	
   	<select id="getBoardNoticeList" resultMap="getBoardResult">
