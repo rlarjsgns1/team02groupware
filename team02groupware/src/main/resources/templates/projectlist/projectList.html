@@ -19,9 +19,10 @@
 					$('[name="projectTitle"]').focus();
 					return false;
 				}
+				/* 
 				projectAddForm.action = "/projectInsert";
 				projectAddForm.submit();
-
+				 */
 			})
 
 			$(".project-list").on('click', function() {
@@ -34,7 +35,6 @@
 			})
 		})
 	</script>
-
 </th:block>
 <th:block layout:fragment="customContents">
 
@@ -104,6 +104,8 @@
 		aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
+
+
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalCenterLabel">새 프로젝트</h5>
 					<button type="button" class="close" data-dismiss="modal"
@@ -111,37 +113,115 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="pr-add-modal modal-body">
-					<form class="forms-sample" name="projectAddForm" method="post"
-						onsubmit="return checkInput()">
-						<div class="form-group">
-							<label for="exampleInputUsername1">프로젝트 코드</label><input type="text" name="projectCode" class="form-control"
-								id="projectTitle-input" placeholder="프로젝트 코드(임시)"> <label
-								for="exampleInputUsername1">프로젝트 제목</label> <input type="text"
-								name="projectTitle" class="form-control"
-								placeholder="예) 웹사이트 개발">
 
+
+				<form name="projectAddForm" method="post"
+					onsubmit="return checkInput()">
+					<div class="pr-add-modal modal-body">
+						<!--
+					<div class="form-group">
+						<label>사원 코드</label> <input type="text" 
+							name="employeeCode" class="form-control"
+							placeholder="사원코드(임시)">
+					</div>
+					<div class="form-group">
+						<label>프로젝트 코드</label> <input type="text" name="projectCode"
+							class="form-control"
+							placeholder="프로젝트 코드(임시)">
+					</div>
+					-->
+						<div class="form-group">
+							<label for="projectTitle">프로젝트 제목</label> <input type="text"
+								id="projectTitle" name="projectTitle" class="form-control"
+								placeholder="예) 웹사이트 개발">
 						</div>
 						<div class="form-group">
-							<label for="exampleInputEmail1">프로젝트 설명(선택사항)</label> <input
-								name="projectDesc" class="form-control" id="exampleInputEmail1">
+							<label for="projectDesc">프로젝트 설명(선택사항)</label> <input type="text"
+								id="projectDesc" name="projectDesc" class="form-control">
 						</div>
-						<!-- 
-						<button type="submit" class="btn btn-primary mr-2">추가하기</button>
-						<button class="btn btn-light">취소</button>
-						-->
-						<div class="project-add-btn modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">취소</button>
-							<button type="submit" class="pr-submit-btn btn btn-primary">추가하기</button>
+
+
+						<div class="form-group">
+							<label>공개 범위 설정</label>
+							<div class="form-radio">
+								<div class="access-picker privacy-btn" role="button"
+									tabindex="0">
+									<label for="privacyProject">
+										<div class="radio-section radio radio-inline">
+											<div class="radio-btn">
+												<label for="privacyProject"> <input type="radio"
+													checked="checked" name="projectAccess" value="비공개"
+													id="privacyProject"> <i class="helper"></i>
+												</label>
+											</div>
+											<div class="btn-text">
+												<div class="btn-value">비공개</div>
+												<div class="btn-desc">(추가된 멤버만 액세스 가능)</div>
+											</div>
+										</div>
+									</label>
+								</div>
+								<div class="access-picker public-btn" role="button" tabindex="0">
+									<label for="publicProject">
+										<div class="radio-section radio radio-inline">
+											<div class="radio-btn">
+												<label for="publicProject"> <input type="radio"
+													name="projectAccess" value="공개" id="publicProject">
+													<i class="helper"></i>
+												</label>
+											</div>
+											<div class="btn-text">
+												<div class="btn-value">공개</div>
+												<div class="btn-desc">(모든 멤버 액세스 가능)</div>
+											</div>
+										</div>
+									</label>
+								</div>
+							</div>
 						</div>
-					</form>
+
+
+						<div class="form-group">
+							<label>프로젝트 멤버(선택사항)</label>
+							<div class="col-md-6">
+								<form class="sample-form">
+									<div class="form-group">
+										<label for="">Multiple select box using select 2 </label> <select
+											class="form-control select2" multiple="multiple">
+											<option value="cheese">Cheese</option>
+											<option value="tomatoes">Tomatoes</option>
+											<option value="mozarella">Mozzarella</option>
+											<option value="mushrooms">Mushrooms</option>
+											<option value="pepperoni" selected>Pepperoni</option>
+											<option value="onions">Onions</option>
+										</select>
+									</div>
+								</form>
+							</div>
+						</div>
+
+
+					</div>
+				</form>
+
+
+				<div class="project-add-btn modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">취소</button>
+					<button type="submit" class="pr-submit-btn btn btn-primary">추가하기</button>
 				</div>
+
 			</div>
 		</div>
 	</div>
 
+
 	<!--------------------------새 프로젝트 추가 버튼 클릭시 모달창 end --------------------------->
+
+
+
+
+
 
 	<!--------------------------프로젝트 설정(수정) 버튼 클릭시 모달창 start --------------------------->
 	<div class="modal fade edit-layout-modal" id="editLayoutItem"
@@ -163,14 +243,13 @@
 							<div class="pr-update-modal card-body">
 								<form class="forms-sample">
 									<div class="form-group">
-										<label for="exampleInputUsername1">제목</label> <input
+										<label for="projectTitle">제목</label> <input
 											th:text="${projectTitle}" type="text" class="form-control"
-											id="exampleInputUsername1" placeholder="예) 웹사이트 개발">
+											id="projectTitle" placeholder="예) 웹사이트 개발">
 									</div>
 									<div class="form-group">
-										<label for="exampleInputEmail1">설명(선택사항)</label> <input
-											type="email" class="form-control" id="exampleInputEmail1"
-											placeholder="Email">
+										<label for="projectDesc">설명(선택사항)</label> <input type="text"
+											class="form-control" id="projectDesc">
 									</div>
 
 									<div class="form-group">
