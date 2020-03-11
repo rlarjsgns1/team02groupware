@@ -6,21 +6,26 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import com.team02.groupware.dto.BoardDto;
+import com.team02.groupware.dto.CommentDto;
 
 
 @Mapper
 public interface BoardMapper {
 	
-	public List<BoardDto> getBoardList(Map<String, Object> map);
+	public List<BoardDto> selectBoardList(Map<String, Object> map);
 	
-	public int getBoardCount(Map<String, Object> map);
+	public int selectBoardCount(Map<String, Object> map);
 	
-	public List<String> getDepartList();
+	public List<String> selectDepartList();
 	
-	public List<BoardDto> getBoardNoticeList();
+	public List<BoardDto> selectBoardNoticeList();
 	
-	public void boardInsert(BoardDto bDto);
+	public int selectMaxBoardNum();
 	
-	public int getMaxBoardNum();
+	public void insertBoard(BoardDto bDto);
+	
+	public List<BoardDto> selectBoardDetailView(BoardDto bDto);
+	
+	public List<CommentDto> selectCommentList(BoardDto bDto);
 	
 }

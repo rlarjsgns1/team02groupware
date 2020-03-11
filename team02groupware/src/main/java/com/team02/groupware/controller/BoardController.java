@@ -81,11 +81,19 @@ public class BoardController {
 	}
 
 	@GetMapping("/boardDetailView")
-	public String BoardDetailView(Model model, BoardDto bDto, @RequestParam(value="boardNum", required = false) Object boardNum) {
+	public String BoardDetailView(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto, @RequestParam(value="boardNum", required = false) Object boardNum) {
 		
 		if(boardNum != null) System.out.println("test:" + boardNum.toString());
 		System.out.println("보드디테일뷰 bDto 투스트링 : "+bDto.toString());
 		
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		boardMap = boardService.selectBoardDetailView(bDto);
+		System.out.println("보드디테일뷰 컨트롤러 보드리스트 : " + boardMap.get("boardList"));
+		
+		model.addAttribute("boardList", boardMap.get("boardList"));
+		model.addAttribute("commentList", boardMap.get("commentList"));
+		model.addAttribute("pagingDto", pDto);
+		model.addAttribute("searchDto", sDto);
 		
 		return "board/boardDetailView";
 	}
