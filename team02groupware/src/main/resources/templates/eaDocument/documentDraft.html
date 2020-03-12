@@ -37,35 +37,19 @@
 					});
 					
 					
-					/*
-					  * @brief 각각 체크박스 체크 이벤트
-					  * @author 김건훈
-					  */
-					  
-					$('.ea-checkbox').on('click',function(){
-						//console.log('체크박스클릭');
-						if($(this).siblings('input:checkbox').is(":checked")==false){	
-												$(this).siblings('input:checkbox').attr("checked", true);
-						}else{			
-												$(this).siblings('input:checkbox').attr("checked", false);
-						};	
-					});
-					
 					 
 					/*
-					  * @brief 양식생성 페이지 테이블 내 약칭,보존연한,보안등급 물음표 아이콘 Modal Event
+					  * @brief 기안하기 페이지 테이블 내 보존연한,보안등급 물음표 아이콘 Modal Event
 					  * @author 김건훈
 					  */	
 					$('.ik-help-circle').on('mouseover',function(e){
 						//console.log('마우스오버');
 						var ruleTipType = $(this).siblings().text()
 						console.log(ruleTipType)
-						if(ruleTipType=='약칭'){
-							$('#modal-content-type').text('약칭은 문서 번호에 쓰이기 때문에 간단할 수록 좋습니다. 중복하여 사용할 수 있지만 구분하는 것이 좋습니다.');	
-						}else if(ruleTipType=='보존 연한'){
-							$('#modal-content-type').text('문서의 초기값으로 설정 할 보존연한을 선택합니다. 변경 금지 선택 시 기안자와 결재자가 이를 수정할 수 없습니다. 보존 연한이 만료되면 삭제 문서 목록으로 이동합니다.');
+						if(ruleTipType=='보존 연한'){
+							$('#modal-content-type').text('문서양식의 초기값으로 설정 된 보존연한을 표시합니다. 보존 연한이 만료되면 삭제 문서 목록으로 이동합니다.');
 						}else if(ruleTipType=='보안 등급'){
-							$('#modal-content-type').text('문서의 초기값으로 설정 할 보안등급을 선택합니다. 변경 금지 선택 시 기안자와 결재자가 이를 수정할 수 없습니다. 보안 등급에 따라 열람 권한이 제한됩니다.');
+							$('#modal-content-type').text('문서의 초기값으로 설정 된 보안등급을 표시합니다. 보안 등급에 따라 열람 권한이 제한됩니다.');
 						}
   						var sWidth = window.innerWidth;
 						var sHeight = window.innerHeight;
@@ -99,7 +83,7 @@
 			                 	</button>
 			                 </div>
 	                           <!-- 테이블 상단 메뉴탭 End-->                         
-                               <!-- 문서 양식 기본설정 테이블 Start -->
+                               <!-- 문서 기안하기 기본설정 테이블 Start -->
                                     <div class="card-header d-block">
                                         <h6>기본설정</h6> 
                                     </div>
@@ -167,21 +151,25 @@
                                         </div>
                                     </div>
                                 
-                                 <!-- 문서 양식 기본설정 테이블  End -->
+                                 <!-- 문서 기안하기 기본설정 테이블  End -->
                                  
-                                 <!-- 문서 양식 결재라인 포맷 설정 Start -->  
+                                 <!-- 문서 기안하기 결재라인 포맷 Start -->  
                                     <div class="card-header d-block">                                   
                                        <h6>결재 양식 </h6>
-                                       <button type="button" class="btn btn-link" data-toggle="modal" data-target="#approval-format">설정</button>
+                                       <p>문서 종류 선택 시 결재선이 노출됩니다.</p>
                                     </div>
-                                 <!-- 문서 양식 결재라인 포맷 설정 End -->
+                                 <!-- 문서 기안하기 결재라인 포맷 설정 End -->
                                  
-                                 <!-- 문서 양식 상세내용 summer note editor Start -->    
+                                 <!-- 문서 기안하기 상세내용 summer note editor Start -->    
                                     <div class="card-body  table-border-style">
-                                        <textarea class="form-control html-editor" rows="10"></textarea>
+                                       <h6>상세 입력 </h6>
+                                       <p>문서 종류 선택 시 상세 입력이 노출됩니다.</p>
+                                    	<div style="display: none">
+                                        	<textarea class="form-control html-editor" rows="10" ></textarea>
+                                    	</div>
                                     </div>
                         		</div>
-                        		<!-- 문서 양식 상세내용 summer note editor End -->    
+                        		<!-- 문서 기안하기 상세내용 summer note editor End -->    
                         		
                         		<!-- 양식생성 페이지 테이블 내 약칭,보존연한,보안등급 물음표 아이콘 Modal View Start --> 
 	                        	<div class="modal-dialog modal-sm mt-0 mb-0 ruletip" role="document">
