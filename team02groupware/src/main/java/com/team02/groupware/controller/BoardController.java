@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team02.groupware.dto.BoardDto;
+import com.team02.groupware.dto.CommentDto;
 import com.team02.groupware.dto.PagingDto;
 import com.team02.groupware.dto.SearchDto;
 import com.team02.groupware.service.BoardService;
@@ -146,15 +147,16 @@ public class BoardController {
 		return "index";
 	}
 	
-	@PostMapping("/ajaxResponse")
-	public @ResponseBody List<String> ajaxResponse(Model model, @RequestBody BoardDto map) {
+	@PostMapping("/commentInsert")
+	public @ResponseBody Map<String, Object> ajaxResponse(Model model, BoardDto bDto, CommentDto cDto) {
 		
-		System.out.println("ajax로 보내진 배열의 값 : {}" + map);
-		System.out.println(map.getBoardCategory());
-		System.out.println(map.getBoardTitle());
-		model.addAttribute("title", "ajaxResponse");
-		List<String> list = new ArrayList<String>();
-		return list;
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		System.out.println(bDto.getBoardNum());
+		System.out.println(cDto.getCommentContent());
+		
+		boardMap = boardService.commentInsert(bDto, cDto);
+		
+		return boardMap;
 	}
 
 }

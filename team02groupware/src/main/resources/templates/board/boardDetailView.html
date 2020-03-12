@@ -10,9 +10,7 @@
 <th:block layout:fragment="customCss">
 	<link rel="stylesheet" href="boardcss/main.css">
 	<style>
-		.commentInput td{
-			padding: 0;
-		}
+		
 		.commentContent p{
 			margin: 1px 0 1px 5px;
 		}	
@@ -45,10 +43,12 @@
 		var pagingDto = [[${pagingDto}]];
 		var searchDto = [[${searchDto}]];
 		
+		
 	/*]]>*/
 		console.log(boardList)
 		console.log(searchDto)
 		console.log(commentList)
+		console.log(boardList[0].boardNum)
 		
 		var viewNum = pagingDto.viewNum;
 		var selectPage = pagingDto.selectPage;
@@ -57,6 +57,47 @@
 		var searchBy = searchDto.searchBy
 		var searchDate = searchDto.searchDate
 		var searchInput = searchDto.searchInput
+		var boardNum = boardList[0].boardNum
+		
+		
+		
+		$(function(){
+			
+			// 댓글 등록
+			$('#commentInputBtn').click(function(){
+				
+				var commentContent = $('#commentInputText').val()
+				
+				if(commentContent == ''){
+					alert('내용을 입력해주세요.');
+				}else{
+					
+					console.log(commentContent)
+					
+					var request = $.ajax({
+						  url: "/commentInsert",
+						  method: "POST",
+						  data: { commentContent : commentContent
+							  		,boardNum : boardNum},
+						  dataType: "json"
+						});
+						 
+						request.done(function(data) {
+						 	console.log(data);
+						 	
+						 	
+						 	
+						});
+						 
+						request.fail(function( jqXHR, textStatus ) {
+						  alert( "Request failed: " + textStatus );
+						});
+				}
+			})
+		})
+		
+		
+		
 
 		
 </script>
@@ -98,7 +139,7 @@
 	
     <!--  디테일 메인 폼 Start -->
 	<div class="col-md-12" style="padding: 0">
-      <div class="card" style="min-height: 400px; ">
+      <div class="card" style="min-height: 400px;">
       	<th:block th:each="b:${boardList}">
           <div class="card-header">
           	<div class="col-md-8" style="padding:0">
@@ -164,10 +205,10 @@
 		  		<!-- 댓글 입력창 Start -->
 		  		<div class="row" style="padding:10px 10px 0 10px; margin-bottom: 0;">
 			  		<div class="col-sm-11 col-xs-10" style="padding:5px 5px 5px 5px">
-			  			<textarea rows="3" class="form-control"></textarea>
+			  			<textarea rows="3" class="form-control" id="commentInputText"></textarea>
 			  		</div>
 			  		<div class="col-sm-1 col-xs-1" style="padding:5px 5px 5px 5px">
-			  			<button class="btn btn-default btn-block" style="height: 80px;">등록</button>
+			  			<button id="commentInputBtn" class="btn btn-default btn-block" style="height: 80px;">등록</button>
 			  		</div>
 			  	</div>
 			  	<!-- 댓글 입력창 End-->

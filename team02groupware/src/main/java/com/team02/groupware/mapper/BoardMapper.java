@@ -28,4 +28,6 @@ public interface BoardMapper {
 	
 	public List<CommentDto> selectCommentList(BoardDto bDto);
 	
+	public void insertComment(Map<String, Object> map);
+	
 }

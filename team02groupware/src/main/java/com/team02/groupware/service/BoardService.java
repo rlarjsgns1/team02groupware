@@ -183,6 +183,18 @@ public class BoardService {
 		return boardMap;
 	}
 	
+	public Map<String, Object> commentInsert(BoardDto bDto, CommentDto cDto){
+		
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		boardMap.put("boardDto", bDto);
+		boardMap.put("commentDto", cDto);
+		
+		boardMapper.insertComment(boardMap);
+		
+		
+		return boardMap;
+	}
+	
 	
 	
 	

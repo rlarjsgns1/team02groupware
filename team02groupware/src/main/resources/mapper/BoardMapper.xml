@@ -213,6 +213,18 @@
     	<result property="commentContent" column="comment_content"/>
 
   	</resultMap>
+  	
+  	<!-- 댓글 insert -->
+  	<insert id="insertComment" parameterType="map">
+		INSERT INTO 
+			board_comment
+			(board_num
+			,comment_date
+			,comment_content
+			,comment_writer)
+		VALUES (${boardDto.boardNum}, NOW(), #{commentDto.commentContent}, '관리자')
+
+	</insert>
 	
 	
 </mapper>  
