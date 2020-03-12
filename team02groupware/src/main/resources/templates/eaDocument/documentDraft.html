@@ -9,8 +9,9 @@
  -->	
 		<!-- CSS custom -->
 		<th:block layout:fragment="customCss">
-			<link rel="stylesheet" href="/dist/css/electronicApproval/electronicApproval.css">
+			 <link rel="stylesheet" href="/dist/css/electronicApproval/electronicApproval.css">
 			 <link rel="stylesheet" href="/plugins/summernote/dist/summernote-bs4.css">
+			 <link rel="stylesheet" href="dist/css/electronicApproval/electronicApprovalSelect2.min.css">
 		</th:block>
 		
 		<th:block layout:fragment="customTitle">
@@ -86,7 +87,6 @@
                                <!-- 문서 기안하기 기본설정 테이블 Start -->
                                     <div class="card-header d-block">
                                         <h6>기본설정</h6> 
-                                    </div>
                                     <div class="card-body p-0 table-border-style">
                                         <div class="table-responsive">
                                             <table class="table document-form-table">                                          
@@ -150,28 +150,218 @@
                                             </table>
                                         </div>
                                     </div>
+                                    </div>
                                 
                                  <!-- 문서 기안하기 기본설정 테이블  End -->
                                  
-                                 <!-- 문서 기안하기 결재라인 포맷 Start -->  
+                                 <!-- 문서 기안하기 결재선 지정 Start -->  
                                     <div class="card-header d-block">                                   
-                                       <h6>결재 양식 </h6>
-                                       <p>문서 종류 선택 시 결재선이 노출됩니다.</p>
+                                       <h6>결재선 </h6>
+                                       <!-- <p>문서 종류 선택 시 결재선이 노출됩니다.</p> -->
+                                       
+                                       <!-- 결재라인 포맷 테이블 Start -->
+                                       <div class="table-responsive">
+											<table style="height: 300px; width: 90%; table-layout: fixed; text-align: center; border: 1px solid #cdcdcd;">
+												<tbody>
+													<tr style="height: 50px;" id="approverPosition">
+														<td style="width: 96px; height: 140px; background: #f9f9f9; border: 1px solid #cdcdcd; "
+															rowspan="3">
+															<div class="col-md-12">
+																결재
+																<img src="img/electronicApproval/add.png"
+																	style="position: absolute; bottom: 80px; right: 5px; width: 20px; height: auto; cursor: pointer;"
+																	data-toggle="modal" data-target="#approvalLine" id="addApproverImg">
+															</div>
+														</td>
+														<td style="background: #f9f9f9; border-: 1px solid #cdcdcd;">직급1</td>
+														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;"></td>
+														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;"></td>
+														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;"></td>
+														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;"></td>
+														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;"></td>
+														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;"></td>
+													</tr>
+													<tr style="height: 100px; border: 1px solid #cdcdcd;">
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+													</tr>
+													<tr style="height: 50px; border: 1px solid #cdcdcd;" id="approverName">
+														<td style="border: 1px solid #cdcdcd;">김건훈</td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+													</tr>
+													<tr style="height: 50px; border: 1px solid #cdcdcd;" id="agreementName">
+														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;">
+															<div class="col-md-12">합의
+																<img src="img/electronicApproval/add.png" style="position: absolute; right: 5px; width: 20px; height: auto; cursor: pointer;" data-toggle="modal" data-target="#agreementLine" id="addAgreementImg">							
+															</div>
+														</td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
+													</tr>
+													<tr style="height: 45px;">
+														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;">
+														<div class="col-md-12">참조</div>
+														</td>
+														<td colspan="7"> 
+															<form>
+												            	<select id="referrerSelect" class="form-control" multiple="multiple">
+													          		<option value=""></option>
+													          		<optgroup label="TEAM 02">
+														                <option value="김건훈">김건훈</option>
+														                <option value="김정훈">김정훈</option>
+														                <option value="이원준">이원준</option>
+														                <option value="김연지">김연지</option>
+													                </optgroup>
+													                <optgroup label="경영지원부">
+														             	<option value="사원1">사원1</option>
+														                <option value="사원2">사원2</option>
+														                <option value="사원3">사원3</option>
+													                </optgroup>
+													                <optgroup label="영업관리">
+														                <option value="사원4">사원4</option>
+														                <option value="사원5">사원5</option>
+														                <option value="사원6">사원6</option>
+													                </optgroup>
+													                <optgroup label="고객응대">
+														                <option value="사원7">사원7</option>
+														                <option value="사원8">사원8</option>
+													                </optgroup>
+												           		</select>
+												    		</form>
+								 						 </td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+                                       <!-- 결재라인 포맷 테이블 End -->
                                     </div>
-                                 <!-- 문서 기안하기 결재라인 포맷 설정 End -->
+                                    	<!-- 결재자 추가 Modal View Start -->
+										  <div class="modal fade show" id="approvalLine" role="dialog" aria-hidden="true">
+										    <div class="modal-dialog modal-sm mt-0 mb-0 modal-dialog-centered" role="document">
+										     <div class="modal-content">
+										        <div class="modal-header">
+										            <h5 class="modal-title">결재 설정</h5>	
+										        </div>
+										        <div class="modal-body">
+										      <ul class="list-group approverGroupList" style="overflow-y: inherit; overflow-x:hidden; max-height: 200px; -webkit-overflow-scrolling: touch;">
+												  <li class="list-group-item list-group-item-action disabled">
+												  	<select id="approverSelect" class="form-control">
+																    <option value="">클릭 후 입력</option>
+															   		<optgroup label="TEAM 02">
+															          <option value="김건훈,직급1">김건훈</option>
+															          <option value="김정훈,직급2">김정훈</option>
+															          <option value="이원준,직급3">이원준</option>
+															          <option value="김연지,직급4">김연지</option>
+															         </optgroup>
+															         <optgroup label="경영지원부">
+															       	  <option value="사원1,직급5">사원1</option>
+															          <option value="사원2,직급6">사원2</option>
+															          <option value="사원3,직급7">사원3</option>
+															         </optgroup>
+															         <optgroup label="영업관리">
+															          <option value="사원4,직급8">사원4</option>
+															          <option value="사원5,직급9">사원5</option>
+															          <option value="사원6,직급10">사원6</option>
+															         </optgroup>
+															         <optgroup label="고객응대">
+															          <option value="사원7,직급11">사원7</option>
+															          <option value="사원8,직급12">사원8</option>
+															         </optgroup>
+																  </select>
+												  </li>
+												  <li class="list-group-item list-group-item-action">김건훈</li>
+									  
+											</ul>
+									   		 
+										        </div>
+										        <div class="modal-footer">
+										            <button type="button" class="btn btn-primary" data-dismiss="modal" id=approverAddBtn>확인</button>
+										            <button type="button" class="btn btn-secondary" data-dismiss="modal" id=approverCancelBtn>취소</button>
+										        </div>
+										    	</div>
+										   </div>
+										 </div>  
+										<!-- 결재자 추가 Modal View End -->
+										<!-- 합의자 추가 Modal View Start -->
+										  <div class="modal fade show" id="agreementLine" role="dialog" aria-hidden="true">
+										    <div class="modal-dialog modal-sm mt-0 mb-0 modal-dialog-centered" role="document">
+										     <div class="modal-content">
+										        <div class="modal-header">
+										            <h5 class="modal-title">합의 설정</h5>		
+										        </div>
+										        <div class="modal-body">
+										      <ul class="list-group agreementGroupList" style="overflow-y: inherit; overflow-x:hidden; max-height: 200px; -webkit-overflow-scrolling: touch;">
+												  <li class="list-group-item list-group-item-action disabled">
+												  	<select id="agreementSelect" class="form-control">
+																    <option value="">클릭 후 입력</option>
+															   		<optgroup label="TEAM 02">
+															          <option value="김건훈,직급1">김건훈</option>
+															          <option value="김정훈,직급2">김정훈</option>
+															          <option value="이원준,직급3">이원준</option>
+															          <option value="김연지,직급4">김연지</option>
+															         </optgroup>
+															         <optgroup label="경영지원부">
+															       	  <option value="사원1,직급5">사원1</option>
+															          <option value="사원,직급6">사원2</option>
+															          <option value="사원3,직급7">사원3</option>
+															         </optgroup>
+															         <optgroup label="영업관리">
+															          <option value="사원4,직급8">사원4</option>
+															          <option value="사원5,직급9">사원5</option>
+															          <option value="사원6,직급10">사원6</option>
+															         </optgroup>
+															         <optgroup label="고객응대">
+															          <option value="사원7,직급11">사원7</option>
+															          <option value="사원8,직급12">사원8</option>
+															         </optgroup>
+																  </select>
+												  </li>
+												  <li class="list-group-item list-group-item-action">김건훈
+												  	<!-- <img src="img/electronicApproval/cancel.png" style="position: absolute; float:left; width: 10px; height: auto; margin-top : 5px; margin-left: 10px;" class="approverCancel"> -->
+												  </li>
+									  
+											</ul>
+									   		 
+										        </div>
+										        <div class="modal-footer">
+										            <button type="button" class="btn btn-primary" data-dismiss="modal" id=agreementAddBtn>확인</button>
+										            <button type="button" class="btn btn-secondary" data-dismiss="modal" id=agreementCancelBtn>취소</button>
+										        </div>
+										    	</div>
+										   </div>
+										 </div>  
+										<!-- 합의자 추가 Modal View End -->
+                                    
+                                    
+                                 <!-- 문서 기안하기 결재선 지정 End -->
                                  
                                  <!-- 문서 기안하기 상세내용 summer note editor Start -->    
                                     <div class="card-body  table-border-style">
                                        <h6>상세 입력 </h6>
-                                       <p>문서 종류 선택 시 상세 입력이 노출됩니다.</p>
-                                    	<div style="display: none">
+                                       <!-- <p>문서 종류 선택 시 상세 입력이 노출됩니다.</p> -->
+                                    	
                                         	<textarea class="form-control html-editor" rows="10" ></textarea>
-                                    	</div>
+                                    	
                                     </div>
                         		</div>
                         		<!-- 문서 기안하기 상세내용 summer note editor End -->    
                         		
-                        		<!-- 양식생성 페이지 테이블 내 약칭,보존연한,보안등급 물음표 아이콘 Modal View Start --> 
+                        		<!-- 기안하기 페이지 테이블 내 보존연한, 보안등급 물음표 아이콘 Modal View Start --> 
 	                        	<div class="modal-dialog modal-sm mt-0 mb-0 ruletip" role="document">
 						        	<div class="modal-content">
 	                               		 <div class="modal-body">
@@ -179,54 +369,8 @@
 	                                	 </div>
 	                           		 </div>
                            		</div>
-                        		<!-- 양식생성 페이지 테이블 내 약칭,보존연한,보안등급 물음표 아이콘 Modal View End -->
-                        		
-                        		<!-- 결재 포맷지정 Modal View Start -->
-		                        <div class="modal fade show" id="approval-format" tabindex="-1" role="dialog" aria-hidden="true">
-		                          <div class="modal-dialog modal-lg mt-0 mb-0 modal-dialog-centered" role="document">
-		                           <div class="modal-content">
-		                              <div class="modal-header">
-		                                  <h5 class="modal-title">결재 포맷을 선택하세요.</h5>
-		                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		                                      <span aria-hidden="true">&times;</span>
-		                                  </button>
-		                              </div>
-		                              <div class="modal-body">
-		                                	<div class="card">
-		                                		<div class="card-header">
-		                                		1
-		                                		</div>
-		                                		<div class="card-body">
-		                                		2
-		                                		</div>
-		                                		<div class="card-header">
-		                                		3
-		                                		</div>
-		                                		<div class="card-body">
-		                                		4
-		                                		</div>
-		                                		<div class="card-header">
-		                                		5
-		                                		</div>
-		                                		<div class="card-body">
-		                                		6
-		                                		</div>
-		                                		<div class="card-header">
-		                                		7
-		                                		</div>
-		                                		<div class="card-body">
-		                                		8
-		                                		</div>
-		                                	</div>
-		                              </div>
-		                              <div class="modal-footer">
-		                                  <button type="button" class="btn btn-primary">다음</button>
-		                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-		                              </div>
-		                          	</div>
-		                         </div>
-		                       </div>
-	                     	<!-- 결재 포맷지정 Modal View Start --> 
+                        		<!-- 기안하기 페이지 테이블 내 보존연한, 보안등급 물음표 아이콘 Modal View Start -->               		
+                        	
 		</th:block>
 
 	<th:block layout:fragment="customJs">        
@@ -239,15 +383,189 @@
         <script src="/plugins/summernote/dist/summernote-bs4.min.js"></script>
         <script src="/dist/js/theme.min.js"></script>
         <script src="/js/layouts.js"></script>
-
-		<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-			<script>
-		    (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-		    function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-		    e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-		    e.src='https://www.google-analytics.com/analytics.js';
-		    r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-		    ga('create','UA-XXXXX-X','auto');ga('send','pageview');
-			</script>
+        <script src="dist/js/electronicApproval/electronicApprovalSelect2.min.js"></script>
+        <!-- select2 플러그인 사용 Start (select2 플러그인 미적용 때문에 하단에 배치)-->
+		<script type="text/javascript">
+		
+		/* 이름과직급이 "," 기준으로 자르고 자른값을 배열로 담기 위한 배열변수 */
+		var approverVal = new Array();
+		/* approverVal 배열에 담긴값을 다차원 배열에 담아주기 위하면 선언한 배열변수*/
+		var approverArray = new Array();
+		
+		var agreementVal = new Array();
+		var agreementArray = new Array();
+		
+		$(document).ready(function() {
+				/* 참조자 지정 select box event*/
+			  $('#referrerSelect').select2({
+			   	  placeholder: "참조자를 추가하려면 입력하세요."    
+			  });
+				
+			   /* 결재자 지정 select box event*/		
+			  $('#approverSelect').select2().on("select2:select", function (e){
+			      var selectedElement = $(e.currentTarget);
+			      var approverOriginVal = selectedElement.val();
+			      approverVal = approverOriginVal.split(',');
+			      //console.log(approverOriginVal);
+			     
+			      approverArray.push(approverVal);
+			      //console.log(approverArray);
+			      
+			      var clone = $('.approverGroupList').children('li:last-child').clone();
+			      var tag = "<img src=\"img/electronicApproval/cancel.png\" style=\"position: absolute; float:left; width: 10px; height: auto; margin-top : 5px; margin-left: 10px;\" class=\"approverCancel\">";
+			      clone.text(approverVal[0]);
+			      clone.attr('value',approverOriginVal);
+			      
+			      clone.append(tag);
+			      $(".approverGroupList").append(clone);
+			      
+			      $('#approverSelect').val(null).trigger('change');
+			  });
+			 
+			   /* 지정된 결재자 삭제  event*/
+			  $(document).on('click','.approverCancel',function(){
+				 //console.log('취소버튼 테스트');
+				 //console.log($(this).parent().attr('value'));
+					var cancelApprover = $(this).parent().attr('value');
+				  for(var i=0; i<approverArray.length; i++){
+					  approverVal = approverArray[i];
+					  for(var j=0;j<approverVal.length/2; j++){
+						  var name = approverVal[j]
+						  var postion = approverVal[j+1]
+						  //console.log(name);
+						  //console.log(postion);
+						  if(name+","+postion==cancelApprover){
+							  approverArray.splice(i, 1);
+						  }
+					  }		
+				  }
+				  //console.log(approverArray);
+				  $(this).parent().remove();
+			  });
+			  
+			   
+			   /* 지정된 결재자 결재라인에 뿌려주는  event*/
+			  $(document).on('click','#approverAddBtn',function(){
+				 //console.log('결재 설정된 사람들 결재라인에 추가하기위한 버튼') 
+				  for(var i=0; i<approverArray.length; i++){
+					  approverVal = approverArray[i];
+					  for(var j=0;j<approverVal.length/2; j++){
+						  var name = approverVal[j]
+						  var postion = approverVal[j+1]
+						  //console.log(name);
+						  //console.log(postion);
+						  
+						  $('#approverPosition td:nth-child('+(i+3)+')').text(postion);
+						  $('#approverName td:nth-child('+(i+2)+')').text(name);
+					  }		
+				  }
+			  });
+			   
+			  /* 결재자 변경을위한 결재라인 초기화 이벤트*/
+			  $('#addApproverImg').on('click',function(){
+				 //console.log('결재자추가플러스이미지클릭') 
+				 for(var i=0; i<approverArray.length; i++){
+					 $('#approverPosition td:nth-child('+(i+3)+')').text("");
+					 $('#approverName td:nth-child('+(i+2)+')').text("");
+				 }
+			  });
+			
+			  /* 취소 버튼클릭시 지정해놓았던 결재자들 초기화 이벤트 */
+			  $(document).on('click','#approverCancelBtn',function(){
+				  var result = confirm('지정한 결재자가 초기화 됩니다. 계속하시겠습니까?');
+				  if(result){
+				  $('.approverCancel').parent().remove();
+				  approverArray = new Array(); 	
+				  }
+			  });
+			 
+			   /* 합의자 지정 select box event*/
+			  $('#agreementSelect').select2().on("select2:select", function (e){
+			      var selectedElement = $(e.currentTarget);
+			      var agreementOriginVal = selectedElement.val();
+			      agreementVal = agreementOriginVal.split(',');
+			      //console.log(agreementVal);
+			      agreementArray.push(agreementVal);
+			      var clone = $('.agreementGroupList').children('li:last-child').clone();
+			      var tag = "<img src=\"img/electronicApproval/cancel.png\" style=\"position: absolute; float:left; width: 10px; height: auto; margin-top : 5px; margin-left: 10px;\" class=\"agreementCancel\">";
+			      clone.text(agreementVal[0]);
+			      clone.attr('value',agreementOriginVal);
+			      clone.append(tag);
+			      $(".agreementGroupList").append(clone);
+			      $('#agreementSelect').val(null).trigger('change');
+			  });
+			 
+			   /* 합의자 결재자 삭제  event*/
+			  $(document).on('click','.agreementCancel',function(){
+				  //console.log('취소버튼 테스트');
+				  var cancelAgreememt = $(this).parent().attr('value');
+				  
+				  for(var i=0; i<agreementArray.length; i++){
+					  agreementVal = agreementArray[i];
+					  for(var j=0;j<agreementVal.length/2; j++){
+						  var name = agreementVal[j]
+						  var postion = agreementVal[j+1]
+						  //console.log(name);
+						  //console.log(postion);
+						  if(name+","+postion==cancelAgreememt){
+							  agreementArray.splice(i, 1);
+						  }
+					  }		
+				  }
+				  console.log(agreementArray);
+				  $(this).parent().remove();
+					
+			  });	
+			   
+			   /* 지정된 합의자 결재라인에 뿌려주는  event*/
+			  $(document).on('click','#agreementAddBtn',function(){
+				 //console.log('합의설정된 사람들 결재라인에 추가하기위한 버튼') 
+				  for(var i=0; i<agreementArray.length; i++){
+					  agreementVal = agreementArray[i];
+					  for(var j=0;j<agreementVal.length/2; j++){
+						  var name = agreementVal[j]
+						  var postion = agreementVal[j+1]
+						  //console.log(name);
+						  //console.log(postion);
+						  console.log(name);
+						  $('#agreementName td:nth-child('+(i+2)+')').text(name);
+					  }		
+				  }
+			  });
+			   
+			  /* 합의자 변경을위한 결재라인 초기화 이벤트*/
+			  $('#addAgreementImg').on('click',function(){
+				 //console.log('결재자추가플러스이미지클릭') 
+				 for(var i=0; i<agreementArray.length; i++){
+					 $('#agreementName td:nth-child('+(i+2)+')').text("");
+				 }
+			  });
+			  
+			  /* 취소 버튼클릭시 지정해놓았던 합의자들 초기화 이벤트 */
+			  $(document).on('click','#agreementCancelBtn',function(){
+				  var result = confirm('지정한 합의자가 초기화 됩니다. 계속하시겠습니까?');
+				  if(result){
+					  $('.agreementCancel').parent().remove();
+					  agreementArray = new Array(); 					  
+				  }
+			  });
+		});
+	
+		</script>
+		<!-- select2 플러그인 사용 End-->
+	        
+	        
+	        
+	        
+	
+			<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+				<script>
+			    (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+			    function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+			    e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+			    e.src='https://www.google-analytics.com/analytics.js';
+			    r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+			    ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+				</script>
 	</th:block>
 </html>
