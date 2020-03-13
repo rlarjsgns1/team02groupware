@@ -27,9 +27,15 @@
 		margin-top: 3px;
 	}
 
-	.document-form-table input{ /* 양식생성 테이블 row에 위치한 input box css */
+	.document-form-table input{ /* 전자결재  FORM(양식생성 테이블) row에 위치한 input box css */
 		border-color : #343a40; 
 	}
+	.document-form-table td{  /* 전자결재  FORM(양식생성, 기안하기) 테이블 요소 CSS */
+		border-right: 1px solid #dee2e6;
+	}
+	.document-form-table tr:last-child { /* 전자결재  FORM(양식생성, 기안하기) 테이블 요소 CSS */
+		border-bottom: 1px solid #dee2e6; 
+	} 
 	
 	.document-form-checkbox{ /* 양식생성 테이블 row에 위치한 check box css */
 		margin-top: 15px;
@@ -55,3 +61,21 @@
 	 width: 100px;
 	 height: 32px;
 	}
+	
+ 	.card .card-header{/*  card, card-header 밑줄제거 */
+	border-bottom: unset; 
+	} 
+	
+ 	.approvalForm{ /* 전자결재 FORM 요소 정렬 CSS */
+		width: 80%;
+	} 
+	
+	.document-draft-btn{/* 기안하기 화면 기본설정 테이블 버튼 */
+		display: inline-block;
+		width: 170px;
+		
+	} 
+	.note-toolbar>.note-btn-group,.note-toolbar>.btn-group,.note-toolbar>.note-style{ /* summer note 툴바 css */
+		margin-right : 0px !important;
+	}
+	

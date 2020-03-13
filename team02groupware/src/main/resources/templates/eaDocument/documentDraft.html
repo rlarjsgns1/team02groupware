@@ -11,7 +11,7 @@
 		<th:block layout:fragment="customCss">
 			 <link rel="stylesheet" href="/dist/css/electronicApproval/electronicApproval.css">
 			 <link rel="stylesheet" href="/plugins/summernote/dist/summernote-bs4.css">
-			 <link rel="stylesheet" href="dist/css/electronicApproval/electronicApprovalSelect2.min.css">
+			 <link rel="stylesheet" href="/dist/css/electronicApproval/electronicApprovalSelect2.min.css">
 		</th:block>
 		
 		<th:block layout:fragment="customTitle">
@@ -84,7 +84,7 @@
 			                 	</button>
 			                 </div>
 	                           <!-- 테이블 상단 메뉴탭 End-->
-	                           <div style="width: 80%;">                      
+	                           <div class="approvalForm">                      
                                <!-- 문서 기안하기 기본설정 테이블 Start -->
                                     <div class="card-header d-block">
                                         <h6>기본설정</h6> 
@@ -95,7 +95,7 @@
                                                     <tr>
                                                         <td class="table-active document-form-table-td">문서 종류</td>
                                                         <td> 
-                                                        	<div class="btn-group">         
+                                                        	<div class="document-draft-btn">         
                                                         	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-12" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     		분류 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                				</button>
@@ -103,7 +103,7 @@
 			                                                	<a class="dropdown-item">프로젝트</a>
 			                                                </div>
 			                                                </div>
-			                                                <div class="btn-group">
+			                                                <div class="document-draft-btn">
 			                                                <button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-12" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     		종류 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                				</button>
@@ -115,15 +115,15 @@
 			                                                </div>
                                               		  </td>
                                                         <td class="table-active document-form-table-td">작성자</td>
-                                                        <td><input type="text" class="form-control col-sm-7"></td>
+                                                        <td><span>김건훈</span></td>
                                                     </tr>
                                                      <tr>
                                                         <td class="table-active document-form-table-td"><span>보존 연한</span><i class="ik ik-help-circle"></i></td>
                                                         <td> 	
-                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-7" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle document-draft-btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     			보존연한 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                				</button>
-			                                                <div class="dropdown-menu">
+			                                                <div class="dropdown-menu ">
 			                                                	<a class="dropdown-item">1년</a>
 			                                                    <a class="dropdown-item">5년</a>
 			                                                    <a class="dropdown-item">10년</a>
@@ -131,7 +131,7 @@
 			                                                </div>
 			                                            </td>
                                                         <td class="table-active document-form-table-td"><span>보안 등급</span><i class="ik ik-help-circle"></i></td>
-                                                        <td><button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-7" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <td><button class="btn btn-outline-dark btn-xs dropdown-toggle document-draft-btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     		보안등급 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                				</button>
 			                                                <div class="dropdown-menu">
@@ -139,14 +139,9 @@
 			                                                    <a class="dropdown-item">A등급</a>
 			                                                    <a class="dropdown-item">B등급</a>
 			                                                    <a class="dropdown-item">C등급</a>
-			                                                </div></td>
-                                                    </tr>                              
-                                                    <tr>
-	                                                    <td></td>
-	                                                    <td></td>
-	                                                    <td></td>
-	                                                    <td></td>
-                                                    </tr>
+			                                                </div>
+			                                           </td>
+                                                    </tr>                                                                         
                                                 </tbody>
                                             </table>
                                         </div>
@@ -359,8 +354,7 @@
                                     <div class="card-body  table-border-style">
                                        <h6>상세 입력 </h6>
                                        <!-- <p>문서 종류 선택 시 상세 입력이 노출됩니다.</p> -->
-                                    	
-                                        	<textarea class="form-control html-editor" rows="10" ></textarea>
+                                    	<textarea class="form-control html-editor" rows="10" ></textarea>
                                     	
                                     </div>
                                   </div> 
@@ -387,6 +381,7 @@
         <script src="/plugins/screenfull/dist/screenfull.js"></script>
         <script src="/plugins/sweetalert/dist/sweetalert.min.js"></script>
         <script src="/plugins/summernote/dist/summernote-bs4.min.js"></script>
+        <script src="/plugins/summernote/dist/lang/summernote-ko-KR.js"></script>
         <script src="/dist/js/theme.min.js"></script>
         <script src="/js/layouts.js"></script>
         <script src="dist/js/electronicApproval/electronicApprovalSelect2.min.js"></script>
