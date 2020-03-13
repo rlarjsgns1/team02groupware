@@ -100,36 +100,70 @@ public class BoardController {
 	}
 	
 	@GetMapping("/boardUpdateForm")
-	public String boardUpdateForm(Model model) {
+	public String boardUpdateForm(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto) {
 		
-		model.addAttribute("title", "boardUpdateForm");
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		Map<String, Object> boardMap2 = new HashMap<String, Object>();
+		
+		boardMap = boardService.getDepartList();
+		boardMap2 = boardService.selectBoardUpdateForm(bDto);
+		
+		model.addAttribute("departList", boardMap.get("departList"));
+		model.addAttribute("boardList", boardMap2.get("boardList"));
+		model.addAttribute("pagingDto", pDto);
+		model.addAttribute("searchDto", sDto);
 		
 		return "board/boardUpdateForm";
 	}
 	
-	@GetMapping("/boardUpdate")
-	public String boardUpdate(Model model) {
+	@PostMapping("/boardUpdate")
+	public String boardUpdate(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto, RedirectAttributes redirectA) {
 		
-		model.addAttribute("title", "boardUpdate");
+		System.out.println("보드업데이트" + bDto.toString());
+		System.out.println("보드업데이트" + pDto.toString());
+		System.out.println("보드업데이트" + sDto.toString());
+		boardService.updateBoard(bDto);
 		
-		return "index";
+		redirectA.addAttribute("boardNum", bDto.getBoardNum());
+		redirectA.addAttribute("selectPage", pDto.getSelectPage());
+		redirectA.addAttribute("viewNum", pDto.getViewNum());
+		redirectA.addAttribute("boardCategory", sDto.getSearchBoardCategory());
+		redirectA.addAttribute("isSearchCheck", sDto.getIsSearchCheck());
+		redirectA.addAttribute("searchBy", sDto.getSearchBy());
+		redirectA.addAttribute("searchDate", sDto.getSearchDate());
+		redirectA.addAttribute("searchInput", sDto.getSearchInput());
+	
+		return "redirect:/boardDetailView";
 	}
 	
 	@GetMapping("/boardDelete")
-	public String boardDelete(Model model) {
+	public String boardDelete(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto, RedirectAttributes redirectA) {
 		
-		model.addAttribute("title", "boardDelete");
+		boardService.deleteBoard(bDto);
 		
-		return "index";
+		redirectA.addAttribute("selectPage", pDto.getSelectPage());
+		redirectA.addAttribute("viewNum", pDto.getViewNum());
+		redirectA.addAttribute("boardCategory", sDto.getBoardCategory());
+		redirectA.addAttribute("isSearchCheck", sDto.getIsSearchCheck());
+		redirectA.addAttribute("searchBy", sDto.getSearchBy());
+		redirectA.addAttribute("searchDate", sDto.getSearchDate());
+		redirectA.addAttribute("searchInput", sDto.getSearchInput());
+		
+		return "redirect:/boardList";
 	}
 	
-	@GetMapping("/commentWrite")
-	public String commentWrite(Model model) {
+	@PostMapping("/commentInsert")
+	public @ResponseBody Map<String, Object> ajaxResponse(Model model, BoardDto bDto, CommentDto cDto) {
 		
-		model.addAttribute("title", "commentWrite");
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		System.out.println(bDto.getBoardNum());
+		System.out.println(cDto.getCommentContent());
 		
-		return "index";
+		boardMap = boardService.commentInsert(bDto, cDto);
+		
+		return boardMap;
 	}
+	
 	
 	@GetMapping("/commentUpdate")
 	public String commentUpdate(Model model) {
@@ -147,16 +181,5 @@ public class BoardController {
 		return "index";
 	}
 	
-	@PostMapping("/commentInsert")
-	public @ResponseBody Map<String, Object> ajaxResponse(Model model, BoardDto bDto, CommentDto cDto) {
-		
-		Map<String, Object> boardMap = new HashMap<String, Object>();
-		System.out.println(bDto.getBoardNum());
-		System.out.println(cDto.getCommentContent());
-		
-		boardMap = boardService.commentInsert(bDto, cDto);
-		
-		return boardMap;
-	}
 
 }

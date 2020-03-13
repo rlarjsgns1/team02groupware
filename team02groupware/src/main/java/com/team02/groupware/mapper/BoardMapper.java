@@ -30,4 +30,11 @@ public interface BoardMapper {
 	
 	public void insertComment(Map<String, Object> map);
 	
+	public void updateCommentCount(Map<String, Object> map);
+	
+	public void updateBoardViewCount(BoardDto bDto);
+	
+	public void updateBoard(BoardDto bDto);
+	
+	public void deleteBoard(BoardDto bDto);
 }

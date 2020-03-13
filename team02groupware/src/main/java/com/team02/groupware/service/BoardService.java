@@ -1,6 +1,8 @@
 package com.team02.groupware.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -172,6 +174,7 @@ public class BoardService {
 		List<BoardDto> boardList = new ArrayList<BoardDto>();
 		List<CommentDto> commentList = new ArrayList<CommentDto>();
 		
+		boardMapper.updateBoardViewCount(bDto);
 		boardList = boardMapper.selectBoardDetailView(bDto);
 		commentList = boardMapper.selectCommentList(bDto);
 		
@@ -186,13 +189,43 @@ public class BoardService {
 	public Map<String, Object> commentInsert(BoardDto bDto, CommentDto cDto){
 		
 		Map<String, Object> boardMap = new HashMap<String, Object>();
+		
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");	
+		Date time = new Date();	
+		String currentTime = format1.format(time);
+				
+		boardMap.put("currentTime", currentTime);
 		boardMap.put("boardDto", bDto);
 		boardMap.put("commentDto", cDto);
-		
+		boardMap.put("isCommentCount", "true");
 		boardMapper.insertComment(boardMap);
+		boardMapper.updateCommentCount(boardMap);
+		return boardMap;
+	}
+	
+	public Map<String, Object> selectBoardUpdateForm(BoardDto bDto){
 		
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		List<BoardDto> boardList = new ArrayList<BoardDto>();
+		
+		boardList = boardMapper.selectBoardDetailView(bDto);
+		
+		boardMap.put("boardList", boardList);
 		
 		return boardMap;
+
+	}
+	
+	public void updateBoard(BoardDto bDto) {
+		
+		boardMapper.updateBoard(bDto);
+		
+	}
+	
+	public void deleteBoard(BoardDto bDto) {
+		
+		boardMapper.deleteBoard(bDto);
+		
 	}
 	
 	

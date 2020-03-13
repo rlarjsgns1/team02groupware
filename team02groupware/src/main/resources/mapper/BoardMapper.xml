@@ -151,7 +151,7 @@
 		
 	</select>
 	
-	<!-- 글쓰기 직후 해당 글 select -->
+	<!-- 글쓰기 직후 해당 글 board_num select -->
 	<select id="selectMaxBoardNum" resultType="int">
 		SELECT 
 			max(board_num)
@@ -225,6 +225,54 @@
 		VALUES (${boardDto.boardNum}, NOW(), #{commentDto.commentContent}, '관리자')
 
 	</insert>
+	
+	<!-- 댓글 insert,delete시 게시판 댓글수 증감 -->
+	<update id="updateCommentCount" parameterType="map">
+		UPDATE 
+			board
+		SET
+			<if test="isCommentCount == 'true'">
+				board_comment_count = board_comment_count + 1
+			</if>
+			<if test="isCommentCount == 'false'">
+				board_comment_count = board_comment_count - 1
+			</if>
+		Where
+			board_num = ${boardDto.boardNum}
+
+	</update>
+	<!-- 게시글 조회수 증가 -->
+	<update id="updateBoardViewCount" parameterType="BoardDto">
+		UPDATE 
+			board
+		SET
+			board_view_count = board_view_count + 1
+
+		Where
+			board_num = ${boardNum}
+
+	</update>
+	<!-- 게시글 update -->
+	<update id="updateBoard" parameterType="BoardDto">
+		UPDATE 
+			board
+		SET
+			board_category = #{boardCategory}
+			,board_title = #{boardTitle}
+			,board_content_text = #{boardContentText}
+		WHERE 
+			board_num = ${boardNum}
+
+	</update>
+	<!-- 게시글 delete -->
+	<update id="deleteBoard" parameterType="BoardDto">
+		DELETE 
+		FROM 
+			board 
+		WHERE board_num = ${boardNum}
+
+	</update>
+	
 	
 	
 </mapper>  

@@ -26,6 +26,9 @@
 		.commentUnderLine{
 			margin-top: 10px;
 		}
+		pre{
+			white-space: pre-line;
+		}
 		
 	</style>
 </th:block>
@@ -45,9 +48,10 @@
 		
 		
 	/*]]>*/
-		console.log(boardList)
-		console.log(searchDto)
-		console.log(commentList)
+		console.log('boardList',boardList)
+		console.log('searchDto',searchDto)
+		console.log('commentList',commentList)
+		console.log('pagingDto',pagingDto)
 		console.log(boardList[0].boardNum)
 		
 		var viewNum = pagingDto.viewNum;
@@ -58,21 +62,26 @@
 		var searchDate = searchDto.searchDate
 		var searchInput = searchDto.searchInput
 		var boardNum = boardList[0].boardNum
-		
+		console.log(viewNum)
+		console.log(selectPage)
+		console.log(boardCategory)
+		console.log(isSearchCheck)
+		console.log(searchBy)
+		console.log(searchDate)
+		console.log(searchInput)
+		console.log(boardNum)
 		
 		
 		$(function(){
 			
 			// 댓글 등록
-			$('#commentInputBtn').click(function(){
+			$('#commentInputBtn').on('click', function(){
 				
 				var commentContent = $('#commentInputText').val()
 				
 				if(commentContent == ''){
 					alert('내용을 입력해주세요.');
 				}else{
-					
-					console.log(commentContent)
 					
 					var request = $.ajax({
 						  url: "/commentInsert",
@@ -83,10 +92,23 @@
 						});
 						 
 						request.done(function(data) {
-						 	console.log(data);
+						 	$('#commentInputText').val("")
 						 	
+						 	var commentContent = data.commentDto.commentContent
+						 	var currentTime = data.currentTime.substring(0,16)
+						 	var commentList = $('.commentListHidden').eq(0).clone()
 						 	
+						 	// 댓글 추가
+						 	commentList.css('display', 'block')
+						 	commentList.find('.commentNick').text('관리자')
+						 	commentList.find('.commentDate').text(currentTime)
+						 	commentList.find('.commentContent pre').text(commentContent)
+						 	$('#commentUl').append(commentList)
 						 	
+						 	// 댓글 수 +1 증가
+						 	var currentCommentCount = $('#commentCount').text();
+						 	var addCommentCount = Number(currentCommentCount) + 1;
+						 	$('#commentCount').text(addCommentCount);
 						});
 						 
 						request.fail(function( jqXHR, textStatus ) {
@@ -94,6 +116,20 @@
 						});
 				}
 			})
+			
+			$('#boardDeleteBtn').click(function(){
+				var input = confirm('삭제 하시겠습니까?'); 
+				
+				if(input == true){
+					location.href='/boardDelete?viewNum='+viewNum+'selectPage='+selectPage+'boardCategory='+boardCategory+'isSearchCheck='+isSearchCheck+'searchBy='+searchBy+'searchDate='+searchDate+'searchInput='+searchInput+''
+					
+				}
+					
+					
+				
+				
+			})
+
 		})
 		
 		
@@ -171,7 +207,7 @@
             </div>
             <div class="col-md-6" style="padding:0; margin: 30px 0 10px 0; position:absolute; bottom:0px;">
 
-            	댓글 <span>[[${b.boardCommentCount}]]</span>ㅣ 조회수 <span>[[${b.boardViewCount}]]</span>
+            	<span style="font-weight:bold;">댓글</span> <span id="commentCount">[[${b.boardCommentCount}]]</span>ㅣ <span style="font-weight:bold;">조회수</span> <span>[[${b.boardViewCount}]]</span>
             </div>
 	      </div>
 	      </th:block>
@@ -179,7 +215,7 @@
 		  <div style="background-color:#b3d4fc; padding:0px 20px 0px 20px;">
 		  	<div style="padding:10px;">
 		  	
-		  	<ul style="margin-bottom:0px;">
+		  	<ul id="commentUl" style="margin-bottom:0px;">
 		  		<!-- 댓글 li Start-->
 		  		<th:block th:each="c:${commentList}">
 			  		<li class="commentList">
@@ -190,8 +226,10 @@
 			  					<p style="float:right"> <a>수정</a> <span>ㅣ</span> <a>삭제</a></p>
 			  				</div>
 			  				<div class="commentContent">
+			  					<pre>
 				  				<th:block th:utext="${c.commentContent}">
 	            				</th:block>
+	            				</pre>
             				</div>
 			  			</div>
 			  			<div class="commentUnderLine" style="color:#F6F7FB; border-bottom-width: 1px; border-bottom-style: solid;"></div>
@@ -199,6 +237,20 @@
 		  		</th:block>
 		  		<!-- 댓글 li End-->
 		  		
+		  		<!-- ajax 생성용 히든 댓글 -->
+		  		<li class="commentListHidden" style="display:none">
+			  			<div class="commentListInnerDiv">
+			  				<div class="commentTop">
+			  					<span class="commentNick"></span>
+			  					<span class="commentDate"></span>
+			  					<p style="float:right"> <a>수정</a> <span>ㅣ</span> <a>삭제</a></p>
+			  				</div>
+			  				<div class="commentContent">
+				  				<pre></pre>
+            				</div>
+			  			</div>
+			  			<div class="commentUnderLine" style="color:#F6F7FB; border-bottom-width: 1px; border-bottom-style: solid;"></div>
+			  		</li>
 		  		
 		  	</ul>
 		  	<div style="clear:both; height:0px;"></div>
@@ -220,10 +272,41 @@
   
   	<!-- 글쓰기, 목록 버튼 리스트 Start --> 
   	<div style="float:right">
-      <button class="btn btn-outline-dark"><i class="ik ik-edit-1 "></i>글쓰기</button>
-      <button class="btn btn-outline-dark">수정</button>
-      <button class="btn btn-outline-dark">삭제</button>
-      <button class="btn btn-outline-dark">목록</button>
+      <a href="/boardWriteForm"><button class="btn btn-outline-dark"><i class="ik ik-edit-1 "></i>글쓰기</button></a>
+      <th:block th:each="b:${boardList}">
+      <a th:href=
+      		"@{/boardUpdateForm
+	      (boardNum=${b.boardNum}
+	      ,selectPage=${pagingDto.selectPage}
+	      ,viewNum=${pagingDto.viewNum}
+	      ,boardCategory=${searchDto.boardCategory}
+	      ,isSearchCheck=${searchDto.isSearchCheck}
+	      ,searchBy=${searchDto.searchBy}
+	      ,searchDate=${searchDto.searchDate}
+	      ,searchInput=${searchDto.searchInput})}"><button class="btn btn-outline-dark">수정</button></a>
+      </th:block>
+      
+      <th:block th:each="b:${boardList}">
+	      <!-- <a th:href=
+	      		"@{/boardDelete
+		      (boardNum=${b.boardNum}
+		      ,selectPage=${pagingDto.selectPage}
+		      ,viewNum=${pagingDto.viewNum}
+		      ,boardCategory=${searchDto.boardCategory}
+		      ,isSearchCheck=${searchDto.isSearchCheck}
+		      ,searchBy=${searchDto.searchBy}
+		      ,searchDate=${searchDto.searchDate}
+		      ,searchInput=${searchDto.searchInput})}"> --><button id="boardDeleteBtn" class="btn btn-outline-dark">삭제</button></a>
+      </th:block>
+      <a th:href=
+      		"@{/boardList
+	      (selectPage=${pagingDto.selectPage}
+	      ,viewNum=${pagingDto.viewNum}
+	      ,boardCategory=${searchDto.boardCategory}
+	      ,isSearchCheck=${searchDto.isSearchCheck}
+	      ,searchBy=${searchDto.searchBy}
+	      ,searchDate=${searchDto.searchDate}
+	      ,searchInput=${searchDto.searchInput})}"><button class="btn btn-outline-dark">목록</button></a>
   	
   	</div>
   	<!-- 글쓰기, 목록 버튼 리스트 End --> 
