@@ -84,7 +84,9 @@
 			                 	</button>
 			                 </div>
 	                           <!-- 테이블 상단 메뉴탭 End-->
-	                           <div class="approvalForm">                      
+	                           
+	                           <div class="electronic-approval-form">     
+	                                            
                                <!-- 문서 기안하기 기본설정 테이블 Start -->
                                     <div class="card-header d-block">
                                         <h6>기본설정</h6> 
@@ -327,7 +329,7 @@
 															         </optgroup>
 																  </select>
 												  </li>
-												  <li class="list-group-item list-group-item-action">김건훈
+												  <li class="list-group-item list-group-item-action" style="display:none;">
 												  	<!-- <img src="img/electronicApproval/cancel.png" style="position: absolute; float:left; width: 10px; height: auto; margin-top : 5px; margin-left: 10px;" class="approverCancel"> -->
 												  </li>
 									  
@@ -381,7 +383,6 @@
         <script src="/plugins/screenfull/dist/screenfull.js"></script>
         <script src="/plugins/sweetalert/dist/sweetalert.min.js"></script>
         <script src="/plugins/summernote/dist/summernote-bs4.min.js"></script>
-        <script src="/plugins/summernote/dist/lang/summernote-ko-KR.js"></script>
         <script src="/dist/js/theme.min.js"></script>
         <script src="/js/layouts.js"></script>
         <script src="dist/js/electronicApproval/electronicApprovalSelect2.min.js"></script>
@@ -491,6 +492,7 @@
 			      var tag = "<img src=\"img/electronicApproval/cancel.png\" style=\"position: absolute; float:left; width: 10px; height: auto; margin-top : 5px; margin-left: 10px;\" class=\"agreementCancel\">";
 			      clone.text(agreementVal[0]);
 			      clone.attr('value',agreementOriginVal);
+			      clone.css('display','block')
 			      clone.append(tag);
 			      $(".agreementGroupList").append(clone);
 			      $('#agreementSelect').val(null).trigger('change');
