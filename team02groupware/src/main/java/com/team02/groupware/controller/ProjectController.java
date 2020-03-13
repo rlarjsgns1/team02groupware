@@ -35,7 +35,7 @@ public class ProjectController {
 	
 	@GetMapping("/taskList")
 	public String taskList() {
-		return "projectlist/taskList";
+		return "project/taskList";
 	}
 	
 	@PostMapping("/projectInsert")
@@ -69,6 +69,6 @@ public class ProjectController {
 		model.addAttribute("startPageNum", map.get("startPageNum"));
 		model.addAttribute("endPageNum", map.get("endPageNum"));
 		//System.out.println(boardService.getBoardlist().toString());
-		return "projectlist/projectList";
+		return "project/projectList";
 	}
 }
