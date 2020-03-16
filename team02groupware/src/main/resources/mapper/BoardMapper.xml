@@ -192,12 +192,47 @@
 
 	</select>
 	
+	<!-- 게시글 조회수 증가 -->
+	<update id="updateBoardViewCount" parameterType="BoardDto">
+		UPDATE 
+			board
+		SET
+			board_view_count = board_view_count + 1
+
+		Where
+			board_num = ${boardNum}
+
+	</update>
+	
+	<!-- 게시글 update -->
+	<update id="updateBoard" parameterType="BoardDto">
+		UPDATE 
+			board
+		SET
+			board_category = #{boardCategory}
+			,board_title = #{boardTitle}
+			,board_content_text = #{boardContentText}
+		WHERE 
+			board_num = ${boardNum}
+
+	</update>
+	
+	<!-- 게시글 delete -->
+	<delete id="deleteBoard" parameterType="BoardDto">
+		DELETE 
+		FROM 
+			board 
+		WHERE board_num = ${boardNum}
+
+	</delete>
+	
 	<!-- 댓글 리스트 select -->
 	<select id="selectCommentList" resultMap="selectCommentResult" parameterType="BoardDto">
 		SELECT
 			comment_writer
 			,comment_date
 			,comment_content
+			,comment_num
 		FROM
 			board_comment
 		WHERE
@@ -211,6 +246,7 @@
     	<result property="commentWriter" column="comment_writer"/>
     	<result property="commentDate" column="comment_date"/>
     	<result property="commentContent" column="comment_content"/>
+    	<result property="commentNum" column="comment_num"/>
 
   	</resultMap>
   	
@@ -225,6 +261,14 @@
 		VALUES (${boardDto.boardNum}, NOW(), #{commentDto.commentContent}, '관리자')
 
 	</insert>
+	
+	<!-- 댓글 insert 후 max 댓글번호 select -->
+	<select id="selectMaxCommentNum" resultType="int">
+		SELECT 
+			max(comment_num)
+		FROM 
+			board_comment
+	</select>
 	
 	<!-- 댓글 insert,delete시 게시판 댓글수 증감 -->
 	<update id="updateCommentCount" parameterType="map">
@@ -241,38 +285,18 @@
 			board_num = ${boardDto.boardNum}
 
 	</update>
-	<!-- 게시글 조회수 증가 -->
-	<update id="updateBoardViewCount" parameterType="BoardDto">
+	
+	<!-- 댓글 Update -->
+	
+	<update id="updateComment" parameterType="CommentDto">
 		UPDATE 
-			board
+			board_comment
 		SET
-			board_view_count = board_view_count + 1
-
-		Where
-			board_num = ${boardNum}
-
-	</update>
-	<!-- 게시글 update -->
-	<update id="updateBoard" parameterType="BoardDto">
-		UPDATE 
-			board
-		SET
-			board_category = #{boardCategory}
-			,board_title = #{boardTitle}
-			,board_content_text = #{boardContentText}
-		WHERE 
-			board_num = ${boardNum}
-
-	</update>
-	<!-- 게시글 delete -->
-	<update id="deleteBoard" parameterType="BoardDto">
-		DELETE 
-		FROM 
-			board 
-		WHERE board_num = ${boardNum}
+			comment_content = #{commentContent}
+		WHERE
+			comment_num = ${commentNum}
 
 	</update>
 	
-	
-	
+
 </mapper>  

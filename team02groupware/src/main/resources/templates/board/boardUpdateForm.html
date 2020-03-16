@@ -28,6 +28,37 @@
 	            lang: 'ko-KR'// set focus to editable area after initializing summernote
 	    });
 	    
+	    
+	    $('#boardUpdateBtn').click(function(){
+	    	var boardCategory = $('[name=boardCategory]')
+	    	var boardTitle = $('[name=boardTitle]')
+	    	var boardContentText = $('[name=boardContentText]')
+	    	
+	    	console.log(boardCategory);
+	    	console.log(boardTitle);
+	    	console.log(boardContentText);
+	    	
+	    	if(boardCategory.val() == '카테고리 선택'){
+	    		alert('카테고리를 선택해 주세요.')
+	    		boardCategory.focus();
+	    	}else if(boardTitle.val() == ''){
+	    		alert('제목을 입력해 주세요.')
+	    		boardTitle.focus();
+	    	}else if(boardContentText.val() == ''){
+	    		alert('내용을 입력해 주세요.')
+	    		boardContentText.focus();
+	    	}else{
+	    		$('#boardUpdateForm').submit();
+	    	}
+
+	    	
+	    })
+	    
+	     $('#cancleBtn').click(function(){	// 취소 버튼
+	    	history.back()
+
+	    })
+	    
 	});
 	
 	
@@ -75,7 +106,7 @@
          
           <div style="margin: 25px 0 0 0">
              <th:block th:each="b:${boardList}">
-              <form action="/boardUpdate" class="forms-sample" method="post">
+              <form id="boardUpdateForm" action="/boardUpdate" class="forms-sample" method="post">
                   <div class="row">
                       <div class="col-md-3">
                           <div class="form-group">
@@ -123,8 +154,6 @@
 	                  </div>
                   </div>
                   
-                  <button class="btn btn-light float-md-right">취소</button>
-                  <button type="submit" class="btn btn-primary mr-2 float-md-right">확인</button>
                   
                   
                   <input type="hidden" name="boardNum" th:value="${b.boardNum}">
@@ -137,6 +166,8 @@
                   <input type="hidden" name="searchInput" th:value="${searchDto.searchInput}">
               </form>
               </th:block>
+              	<button id="cancleBtn" class="btn btn-light float-md-right">취소</button>
+                <button id="boardUpdateBtn" type="button" class="btn btn-primary mr-2 float-md-right">확인</button>
           </div>
       
       <!-- 글쓰기폼 End -->

@@ -1,8 +1,6 @@
 package com.team02.groupware.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -122,6 +119,7 @@ public class BoardController {
 		System.out.println("보드업데이트" + bDto.toString());
 		System.out.println("보드업데이트" + pDto.toString());
 		System.out.println("보드업데이트" + sDto.toString());
+		
 		boardService.updateBoard(bDto);
 		
 		redirectA.addAttribute("boardNum", bDto.getBoardNum());
@@ -138,6 +136,10 @@ public class BoardController {
 	
 	@GetMapping("/boardDelete")
 	public String boardDelete(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto, RedirectAttributes redirectA) {
+		
+		System.out.println("boardDelete bDto :  " + bDto);
+		System.out.println("boardDelete pDto :  " + pDto);
+		System.out.println("boardDelete sDto :  " + sDto);
 		
 		boardService.deleteBoard(bDto);
 		
@@ -165,12 +167,14 @@ public class BoardController {
 	}
 	
 	
-	@GetMapping("/commentUpdate")
-	public String commentUpdate(Model model) {
+	@PostMapping("/commentUpdate")
+	public @ResponseBody Map<String, Object> commentUpdate(Model model, CommentDto cDto) {
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		System.out.println("커멘트업데이트 cDto : " + cDto);
 		
-		model.addAttribute("title", "commentUpdate");
-		
-		return "index";
+		boardService.commentUpdate(cDto);
+		boardMap.put("commentDto", cDto);
+		return boardMap;
 	}
 	
 	@GetMapping("/commentDelete")

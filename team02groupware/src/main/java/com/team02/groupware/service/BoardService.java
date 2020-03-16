@@ -186,22 +186,6 @@ public class BoardService {
 		return boardMap;
 	}
 	
-	public Map<String, Object> commentInsert(BoardDto bDto, CommentDto cDto){
-		
-		Map<String, Object> boardMap = new HashMap<String, Object>();
-		
-		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");	
-		Date time = new Date();	
-		String currentTime = format1.format(time);
-				
-		boardMap.put("currentTime", currentTime);
-		boardMap.put("boardDto", bDto);
-		boardMap.put("commentDto", cDto);
-		boardMap.put("isCommentCount", "true");
-		boardMapper.insertComment(boardMap);
-		boardMapper.updateCommentCount(boardMap);
-		return boardMap;
-	}
 	
 	public Map<String, Object> selectBoardUpdateForm(BoardDto bDto){
 		
@@ -228,6 +212,34 @@ public class BoardService {
 		
 	}
 	
+	public Map<String, Object> commentInsert(BoardDto bDto, CommentDto cDto){
+		
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");	
+		Date time = new Date();	
+		String currentTime = format1.format(time);
+		
+		boardMap.put("commentDto", cDto);
+		boardMap.put("currentTime", currentTime);
+		boardMap.put("boardDto", bDto);
+		boardMap.put("isCommentCount", "true");
+		boardMapper.insertComment(boardMap);
+		boardMapper.updateCommentCount(boardMap);
+		
+		int commentNum = boardMapper.selectMaxCommentNum();
+		System.out.println("커멘트 인서트 커멘트넘 : " + commentNum);
+		boardMap.put("commentNum", commentNum);
+		
+		return boardMap;
+	}
+	
+	public void commentUpdate(CommentDto cDto){
+		
+		boardMapper.updateComment(cDto);
+		
+		
+	}
 	
 	
 	

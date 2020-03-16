@@ -1,8 +1,6 @@
 package com.team02.groupware.dto;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
 
 public class PagingDto {
 	
@@ -19,11 +17,7 @@ public class PagingDto {
 	private String departList = "전체";
 	
 	
-	
-	
-	
 
-	
 
 	@Override
 	public String toString() {
