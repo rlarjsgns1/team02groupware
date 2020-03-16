@@ -9,7 +9,7 @@
 		margin-left: 15px;
 		cursor:pointer;
 	}
-	
+
 	.ruletip{		/* 사내전자결재규정 Modal css */
 		position: absolute;
 		 display : none; 
@@ -23,13 +23,19 @@
 	.border-checkbox-label { /* 양식함 테이블 row에 위치한 체크박스 css */
 		margin-bottom : 0px;
 	}
-	::after, ::before{ /* 양식함 테이블 row에 위치한 체크박스 css */
-		box-sizing : unset;
+	.document-form-check-box{ /* 양식함 테이블 row에 위치한 체크박스 css */
+		margin-top: 3px;
 	}
 
-	.document-form-table input{ /* 양식생성 테이블 row에 위치한 input box css */
+	.document-form-table input{ /* 전자결재  FORM(양식생성 테이블) row에 위치한 input box css */
 		border-color : #343a40; 
 	}
+	.document-form-table td{  /* 전자결재  FORM(양식생성, 기안하기) 테이블 요소 CSS */
+		border-right: 1px solid #dee2e6;
+	}
+	.document-form-table tr:last-child { /* 전자결재  FORM(양식생성, 기안하기) 테이블 요소 CSS */
+		border-bottom: 1px solid #dee2e6; 
+	} 
 	
 	.document-form-checkbox{ /* 양식생성 테이블 row에 위치한 check box css */
 		margin-top: 15px;
@@ -39,4 +45,62 @@
 		text-align: center;
 	}
 	
+	.btn{/* 버튼 관련 css */
+		height: unset;
+	}
+
+	.select2-container { /* select2 box css */
+  		width: 100% !important;
+	}
 	
+	.list-group li{ /* 결재자 설정부분 리스트 css */
+		border-color: #fff;
+  		
+	}
+	.search-keyword-btn{ /* 양식함 관리 화면 검색 select box css */
+	 width: 100px;
+	 height: 32px;
+	}
+	
+ 	.card .card-header{/*  card, card-header 밑줄제거 */
+	border-bottom: unset; 
+	} 
+	
+ 	.electronic-approval-form{ /* 전자결재 FORM 요소 정렬 CSS */
+		width: 80%;
+	} 
+	
+	.document-draft-btn{/* 기안하기 화면 기본설정 테이블 버튼 */
+		width: 155px;
+		display: inline-block;
+		
+		
+		
+	} 
+ 	.note-toolbar>.note-btn-group,.note-toolbar>.btn-group,.note-toolbar>.note-style{/*  summer note 툴바 css */
+		/* margin-right : 0px !important; */
+		
+	} 
+	
+	#approval-format-set-btn{ /* 양식 생성 화면 결재 양식 설정 btn css */
+		color: #007bff;
+		margin-left: 10px;
+		cursor: pointer;
+		font-size: 0.9rem;
+	}
+	
+	.document-draft-title{ /* 기안하기 화면 제목 input box css */
+    	border-color: #343a40;
+	}
+	
+	.approval-format-type-title{ /* 결재 양식 화면 결재양식 설정 css */
+		padding-left: 20px;
+	}
+	
+	.table-hover{ /* 전자결재 관련 테이블 tbody>tr css */
+		cursor: pointer;
+	}
+	
+	.document-form-type-list{ /* 양식 분류설정 <li> css */
+		cursor: pointer;
+	}
