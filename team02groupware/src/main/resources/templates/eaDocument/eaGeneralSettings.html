@@ -66,8 +66,10 @@
 							$('#modal-content-type').text('지연 문서 표시 기간을 선택하면 그 기간 후 관련자의 문서 목록에 빨간색으로 나타납니다.');
 						}else if(ruleTipType=='회사 코드 설정'){
 							$('#modal-content-type').text('문서 번호에 사용할 회사 코드를 설정 하세요.');
+						}else if(ruleTipType=='보존 연한 만료 후 삭제 설정'){
+							$('#modal-content-type').text('결재 완료된 문서가 보존 연한이 만료된 후 임시삭제 상태로 변경되는  것의 허용 여부를 설정합니다.');
 						}
-					
+						
   						var sWidth = window.innerWidth;
 						var sHeight = window.innerHeight;
 						var mWidth = $('.ruletip').width();
@@ -175,32 +177,33 @@
                                        		<span>지연 문서 표시</span><i class="ik ik-help-circle"></i>
                                     	</h6>
                                    		 <div class="form-radio">
-                                		  <div class="radio radio-inline">
-	                                		<label>
-                                                   <input type="radio" name="radio">
-                                                   <i class="helper"></i>3일 후
-                                             </label>
-                                           </div>                                     	                                     	
-                                		  <div class="radio radio-inline">
-	                                		<label>
-                                                   <input type="radio" name="radio">
-                                                   <i class="helper"></i>7일 후
-                                             </label>
-                                           </div>                                     	                                     	
-                                		  <div class="radio radio-inline">
-	                                		<label>
-                                                   <input type="radio" name="radio">
-                                                   <i class="helper"></i>15일 후
-                                             </label>
-                                           </div>
-                                           <div class="radio radio-inline">
-	                                		<label>
-                                                   <input type="radio" name="radio">
-                                                   <i class="helper"></i>표시 안 함
-                                             </label>
-                                           </div>
+                                   		  <form>
+	                                		  <div class="radio radio-inline">
+		                                		<label>
+	                                                   <input type="radio" name="radio">
+	                                                   <i class="helper"></i>3일 후
+	                                             </label>
+	                                           </div>                                     	                                     	
+	                                		  <div class="radio radio-inline">
+		                                		<label>
+	                                                   <input type="radio" name="radio">
+	                                                   <i class="helper"></i>7일 후
+	                                             </label>
+	                                           </div>                                     	                                     	
+	                                		  <div class="radio radio-inline">
+		                                		<label>
+	                                                   <input type="radio" name="radio">
+	                                                   <i class="helper"></i>15일 후
+	                                             </label>
+	                                           </div>
+	                                           <div class="radio radio-inline">
+		                                		<label>
+	                                                   <input type="radio" name="radio">
+	                                                   <i class="helper"></i>표시 안 함
+	                                             </label>
+	                                           </div>
+                                           </form>
                                      	</div>
-                                     	
                                     </div>
                                  <!-- 지연 문서 표시 설정 End -->
                                  
@@ -216,13 +219,284 @@
                                  <!-- 문서 번호 설정 Start -->    
                                    <div class="card-header d-block">
                                   	<h6>
-										<span>문서 번호 설정</span><i class="ik ik-help-circle"></i>
+										문서 번호 설정
                                   	</h6>                                   
-                                      
+                                    <div class="table-responsive">
+                                            <table class="table table-hover mb-0 document-code-setting-table">
+                                                <thead>
+                                                    <tr>
+                                                    	<th>1.회사 코드</th>
+                                                        <th>2.약칭 및 소속</th>
+                                                        <th>3.문서 등록 시점</th>
+                                                        <th>4.일련 번호</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                      <td>
+                                                       	<div class="form-radio">
+                                                       	 <form>
+				                                		   <div class="radio">
+					                                		  <label>
+	 				                                           <input type="radio" name="radio">
+				                                               <i class="helper"></i>사용
+				                                              </label>
+				                                            </div>
+				                                            <div class="radio">
+					                                		  <label>
+	 				                                           <input type="radio" name="radio">
+				                                               <i class="helper"></i>사용 안 함
+				                                              </label>
+				                                            </div>
+				                                           </form>
+				                                          </div>                                         
+                                           			  </td>
+                                                       <td>
+                                                       	<div class="form-radio">
+                                                       	 <form>
+				                                		  <div class="radio">
+					                                		<label>
+	 				                                          <input type="radio" name="radio">
+				                                              <i class="helper"></i>등록자 소속명
+				                                             </label>
+				                                           </div>
+				                                           <div class="radio">
+					                                		<label>
+	 				                                          <input type="radio" name="radio">
+				                                              <i class="helper"></i>약칭
+				                                            </label>
+				                                           </div>
+				                                           <div class="radio">
+					                                		<label>
+	 				                                          <input type="radio" name="radio">
+				                                              <i class="helper"></i>둘 다 사용
+				                                            </label>
+				                                            </div>
+				                                            <div class="radio">
+					                                		 <label>
+	 				                                          <input type="radio" name="radio">
+				                                              <i class="helper"></i>둘 다 사용 안 함
+				                                             </label>
+				                                           </div>
+				                                           </form>
+				                                          </div>
+                                                       </td>
+                                                       <td>
+                                                       	<div class="form-radio">
+                                                       	 <form>
+				                                		  <div class="radio">
+					                                		 <label>
+	 				                                          <input type="radio" name="radio">
+				                                              <i class="helper"></i>연, 월, 일 8자(YYYYMMDD)
+				                                             </label>
+				                                           </div>
+				                                           <div class="radio">
+					                                		 <label>
+	 				                                          <input type="radio" name="radio">
+				                                              <i class="helper"></i>연, 월, 일 6자(YYMMDD)
+				                                             </label>
+				                                           </div>
+				                                           <div class="radio">
+					                                		 <label>
+	 				                                          <input type="radio" name="radio">
+				                                              <i class="helper"></i>연, 월 6자(YYYYMM)
+				                                             </label>
+				                                           </div>
+				                                           <div class="radio">
+					                                		 <label>
+	 				                                          <input type="radio" name="radio">
+				                                              <i class="helper"></i>연, 월 4자(YYMM)
+				                                             </label>
+				                                           </div>
+				                                           <div class="radio">
+					                                		 <label>
+	 				                                          <input type="radio" name="radio">
+				                                              <i class="helper"></i>연 4자(YYYY)
+				                                             </label>
+				                                           </div>
+				                                		   <div class="radio">
+					                                		<label>
+	 				                                          <input type="radio" name="radio">
+				                                              <i class="helper"></i>연 2자(YY)
+				                                             </label>
+				                                           </div>
+				                                           </form>
+				                                          </div> 
+                                                       </td>
+                                                       <td>
+                                                       	<div class="form-radio">
+                                                       	 <form>
+				                                		  <div class="radio">
+					                                		 <label>
+	 				                                          <input type="radio" name="radio">
+				                                              <i class="helper"></i>2자리(ex. 01)
+				                                             </label>
+				                                           </div>
+				                                           <div class="radio">
+					                                		 <label>
+	 				                                          <input type="radio" name="radio">
+				                                              <i class="helper"></i>3자리(ex. 001)
+				                                             </label>
+				                                           </div>			                                         
+				                                		   <div class="radio">
+					                                		 <label>
+	 				                                          <input type="radio" name="radio">
+				                                              <i class="helper"></i>4자리(ex. 0001)
+				                                             </label>
+				                                           </div>
+				                                           </form>
+				                                          </div>
+                                                       </td>
+                                                    </tr>                                                                                                              
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                       	<span>문서 번호 결과 미리보기</span>
+                                       	<input type="text" class="form-control company-code-title col-sm-3">  
                                   </div>                      		                        		                      		                                	 
-                              	 <!-- 문서 번호 설정 End --> 	    
+                              	 <!-- 문서 번호 설정 End -->
+                              	 <!--보존 연한 만료 후 삭제 설정 Start -->  
+                                    <div class="card-header d-block">                                   
+                                        <h6>
+                                       		<span>보존 연한 만료 후 삭제 설정</span><i class="ik ik-help-circle"></i>
+                                    	</h6>
+                                   		 <div class="form-radio">
+                                   		  <form>
+	                                		  <div class="radio radio-inline">
+		                                		<label>
+	                                                   <input type="radio" name="radio">
+	                                                   <i class="helper"></i>허용 함
+	                                             </label>
+	                                           </div>                                     	                                     	
+	                                		  <div class="radio radio-inline">
+		                                		<label>
+	                                                   <input type="radio" name="radio">
+	                                                   <i class="helper"></i>허용 안 함
+	                                             </label>
+	                                           </div>                                     	                                     	      		
+                                           </form>
+                                     	</div>
+                                    </div>
+                                 <!-- 보존 연한 만료 후 삭제 설정 End -->
+                                 <!-- 선결재 여부 설정 Start -->  
+                                    <div class="card-header d-block">                                   
+                                        <h6>
+                                       		<span>같은 결재선 내에서 선결재</span><i class="ik ik-help-circle"></i>
+                                    	</h6>
+                                   		 <div class="form-radio">
+                                   		  <form>
+	                                		  <div class="radio radio-inline">
+		                                		<label>
+	                                                   <input type="radio" name="radio">
+	                                                   <i class="helper"></i>허용 함
+	                                             </label>
+	                                           </div>                                     	                                     	
+	                                		  <div class="radio radio-inline">
+		                                		<label>
+	                                                   <input type="radio" name="radio">
+	                                                   <i class="helper"></i>허용 안 함
+	                                             </label>
+	                                           </div>                                     	                                     	      		
+                                           </form>
+                                     	</div>
+                                    </div>
+                                 <!-- 선결재 여부 설정 End -->
+                                 <!-- 대결 여부 설정 Start -->  
+                                    <div class="card-header d-block">                                   
+                                        <h6>
+                                       		<span>대결</span><i class="ik ik-help-circle"></i>
+                                    	</h6>
+                                   		 <div class="form-radio">
+                                   		  <form>
+	                                		  <div class="radio radio-inline">
+		                                		<label>
+	                                                   <input type="radio" name="radio">
+	                                                   <i class="helper"></i>허용 함
+	                                             </label>
+	                                           </div>                                     	                                     	
+	                                		  <div class="radio radio-inline">
+		                                		<label>
+	                                                   <input type="radio" name="radio">
+	                                                   <i class="helper"></i>허용 안 함
+	                                             </label>
+	                                           </div>                                     	                                     	      		
+                                           </form>
+                                     	</div>
+                                    </div>
+                                 <!-- 대결 여부 설정 End -->
+                                 <!-- 후결 여부 설정 Start -->  
+                                    <div class="card-header d-block">                                   
+                                        <h6>
+                                       		<span>후결</span><i class="ik ik-help-circle"></i>
+                                    	</h6>
+                                   		 <div class="form-radio">
+                                   		  <form>
+	                                		  <div class="radio radio-inline">
+		                                		<label>
+	                                                   <input type="radio" name="radio">
+	                                                   <i class="helper"></i>허용 함
+	                                             </label>
+	                                           </div>                                     	                                     	
+	                                		  <div class="radio radio-inline">
+		                                		<label>
+	                                                   <input type="radio" name="radio">
+	                                                   <i class="helper"></i>허용 안 함
+	                                             </label>
+	                                           </div>                                     	                                     	      		
+                                           </form>
+                                     	</div>
+                                    </div>
+                                 <!-- 후결 여부 설정 End -->
+                                 <!-- 참조 열람 시기 설정 Start -->  
+                                    <div class="card-header d-block">                                   
+                                        <h6>
+                                       		<span>참조 열람 시기 설정</span><i class="ik ik-help-circle"></i>
+                                    	</h6>
+                                   		 <div class="form-radio">
+                                   		  <form>
+	                                		  <div class="radio radio-inline">
+		                                		<label>
+	                                                   <input type="radio" name="radio">
+	                                                   <i class="helper"></i>허용 함
+	                                             </label>
+	                                           </div>                                     	                                     	
+	                                		  <div class="radio radio-inline">
+		                                		<label>
+	                                                   <input type="radio" name="radio">
+	                                                   <i class="helper"></i>허용 안 함
+	                                             </label>
+	                                           </div>                                     	                                     	      		
+                                           </form>
+                                     	</div>
+                                    </div>
+                                 <!-- 참조 열람 시기 설정 End -->
+                                 <!-- 기안 취소 설정 Start -->  
+                                    <div class="card-header d-block">                                   
+                                        <h6>
+                                       		<span>기안 취소 설정</span><i class="ik ik-help-circle"></i>
+                                    	</h6>
+                                   		 <div class="form-radio">
+                                   		  <form>
+	                                		  <div class="radio radio-inline">
+		                                		<label>
+	                                                   <input type="radio" name="radio">
+	                                                   <i class="helper"></i>허용 함
+	                                             </label>
+	                                           </div>                                     	                                     	
+	                                		  <div class="radio radio-inline">
+		                                		<label>
+	                                                   <input type="radio" name="radio">
+	                                                   <i class="helper"></i>허용 안 함
+	                                             </label>
+	                                           </div>                                     	                                     	      		
+                                           </form>
+                                     	</div>
+                                    </div>
+                                 <!-- 기안 취소 설정 End -->
+                                  	  	    
+                        			</div>
                         		</div>
-                        		
+
                         		<!-- 관리자용 전자결재 기본설정 물음표 아이콘 Modal View Start --> 
 	                        	<div class="modal-dialog modal-sm mt-0 mb-0 ruletip" role="document">
 						        	<div class="modal-content">

@@ -12,7 +12,7 @@
 
 	.ruletip{		/* 사내전자결재규정 Modal css */
 		position: absolute;
-		 display : none; 
+		display : none; 
 		z-index: 1;	
 	}
 	
@@ -103,4 +103,8 @@
 	
 	.document-form-type-list{ /* 양식 분류설정 <li> css */
 		cursor: pointer;
+	}
+	
+	.document-code-setting-table td{
+		vertical-align: top !important;
 	}
