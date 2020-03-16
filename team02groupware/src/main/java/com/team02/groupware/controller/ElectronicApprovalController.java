@@ -110,4 +110,14 @@ public class ElectronicApprovalController {
 			return "eaDocument/deleteDocumentList";
 	}	 
 	 
+	 
+	 /*
+	  * @method insertEaGeneralSettings()
+	  * @brief 전자결재 관리자용 기본설정 세팅
+	  * @author 김건훈
+	  */	
+	 @GetMapping("/insertEaGeneralSettings")
+	 public String insertEaGeneralSettings() {
+			return "eaDocument/eaGeneralSettings";
+	}	
 }
