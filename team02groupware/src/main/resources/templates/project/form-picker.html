@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Form Advance | ThemeKit - Admin Template</title>
+        <title>Form Picker | ThemeKit - Admin Template</title>
         <meta name="description" content="">
         <meta name="keywords" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,10 +17,9 @@
         <link rel="stylesheet" href="../plugins/ionicons/dist/css/ionicons.min.css">
         <link rel="stylesheet" href="../plugins/icon-kit/dist/css/iconkit.min.css">
         <link rel="stylesheet" href="../plugins/perfect-scrollbar/css/perfect-scrollbar.css">
-        <link rel="stylesheet" href="../plugins/select2/dist/css/select2.min.css">
-        <link rel="stylesheet" href="../plugins/summernote/dist/summernote-bs4.css">
-        <link rel="stylesheet" href="../plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
-        <link rel="stylesheet" href="../plugins/mohithg-switchery/dist/switchery.min.css">
+        <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css">
+        <link rel="stylesheet" href="../plugins/jquery-minicolors/jquery.minicolors.css">
+        <link rel="stylesheet" href="../plugins/datedropper/datedropper.min.css">
         <link rel="stylesheet" href="../dist/css/theme.min.css">
         <script src="../src/js/vendor/modernizr-2.8.3.min.js"></script>
     </head>
@@ -179,15 +178,15 @@
                                     <a href="ui/icons.html"><i class="ik ik-command"></i><span>Icons</span></a>
                                 </div>
                                 <div class="nav-lavel">Forms</div>
-                                <div class="nav-item has-sub active open">
+                                <div class="nav-item has-sub">
                                     <a href="#"><i class="ik ik-edit"></i><span>Forms</span></a>
                                     <div class="submenu-content">
                                         <a href="form-components.html" class="menu-item">Components</a>
                                         <a href="form-addon.html" class="menu-item">Add-On</a>
-                                        <a href="form-advance.html" class="menu-item active">Advance</a>
+                                        <a href="form-advance.html" class="menu-item">Advance</a>
                                     </div>
                                 </div>
-                                <div class="nav-item">
+                                <div class="nav-item active">
                                     <a href="form-picker.html"><i class="ik ik-terminal"></i><span>Form Picker</span> <span class="badge badge-success">New</span></a>
                                 </div>
 
@@ -275,9 +274,9 @@
                             <div class="row align-items-end">
                                 <div class="col-lg-8">
                                     <div class="page-header-title">
-                                        <i class="ik ik-edit bg-blue"></i>
+                                        <i class="ik ik-terminal bg-blue"></i>
                                         <div class="d-inline">
-                                            <h5>Advance</h5>
+                                            <h5>Form Picker</h5>
                                             <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
                                         </div>
                                     </div>
@@ -289,7 +288,7 @@
                                                 <a href="../index.html"><i class="ik ik-home"></i></a>
                                             </li>
                                             <li class="breadcrumb-item"><a href="#">Forms</a></li>
-                                            <li class="breadcrumb-item active" aria-current="page">Advance</li>
+                                            <li class="breadcrumb-item active" aria-current="page">Form Picker</li>
                                         </ol>
                                     </nav>
                                 </div>
@@ -300,444 +299,94 @@
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3>Switches</h3>
+                                        <h3>Default Date-Picker</h3>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-sm-12 col-xl-4 mb-30">
-                                                <h4 class="sub-title">Single Switche</h4>
-                                                <input type="checkbox" class="js-single" checked />
+                                                <h4 class="sub-title">Date</h4>
+                                                <p>Add type<code>&lt;input type="date"&gt;</code></p>
+                                                <input class="form-control" type="date" />
                                             </div>
                                             <div class="col-sm-12 col-xl-4 mb-30">
-                                                <h4 class="sub-title">Multiple Switches</h4>
-                                                <input type="checkbox" class="js-switch" checked />
-                                                <input type="checkbox" class="js-switch" checked />
-                                                <input type="checkbox" class="js-switch" checked />
+                                                <h4 class="sub-title">Month</h4>
+                                                <p>Add type<code>&lt;input type="month"&gt;</code></p>
+                                                <input class="form-control" type="month" />
                                             </div>
                                             <div class="col-sm-12 col-xl-4 mb-30">
-                                                <h4 class="sub-title">Enable Disable Switches</h4>
-                                                <input type="checkbox" class="js-dynamic-state" checked />
-                                                <button class="btn btn-primary js-dynamic-enable">Enable</button>
-                                                <button class="btn btn-inverse js-dynamic-disable">Disable</button>
+                                                <h4 class="sub-title">Week</h4>
+                                                <p>Add type<code>&lt;input type="week"&gt;</code></p>
+                                                <input class="form-control" type="week" />
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-8">
-                                                <h4 class="sub-title">Color Switches</h4>
-                                                <input type="checkbox" class="js-default" checked />
-                                                <input type="checkbox" class="js-primary" checked />
-                                                <input type="checkbox" class="js-success" checked />
-                                                <input type="checkbox" class="js-info" checked />
-                                                <input type="checkbox" class="js-warning" checked />
-                                                <input type="checkbox" class="js-danger" checked />
-                                                <input type="checkbox" class="js-inverse" checked />
+                                            <div class="col-sm-12 col-xl-4 mb-30">
+                                                <h4 class="sub-title">Date-time-local</h4>
+                                                <p>Add type<code>&lt;input type="datetime-local"&gt;</code></p>
+                                                <input class="form-control" type="datetime-local" />
                                             </div>
-                                            <div class="col-sm-4">
-                                                <h4 class="sub-title">Switch Sizes</h4>
-                                                <input type="checkbox" class="js-large" checked />
-                                                <input type="checkbox" class="js-medium" checked />
-                                                <input type="checkbox" class="js-small" checked />
+                                            <div class="col-sm-12 col-xl-4">
+                                                <h4 class="sub-title">Time</h4>
+                                                <p>Add type<code>&lt;input type="time"&gt;</code></p>
+                                                <input class="form-control" type="time" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3>Radio</h3>
+                                        <h5>Date-Dropper</h5>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-sm-12 col-md-6 col-xl-4 mb-30">
-                                                <h4 class="sub-title">Radio Fill Button</h4>
-                                                <div class="form-radio">
-                                                    <form>
-                                                        <div class="radio radio-inline">
-                                                            <label>
-                                                                <input type="radio" name="radio" checked="checked">
-                                                                <i class="helper"></i>Radio 1
-                                                            </label>
-                                                        </div>
-                                                        <div class="radio radio-inline">
-                                                            <label>
-                                                                <input type="radio" name="radio">
-                                                                <i class="helper"></i>Radio 2
-                                                            </label>
-                                                        </div>
-                                                        <div class="radio radio-inline radio-disable">
-                                                            <label>
-                                                                <input type="radio" disabled="" name="radio">
-                                                                <i class="helper"></i>Radio Disable
-                                                            </label>
-                                                        </div>
-                                                    </form>
-                                                </div>
+                                            <div class="col-sm-12 col-xl-4 mb-30">
+                                                <h4 class="sub-title">Default</h4>
+                                                <p>Add <code>id="#dropper-default"</code></p>
+                                                <input id="dropper-default" class="form-control" type="text" placeholder="Select your date" />
                                             </div>
-                                            <div class="col-sm-12 col-md-6 col-xl-4 mb-30">
-                                                <h4 class="sub-title">Radio outline Button</h4>
-                                                <div class="form-radio">
-                                                    <form>
-                                                        <div class="radio radio-outline radio-inline">
-                                                            <label>
-                                                                <input type="radio" name="radio" checked="checked">
-                                                                <i class="helper"></i>Radio 1
-                                                            </label>
-                                                        </div>
-                                                        <div class="radio radio-outline radio-inline">
-                                                            <label>
-                                                                <input type="radio" name="radio">
-                                                                <i class="helper"></i>Radio 2
-                                                            </label>
-                                                        </div>
-                                                        <div class="radio radio-inline radio-disable">
-                                                            <label>
-                                                                <input type="radio" disabled="" name="radio">
-                                                                <i class="helper"></i>Radio Disable
-                                                            </label>
-                                                        </div>
-                                                    </form>
-                                                </div>
+                                            <div class="col-sm-12 col-xl-4 mb-30">
+                                                <h4 class="sub-title">With Animation</h4>
+                                                <p>Add <code>id="#dropper-animation"</code></p>
+                                                <input id="dropper-animation" class="form-control" type="text" placeholder="Select your animation" />
                                             </div>
-                                            <div class="col-sm-12 col-md-6 col-xl-4 mb-30">
-                                                <h4 class="sub-title">Radio Button</h4>
-                                                <div class="form-radio">
-                                                    <form>
-                                                        <div class="radio radiofill radio-inline">
-                                                            <label>
-                                                                <input type="radio" name="radio" checked="checked">
-                                                                <i class="helper"></i>Radio-fill 1
-                                                            </label>
-                                                        </div>
-                                                        <div class="radio radiofill radio-inline">
-                                                            <label>
-                                                                <input type="radio" name="radio">
-                                                                <i class="helper"></i>Radio-fill 2
-                                                            </label>
-                                                        </div>
-                                                        <div class="radio radiofill radio-inline radio-disable">
-                                                            <label>
-                                                                <input type="radio" disabled="" name="radio">
-                                                                <i class="helper"></i>Radio-fill Disable
-                                                            </label>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <h4 class="sub-title">Color Radio Button</h4>
-                                        <div class="form-radio mb-30">
-                                            <form>
-                                                <div class="radio radiofill radio-default radio-inline">
-                                                    <label>
-                                                        <input type="radio" name="radio" checked="checked">
-                                                        <i class="helper"></i>Default Color
-                                                    </label>
-                                                </div>
-                                                <div class="radio radiofill radio-primary radio-inline">
-                                                    <label>
-                                                        <input type="radio" name="radio" checked="checked">
-                                                        <i class="helper"></i>Primary Color
-                                                    </label>
-                                                </div>
-                                                <div class="radio radiofill radio-success radio-inline">
-                                                    <label>
-                                                        <input type="radio" name="radio" checked="checked">
-                                                        <i class="helper"></i>Success Color
-                                                    </label>
-                                                </div>
-                                                <div class="radio radiofill radio-info radio-inline">
-                                                    <label>
-                                                        <input type="radio" name="radio" checked="checked">
-                                                        <i class="helper"></i>Info Color
-                                                    </label>
-                                                </div>
-                                                <div class="radio radiofill radio-warning radio-inline">
-                                                    <label>
-                                                        <input type="radio" name="radio" checked="checked">
-                                                        <i class="helper"></i>Warning Color
-                                                    </label>
-                                                </div>
-                                                <div class="radio radiofill radio-danger radio-inline">
-                                                    <label>
-                                                        <input type="radio" name="radio" checked="checked">
-                                                        <i class="helper"></i>Danger Color
-                                                    </label>
-                                                </div>
-                                                <div class="radio radiofill radio-inverse radio-inline">
-                                                    <label>
-                                                        <input type="radio" name="radio" checked="checked">
-                                                        <i class="helper"></i>Inverse Color
-                                                    </label>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <h4 class="sub-title">Color Radio material Button</h4>
-                                        <div class="form-radio mb-30">
-                                            <form>
-                                                <div class="radio radio-matrial radio-default radio-inline">
-                                                    <label>
-                                                        <input type="radio" name="radio" checked="checked">
-                                                        <i class="helper"></i>Default Color
-                                                    </label>
-                                                </div>
-                                                <div class="radio radio-matrial radio-primary radio-inline">
-                                                    <label>
-                                                        <input type="radio" name="radio" checked="checked">
-                                                        <i class="helper"></i>Primary Color
-                                                    </label>
-                                                </div>
-                                                <div class="radio radio-matrial radio-success radio-inline">
-                                                    <label>
-                                                        <input type="radio" name="radio" checked="checked">
-                                                        <i class="helper"></i>Success Color
-                                                    </label>
-                                                </div>
-                                                <div class="radio radio-matrial radio-info radio-inline">
-                                                    <label>
-                                                        <input type="radio" name="radio" checked="checked">
-                                                        <i class="helper"></i>Info Color
-                                                    </label>
-                                                </div>
-                                                <div class="radio radio-matrial radio-warning radio-inline">
-                                                    <label>
-                                                        <input type="radio" name="radio" checked="checked">
-                                                        <i class="helper"></i>Warning Color
-                                                    </label>
-                                                </div>
-                                                <div class="radio radio-matrial radio-danger radio-inline">
-                                                    <label>
-                                                        <input type="radio" name="radio" checked="checked">
-                                                        <i class="helper"></i>Danger Color
-                                                    </label>
-                                                </div>
-                                                <div class="radio radio-matrial radio-inverse radio-inline">
-                                                    <label>
-                                                        <input type="radio" name="radio" checked="checked">
-                                                        <i class="helper"></i>Inverse Color
-                                                    </label>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3>Checkbox</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-12 col-xl-6 mb-30">
-                                                <h4 class="sub-title">Border Checkbox</h4>
-                                                <div class="border-checkbox-section">
-                                                    <div class="border-checkbox-group border-checkbox-group-default">
-                                                        <input class="border-checkbox" type="checkbox" id="checkbox0">
-                                                        <label class="border-checkbox-label" for="checkbox0">Do you like it?</label>
-                                                    </div>
-                                                    <div class="border-checkbox-group border-checkbox-group-primary">
-                                                        <input class="border-checkbox" type="checkbox" id="checkbox1">
-                                                        <label class="border-checkbox-label" for="checkbox1">Primary</label>
-                                                    </div>
-                                                    <div class="border-checkbox-group border-checkbox-group-success">
-                                                        <input class="border-checkbox" type="checkbox" id="checkbox2">
-                                                        <label class="border-checkbox-label" for="checkbox2">Success</label>
-                                                    </div>
-                                                    <div class="border-checkbox-group border-checkbox-group-info">
-                                                        <input class="border-checkbox" type="checkbox" id="checkbox3">
-                                                        <label class="border-checkbox-label" for="checkbox3">Info</label>
-                                                    </div>
-                                                    <div class="border-checkbox-group border-checkbox-group-warning">
-                                                        <input class="border-checkbox" type="checkbox" id="checkbox4">
-                                                        <label class="border-checkbox-label" for="checkbox4">Warning</label>
-                                                    </div>
-                                                    <div class="border-checkbox-group border-checkbox-group-danger">
-                                                        <input class="border-checkbox" type="checkbox" id="checkbox5">
-                                                        <label class="border-checkbox-label" for="checkbox5">Danger</label>
-                                                    </div>
-                                                    <div class="border-checkbox-group">
-                                                        <input class="border-checkbox" type="checkbox" id="checkbox6" disabled>
-                                                        <label class="border-checkbox-label" for="checkbox6">Disabled</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-xl-6 mb-30">
-                                                <h4 class="sub-title">Fade-in Checkbox</h4>
-                                                <div class="checkbox-fade fade-in-default">
-                                                    <label>
-                                                        <input type="checkbox" value="">
-                                                        <span class="cr">
-                                                            <i class="cr-icon ik ik-check txt-default"></i>
-                                                        </span>
-                                                        <span>Default</span>
-                                                    </label>
-                                                </div>
-                                                <div class="checkbox-fade fade-in-primary">
-                                                    <label>
-                                                        <input type="checkbox" value="">
-                                                        <span class="cr">
-                                                            <i class="cr-icon ik ik-check txt-primary"></i>
-                                                        </span>
-                                                        <span>Primary</span>
-                                                    </label>
-                                                </div>
-                                                <div class="checkbox-fade fade-in-warning">
-                                                    <label>
-                                                        <input type="checkbox" value="">
-                                                        <span class="cr">
-                                                            <i class="cr-icon ik ik-check txt-warning"></i>
-                                                        </span>
-                                                        <span> Warning</span>
-                                                    </label>
-                                                </div>
-                                                <div class="checkbox-fade fade-in-success">
-                                                    <label>
-                                                        <input type="checkbox" value="">
-                                                        <span class="cr">
-                                                            <i class="cr-icon ik ik-check txt-success"></i>
-                                                        </span>
-                                                        <span>Success</span>
-                                                    </label>
-                                                </div>
-                                                <div class="checkbox-fade fade-in-info">
-                                                    <label>
-                                                        <input type="checkbox" value="">
-                                                        <span class="cr">
-                                                            <i class="cr-icon ik ik-check txt-info"></i>
-                                                        </span>
-                                                        <span> Info</span>
-                                                    </label>
-                                                </div>
-                                                <div class="checkbox-fade fade-in-danger">
-                                                    <label>
-                                                        <input type="checkbox" value="">
-                                                        <span class="cr">
-                                                          <i class="cr-icon ik ik-check txt-danger"></i>
-                                                        </span>
-                                                        <span> Danger</span>
-                                                    </label>
-                                                </div>
-                                                <div class="checkbox-fade fade-in-disable">
-                                                    <label>
-                                                        <input type="checkbox" value="" disabled>
-                                                        <span class="cr">
-                                                          <i class="cr-icon ik ik-check text-default"></i>
-                                                        </span>
-                                                        <span>Disabled</span>
-                                                    </label>
-                                                </div>
+                                            <div class="col-sm-12 col-xl-4 mb-30">
+                                                <h4 class="sub-title">Date format</h4>
+                                                <p>Add <code>id="#dropper-format"</code></p>
+                                                <input id="dropper-format" class="form-control" type="text" placeholder="Select your format" />
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-12 col-xl-6 mb-30">
-                                                <h4 class="sub-title">Color Checkbox</h4>
-                                                <div class="checkbox-color checkbox-default">
-                                                    <input id="checkbox12" type="checkbox" checked="">
-                                                    <label for="checkbox12">
-                                                    Default
-                                                    </label>
-                                                </div>
-                                                <div class="checkbox-color checkbox-primary">
-                                                    <input id="checkbox18" type="checkbox" checked="">
-                                                    <label for="checkbox18">
-                                                    Primary
-                                                    </label>
-                                                </div>
-                                                <div class="checkbox-color checkbox-success">
-                                                    <input id="checkbox13" type="checkbox" checked="">
-                                                    <label for="checkbox13">
-                                                    Success
-                                                    </label>
-                                                </div>
-                                                <div class="checkbox-color checkbox-info">
-                                                    <input id="checkbox14" type="checkbox" checked="">
-                                                    <label for="checkbox14">
-                                                    Info
-                                                    </label>
-                                                </div>
-                                                <div class="checkbox-color checkbox-warning">
-                                                    <input id="checkbox15" type="checkbox" checked="">
-                                                    <label for="checkbox15">
-                                                    Warning
-                                                    </label>
-                                                </div>
-                                                <div class="checkbox-color checkbox-danger">
-                                                    <input id="checkbox16" type="checkbox" checked="">
-                                                    <label for="checkbox16">
-                                                    Danger
-                                                    </label>
-                                                </div>
-                                                <div class="checkbox-color checkbox-default">
-                                                    <input id="checkbox17" type="checkbox" disabled="">
-                                                    <label for="checkbox17">
-                                                    Disabled
-                                                    </label>
-                                                </div>
+                                            <div class="col-sm-12 col-xl-4 mb-30">
+                                                <h4 class="sub-title">Language Support</h4>
+                                                <p>Add <code>id="#dropper-lang"</code></p>
+                                                <input id="dropper-lang" class="form-control" type="text" placeholder="Language Support" />
                                             </div>
-                                            <div class="col-sm-12 col-xl-6 mb-30">
-                                                <h4 class="sub-title">zoom Checkbox</h4>
-                                                <div class="checkbox-zoom zoom-default">
-                                                    <label>
-                                                        <input type="checkbox" value="">
-                                                        <span class="cr">
-                                                            <i class="cr-icon ik ik-check txt-default"></i>
-                                                        </span>
-                                                        <span>Default</span>
-                                                    </label>
-                                                </div>
-                                                <div class="checkbox-zoom zoom-primary">
-                                                    <label>
-                                                        <input type="checkbox" value="">
-                                                        <span class="cr">
-                                                            <i class="cr-icon ik ik-check txt-primary"></i>
-                                                        </span>
-                                                        <span>Primary</span>
-                                                    </label>
-                                                </div>
-                                                <div class="checkbox-zoom zoom-warning">
-                                                    <label>
-                                                        <input type="checkbox" value="">
-                                                        <span class="cr">
-                                                            <i class="cr-icon ik ik-check txt-warning"></i>
-                                                        </span>
-                                                        <span> Warning</span>
-                                                    </label>
-                                                </div>
-                                                <div class="checkbox-zoom zoom-success">
-                                                    <label>
-                                                        <input type="checkbox" value="">
-                                                        <span class="cr">
-                                                            <i class="cr-icon ik ik-check txt-success"></i>
-                                                        </span>
-                                                        <span>Success</span>
-                                                    </label>
-                                                </div>
-                                                <div class="checkbox-zoom zoom-info">
-                                                    <label>
-                                                        <input type="checkbox" value="">
-                                                        <span class="cr">
-                                                            <i class="cr-icon ik ik-check txt-info"></i>
-                                                        </span>
-                                                        <span> Info</span>
-                                                    </label>
-                                                </div>
-                                                <div class="checkbox-zoom zoom-danger">
-                                                    <label>
-                                                        <input type="checkbox" value="">
-                                                        <span class="cr">
-                                                            <i class="cr-icon ik ik-check txt-danger"></i>
-                                                        </span>
-                                                        <span> Danger</span>
-                                                    </label>
-                                                </div>
-                                                <div class="checkbox-zoom zoom-disable">
-                                                    <label>
-                                                        <input type="checkbox" value="" disabled>
-                                                        <span class="cr">
-                                                            <i class="cr-icon ik ik-check text-default"></i>
-                                                        </span>
-                                                        <span>Disabled</span>
-                                                    </label>
-                                                </div>
+                                            <div class="col-sm-12 col-xl-4 mb-30">
+                                                <h4 class="sub-title">Lock Support</h4>
+                                                <p>Add <code>id="#dropper-lock"</code></p>
+                                                <input id="dropper-lock" class="form-control" type="text" placeholder="Select your date" />
+                                            </div>
+                                            <div class="col-sm-12 col-xl-4 mb-30">
+                                                <h4 class="sub-title">Max Year</h4>
+                                                <p>Add <code>id="#dropper-max-year"</code></p>
+                                                <input id="dropper-max-year" class="form-control" type="text" placeholder="Max Year 2020" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-xl-4 mb-30">
+                                                <h4 class="sub-title">Min Year</h4>
+                                                <p>Add <code>id="#dropper-min-year"</code></p>
+                                                <input id="dropper-min-year" class="form-control" type="text" placeholder="Min Year 1990" />
+                                            </div>
+                                            <div class="col-sm-12 col-xl-4 mb-30">
+                                                <h4 class="sub-title">Year-range</h4>
+                                                <p>Add <code>id="#year-range"</code></p>
+                                                <input id="year-range" class="form-control" type="text" placeholder="Select your date" />
+                                            </div>
+                                            <div class="col-sm-12 col-xl-4">
+                                                <h4 class="sub-title">Custom Width</h4>
+                                                <p>Add <code>id="#dropper-width"</code></p>
+                                                <input id="dropper-width" class="form-control" type="text" placeholder="Select your date" />
                                             </div>
                                         </div>
                                     </div>
@@ -746,42 +395,36 @@
                             </div>
                         </div>
 
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="card">
-                                    <div class="card-header"><h3>Input Tag</h3></div>
+                                    <div class="card-header"><h3>Inline Datetimepicker</h3></div>
+                                    <div class="card-body">
+                                        <div id="inlinedatetimepicker"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card" style="min-height: 200px;">
+                                    <div class="card-header"><h3>Dropdown Datepicker</h3></div>
                                     <div class="card-body">
                                         <form action="">
                                             <div class="form-group">
-                                                <label for="input">Type to add a new tag</label>
-                                                <input type="text" id="tags" class="form-control" value="London,Canada,Australia,Mexico,India">
+                                                <label for="date">Date</label>
+                                                <input type="text" class="form-control datetimepicker-input" id="datepicker" data-toggle="datetimepicker" data-target="#datepicker">
                                             </div>
                                         </form>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-header"><h3>Form Repeater</h3></div>
+                                <div class="card" style="min-height: 200px;">
+                                    <div class="card-header"><h3>Dropdown Timepicker</h3></div>
                                     <div class="card-body">
-                                        <p>Click the add button to repeat the form</p>
-                                        <form class="form-inline repeater">
-                                            <div data-repeater-list="group-a">
-                                                <div data-repeater-item class="d-flex mb-2">
-                                                    <label class="sr-only" for="inlineFormInputGroup1">Users</label>
-                                                    <div class="form-group mb-2 mr-sm-2 mb-sm-0">
-                                                        <input type="text" class="form-control" placeholder="Name">
-                                                    </div>
-                                                    <div class="form-group mb-2 mr-sm-2 mb-sm-0">
-                                                        <input type="email" class="form-control" placeholder="Email">
-                                                    </div>
-                                                    <div class="form-group mb-2 mr-sm-2 mb-sm-0">
-                                                        <input type="tel" class="form-control" placeholder="Phone No">
-                                                    </div>
-                                                    <button data-repeater-delete type="button" class="btn btn-danger btn-icon ml-2" ><i class="ik ik-trash-2"></i></button>
-                                                </div>
+                                        <form action="">
+                                            <div class="form-group">
+                                                <label for="time">Time</label>
+                                                <input type="text" class="form-control datetimepicker-input" id="timepicker" data-toggle="datetimepicker" data-target="#timepicker">
                                             </div>
-                                            <button data-repeater-create type="button" class="btn btn-success btn-icon ml-2 mb-2"><i class="ik ik-plus"></i></button>
                                         </form>
                                     </div>
                                 </div>
@@ -791,51 +434,147 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card">
-                                    <div class="card-header"><h3>Select 2</h3></div>
+                                    <div class="card-header">
+                                        <h3>Mini Color</h3>
+                                    </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <form class="sample-form">
-                                                    <div class="form-group">
-                                                        <label for="">Single select box using select 2 </label>
-                                                        <select class="form-control select2">
-                                                            <option value="cheese">Cheese</option>
-                                                            <option value="tomatoes">Tomatoes</option>
-                                                            <option value="mozarella">Mozzarella</option>
-                                                            <option value="mushrooms">Mushrooms</option>
-                                                            <option value="pepperoni">Pepperoni</option>
-                                                            <option value="onions">Onions</option>
-                                                        </select>
+                                            <div class="col-sm-12">
+                                                <h4 class="sub-title">Control-Types</h4>
+                                                <div class="card-block inner-card-block">
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                          <h4 class="sub-title">Hue (default)</h4>
+                                                          <input type="text" id="hue-demo" class="form-control demo" data-control="hue" value="#ff6161">
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                          <h4 class="sub-title">Saturation</h4>
+                                                          <input type="text" id="saturation-demo" class="form-control demo" data-control="saturation" value="#0088cc">
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                          <h4 class="sub-title">Brightness</h4>
+                                                          <input type="text" id="brightness-demo" class="form-control demo" data-control="brightness" value="#00ffff">
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                          <h4 class="sub-title">Wheel</h4>
+                                                          <input type="text" id="wheel-demo" class="form-control demo" data-control="wheel" value="#ff99ee">
+                                                        </div>
                                                     </div>
-                                                </form>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <form class="sample-form">
-                                                    <div class="form-group">
-                                                        <label for="">Multiple select box using select 2 </label>
-                                                        <select class="form-control select2" multiple="multiple">
-                                                            <option value="cheese">Cheese</option>
-                                                            <option value="tomatoes">Tomatoes</option>
-                                                            <option value="mozarella">Mozzarella</option>
-                                                            <option value="mushrooms">Mushrooms</option>
-                                                            <option value="pepperoni" selected>Pepperoni</option>
-                                                            <option value="onions">Onions</option>
-                                                        </select>
-                                                    </div>
-                                                </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-header"><h3>Summernote Editor</h3></div>
                                     <div class="card-body">
-                                        <textarea class="form-control html-editor" rows="10"></textarea>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h4 class="sub-title">Input Modes</h4>
+                                                <div class="card-block inner-card-block">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="row">
+                                                                <div class="col-sm-12 mb-30">
+                                                                  <h4 class="sub-title">Text field </h4>
+                                                                  <input type="text" id="text-field" class="form-control demo" value="#70c24a">
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                  <h4 class="sub-title">Hidden Input</h4>
+                                                                  <input type="hidden" id="hidden-input" class="demo" value="#db913d">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <h4 class="sub-title">Brightness</h4>
+                                                            <input type="text" id="inline" class="form-control demo" data-inline="true" value="#4fc8db">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                            <h4 class="sub-title">Positions</h4>
+                                                <div class="card-block inner-card-block">
+                                                    <div class="row">
+                                                        <div class="col-sm-3">
+                                                          <h4 class="sub-title">bottom left (default)</h4>
+                                                          <input type="text" id="position-bottom-left" class="form-control demo" data-position="bottom left" value="#0088cc">
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                          <h4 class="sub-title">top left</h4>
+                                                          <input type="text" id="position-top-left" class="form-control demo" data-position="top left" value="#0088cc">
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                          <h4 class="sub-title">bottom right</h4>
+                                                          <input type="text" id="position-bottom-right" class="form-control demo" data-position="bottom right" value="#0088cc">
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                          <h4 class="sub-title">top right</h4>
+                                                          <input type="text" id="position-top-right" class="form-control demo" data-position="top right" value="#0088cc">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h4 class="sub-title">RGB(A)</h4>
+                                                <div class="card-block inner-card-block">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                          <h4 class="sub-title">RGB</h4>
+                                                          <input type="text" id="rgb" class="form-control demo" data-format="rgb" value="rgb(33, 147, 58)">
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                          <h4 class="sub-title">RGBA</h4>
+                                                          <input type="text" id="rgba" class="form-control demo" data-format="rgb" data-opacity=".5" value="rgba(52, 64, 158, 0.5)">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h4 class="sub-title">More</h4>
+                                                <div class="card-block inner-card-block">
+                                                    <div class="row mb-30">
+                                                        <div class="col-sm-6">
+                                                          <h4 class="sub-title">Opacity</h4>
+                                                          <input type="text" id="opacity" class="form-control demo" data-opacity=".5" value="#766fa8">
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                          <h4 class="sub-title">Keywords</h4>
+                                                          <input type="text" id="keywords" class="form-control demo" data-keywords="transparent, initial, inherit" value="transparent">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-30">
+                                                        <div class="col-sm-6">
+                                                          <h4 class="sub-title">Default Value</h4>
+                                                          <input type="text" id="default-value" class="form-control demo" data-defaultValue="#ff6600">
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                          <h4 class="sub-title">Letter Case</h4>
+                                                          <input type="text" id="letter-case" class="form-control demo" data-letterCase="uppercase" value="#abcdef">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-30">
+                                                        <div class="col-sm-6">
+                                                          <h4 class="sub-title">Swatches</h4>
+                                                          <input type="text" id="swatches" class="form-control demo" data-swatches="#fff|#000|#f00|#0f0|#00f|#ff0|#0ff" value="#abcdef">
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                          <h4 class="sub-title">Swatches and opacity</h4>
+                                                          <input type="text" id="swatches-2" class="form-control demo" data-format="rgb" data-opacity="1" data-swatches="#fff|#000|#f00|#0f0|#00f|#ff0|rgba(0,0,255,0.5)" value="rgba(14, 206, 235, .5)">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1073,13 +812,12 @@
         <script src="../plugins/popper.js/dist/umd/popper.min.js"></script>
         <script src="../plugins/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="../plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
-        <script src="../plugins/select2/dist/js/select2.min.js"></script>
-        <script src="../plugins/summernote/dist/summernote-bs4.min.js"></script>
-        <script src="../plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
-        <script src="../plugins/jquery.repeater/jquery.repeater.min.js"></script>
-        <script src="../plugins/mohithg-switchery/dist/switchery.min.js"></script>
+        <script src="../plugins/moment/moment.js"></script>
+        <script src="../plugins/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js"></script>
+        <script src="../plugins/jquery-minicolors/jquery.minicolors.min.js"></script>
+        <script src="../plugins/datedropper/datedropper.min.js"></script>
         <script src="../dist/js/theme.min.js"></script>
-        <script src="../js/form-advanced.js"></script>
+        <script src="../js/form-picker.js"></script>
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=

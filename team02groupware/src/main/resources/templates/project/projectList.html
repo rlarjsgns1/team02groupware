@@ -6,6 +6,7 @@
 <th:block layout:fragment="customCss">
 	<link rel="stylesheet" href="dist/css/project/project.css">
 	<link rel="stylesheet" href="/plugins/select2/dist/css/select2.min.css">
+	<link rel="stylesheet" href="/plugins/datedropper/datedropper.min.css">
 </th:block>
 <th:block layout:fragment="customTitle">
 	<title>프로젝트 리스트</title>
@@ -14,6 +15,7 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
+			    
 			$(".pr-submit-btn").click(function(checkInput) {
 				if ($('[name="projectTitle"]').val() == '') {
 					$('[name="projectTitle"]').css("border", "1px solid red");
@@ -36,9 +38,13 @@
 
 			$(".pr-setting-btn").on('click', function() {
 				event.stopPropagation();
-				$("#editLayoutItem").modal("show");
+				$('#editLayoutItem').modal({backdrop: 'static'});
+
 			})
-		})
+			
+
+		})  
+	
 	</script>
 
 </th:block>
@@ -69,7 +75,7 @@
 
 									<button type="button"
 										class="pr-setting-btn btn btn-icon btn-outline-secondary"
-										data-toggle="modal" data-target="#editLayoutItem">
+										data-toggle="modal" data-target="#editLayoutItem" data-backdrop="static" data-keyboard="false">
 										<i class="ik ik-settings"></i>
 									</button>
 
@@ -234,7 +240,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="editLayoutItemLabel"></h5>
+					<h5 class="modal-title" id="editLayoutItemLabel">프로젝트 수정</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -255,15 +261,17 @@
 										<label for="projectDesc">설명(선택사항)</label> <input type="text"
 											class="form-control" id="projectDesc">
 									</div>
+									
+                                   <div class="form-group">
+                                                <label for="date">시작일</label>
+                                                <input type="text" class="form-control datetimepicker-input" id="datepicker" data-toggle="datetimepicker" data-target="#datepicker">
+                                            </div>
+                                            
+                                        
 
-									<div class="form-group">
-										<label class="custom-control custom-radio"> <input
-											type="radio" class="custom-control-input"> <span
-											class="custom-control-label">&nbsp;Remember me</span>
-										</label>
-									</div>
-									<button type="submit" class="btn btn-primary mr-2">Submit</button>
-									<button class="btn btn-light">Cancel</button>
+									
+									<button type="submit" class="btn btn-primary mr-2">수정</button>
+									<button class="btn btn-light">취소</button>
 								</form>
 							</div>
 
@@ -391,6 +399,10 @@
 	<script src="js/tables.js"></script>
 	<script src="js/charts.js"></script>
 	<script src="dist/js/theme.min.js"></script>
+	<script src="js/form-picker.js"></script>
+	<script src="plugins/datedropper/datedropper.min.js"></script>
+	<script src="plugins/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js"></script>
+	 
 	<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 	<script>
 		(
