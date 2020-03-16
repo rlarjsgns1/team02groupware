@@ -10,7 +10,7 @@
 		<!-- CSS custom -->
 		<th:block layout:fragment="customCss">
 			 <link rel="stylesheet" href="/dist/css/electronicApproval/electronicApproval.css">
-			 <link rel="stylesheet" href="/plugins/summernote/dist/summernote-bs4.css">
+			 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 			 <link rel="stylesheet" href="/dist/css/electronicApproval/electronicApprovalSelect2.min.css">
 		</th:block>
 		
@@ -72,6 +72,20 @@
 						$('.ruletip').css("display","none");
 						$(this).css("color","#bcc8d8");
 					});
+					
+						/* summernote plug-in */
+					   $('#ea-summernote').summernote({
+				             height: 300,                 
+				             minHeight: null,             
+				             maxHeight: null,             
+				             focus: true,      
+				             lang: "ko-KR",
+				             popover: {
+				                 image: [],
+				                 link: [],
+				                 air: []
+				               }
+				     });
 				});
 			</script>
 		</th:block>
@@ -168,7 +182,7 @@
 																결재
 																<img src="img/electronicApproval/add.png"
 																	style="position: absolute; bottom: 80px; right: 5px; width: 20px; height: auto; cursor: pointer;"
-																	data-toggle="modal" data-target="#approvalLine" id="addApproverImg">
+																	data-toggle="modal" data-target="#approvalLine" id="addApproverImg" data-backdrop="static" data-keyboard="false">
 															</div>
 														</td>
 														<td style="background: #f9f9f9; border-: 1px solid #cdcdcd;">직급1</td>
@@ -200,7 +214,7 @@
 													<tr style="height: 50px; border: 1px solid #cdcdcd;" id="agreementName">
 														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;">
 															<div class="col-md-12">합의
-																<img src="img/electronicApproval/add.png" style="position: absolute; right: 5px; width: 20px; height: auto; cursor: pointer;" data-toggle="modal" data-target="#agreementLine" id="addAgreementImg">							
+																<img src="img/electronicApproval/add.png" style="position: absolute; right: 5px; width: 20px; height: auto; cursor: pointer;" data-toggle="modal" data-target="#agreementLine" id="addAgreementImg" data-backdrop="static" data-keyboard="false">							
 															</div>
 														</td>
 														<td></td>
@@ -349,17 +363,17 @@
                                  <!-- 문서 기안하기 결재선 지정 End -->
                                  
                                  <div class="card-header d-block">                                   
-                                       <h6>제목 </h6>
+                                       <h6>제목</h6>
+                                       <input type="text" class="form-control document-draft-title" >
                                  </div>
                                  
                                  <!-- 문서 기안하기 상세내용 summer note editor Start -->    
                                     <div class="card-body  table-border-style">
                                        <h6>상세 입력 </h6>
                                        <!-- <p>문서 종류 선택 시 상세 입력이 노출됩니다.</p> -->
-                                    	<textarea class="form-control html-editor" rows="10" ></textarea>
-                                    	
+                                    	<textarea id="ea-summernote" rows="10" ></textarea>
                                     </div>
-                                  </div> 
+                                  </div>            
                         		</div>
                         		<!-- 문서 기안하기 상세내용 summer note editor End -->    
                         		
@@ -382,10 +396,12 @@
         <script src="/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
         <script src="/plugins/screenfull/dist/screenfull.js"></script>
         <script src="/plugins/sweetalert/dist/sweetalert.min.js"></script>
-        <script src="/plugins/summernote/dist/summernote-bs4.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+        <script src="/summernote/lang/summernote-ko-KR.js"></script>
         <script src="/dist/js/theme.min.js"></script>
         <script src="/js/layouts.js"></script>
         <script src="dist/js/electronicApproval/electronicApprovalSelect2.min.js"></script>
+        
         <!-- select2 플러그인 사용 Start (select2 플러그인 미적용 때문에 하단에 배치)-->
 		<script type="text/javascript">
 		

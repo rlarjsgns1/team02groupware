@@ -71,17 +71,36 @@
 	} 
 	
 	.document-draft-btn{/* 기안하기 화면 기본설정 테이블 버튼 */
+		width: 155px;
 		display: inline-block;
-		width: 170px;
+		
+		
 		
 	} 
-	.note-toolbar>.note-btn-group,.note-toolbar>.btn-group,.note-toolbar>.note-style{ /* summer note 툴바 css */
-		margin-right : 0px !important;
-	}
+ 	.note-toolbar>.note-btn-group,.note-toolbar>.btn-group,.note-toolbar>.note-style{/*  summer note 툴바 css */
+		/* margin-right : 0px !important; */
+		
+	} 
 	
-	#approval-format-set-btn{
+	#approval-format-set-btn{ /* 양식 생성 화면 결재 양식 설정 btn css */
 		color: #007bff;
 		margin-left: 10px;
 		cursor: pointer;
 		font-size: 0.9rem;
+	}
+	
+	.document-draft-title{ /* 기안하기 화면 제목 input box css */
+    	border-color: #343a40;
+	}
+	
+	.approval-format-type-title{ /* 결재 양식 화면 결재양식 설정 css */
+		padding-left: 20px;
+	}
+	
+	tbody>tr{ /* 전자결재 관련 테이블 tbody>tr css */
+		cursor: pointer;
+	}
+	
+	.document-form-type-list{
+		cursor: pointer;
 	}

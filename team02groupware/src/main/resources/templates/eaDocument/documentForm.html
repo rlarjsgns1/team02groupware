@@ -10,11 +10,11 @@
 		<!-- CSS custom -->
 		<th:block layout:fragment="customCss">
 			<link rel="stylesheet" href="/dist/css/electronicApproval/electronicApproval.css">
-			 <link rel="stylesheet" href="/plugins/summernote/dist/summernote-bs4.css">
+			<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 		</th:block>
 		
 		<th:block layout:fragment="customTitle">
-		<title>양식함 관리</title>
+		<title>양식 생성</title>
 		</th:block>
 	
 		<!--  Script custom -->
@@ -87,6 +87,20 @@
 						$('.ruletip').css("display","none");
 						$(this).css("color","#bcc8d8");
 					});
+					
+					/* summernote plug-in */
+					   $('#ea-summernote').summernote({
+				             height: 300,                 
+				             minHeight: null,             
+				             maxHeight: null,             
+				             focus: true,
+				             lang: "ko-KR",
+				             popover: {
+				                 image: [],
+				                 link: [],
+				                 air: []
+				               }
+				     });
 				});
 			</script>
 		</th:block>
@@ -112,7 +126,7 @@
                                                     <tr>
                                                         <td class="table-active document-form-table-td">분류</td>
                                                         <td>          
-                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-7" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-9" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     		분류 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                				</button>
 			                                                <div class="dropdown-menu">
@@ -121,18 +135,18 @@
 			                                                </div>
                                               		  </td>
                                                         <td class="table-active document-form-table-td">양식명</td>
-                                                        <td><input type="text" class="form-control col-sm-7"></td>
+                                                        <td><input type="text" class="form-control col-sm-9"></td>
                                                     </tr>
                                                      <tr>
                                                         <td class="table-active document-form-table-td"><span>약칭</span><i class="ik ik-help-circle"></i></td>
-                                                        <td><input type="text" class="form-control col-sm-7"></td>
+                                                        <td><input type="text" class="form-control col-sm-9"></td>
                                                         <td class="table-active document-form-table-td">설명</td>
-                                                        <td><input type="text" class="form-control col-sm-7"></td>
+                                                        <td><input type="text" class="form-control col-sm-9"></td>
                                                     </tr>
                                                      <tr>
                                                         <td class="table-active document-form-table-td"><span>보존 연한</span><i class="ik ik-help-circle"></i></td>
                                                         <td>
-                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-7" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-9" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     		보존연한 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                				</button>
 			                                                <div class="dropdown-menu">
@@ -150,7 +164,7 @@
 			                                                </td>
                                                         <td class="table-active document-form-table-td"><span>보안 등급</span><i class="ik ik-help-circle"></i></td>
                                                         <td>
-                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-7" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-9" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     		보안등급 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                				</button>
 			                                                <div class="dropdown-menu">
@@ -187,11 +201,11 @@
                                  
                                  <!-- 문서 양식 상세내용 summer note editor Start -->    
                                     <div class="card-body  table-border-style">
-                                    	<h6>상세 입력 </h6>
-                                        <textarea class="form-control html-editor" rows="10"></textarea>
-                                    </div>
-                        		<!-- 문서 양식 상세내용 summer note editor End -->
-                        		</div>    
+                                    	<h6>상세 입력 </h6>                                   
+                                    <textarea id="ea-summernote" rows="10" ></textarea>                              
+                                    </div>                      		
+                        		</div>                         		                                	 
+                                <!-- 문서 양식 상세내용 summer note editor End -->  	    
                         		</div>
                         		
                         		<!-- 양식생성 페이지 테이블 내 약칭,보존연한,보안등급 물음표 아이콘 Modal View Start --> 
@@ -211,39 +225,65 @@
 		                              <div class="modal-header">
 		                                  <h5 class="modal-title">결재 포맷을 선택하세요.</h5>
 		                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		                                      <span aria-hidden="true">&times;</span>
+		                                      <span aria-hidden="true"></span>
 		                                  </button>
 		                              </div>
 		                              <div class="modal-body">
 		                                	<div class="card">
-		                                		<div class="card-header">
-		                                		1
+		                                	  <div class="approval-format-type-title">
+		                                		 <div class="form-radio">
+		                                		  <div class="radio">
+			                                		<label>
+	                                                    <input type="radio" name="radio">
+	                                                    <i class="helper"></i>결재
+	                                                </label>
+                                                  </div>
+                                                 </div>
+		                                		</div>
+		                                		<img src="img/electronicApproval/approval_format.PNG" style="width: 90%; max-height: 250px;">
+		                                		<div class="approval-format-type-title">
+		                                		<div class="form-radio">
+		                                		  <div class="radio">
+			                                		<label>
+	                                                    <input type="radio" name="radio">
+	                                                    <i class="helper"></i>신청
+	                                                </label>
+                                                  </div>
+                                                </div>		                             		
 		                                		</div>
 		                                		<div class="card-body">
-		                                		2
+		                                		해당 결재 양식은 준비 중 입니다.
 		                                		</div>
-		                                		<div class="card-header">
-		                                		3
-		                                		</div>
-		                                		<div class="card-body">
-		                                		4
-		                                		</div>
-		                                		<div class="card-header">
-		                                		5
-		                                		</div>
-		                                		<div class="card-body">
-		                                		6
-		                                		</div>
-		                                		<div class="card-header">
-		                                		7
+		                                		<div class="approval-format-type-title">
+		                                		<div class="form-radio">
+		                                		  <div class="radio">
+			                                		<label>
+	                                                    <input type="radio" name="radio">
+	                                                    <i class="helper"></i>결재 후 송신
+	                                                </label>
+                                                  </div>
+                                                </div>		                                		
 		                                		</div>
 		                                		<div class="card-body">
-		                                		8
+		                                		해당 결재 양식은 준비 중 입니다.
+		                                		</div>
+		                                		<div class="approval-format-type-title">
+		                                		<div class="form-radio">
+		                                		  <div class="radio">
+			                                		<label>
+	                                                    <input type="radio" name="radio">
+	                                                    <i class="helper"></i>회람
+	                                                </label>
+                                                  </div>
+                                                </div>		                                		
+		                                		</div>
+		                                		<div class="card-body">
+		                                		해당 결재 양식은 준비 중 입니다.
 		                                		</div>
 		                                	</div>
 		                              </div>
 		                              <div class="modal-footer">
-		                                  <button type="button" class="btn btn-primary">다음</button>
+		                                  <button type="button" class="btn btn-primary">확인</button>
 		                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 		                              </div>
 		                          	</div>
@@ -259,7 +299,8 @@
         <script src="/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
         <script src="/plugins/screenfull/dist/screenfull.js"></script>
         <script src="/plugins/sweetalert/dist/sweetalert.min.js"></script>
-        <script src="/plugins/summernote/dist/summernote-bs4.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+        <script src="/summernote/lang/summernote-ko-KR.js"></script>
         <script src="/dist/js/theme.min.js"></script>
         <script src="/js/layouts.js"></script>
 
