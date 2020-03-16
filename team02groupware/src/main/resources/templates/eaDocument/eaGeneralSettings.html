@@ -53,7 +53,7 @@
 					
 					 
 					/*
-					  * @brief 양식생성 페이지 테이블 내 약칭,보존연한,보안등급 물음표 아이콘 Modal Event
+					  * @brief 관리자용 전자결재 기본설정 물음표 아이콘 Modal Event
 					  * @author 김건훈
 					  */	
 					$('.ik-help-circle').on('mouseover',function(e){
@@ -64,7 +64,10 @@
 							$('#modal-content-type').text('결재가 완료된 후 열람할 수 있는 직위 등급을 설정합니다.');	
 						}else if(ruleTipType=='지연 문서 표시'){
 							$('#modal-content-type').text('지연 문서 표시 기간을 선택하면 그 기간 후 관련자의 문서 목록에 빨간색으로 나타납니다.');
+						}else if(ruleTipType=='회사 코드 설정'){
+							$('#modal-content-type').text('문서 번호에 사용할 회사 코드를 설정 하세요.');
 						}
+					
   						var sWidth = window.innerWidth;
 						var sHeight = window.innerHeight;
 						var mWidth = $('.ruletip').width();
@@ -99,7 +102,7 @@
 	                           
 	                           <div class="electronic-approval-form">   
 	                                                  
-                               <!-- 문서 양식 기본설정 테이블 Start -->
+                               <!-- 관리자용 전자결재 기본설정 테이블 Start -->
                                     <div class="card-header d-block">
                                         <h6><span>보안 등급별 열람 설정</span><i class="ik ik-help-circle"></i></h6> 
                                     <div class="card-body p-0 table-border-style">
@@ -135,15 +138,20 @@
                                                      <tr>
                                                         <td class="table-active document-form-table-td">B등급</td>
                                                         <td>
-                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-9" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    		보존연한 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
+                                                   			 결재완료후 직위
+                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    		직위 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                				</button>
 			                                                <div class="dropdown-menu">
-			                                                	<a class="dropdown-item">1년</a>
-			                                                    <a class="dropdown-item">5년</a>
-			                                                    <a class="dropdown-item">10년</a>
-			                                                    <a class="dropdown-item">영구</a>
-			                                                </div>   
+			                                                	<a class="dropdown-item">1등급(대표이사)</a>
+			                                                    <a class="dropdown-item">2등급(이사)</a>
+			                                                    <a class="dropdown-item">3등급(부장)</a>
+			                                                    <a class="dropdown-item">4등급(차장)</a>
+			                                                    <a class="dropdown-item">5등급(과장)</a>
+			                                                    <a class="dropdown-item">6등급(대리)</a>
+			                                                    <a class="dropdown-item">7등급(사원)</a>
+			                                                </div>
+			                                               	 이상 기본열람   
 			                                            </td>             
                                                     </tr>
                                                     <tr>
@@ -158,28 +166,64 @@
                                     </div>
                                     </div>
                                 
-                                 <!-- 문서 양식 기본설정 테이블  End -->
+                                 <!--관리자용 전자결재  기본설정 테이블  End -->
                                  
-                                 <!-- 문서 양식 결재라인 포맷 설정 Start -->  
+                                 <!--지연 문서 표시 설정 Start -->  
                                     <div class="card-header d-block">                                   
                                        
                                         <h6>
                                        		<span>지연 문서 표시</span><i class="ik ik-help-circle"></i>
                                     	</h6>
-                                   
+                                   		 <div class="form-radio">
+                                		  <div class="radio radio-inline">
+	                                		<label>
+                                                   <input type="radio" name="radio">
+                                                   <i class="helper"></i>3일 후
+                                             </label>
+                                           </div>                                     	                                     	
+                                		  <div class="radio radio-inline">
+	                                		<label>
+                                                   <input type="radio" name="radio">
+                                                   <i class="helper"></i>7일 후
+                                             </label>
+                                           </div>                                     	                                     	
+                                		  <div class="radio radio-inline">
+	                                		<label>
+                                                   <input type="radio" name="radio">
+                                                   <i class="helper"></i>15일 후
+                                             </label>
+                                           </div>
+                                           <div class="radio radio-inline">
+	                                		<label>
+                                                   <input type="radio" name="radio">
+                                                   <i class="helper"></i>표시 안 함
+                                             </label>
+                                           </div>
+                                     	</div>
+                                     	
                                     </div>
-                                 <!-- 문서 양식 결재라인 포맷 설정 End -->
+                                 <!-- 지연 문서 표시 설정 End -->
                                  
-                                 <!-- 회사 코드설정 Start -->    
-                                    <div class="card-body  table-border-style">
-                                    	<h6>회사 코드 설정</h6>                                   
-                                         
-                                    </div>                      		
-                        		</div>                         		                                	 
-                                <!-- 회사 코드설정 End -->  	    
+                              	 <!-- 회사 코드 설정 Start -->    
+                                   <div class="card-header d-block">
+                                  	<h6>
+										<span>회사 코드 설정</span><i class="ik ik-help-circle"></i>
+                                  	</h6>                                   
+                                       <input type="text" class="form-control company-code-title col-sm-3" >
+                                  </div>                      		                        		                      		                                	 
+                              	 <!-- 회사 코드 설정 End -->
+                                 
+                                 <!-- 문서 번호 설정 Start -->    
+                                   <div class="card-header d-block">
+                                  	<h6>
+										<span>문서 번호 설정</span><i class="ik ik-help-circle"></i>
+                                  	</h6>                                   
+                                      
+                                  </div>                      		                        		                      		                                	 
+                              	 <!-- 문서 번호 설정 End --> 	    
                         		</div>
                         		
-                        		<!-- 양식생성 페이지 테이블 내 약칭,보존연한,보안등급 물음표 아이콘 Modal View Start --> 
+                        		<!-- 관리자용 전자결재 기본설정 물음표 아이콘 Modal View Start --> 
 	                        	<div class="modal-dialog modal-sm mt-0 mb-0 ruletip" role="document">
 						        	<div class="modal-content">
 	                               		 <div class="modal-body">
@@ -187,80 +231,8 @@
 	                                	 </div>
 	                           		 </div>
                            		</div>
-                        		<!-- 양식생성 페이지 테이블 내 약칭,보존연한,보안등급 물음표 아이콘 Modal View End -->
-                        		
-                        		<!-- 결재 포맷지정 Modal View Start -->
-		                        <div class="modal fade show" id="approval-format" tabindex="-1" role="dialog" aria-hidden="true">
-		                          <div class="modal-dialog modal-lg mt-0 mb-0 modal-dialog-centered" role="document">
-		                           <div class="modal-content">
-		                              <div class="modal-header">
-		                                  <h5 class="modal-title">결재 포맷을 선택하세요.</h5>
-		                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		                                      <span aria-hidden="true"></span>
-		                                  </button>
-		                              </div>
-		                              <div class="modal-body">
-		                                	<div class="card">
-		                                	  <div class="approval-format-type-title">
-		                                		 <div class="form-radio">
-		                                		  <div class="radio">
-			                                		<label>
-	                                                    <input type="radio" name="radio">
-	                                                    <i class="helper"></i>결재
-	                                                </label>
-                                                  </div>
-                                                 </div>
-		                                		</div>
-		                                		<img src="img/electronicApproval/approval_format.PNG" style="width: 90%; max-height: 250px;">
-		                                		<div class="approval-format-type-title">
-		                                		<div class="form-radio">
-		                                		  <div class="radio">
-			                                		<label>
-	                                                    <input type="radio" name="radio">
-	                                                    <i class="helper"></i>신청
-	                                                </label>
-                                                  </div>
-                                                </div>		                             		
-		                                		</div>
-		                                		<div class="card-body">
-		                                		해당 결재 양식은 준비 중 입니다.
-		                                		</div>
-		                                		<div class="approval-format-type-title">
-		                                		<div class="form-radio">
-		                                		  <div class="radio">
-			                                		<label>
-	                                                    <input type="radio" name="radio">
-	                                                    <i class="helper"></i>결재 후 송신
-	                                                </label>
-                                                  </div>
-                                                </div>		                                		
-		                                		</div>
-		                                		<div class="card-body">
-		                                		해당 결재 양식은 준비 중 입니다.
-		                                		</div>
-		                                		<div class="approval-format-type-title">
-		                                		<div class="form-radio">
-		                                		  <div class="radio">
-			                                		<label>
-	                                                    <input type="radio" name="radio">
-	                                                    <i class="helper"></i>회람
-	                                                </label>
-                                                  </div>
-                                                </div>		                                		
-		                                		</div>
-		                                		<div class="card-body">
-		                                		해당 결재 양식은 준비 중 입니다.
-		                                		</div>
-		                                	</div>
-		                              </div>
-		                              <div class="modal-footer">
-		                                  <button type="button" class="btn btn-primary">확인</button>
-		                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-		                              </div>
-		                          	</div>
-		                         </div>
-		                       </div>
-	                     	<!-- 결재 포맷지정 Modal View Start --> 
+                        		<!-- 관리자용 전자결재 기본설정 물음표 아이콘 Modal View End -->
+                        	
 		</th:block>
 
 	<th:block layout:fragment="customJs">        

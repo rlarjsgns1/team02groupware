@@ -89,7 +89,7 @@
 		font-size: 0.9rem;
 	}
 	
-	.document-draft-title{ /* 기안하기 화면 제목 input box css */
+	.document-draft-title, .company-code-title{ /* 기안하기 화면 제목 input box css */
     	border-color: #343a40;
 	}
 	
@@ -97,7 +97,7 @@
 		padding-left: 20px;
 	}
 	
-	.table-hover{ /* 전자결재 관련 테이블 tbody>tr css */
+	.table-hover{ /* 전자결재 관련 테이블 css*/
 		cursor: pointer;
 	}
 	
