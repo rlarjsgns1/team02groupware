@@ -4,6 +4,7 @@ public class SearchDto {
 	
 	private String boardCategory = "전체";
 	private String searchWord;
+	private String searchBoardCategory;
 	
 	private String isSearchCheck;
 	private String searchBy;
@@ -12,13 +13,20 @@ public class SearchDto {
 	
 	
 	
+	
+	
 	@Override
 	public String toString() {
-		return "SearchDto [boardCategory=" + boardCategory + ", searchWord=" + searchWord + ", isSearchCheck="
-				+ isSearchCheck + ", searchBy=" + searchBy + ", searchDate=" + searchDate + ", searchInput="
-				+ searchInput + "]";
+		return "SearchDto [boardCategory=" + boardCategory + ", searchWord=" + searchWord + ", searchBoardCategory="
+				+ searchBoardCategory + ", isSearchCheck=" + isSearchCheck + ", searchBy=" + searchBy + ", searchDate="
+				+ searchDate + ", searchInput=" + searchInput + "]";
 	}
-	
+	public String getSearchBoardCategory() {
+		return searchBoardCategory;
+	}
+	public void setSearchBoardCategory(String searchBoardCategory) {
+		this.searchBoardCategory = searchBoardCategory;
+	}
 	public String getSearchWord() {
 		return searchWord;
 	}

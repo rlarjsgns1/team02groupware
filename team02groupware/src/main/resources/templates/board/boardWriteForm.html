@@ -28,6 +28,40 @@
 	            lang: 'ko-KR'// set focus to editable area after initializing summernote
 	    });
 	    
+	    $('#boardInsertBtn').click(function(){
+	    	var boardCategory = $('[name=boardCategory]')
+	    	var boardTitle = $('[name=boardTitle]')
+	    	var boardContentText = $('[name=boardContentText]')
+	    	
+	    	console.log(boardCategory);
+	    	console.log(boardTitle);
+	    	console.log(boardContentText);
+	    	
+	    	if(boardCategory.val() == '카테고리 선택'){
+	    		alert('카테고리를 선택해 주세요.');
+	    		boardCategory.focus();
+	    		
+	    	}else if(boardTitle.val() == ''){
+	    		alert('제목을 입력해 주세요.');
+	    		boardTitle.focus();
+	    		
+	    	}else if(boardContentText.val() == ''){
+	    		alert('내용을 입력해 주세요.');
+	    		boardContentText.focus();
+	    	}else{
+	    		$('#boardInsertForm').submit();
+	    	}
+
+	    	
+	    })
+	    
+	    $('#cancleBtn').click(function(){
+	    	history.back()
+	    	
+	    	
+	    })
+	    
+	    
 	});
 
 </script>
@@ -70,7 +104,7 @@
       
          
           <div style="margin: 25px 0 0 0">
-              <form action="/boardInsert" class="forms-sample" method="post">
+              <form action="/boardInsert" id="boardInsertForm" class="forms-sample" method="post">
                   <div class="row">
                       <div class="col-md-3">
                           <div class="form-group">
@@ -91,7 +125,8 @@
                       <div class="col-md-8">
                           <div class="form-group">
                               <label for="exampleInputPassword4">제목</label>
-                      <input name="boardTitle" type="text" class="form-control" placeholder="게시글 제목을 입력하세요">
+                      <input id="boardTitle" name="boardTitle" type="text" class="form-control" placeholder="게시글 제목을 입력하세요">
+                      
                           </div>
                       </div>
                   </div>
@@ -101,6 +136,7 @@
 	                      <input type="file" name="img[]" class="file-upload-default">
 	                      <div class="input-group col-xs-4">
 	                          <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Image">
+	                          
 	                          <span class="input-group-append">
 	                          <button class="file-upload-browse btn btn-primary" type="button">첨부</button>
 	                          </span>
@@ -114,13 +150,13 @@
 	                  </div>
                   </div>
                   
-                  <button class="btn btn-light float-md-right">취소</button>
-                  <button type="submit" class="btn btn-primary mr-2 float-md-right">확인</button>
               </form>
+                  <button id="cancleBtn" class="btn btn-light float-md-right">취소</button>
+                  <button id="boardInsertBtn" type="button" class="btn btn-primary mr-2 float-md-right">확인</button>
           </div>
       
       <!-- 글쓰기폼 End -->
-      
+     
        
    </div>
    

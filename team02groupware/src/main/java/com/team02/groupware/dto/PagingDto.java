@@ -1,8 +1,6 @@
 package com.team02.groupware.dto;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
 
 public class PagingDto {
 	
@@ -16,20 +14,16 @@ public class PagingDto {
 	private boolean isPrevBtn;
 	private boolean isNextBtn;
 	
-	private String[] btnArr = {"전체", "배송", "사이즈", "재입고", "기타"};
 	private String departList = "전체";
 	
 	
-	
-	
-	
+
 
 	@Override
 	public String toString() {
 		return "PagingDto [viewNum=" + viewNum + ", selectPage=" + selectPage + ", limitNum=" + limitNum
 				+ ", pageFirstNum=" + pageFirstNum + ", pageLastNum=" + pageLastNum + ", isPrevBtn=" + isPrevBtn
-				+ ", isNextBtn=" + isNextBtn + ", btnArr=" + Arrays.toString(btnArr) + ", departList=" + departList
-				+ "]";
+				+ ", isNextBtn=" + isNextBtn + ", departList=" + departList + "]";
 	}
 
 	public String getDepartList() {
@@ -40,13 +34,7 @@ public class PagingDto {
 		this.departList = departList;
 	}
 
-	public String[] getBtnArr() {
-		return btnArr;
-	}
-
-	public void setBtnArr(String[] btnArr) {
-		this.btnArr = btnArr;
-	}
+	
 
 	public int getLimitNum() {
 		return limitNum;
