@@ -50,7 +50,7 @@ public class ElectronicApprovalController {
 	 
 	 /*
 	  * @method selectDocumentFormList()
-	  * @brief 양식함 리스트 method
+	  * @brief 관리자용 양식함 리스트 method
 	  * @author 김건훈
 	  */
 	 @GetMapping("/selectDocumentFormList")
@@ -60,7 +60,7 @@ public class ElectronicApprovalController {
 	 
 	 /*
 	  * @method insertDocumentForm()
-	  * @brief 양식 생성 method
+	  * @brief 관리자용 양식 생성 method
 	  * @author 김건훈
 	  */
 	 @GetMapping("/insertDocumentForm")
@@ -78,4 +78,36 @@ public class ElectronicApprovalController {
 	 public String approvalFormat() {
 		 return "eaDocument/eaFormat/approvalFormat";
 	 }
+	 
+	 /*
+	  * @method insertDocumentDraft()
+	  * @brief 문서 기안하기 method
+	  * @author 김건훈
+	  */
+	 @GetMapping("/insertDocumentDraft")
+	 public String insertDocumentDraft() {
+		 return "eaDocument/documentDraft";
+	 }
+	 
+	
+	 /*
+	  * @method selectAllDocumentListForSupervisor()
+	  * @brief 전자결재 관리자용 전체문서 리스트
+	  * @author 김건훈
+	  */	
+	 @GetMapping("/selectAllDocumentListForSupervisor")
+	 public String selectAllDocumentListForSupervisor() {
+			return "eaDocument/documentListForSupervisor";
+	}
+	 
+	 /*
+	  * @method selectAllDocumentListForSupervisor()
+	  * @brief 전자결재 관리자용 임시 삭제문서 보관함 리스트
+	  * @author 김건훈
+	  */	
+	 @GetMapping("/deleteDocumentList")
+	 public String deleteDocumentList() {
+			return "eaDocument/deleteDocumentList";
+	}	 
+	 
 }
