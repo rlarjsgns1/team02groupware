@@ -1,8 +1,6 @@
 package com.team02.groupware.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team02.groupware.dto.BoardDto;
+import com.team02.groupware.dto.CommentDto;
 import com.team02.groupware.dto.PagingDto;
 import com.team02.groupware.dto.SearchDto;
 import com.team02.groupware.service.BoardService;
@@ -81,53 +79,102 @@ public class BoardController {
 	}
 
 	@GetMapping("/boardDetailView")
-	public String BoardDetailView(Model model, BoardDto bDto, @RequestParam(value="boardNum", required = false) Object boardNum) {
+	public String BoardDetailView(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto, @RequestParam(value="boardNum", required = false) Object boardNum) {
 		
 		if(boardNum != null) System.out.println("test:" + boardNum.toString());
 		System.out.println("보드디테일뷰 bDto 투스트링 : "+bDto.toString());
 		
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		boardMap = boardService.selectBoardDetailView(bDto);
+		System.out.println("보드디테일뷰 컨트롤러 보드리스트 : " + boardMap.get("boardList"));
+		
+		model.addAttribute("boardList", boardMap.get("boardList"));
+		model.addAttribute("commentList", boardMap.get("commentList"));
+		model.addAttribute("pagingDto", pDto);
+		model.addAttribute("searchDto", sDto);
 		
 		return "board/boardDetailView";
 	}
 	
 	@GetMapping("/boardUpdateForm")
-	public String boardUpdateForm(Model model) {
+	public String boardUpdateForm(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto) {
 		
-		model.addAttribute("title", "boardUpdateForm");
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		Map<String, Object> boardMap2 = new HashMap<String, Object>();
+		
+		boardMap = boardService.getDepartList();
+		boardMap2 = boardService.selectBoardUpdateForm(bDto);
+		
+		model.addAttribute("departList", boardMap.get("departList"));
+		model.addAttribute("boardList", boardMap2.get("boardList"));
+		model.addAttribute("pagingDto", pDto);
+		model.addAttribute("searchDto", sDto);
 		
 		return "board/boardUpdateForm";
 	}
 	
-	@GetMapping("/boardUpdate")
-	public String boardUpdate(Model model) {
+	@PostMapping("/boardUpdate")
+	public String boardUpdate(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto, RedirectAttributes redirectA) {
 		
-		model.addAttribute("title", "boardUpdate");
+		System.out.println("보드업데이트" + bDto.toString());
+		System.out.println("보드업데이트" + pDto.toString());
+		System.out.println("보드업데이트" + sDto.toString());
 		
-		return "index";
+		boardService.updateBoard(bDto);
+		
+		redirectA.addAttribute("boardNum", bDto.getBoardNum());
+		redirectA.addAttribute("selectPage", pDto.getSelectPage());
+		redirectA.addAttribute("viewNum", pDto.getViewNum());
+		redirectA.addAttribute("boardCategory", sDto.getSearchBoardCategory());
+		redirectA.addAttribute("isSearchCheck", sDto.getIsSearchCheck());
+		redirectA.addAttribute("searchBy", sDto.getSearchBy());
+		redirectA.addAttribute("searchDate", sDto.getSearchDate());
+		redirectA.addAttribute("searchInput", sDto.getSearchInput());
+	
+		return "redirect:/boardDetailView";
 	}
 	
 	@GetMapping("/boardDelete")
-	public String boardDelete(Model model) {
+	public String boardDelete(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto, RedirectAttributes redirectA) {
 		
-		model.addAttribute("title", "boardDelete");
+		System.out.println("boardDelete bDto :  " + bDto);
+		System.out.println("boardDelete pDto :  " + pDto);
+		System.out.println("boardDelete sDto :  " + sDto);
 		
-		return "index";
+		boardService.deleteBoard(bDto);
+		
+		redirectA.addAttribute("selectPage", pDto.getSelectPage());
+		redirectA.addAttribute("viewNum", pDto.getViewNum());
+		redirectA.addAttribute("boardCategory", sDto.getBoardCategory());
+		redirectA.addAttribute("isSearchCheck", sDto.getIsSearchCheck());
+		redirectA.addAttribute("searchBy", sDto.getSearchBy());
+		redirectA.addAttribute("searchDate", sDto.getSearchDate());
+		redirectA.addAttribute("searchInput", sDto.getSearchInput());
+		
+		return "redirect:/boardList";
 	}
 	
-	@GetMapping("/commentWrite")
-	public String commentWrite(Model model) {
+	@PostMapping("/commentInsert")
+	public @ResponseBody Map<String, Object> ajaxResponse(Model model, BoardDto bDto, CommentDto cDto) {
 		
-		model.addAttribute("title", "commentWrite");
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		System.out.println(bDto.getBoardNum());
+		System.out.println(cDto.getCommentContent());
 		
-		return "index";
+		boardMap = boardService.commentInsert(bDto, cDto);
+		
+		return boardMap;
 	}
 	
-	@GetMapping("/commentUpdate")
-	public String commentUpdate(Model model) {
+	
+	@PostMapping("/commentUpdate")
+	public @ResponseBody Map<String, Object> commentUpdate(Model model, CommentDto cDto) {
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		System.out.println("커멘트업데이트 cDto : " + cDto);
 		
-		model.addAttribute("title", "commentUpdate");
-		
-		return "index";
+		boardService.commentUpdate(cDto);
+		boardMap.put("commentDto", cDto);
+		return boardMap;
 	}
 	
 	@GetMapping("/commentDelete")
@@ -138,15 +185,5 @@ public class BoardController {
 		return "index";
 	}
 	
-	@PostMapping("/ajaxResponse")
-	public @ResponseBody List<String> ajaxResponse(Model model, @RequestBody BoardDto map) {
-		
-		System.out.println("ajax로 보내진 배열의 값 : {}" + map);
-		System.out.println(map.getBoardCategory());
-		System.out.println(map.getBoardTitle());
-		model.addAttribute("title", "ajaxResponse");
-		List<String> list = new ArrayList<String>();
-		return list;
-	}
 
 }

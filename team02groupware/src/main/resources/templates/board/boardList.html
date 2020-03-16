@@ -83,8 +83,7 @@
 		var searchBy = searchDto.searchBy
 		var searchDate = searchDto.searchDate
 		var searchInput = searchDto.searchInput
-		
-		
+
 		console.log(selectPage);
 		console.log(viewNum);
 		console.log(boardCategory);
@@ -189,7 +188,8 @@
        </div>
    </div>
    <!-- 게시판 페이지 헤더 End -->
-
+	
+	
 	<div class="row">
 		<div class="col-md-12">
 			<!------ viewNum 드롭다운 Start ------>
@@ -273,7 +273,11 @@
 								<th:block th:if="${b.boardTimeCheck < 1440 }">
 									<th class="noticeTitle" >
 									<a class="noticeTitle" 
-										th:href="${'/boardDetailView?boardNum='+b.boardNum+'&selectPage='+pagingDto.selectPage+'&viewNum='+pagingDto.viewNum}">
+										th:href="@{/boardDetailView(
+										boardNum=${b.boardNum}
+										,selectPage=${pagingDto.selectPage}
+										,viewNum=${pagingDto.viewNum}
+										,boardCategory=${searchDto.boardCategory})}">
 									[[${b.boardTitle}]] 
 									<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>
 											<i class="xi-new" style="color: red;"></i></a></th>
@@ -282,7 +286,11 @@
 								<th:block th:unless="${b.boardTimeCheck < 1440 }">
 									<th class="noticeTitle">
 									<a class="noticeTitle" 
-										th:href="${'/boardDetailView?boardNum='+b.boardNum+'&selectPage='+pagingDto.selectPage+'&viewNum='+pagingDto.viewNum}">
+										th:href="@{/boardDetailView(
+										boardNum=${b.boardNum}
+										,selectPage=${pagingDto.selectPage}
+										,viewNum=${pagingDto.viewNum}
+										,boardCategory=${searchDto.boardCategory})}">
 									[[${b.boardTitle}]] 
 									<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>
 											</a></th>
@@ -293,13 +301,27 @@
 							<th:block th:if="${b.boardCommentCount == 0}">
 								<!-- 게시글 작성 시간이 24시간 이내일 경우 -->
 								<th:block th:if="${b.boardTimeCheck < 1440 }">
-									<th class="noticeTitle"><a class="noticeTitle" th:href="@{/boardDetailView(boardNum=${b.boardNum})}"> [[${b.boardTitle}]]<i class="xi-new"
-										style="color: red;"></i></a></th>
+									<th class="noticeTitle"><a class="noticeTitle" 
+									th:href="@{/boardDetailView(
+										boardNum=${b.boardNum}
+										,selectPage=${pagingDto.selectPage}
+										,viewNum=${pagingDto.viewNum}
+										,boardCategory=${searchDto.boardCategory})}">
+										 [[${b.boardTitle}]]
+										 <i class="xi-new"style="color: red;"></i></a>
+									</th>
 									
 								</th:block>
 								<!-- 게시글 작성 시간이 24시간 지났을 경우 -->
 								<th:block th:unless="${b.boardTimeCheck < 1440 }">
-									<th class="noticeTitle"><a class="noticeTitle" th:href="@{/boardDetailView(boardNum=${b.boardNum})}"> [[${b.boardTitle}]]</a></th>
+									<th class="noticeTitle"><a class="noticeTitle" 
+									th:href="@{/boardDetailView(
+										boardNum=${b.boardNum}
+										,selectPage=${pagingDto.selectPage}
+										,viewNum=${pagingDto.viewNum}
+										,boardCategory=${searchDto.boardCategory})}">
+										 [[${b.boardTitle}]]</a>
+									</th>
 								</th:block>
 							</th:block>
 	
@@ -335,12 +357,26 @@
 							<th:block th:if="${b.boardTimeCheck < 1440 }">
 								<th:block th:if="${searchDto.isSearchCheck == 'true'}">
 									
-									<td><a th:href="@{/boardDetailView(boardNum=${b.boardNum})}"><th:block th:utext="${b.boardSearchWord}"></th:block>
+									<td><a th:href="@{/boardDetailView(
+										boardNum=${b.boardNum}
+										,selectPage=${pagingDto.selectPage}
+										,viewNum=${pagingDto.viewNum}
+										,boardCategory=${searchDto.boardCategory}
+										,isSearchCheck=${searchDto.isSearchCheck}
+										,searchBy=${searchDto.searchBy}
+										,searchDate=${searchDto.searchDate}
+										,searchInput=${searchDto.searchInput})}">
+									<th:block th:utext="${b.boardSearchWord}"></th:block>
 									<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>
 											<i class="xi-new" style="color: red;"></i></a></td>
 								</th:block>
 								<th:block th:if="${searchDto.isSearchCheck != 'true'}">
-									<td><a th:href="@{/boardDetailView(boardNum=${b.boardNum})}">[[${b.boardTitle}]] 
+									<td><a th:href="@{/boardDetailView(
+										boardNum=${b.boardNum}
+										,selectPage=${pagingDto.selectPage}
+										,viewNum=${pagingDto.viewNum}
+										,boardCategory=${searchDto.boardCategory})}">
+										[[${b.boardTitle}]] 
 									<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>
 											<i class="xi-new" style="color: red;"></i></a></td>
 								</th:block>
@@ -348,14 +384,28 @@
 							<!-- 게시글 작성 시간이 24시간 지났을 경우 -->
 							<th:block th:unless="${b.boardTimeCheck < 1440 }">
 								<th:block th:if="${searchDto.isSearchCheck == 'true'}">
-									<td><a th:href="@{/boardDetailView(boardNum=${b.boardNum})}"><th:block th:utext="${b.boardSearchWord}"></th:block>
+									<td><a th:href="@{/boardDetailView(
+										boardNum=${b.boardNum}
+										,selectPage=${pagingDto.selectPage}
+										,viewNum=${pagingDto.viewNum}
+										,boardCategory=${searchDto.boardCategory}
+										,isSearchCheck=${searchDto.isSearchCheck}
+										,searchBy=${searchDto.searchBy}
+										,searchDate=${searchDto.searchDate}
+										,searchInput=${searchDto.searchInput})}">
+										<th:block th:utext="${b.boardSearchWord}"></th:block>
 									<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>
-											</a></td>
+									</a></td>
 								</th:block>
 								<th:block th:if="${searchDto.isSearchCheck != 'true'}">
-									<td><a th:href="@{/boardDetailView(boardNum=${b.boardNum})}">[[${b.boardTitle}]] 
+									<td><a th:href="@{/boardDetailView(
+										boardNum=${b.boardNum}
+										,selectPage=${pagingDto.selectPage}
+										,viewNum=${pagingDto.viewNum}
+										,boardCategory=${searchDto.boardCategory})}">
+										[[${b.boardTitle}]] 
 									<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>
-											</a></td>
+									</a></td>
 								</th:block>
 							</th:block>
 						</th:block>
@@ -365,21 +415,49 @@
 							<!-- 게시글 작성 시간이 24시간 이내일 경우 -->
 							<th:block th:if="${b.boardTimeCheck < 1440 }">
 								<th:block th:if="${searchDto.isSearchCheck == 'true'}">
-									<td><a th:href="@{/boardDetailView(boardNum=${b.boardNum})}"><th:block th:utext="${b.boardSearchWord}"></th:block>
+									<td><a th:href="@{/boardDetailView(
+										boardNum=${b.boardNum}
+										,selectPage=${pagingDto.selectPage}
+										,viewNum=${pagingDto.viewNum}
+										,boardCategory=${searchDto.boardCategory}
+										,isSearchCheck=${searchDto.isSearchCheck}
+										,searchBy=${searchDto.searchBy}
+										,searchDate=${searchDto.searchDate}
+										,searchInput=${searchDto.searchInput})}">
+										<th:block th:utext="${b.boardSearchWord}"></th:block>
 									<i class="xi-new" style="color: red;"></i></a></td>
 								</th:block>
 								<th:block th:if="${searchDto.isSearchCheck != 'true'}">
-									<td><a th:href="@{/boardDetailView(boardNum=${b.boardNum})}"> [[${b.boardTitle}]]<i class="xi-new"
-										style="color: red;"></i></a></td>
+									<td><a th:href="@{/boardDetailView(
+										boardNum=${b.boardNum}
+										,selectPage=${pagingDto.selectPage}
+										,viewNum=${pagingDto.viewNum}
+										,boardCategory=${searchDto.boardCategory})}"> 
+										[[${b.boardTitle}]]
+										<i class="xi-new" style="color: red;"></i></a></td>
 								</th:block>
 							</th:block>
 							<!-- 게시글 작성 시간이 24시간 지났을 경우 -->
 							<th:block th:unless="${b.boardTimeCheck < 1440 }">
 								<th:block th:if="${searchDto.isSearchCheck == 'true'}">
-									<td><a th:href="@{/boardDetailView(boardNum=${b.boardNum})}"><th:block th:utext="${b.boardSearchWord}"></th:block></a></td>
+									<td><a th:href="@{/boardDetailView(
+										boardNum=${b.boardNum}
+										,selectPage=${pagingDto.selectPage}
+										,viewNum=${pagingDto.viewNum}
+										,boardCategory=${searchDto.boardCategory}
+										,isSearchCheck=${searchDto.isSearchCheck}
+										,searchBy=${searchDto.searchBy}
+										,searchDate=${searchDto.searchDate}
+										,searchInput=${searchDto.searchInput})}">
+										<th:block th:utext="${b.boardSearchWord}"></th:block></a></td>
 								</th:block>
 								<th:block th:if="${searchDto.isSearchCheck != 'true'}">
-									<td><a th:href="@{/boardDetailView(boardNum=${b.boardNum})}"> [[${b.boardTitle}]]</a></td>
+									<td><a th:href="@{/boardDetailView(
+										boardNum=${b.boardNum}
+										,selectPage=${pagingDto.selectPage}
+										,viewNum=${pagingDto.viewNum}
+										,boardCategory=${searchDto.boardCategory})}"> 
+										[[${b.boardTitle}]]</a></td>
 								</th:block>
 							</th:block>
 						</th:block>
@@ -521,6 +599,7 @@
 	</div>
 </div>
 </div>
+
 
 
 	

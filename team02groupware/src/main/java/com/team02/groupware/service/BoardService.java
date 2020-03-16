@@ -1,6 +1,8 @@
 package com.team02.groupware.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.team02.groupware.dto.BoardDto;
+import com.team02.groupware.dto.CommentDto;
 import com.team02.groupware.dto.PagingDto;
 import com.team02.groupware.dto.SearchDto;
 import com.team02.groupware.mapper.BoardMapper;
@@ -35,7 +38,7 @@ public class BoardService {
 		Map<String, Object> boardMap = new HashMap<String, Object>();
 		boardMap.put("boardDto", bDto);
 		boardMap.put("searchDto", sDto);
-		int boardCount = boardMapper.getBoardCount(boardMap);
+		int boardCount = boardMapper.selectBoardCount(boardMap);
 		System.out.println("보드서비스 겟보드 카운트 후");
 		System.out.println("보드카운트 : "+ boardCount);
 		
@@ -89,7 +92,7 @@ public class BoardService {
 		System.out.println(boardMap.get("boardDto").toString());
 		System.out.println(boardMap.get("searchDto").toString());
 		List<BoardDto> boardList = new ArrayList<BoardDto>();
-		boardList = boardMapper.getBoardList(boardMap);
+		boardList = boardMapper.selectBoardList(boardMap);
 		System.out.println("보드서비스 겟보드리스트 후");
 		System.out.println("보드리스트 : " + boardList.toString());
 		/* 페이징 값 셋팅 */
@@ -100,11 +103,11 @@ public class BoardService {
 		pDto.setNextBtn(isNextBtn);
 		
 		List<String> departList = new ArrayList<String>();
-		departList = boardMapper.getDepartList();
+		departList = boardMapper.selectDepartList();
 		System.out.println("디파트리스트 투스트링 : "+departList.toString());
 		
 		List<BoardDto> boardNoticeList = new ArrayList<BoardDto>();
-		boardNoticeList = boardMapper.getBoardNoticeList();
+		boardNoticeList = boardMapper.selectBoardNoticeList();
 		System.out.println("겟보드 노티스 리스트 : "+boardNoticeList.toString());
 		
 		
@@ -145,7 +148,7 @@ public class BoardService {
 	public Map<String, Object> getDepartList(){
 
 		List<String> departList = new ArrayList<String>();
-		departList = boardMapper.getDepartList();
+		departList = boardMapper.selectDepartList();
 		
 		Map<String, Object> boardMap = new HashMap<String, Object>();
 		
@@ -156,15 +159,87 @@ public class BoardService {
 	
 	public Map<String, Object> boardInsert(BoardDto bDto){
 
-		boardMapper.boardInsert(bDto);
+		boardMapper.insertBoard(bDto);
 		
-		int maxBoardNum = boardMapper.getMaxBoardNum();
+		int maxBoardNum = boardMapper.selectMaxBoardNum();
 		Map<String, Object> boardMap = new HashMap<String, Object>();
 		boardMap.put("boardNum", maxBoardNum);
 		
 		return boardMap;
 	}
 	
+	public Map<String, Object> selectBoardDetailView(BoardDto bDto){
+		
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		List<BoardDto> boardList = new ArrayList<BoardDto>();
+		List<CommentDto> commentList = new ArrayList<CommentDto>();
+		
+		boardMapper.updateBoardViewCount(bDto);
+		boardList = boardMapper.selectBoardDetailView(bDto);
+		commentList = boardMapper.selectCommentList(bDto);
+		
+		boardMap.put("boardList", boardList);
+		boardMap.put("commentList", commentList);
+		System.out.println("보드디테일뷰 보드리스트 : " + boardList.toString());
+		System.out.println("보드디테일뷰 코멘트리스트 : " + commentList.toString());
+		
+		return boardMap;
+	}
+	
+	
+	public Map<String, Object> selectBoardUpdateForm(BoardDto bDto){
+		
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		List<BoardDto> boardList = new ArrayList<BoardDto>();
+		
+		boardList = boardMapper.selectBoardDetailView(bDto);
+		
+		boardMap.put("boardList", boardList);
+		
+		return boardMap;
+
+	}
+	
+	public void updateBoard(BoardDto bDto) {
+		
+		boardMapper.updateBoard(bDto);
+		
+	}
+	
+	public void deleteBoard(BoardDto bDto) {
+		
+		boardMapper.deleteBoard(bDto);
+		
+	}
+	
+	public Map<String, Object> commentInsert(BoardDto bDto, CommentDto cDto){
+		
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");	
+		Date time = new Date();	
+		String currentTime = format1.format(time);
+		
+		boardMap.put("commentDto", cDto);
+		boardMap.put("currentTime", currentTime);
+		boardMap.put("boardDto", bDto);
+		boardMap.put("isCommentCount", "true");
+		boardMapper.insertComment(boardMap);
+		boardMapper.updateCommentCount(boardMap);
+		
+		int commentNum = boardMapper.selectMaxCommentNum();
+		System.out.println("커멘트 인서트 커멘트넘 : " + commentNum);
+		boardMap.put("commentNum", commentNum);
+		
+		return boardMap;
+	}
+	
+	public void commentUpdate(CommentDto cDto){
+		
+		boardMapper.updateComment(cDto);
+		
+		
+	}
 	
 	
 	
