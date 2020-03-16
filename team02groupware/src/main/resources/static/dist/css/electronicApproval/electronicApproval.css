@@ -97,10 +97,10 @@
 		padding-left: 20px;
 	}
 	
-	tbody>tr{ /* 전자결재 관련 테이블 tbody>tr css */
+	.table-hover{ /* 전자결재 관련 테이블 tbody>tr css */
 		cursor: pointer;
 	}
 	
-	.document-form-type-list{
+	.document-form-type-list{ /* 양식 분류설정 <li> css */
 		cursor: pointer;
 	}
