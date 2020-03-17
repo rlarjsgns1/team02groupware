@@ -177,12 +177,17 @@ public class BoardController {
 		return boardMap;
 	}
 	
-	@GetMapping("/commentDelete")
-	public String commentDelete(Model model) {
+	@PostMapping("/commentDelete")
+	public @ResponseBody Map<String, Object> commentDelete(Model model, BoardDto bDto, CommentDto cDto) {
 		
-		model.addAttribute("title", "commentDelete");
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		System.out.println(bDto.getBoardNum());
+		System.out.println(cDto.getCommentNum());
+		boardMap.put("boardDto", bDto);
+		boardMap.put("commentDto", cDto);
+		boardService.commentDelete(bDto, cDto);
 		
-		return "index";
+		return boardMap;
 	}
 	
 

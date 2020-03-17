@@ -11,6 +11,13 @@
 	<link rel="stylesheet" href="boardcss/main.css">
 	<style>
 		
+		/* 댓글 전체 폼 */
+		.commentFormDiv{	
+			background-color:#b3d4fc; /* #b3d4fc; */
+			padding:0px 20px 0px 20px;
+			
+		}
+
 		.commentContent p{
 			margin: 1px 0 1px 5px;
 		}	
@@ -23,8 +30,12 @@
 		.commentNick{
 			font-weight:bold;
 		}
-		.commentUnderLine{
+		/* 댓글창 밑줄 */
+		.commentUnderLine{		
 			margin-top: 10px;
+			color:#F6F7FB; 	/* #F6F7FB */
+			border-bottom-width: 1px; 
+			border-bottom-style: solid;
 		}
 		pre{
 			white-space: pre-line;
@@ -121,15 +132,16 @@
 						 	
 						 	console.log(commentNum)
 						 	
-						 	// 댓글 추가
+						 	// 댓글창에 댓글 추가
 						 	commentList.css('display', 'block')
 						 	commentList.find('.commentNick').text('관리자')
 						 	commentList.find('.commentDate').text(currentTime)
 						 	commentList.find('.commentContent pre').text(commentContent)
 						 	commentList.find('.commentNum').val(commentNum)
+						 	commentList.find('.commentNum').attr('commentText',''+commentContent+'')
 						 	$('#commentUl').append(commentList)
 						 	
-						 	// 댓글 수 +1 증가
+						 	// 게시글 총 댓글 수 +1 
 						 	var currentCommentCount = $('#commentCount').text();
 						 	var addCommentCount = Number(currentCommentCount) + 1;
 						 	$('#commentCount').text(addCommentCount);
@@ -146,6 +158,7 @@
 				e.preventDefault();
 				var commentContentDiv = $(this).parent().parent().siblings('.commentContent');
 				var commentContentText = $(this).parent().parent().siblings('.commentContent').find('pre').text().trim();
+				$(this).closest('li.commentList').find('input.commentNum').attr('commentText',''+commentContentText+'')
 				console.log(commentContentText)
 				// 버튼 클릭시 html 생성
 				var commentContentHtml = '<div class="commentInputDiv col-sm-11 col-md-11 col-xs-10" style="padding:5px 5px 5px 5px">';
@@ -159,58 +172,105 @@
 				var commentTop = commentContentDiv.siblings('.commentTop');
 				commentTop.find('.commentUpDelLine').html('<a class="commentUpdateCancleBtn" href="#" style="color:red;">수정취소</a>')
 				
-				// 댓글 업데이트 Ajax
-				$(document).on('click','.commentUpdateBtn', function(e){
-					e.preventDefault();
+			})
+			
+			
+			// 댓글 업데이트 Ajax
+			$(document).on('click','.commentUpdateBtn', function(e){
+				e.preventDefault();
 
-					var commentNum = $(this).closest('li.commentList').find('input.commentNum').val()
-					var commentContent = $(this).parent().prev().find('.commentInputText').val()
-					console.log(commentNum)
-					console.log(commentContent)
+				var commentNum = $(this).closest('li.commentList').find('input.commentNum').val()
+				var commentContent = $(this).parent().prev().find('.commentInputText').val()
+				console.log(commentNum)
+				console.log(commentContent)
+				var commentContentUpdateDiv = $(this).parent().parent();
+				
+				
+				var request = $.ajax({
+					  url: "/commentUpdate",
+					  method: "POST",
+					  data: { commentNum : commentNum
+						  		,commentContent : commentContent},
+					  dataType: "json"
+					});
+					 
+					request.done(function(data) {
+						var dbCommentContent = data.commentDto.commentContent
+						console.log(dbCommentContent)
+						var commentTopUpdate = commentContentUpdateDiv.siblings('.commentTop');
+						commentContentUpdateDiv.html('<pre>'+dbCommentContent+'</pre>');
+						
+						var commentHtml = '<a class="commentUpdateFormBtn" href="#">수정 </a>';
+						commentHtml += '<span> ㅣ</span> ';
+						commentHtml += '<a class="commentDeleteBtn" href="#">삭제</a>';
+						
+						commentTopUpdate.find('.commentUpDelLine').html(commentHtml);
+						
+					});
+					 
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+					});
+			})
+				
+				
+			// 댓글 수정취소
+			$(document).on('click','.commentUpdateCancleBtn', function(e){
+				e.preventDefault();
+				var commentText = $(this).closest('li.commentList').find('input.commentNum').attr('commentText')
+				var commentContentCancleDiv= $(this).parent().parent().siblings('.commentContent');
+				var check = confirm('내용 입력을 취소하시겠습니까?')
+				if(check == true){
 					
+					commentContentCancleDiv.html('<pre>'+commentText+'</pre>');
+					var commentCancleHtml = '<a class="commentUpdateFormBtn" href="#">수정</a>';
+					commentCancleHtml += '<span>ㅣ</span> ';
+					commentCancleHtml += '<a class="commentDeleteBtn" href="#">삭제</a>';
+					
+					var commentTopUpdate = commentContentCancleDiv.siblings('.commentTop');
+					commentTopUpdate.find('.commentUpDelLine').html(commentCancleHtml);
+				}
+			})
+			
+
+			// 댓글 삭제
+			$(document).on('click','.commentDeleteBtn', function(e){
+				
+				e.preventDefault();
+				
+				var commentNum = $(this).closest('li.commentList').find('input.commentNum').val()
+				console.log(commentNum)
+				var commentList = $(this).closest('li.commentList')
+				var currentCommentCount = $('#commentCount').text();
+				var minusCommentCount = Number(currentCommentCount) - 1;
+				
+				if(confirm('댓글을 삭제하시겠습니까?')){
 					var request = $.ajax({
-						  url: "/commentUpdate",
+						  url: "/commentDelete",
 						  method: "POST",
 						  data: { commentNum : commentNum
-							  		,commentContent : commentContent},
+							  		,boardNum : boardNum},
 						  dataType: "json"
 						});
-						 
+					
 						request.done(function(data) {
-							var commentContent = data.commentDto.commentContent
-							commentContentDiv.html('<pre>'+commentContent+'</pre>');
-							var commentHtml = '<a class="commentUpdateFormBtn" href="#">수정</a>';
-							commentHtml += '<span>ㅣ</span> ';
-							commentHtml += '<a class="commentDeleteBtn" href="#">삭제</a>';
-							commentTop.find('.commentUpDelLine').html(commentHtml);
+							
+							// 댓글 삭제
+							commentList.remove();
+							// 게시글 총 댓글 수 -1
+						 	$('#commentCount').text(minusCommentCount);
 							
 						});
 						 
 						request.fail(function( jqXHR, textStatus ) {
 						  alert( "Request failed: " + textStatus );
 						});
-				})
+					
+				}
 				
-				// 댓글 수정취소
-				$(document).on('click','.commentUpdateCancleBtn', function(e){
-					e.preventDefault();
-					//commentContentText
-					var check = confirm('내용 입력을 취소하시겠습니까?')
-					if(check == true){
-						console.log(commentContentText)
-						commentContentDiv.html('<pre>'+commentContentText+'</pre>');
-						var commentHtml = '<a class="commentUpdateFormBtn" href="#">수정</a>';
-						commentHtml += '<span>ㅣ</span> ';
-						commentHtml += '<a class="commentDeleteBtn" href="#">삭제</a>';
-						commentTop.find('.commentUpDelLine').html(commentHtml);
-					}
-				})
-			})
-			
-			
-			// 댓글 삭제
-			$('.commentDeleteBtn').on('click',function(){
-			
+				
+				
+				
 			})
 			
 
@@ -290,7 +350,7 @@
 	      </div>
 	      </th:block>
 	      <!-- 댓글 전체 폼 Start -->
-		  <div style="background-color:#b3d4fc; padding:0px 20px 0px 20px;">
+		  <div class="commentFormDiv">
 		  	<div style="padding:10px;">
 		  	
 		  	<ul id="commentUl" style="margin-bottom:0px;">
@@ -316,14 +376,14 @@
 	            				</pre>
             				</div>
 			  			</div>
-			  			<div class="commentUnderLine" style="color:#F6F7FB; border-bottom-width: 1px; border-bottom-style: solid;"></div>
+			  			<div class="commentUnderLine" ></div>
 			  			<input class = "commentNum" type="hidden" th:value="${c.commentNum}">
 			  		</li>
 		  		</th:block>
 		  		<!-- 댓글 li End-->
 		  		
 		  		<!-- ajax 생성용 히든 댓글 -->
-		  		<li class="commentListHidden" style="display:none">
+		  		<li class="commentListHidden commentList" style="display:none">
 			  			<div class="commentListInnerDiv">
 			  				<div class="commentTop">
 			  					<span class="commentNick"></span>
@@ -341,7 +401,7 @@
 				  				<pre></pre>
             				</div>
 			  			</div>
-			  			<div class="commentUnderLine" style="color:#F6F7FB; border-bottom-width: 1px; border-bottom-style: solid;"></div>
+			  			<div class="commentUnderLine"></div>
 			  			<input class = "commentNum" type="hidden">
 			  	</li>
 		  		

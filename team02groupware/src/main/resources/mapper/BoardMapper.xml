@@ -287,7 +287,6 @@
 	</update>
 	
 	<!-- 댓글 Update -->
-	
 	<update id="updateComment" parameterType="CommentDto">
 		UPDATE 
 			board_comment
@@ -295,6 +294,28 @@
 			comment_content = #{commentContent}
 		WHERE
 			comment_num = ${commentNum}
+
+	</update>
+	
+	<!-- 댓글 Delete -->
+	<update id="deleteComment" parameterType="CommentDto">
+		DELETE 
+		FROM 
+			board_comment 
+		WHERE 
+			comment_num = ${commentNum}
+
+	</update>
+	<!-- 게시글 댓글수 감소 -->
+	<update id="deleteCommentCount" parameterType="BoardDto">
+		UPDATE 
+			board
+		SET
+			
+			board_comment_count = board_comment_count - 1
+			
+		Where
+			board_num = ${boardNum}
 
 	</update>
 	
