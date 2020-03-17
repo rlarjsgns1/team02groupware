@@ -3,12 +3,19 @@ package com.team02.groupware.controller;
 
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team02.groupware.service.ElectronicApprovalService;
 
@@ -22,7 +29,7 @@ import com.team02.groupware.service.ElectronicApprovalService;
 public class ElectronicApprovalController {
 	
 	  @Autowired //ElectronicApprovalService 의존성 주입
-	private ElectronicApprovalService eaService;
+	  private ElectronicApprovalService eaService;
 
 	private static final Logger logger = LoggerFactory.getLogger(ElectronicApprovalController.class);
 	 
@@ -119,5 +126,25 @@ public class ElectronicApprovalController {
 	 @GetMapping("/insertEaGeneralSettings")
 	 public String insertEaGeneralSettings() {
 			return "eaDocument/eaGeneralSettings";
-	}	
+	}
+	 
+	 /*
+	  * @method ajaxSetDocumentCodeFormat()
+	  * @brief 관리자용 전자결재 기본설정 화면 문서번호 method
+	  * @author 김건훈
+	  */	
+	 	@PostMapping(value="/ajaxSetDocumentCodeFormat",produces = "application/json")
+	 	@ResponseBody
+		public Map<String,Object> ajaxSetDocumentCodeFormat(@RequestBody Map<String,Object> checkRadioMap){
+	 		
+	 		//System.out.println(checkRadioMap.toString());
+	 		//logger.info("ajax로 보내진 값 :: {}", checkRadioMap.toString());
+	 		
+	 		String result = eaService.ajaxSetDocumentCodeFormat(checkRadioMap);
+	 		//System.out.println("문서 번호 가공 후 결과값------>"+result);
+	 		
+	 		Map<String,Object> resultMap = new HashMap<String,Object>();
+	 		resultMap.put("result", result);
+	 		return resultMap;
+		}
 }
