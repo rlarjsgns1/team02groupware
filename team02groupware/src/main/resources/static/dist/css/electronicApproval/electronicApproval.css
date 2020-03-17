@@ -77,34 +77,34 @@
 		
 		
 	} 
- 	.note-toolbar>.note-btn-group,.note-toolbar>.btn-group,.note-toolbar>.note-style{/*  summer note 툴바 css */
+ 	.note-toolbar>.note-btn-group,.note-toolbar>.btn-group,.note-toolbar>.note-style{/*  summer note 툴바 CSS */
 		/* margin-right : 0px !important; */
 		
 	} 
 	
-	#approval-format-set-btn{ /* 양식 생성 화면 결재 양식 설정 btn css */
+	#approval-format-set-btn{ /* 양식 생성 화면 결재 양식 설정 btn CSS */
 		color: #007bff;
 		margin-left: 10px;
 		cursor: pointer;
 		font-size: 0.9rem;
 	}
 	
-	.document-draft-title, .company-code-title{ /* 기안하기 화면 제목 input box css */
+	.document-draft-title, .company-code-title{ /* 기안하기 화면 제목 input box CSS */
     	border-color: #343a40;
 	}
 	
-	.approval-format-type-title{ /* 결재 양식 화면 결재양식 설정 css */
+	.approval-format-type-title{ /* 결재 양식 화면 결재양식 설정 CSS */
 		padding-left: 20px;
 	}
 	
-	.table-hover{ /* 전자결재 관련 테이블 css*/
+	.table-hover{ /* 전자결재 관련 테이블 CSS*/
 		cursor: pointer;
 	}
 	
-	.document-form-type-list{ /* 양식 분류설정 <li> css */
+	.document-form-type-list{ /* 양식 분류설정 <li> CSS */
 		cursor: pointer;
 	}
 	
-	.document-code-setting-table td{
+	.document-code-setting-table td{ /* 관리자용 기본설정 페이지에서 문서번호 설정 테이블 CSS */
 		vertical-align: top !important;
 	}

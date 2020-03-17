@@ -52,14 +52,18 @@
 					});
 					
 					 
-					/*
+					 /*
 					  * @brief 관리자용 전자결재 기본설정 물음표 아이콘 Modal Event
 					  * @author 김건훈
 					  */	
 					$('.ik-help-circle').on('mouseover',function(e){
 						//console.log('마우스오버');
 						var ruleTipType = $(this).siblings().text()
-						console.log(ruleTipType)
+						//console.log(ruleTipType)
+						
+						var divLeft = e.pageX - 150
+						var divTop = e.pageY - 50
+						
 						if(ruleTipType=='보안 등급별 열람 설정'){
 							$('#modal-content-type').text('결재가 완료된 후 열람할 수 있는 직위 등급을 설정합니다.');	
 						}else if(ruleTipType=='지연 문서 표시'){
@@ -68,17 +72,20 @@
 							$('#modal-content-type').text('문서 번호에 사용할 회사 코드를 설정 하세요.');
 						}else if(ruleTipType=='보존 연한 만료 후 삭제 설정'){
 							$('#modal-content-type').text('결재 완료된 문서가 보존 연한이 만료된 후 임시삭제 상태로 변경되는  것의 허용 여부를 설정합니다.');
+						}else if(ruleTipType=='같은 결재선 내에서 선결재'){
+							$('#modal-content-type').text('같은 결재선 내에서 예정 상태인 결재자의 선결재 허용 여부를 설정합니다.');
+						}else if(ruleTipType=='대결'){
+							$('#modal-content-type').text('하위 결재자가 최종 결재자 대신 결재하여 문서를 승인하는 방식의 허용 여부를 설정합니다.');
+							 divLeft = e.pageX - 90
+						}else if(ruleTipType=='후결'){
+							$('#modal-content-type').text('최종 결재자가 부재 시 우선적으로 기안을 집행하고 이후 최종 결재자의 승인 또는 반려를 받는 방식의 허용 여부를 설정합니다.');
+							divLeft = e.pageX - 90
+						}else if(ruleTipType=='참조 열람 시기 설정'){
+							$('#modal-content-type').text('참조자의 문서 열람 가능 시기를 설정합니다.');
+						}else if(ruleTipType=='기안 취소 설정'){
+							$('#modal-content-type').text('기안자가 기안 취소한 문서의 처리 방법을 설정합니다.');
 						}
-						
-  						var sWidth = window.innerWidth;
-						var sHeight = window.innerHeight;
-						var mWidth = $('.ruletip').width();
-						var mHeight = $('.ruletip').height();
-						var divLeft = e.clientX - 150;
-						var divTop = e.clientY - 48;
-						
-						if( divLeft + mWidth > sWidth ) divLeft -= mWidth;
-						if( divTop + mHeight > sHeight ) divTop -= mWidth;		
+		
 						$('.ruletip').css({display:"block", "top": divTop, "left": divLeft});
 						
 						$(this).css("color","black");
@@ -91,6 +98,32 @@
 						$(this).css("color","#bcc8d8");
 					});
 					
+					
+					 /*
+					  * @brief 관리자용 전자결재 기본설정 문서번호 조합 Event
+					  * @author 김건훈
+					  */
+					  
+					  $('#companyCode').keyup(function() {
+					  var companyCode = $('#companyCode').val();
+					  console.log(companyCode);
+					  
+					  /* var request = $.ajax({
+					    url: "script.php",
+					    method: "POST",
+					    data: { id : menuId },
+					    dataType: "html"
+					  });
+					   
+					  request.done(function( msg ) {
+					    $( "#log" ).html( msg );
+					  });
+					   
+					  request.fail(function( jqXHR, textStatus ) {
+					    alert( "Request failed: " + textStatus );
+					  }); */
+					  
+					  });
 				});
 			</script>
 		</th:block>
@@ -212,7 +245,7 @@
                                   	<h6>
 										<span>회사 코드 설정</span><i class="ik ik-help-circle"></i>
                                   	</h6>                                   
-                                       <input type="text" class="form-control company-code-title col-sm-3" >
+                                       <input type="text" class="form-control company-code-title col-sm-3" id="companyCode" >
                                   </div>                      		                        		                      		                                	 
                               	 <!-- 회사 코드 설정 End -->
                                  
@@ -238,7 +271,7 @@
                                                        	 <form>
 				                                		   <div class="radio">
 					                                		  <label>
-	 				                                           <input type="radio" name="radio">
+	 				                                           <input type="radio" name="radio" checked="checked">
 				                                               <i class="helper"></i>사용
 				                                              </label>
 				                                            </div>
@@ -268,7 +301,7 @@
 				                                           </div>
 				                                           <div class="radio">
 					                                		<label>
-	 				                                          <input type="radio" name="radio">
+	 				                                          <input type="radio" name="radio" checked="checked">
 				                                              <i class="helper"></i>둘 다 사용
 				                                            </label>
 				                                            </div>
@@ -286,7 +319,7 @@
                                                        	 <form>
 				                                		  <div class="radio">
 					                                		 <label>
-	 				                                          <input type="radio" name="radio">
+	 				                                          <input type="radio" name="radio" checked="checked">
 				                                              <i class="helper"></i>연, 월, 일 8자(YYYYMMDD)
 				                                             </label>
 				                                           </div>
@@ -340,7 +373,7 @@
 				                                           </div>			                                         
 				                                		   <div class="radio">
 					                                		 <label>
-	 				                                          <input type="radio" name="radio">
+	 				                                          <input type="radio" name="radio" checked="checked">
 				                                              <i class="helper"></i>4자리(ex. 0001)
 				                                             </label>
 				                                           </div>
@@ -457,13 +490,13 @@
 	                                		  <div class="radio radio-inline">
 		                                		<label>
 	                                                   <input type="radio" name="radio">
-	                                                   <i class="helper"></i>허용 함
+	                                                   <i class="helper"></i>결재 시작
 	                                             </label>
 	                                           </div>                                     	                                     	
 	                                		  <div class="radio radio-inline">
 		                                		<label>
 	                                                   <input type="radio" name="radio">
-	                                                   <i class="helper"></i>허용 안 함
+	                                                   <i class="helper"></i>결재 완료
 	                                             </label>
 	                                           </div>                                     	                                     	      		
                                            </form>
@@ -480,19 +513,26 @@
 	                                		  <div class="radio radio-inline">
 		                                		<label>
 	                                                   <input type="radio" name="radio">
-	                                                   <i class="helper"></i>허용 함
+	                                                   <i class="helper"></i>반려 처리
 	                                             </label>
 	                                           </div>                                     	                                     	
 	                                		  <div class="radio radio-inline">
 		                                		<label>
 	                                                   <input type="radio" name="radio">
-	                                                   <i class="helper"></i>허용 안 함
+	                                                   <i class="helper"></i>문서 삭제
 	                                             </label>
 	                                           </div>                                     	                                     	      		
                                            </form>
                                      	</div>
                                     </div>
                                  <!-- 기안 취소 설정 End -->
+                                 <!-- 설정 저장 버튼 Start -->  
+                                    <div class="card-header d-block">                                   
+                                        <button type="button" class="btn btn-primary">
+			                 				<i class="ik ik-check-circle"></i>저장
+			                 			</button>
+                                    </div>
+                                 <!-- 설정 저장 버튼  End -->
                                   	  	    
                         			</div>
                         		</div>
