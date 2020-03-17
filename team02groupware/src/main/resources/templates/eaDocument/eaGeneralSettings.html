@@ -104,39 +104,55 @@
 					  * @author 김건훈
 					  */
 					  var companyCode = $('#companyCode').val();
-					 
+					  var companyCodeRadioVal = $('.companyCodeRadio').find('input:checked').val();
+					  var unitRadioVal = $('.unitRadio').find('input:checked').val();
+					  var registerDateRadioVal = $('.registerDateRadio').find('input:checked').val();
+					  var serialNumRadioVal = $('.serialNumRadio').find('input:checked').val();
+					  var checkRadioMap = null;
+					  
 					  $('#companyCode').keyup(function() {
 					  companyCode = $('#companyCode').val();
 					  //console.log(companyCode);
-					 
-					  /* $('#showCompanyCode').val(companyCode); */
-					  /* var request = $.ajax({
-					    url: "script.php",
-					    method: "POST",
-					    data: { id : menuId },
-					    dataType: "html"
-					  });
 					   
-					  request.done(function( msg ) {
-					    $( "#log" ).html( msg );
-					  });
-					   
-					  request.fail(function( jqXHR, textStatus ) {
-					    alert( "Request failed: " + textStatus );
-					  }); */
+					   checkRadioMap = {};
 					  
+					   checkRadioMap.companyCode = companyCode;
+					   checkRadioMap.companyCodeRadioVal = companyCodeRadioVal;
+					   checkRadioMap.unitRadioVal = unitRadioVal;
+					   checkRadioMap.registerDateRadioVal = registerDateRadioVal;
+					   checkRadioMap.serialNumRadioVal = serialNumRadioVal;
+						
+					   
+					   var request = $.ajax({
+						    url: "/ajaxSetDocumentCodeFormat",
+						    contentType: 'application/json',
+						    method: "POST",
+						    data: JSON.stringify(checkRadioMap),
+						    dataType: "json"
+						  });
+						   
+						  request.done(function(data) {
+						  	//console.log(data.result);
+						  	var documentCodeFormatResult = data.result;
+						  	$('#showCompanyCode').val(documentCodeFormatResult);
+						  });
+						   
+						  request.fail(function( jqXHR, textStatus ) {
+						    alert( "Request failed: " + textStatus );
+						  }); 
+						  
 					  });
 					 
 					  $('.checkRadio').click(function(){
 						  //console.log('문서번호 설정 테이블 라디오박스 실행')
 						  //console.log(companyCode);
 
-						  var companyCodeRadioVal = $('.companyCodeRadio').find('input:checked').val();
-						  var unitRadioVal = $('.unitRadio').find('input:checked').val();
-						  var registerDateRadioVal = $('.registerDateRadio').find('input:checked').val();
-						  var serialNumRadioVal = $('.serialNumRadio').find('input:checked').val();
+						 companyCodeRadioVal = $('.companyCodeRadio').find('input:checked').val();
+						 unitRadioVal = $('.unitRadio').find('input:checked').val();
+						 registerDateRadioVal = $('.registerDateRadio').find('input:checked').val();
+						 serialNumRadioVal = $('.serialNumRadio').find('input:checked').val();
 						  
-						  var checkRadioMap = {};
+						   checkRadioMap = {};
 					  
 						   checkRadioMap.companyCode = companyCode;
 						   checkRadioMap.companyCodeRadioVal = companyCodeRadioVal;
@@ -165,7 +181,6 @@
 						  request.fail(function( jqXHR, textStatus ) {
 						    alert( "Request failed: " + textStatus );
 						  }); 
-						  
 						  
 					  });
 				});
