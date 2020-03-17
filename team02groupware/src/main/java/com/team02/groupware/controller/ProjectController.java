@@ -32,12 +32,10 @@ public class ProjectController {
 	@Autowired
 	private ProjectService projectService;
 
-	
-	@PostMapping("/projectUpdate")
-	public String projectUpdate(Project project) {
-		System.out.println(project.toString());
-	}
-	
+	/*
+	 * @PostMapping("/projectUpdate") public String projectUpdate(Project project) {
+	 * System.out.println(project.toString()); }
+	 */
 	
 	
 	@GetMapping("/taskList")
