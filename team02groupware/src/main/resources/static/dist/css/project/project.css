@@ -60,6 +60,7 @@
 .add-btn-wrap{
 	display:block;
 	flex-shrink:0;
+	float:left;
 }
 
 .member-add-btn {
@@ -72,6 +73,7 @@
 }
 .select2-selection--multiple{
 	border:0 !important;
+	width:10rem;
 }
 .select2-selection__choice{
 	margin-top: 0 !important;
@@ -82,17 +84,30 @@
 	over-flow-y: auto;
 	max-height:90px;
 	display:flex;
-	flex-direction:row;
+
 }
-
-
 
 
 /*---------------------------------------------- 프로젝트 수정 modal start---------------------------------------------- */
+
+@media only screen and (min-width: 560px) { .edit-layout-modal .modal-dialog { max-width: 40%; } }
+
+
 .pr-update-modal{
 	font-size:16px;
+	width:100%;
 }
 
+
+.update-member-select{
+	over-flow-y: auto;
+	max-height:90px;
+	display:flex;
+	flex-direction:row;
+}
+.select2-selection__rendered{
+	width:300px;
+}
 
 /*---------------------------------------------- 프로젝트 추가 modal end---------------------------------------------- */
 

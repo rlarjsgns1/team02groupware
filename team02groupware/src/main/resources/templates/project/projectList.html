@@ -7,15 +7,21 @@
 	<link rel="stylesheet" href="dist/css/project/project.css">
 	<link rel="stylesheet" href="/plugins/select2/dist/css/select2.min.css">
 	<link rel="stylesheet" href="/plugins/datedropper/datedropper.min.css">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 </th:block>
 <th:block layout:fragment="customTitle">
 	<title>프로젝트 리스트</title>
 </th:block>
 <th:block layout:fragment="customScript">
+
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
+
 	<script type="text/javascript">
 		$(function() {
-			    
+
 			$(".pr-submit-btn").click(function(checkInput) {
 				if ($('[name="projectTitle"]').val() == '') {
 					$('[name="projectTitle"]').css("border", "1px solid red");
@@ -28,23 +34,27 @@
 
 			})
 
-			$(".member-add-btn").click(function(){
-				$('.select2').select2('open');
+			$(".member-add-btn").click(function() {
+				$('#add-select2').select2('open');
 			})
 			
+			$(".member-update-btn").click(function() {
+				$('#update-select2').select2('open');
+			})
+
 			$(".project-list").on('click', function() {
 				location.href = '/taskList';
 			})
 
 			$(".pr-setting-btn").on('click', function() {
 				event.stopPropagation();
-				$('#editLayoutItem').modal({backdrop: 'static'});
+				$('#editLayoutItem').modal({
+					backdrop : 'static'
+				});
 
 			})
-			
 
-		})  
-	
+		})
 	</script>
 
 </th:block>
@@ -75,7 +85,8 @@
 
 									<button type="button"
 										class="pr-setting-btn btn btn-icon btn-outline-secondary"
-										data-toggle="modal" data-target="#editLayoutItem" data-backdrop="static" data-keyboard="false">
+										data-toggle="modal" data-target="#editLayoutItem"
+										data-backdrop="static" data-keyboard="false">
 										<i class="ik ik-settings"></i>
 									</button>
 
@@ -124,14 +135,14 @@
 					</button>
 				</div>
 
-					<div class="pr-add-modal modal-body">
+				<div class="pr-add-modal modal-body">
 
-				<form name="projectAddForm" method="post"
-					onsubmit="return checkInput()">
+					<form name="projectAddForm" method="post"
+						onsubmit="return checkInput()">
 
 						<div class="form-group">
-							<label>사원 코드</label> <input type="text"
-								name="employeeCode" class="form-control" placeholder="EE001~EE004">
+							<label>사원 코드</label> <input type="text" name="employeeCode"
+								class="form-control" placeholder="EE001~EE004">
 						</div>
 
 						<div class="form-group">
@@ -188,31 +199,31 @@
 
 
 
-				</form>
-						<div class="form-group">
-							<label>프로젝트 멤버(선택사항)</label>
-							<div>
-								<form class="sample-form">
-									<div class="add-btn-wrap">
+					</form>
+					<div class="form-group">
+						<label>프로젝트 멤버(선택사항)</label>
+						<div>
+							<form class="sample-form">
+								<div class="add-btn-wrap">
 									<img class="member-add-btn"
 										src="/img/project/member_plus_btn.png">
-									</div>
-									<div class="member-select-wrap form-group">
-										<select class="form-control select2" multiple="multiple">
-											<option value="김연지" selected>김연지</option>
-											<option value="김건훈">김건훈</option>
-											<option value="김정훈">김정훈</option>
-											<option value="이원준">이원준</option>
-											<option value="김연지">김영훈</option>
-											<option value="김건훈">김곤지</option>
-											<option value="김정훈">김상훈</option>
-											<option value="이원준">이원영</option>
-										</select>
-									</div>
-								</form>
-							</div>
+								</div>
+								<div class="member-select-wrap form-group">
+									<select class="form-control select2" id="add-select2" multiple="multiple">
+										<option value="김연지" selected>김연지</option>
+										<option value="김건훈">김건훈</option>
+										<option value="김정훈">김정훈</option>
+										<option value="이원준">이원준</option>
+										<option value="김연지">김영훈</option>
+										<option value="김건훈">김곤지</option>
+										<option value="김정훈">김상훈</option>
+										<option value="이원준">이원영</option>
+									</select>
+								</div>
+							</form>
 						</div>
 					</div>
+				</div>
 
 
 				<div class="project-add-btn modal-footer">
@@ -249,33 +260,63 @@
 
 				<div class="modal-body">
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-9">
 							<div class="pr-update-modal card-body">
-								<form class="forms-sample">
+								<form class="forms-sample" th:action="@{/projectUpdate}"
+									method="post">
 									<div class="form-group">
-										<label for="projectTitle">제목</label> <input
-											th:text="${projectTitle}" type="text" class="form-control"
-											id="projectTitle" placeholder="예) 웹사이트 개발">
+										<label for="projectTitle">제목</label> <input type="text"
+											class="form-control" id="projectTitle" name=projectTitle>
 									</div>
 									<div class="form-group">
 										<label for="projectDesc">설명(선택사항)</label> <input type="text"
-											class="form-control" id="projectDesc">
+											class="form-control" id="projectDesc" name=projectDesc>
 									</div>
-									
-                                   <div class="form-group">
-                                                <label for="date">시작일</label>
-                                                <input type="text" name="projectStart" class="form-control datetimepicker-input" id="datepicker" data-toggle="datetimepicker" data-target="#datepicker">
-                                            </div>
-                                     <div class="form-group">
-                                                <label for="date">마감일</label>
-                                                <input type="text" name="projectDeadline" class="form-control datetimepicker-input" id="datepicker" data-toggle="datetimepicker" data-target="#datepicker">
-                                            </div>        
-                                        <div class="form-group">
-                                                <label for="date">실제 완료일</label>
-                                                <input type="text" name="projectEnd" class="form-control datetimepicker-input" id="datepicker" data-toggle="datetimepicker" data-target="#datepicker">
-                                            </div>    
 
-									
+									<div class="form-group">
+										<label for="Date">시작일</label> <input type="text"
+											name="projectStart" class="form-control datetimepicker-input"
+											id="datepicker1" data-toggle="datetimepicker"
+											data-target="#datepicker1">
+									</div>
+									<div class="form-group">
+										<label for="Date">마감일</label> <input type="text"
+											name="projectDeadline"
+											class="form-control datetimepicker-input" id="datepicker2"
+											data-toggle="datetimepicker" data-target="#datepicker2">
+									</div>
+									<div class="form-group">
+										<label for="Date">실제 완료일</label> <input type="text"
+											name="projectEnd" class="form-control datetimepicker-input"
+											id="datepicker3" data-toggle="datetimepicker"
+											data-target="#datepicker3">
+									</div>
+									<div class="form-group">
+										<label>프로젝트 멤버(선택사항)</label>
+										<div>
+											<form class="sample-form">
+												<div class="add-btn-wrap">
+													<img class="member-update-btn"
+														src="/img/project/member_plus_btn.png">
+												</div>
+												<div class="update-member-select form-group">
+													<select class="form-control select2" id="update-select2" multiple="multiple">
+														<option value="김연지" selected>김연지</option>
+														<option value="김건훈">김건훈</option>
+														<option value="김정훈">김정훈</option>
+														<option value="이원준">이원준</option>
+														<option value="김연지">김영훈</option>
+														<option value="김건훈">김곤지</option>
+														<option value="김정훈">김상훈</option>
+														<option value="이원준">이원영</option>
+													</select>
+												</div>
+											</form>
+										</div>
+									</div>
+
+
+
 									<button type="submit" class="btn btn-primary mr-2">수정</button>
 									<button class="btn btn-light">취소</button>
 								</form>
@@ -294,10 +335,10 @@
 		</div>
 	</div>
 	<!--------------------------프로젝트 설정(수정) 버튼 클릭시 모달창 end --------------------------->
-	
-	
-	
-	
+
+
+
+
 	<!--------------------------프로젝트 리스트 테이블형 --------------------------->
 	<!-- 
 	<div class="pr-table-list">
@@ -407,8 +448,7 @@
 	<script src="dist/js/theme.min.js"></script>
 	<script src="js/form-picker.js"></script>
 	<script src="plugins/datedropper/datedropper.min.js"></script>
-	<script src="plugins/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js"></script>
-	 
+
 	<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 	<script>
 		(
@@ -427,6 +467,8 @@
 		ga('send', 'pageview');
 	</script>
 	<script src="/plugins/select2/dist/js/select2.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 	<script>
 		$(function() {
 

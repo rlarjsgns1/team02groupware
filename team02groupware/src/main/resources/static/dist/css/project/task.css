@@ -21,7 +21,15 @@
 }
 .card-header{
 	cursor: move;
+	height:60px;	
+	line-height:-1px;
+	background-color:#26C281;
+	padding:0;
 }
+.card-header h6{
+	margin-top:.5rem;
+}
+
 .card-body{
 	max-height:29rem;
 	overflow-y:auto;
@@ -34,9 +42,14 @@
 	user-select: none;
 	z-index:1;
 	cursor:url('/img/project/hand-move.png'),move;
+	height:100%;
 }
 .dd-item{
 	cursor:move;
 	
 }
-	
+
+.tasklist-add-card .card-header{
+	cursor:pointer;
+	background-color: #dddddd;
+}
