@@ -9,10 +9,7 @@
 .container-fluid{
 	padding-right:0px;	
 }
-.row{
-	flex:1 1;
-	flex-direction:row;
-	width:auto;
+.task-row{
 	flex-wrap:nowrap !important;
 }
 .card{
@@ -24,22 +21,35 @@
 }
 .card-header{
 	cursor: move;
+	height:60px;	
+	line-height:-1px;
+	background-color:#26C281;
+	padding:0;
 }
+.card-header h6{
+	margin-top:.5rem;
+}
+
 .card-body{
 	max-height:29rem;
 	overflow-y:auto;
 	cursor:default;
 }
 .scrollable-layout{
-	-webkit-overflow-scrolling:touch;
+	-webkit-overflow-scrolling: touch;
 	display:flex;
-	overflow-x:auto;
-	height:100%;
-	z-index:-1;
+	overflow: auto;
+	user-select: none;
+	z-index:1;
 	cursor:url('/img/project/hand-move.png'),move;
+	height:100%;
 }
 .dd-item{
 	cursor:move;
 	
 }
-	
+
+.tasklist-add-card .card-header{
+	cursor:pointer;
+	background-color: #dddddd;
+}

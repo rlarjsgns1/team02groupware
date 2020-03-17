@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 <!--
-   @file documentFormList.html
+   @file documentListForSupervisor.html
    @brief 관리자용 전체 문서 리스트view
    @author 김건훈
  -->	
@@ -29,15 +29,9 @@
 					  */	
 					$('.ik-help-circle').on('mouseover',function(e){
 			 
-   						var sWidth = window.innerWidth;
-						var sHeight = window.innerHeight;
-						var mWidth = $('.ruletip').width();
-						var mHeight = $('.ruletip').height();
-						var divLeft = e.clientX - 150;
-						var divTop = e.clientY - 48;
+						var divLeft = e.pageX - 150
+						var divTop = e.pageY - 50
 						
-						if( divLeft + mWidth > sWidth ) divLeft -= mWidth;
-						if( divTop + mHeight > sHeight ) divTop -= mWidth;		
 						$('.ruletip').css({display:"block", "top": divTop, "left": divLeft});
 						
 						$(this).css("color","black");

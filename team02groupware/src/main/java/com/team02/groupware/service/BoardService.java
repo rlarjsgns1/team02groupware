@@ -237,7 +237,14 @@ public class BoardService {
 	public void commentUpdate(CommentDto cDto){
 		
 		boardMapper.updateComment(cDto);
+
+	}
+
+
+	public void commentDelete(BoardDto bDto, CommentDto cDto) {
 		
+		boardMapper.deleteComment(cDto);
+		boardMapper.deleteCommentCount(bDto);
 		
 	}
 	

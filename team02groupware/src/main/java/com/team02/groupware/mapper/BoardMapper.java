@@ -43,6 +43,10 @@ public interface BoardMapper {
 	public void updateCommentCount(Map<String, Object> map);
 	
 	public void updateComment(CommentDto cDto);
+
+	public void deleteComment(CommentDto cDto);
+
+	public void deleteCommentCount(BoardDto bDto);
 	
 	
 }

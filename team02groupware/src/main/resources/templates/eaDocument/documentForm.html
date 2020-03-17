@@ -67,15 +67,10 @@
 						}else if(ruleTipType=='보안 등급'){
 							$('#modal-content-type').text('문서의 초기값으로 설정 할 보안등급을 선택합니다. 변경 금지 선택 시 기안자와 결재자가 이를 수정할 수 없습니다. 보안 등급에 따라 열람 권한이 제한됩니다.');
 						}
-  						var sWidth = window.innerWidth;
-						var sHeight = window.innerHeight;
-						var mWidth = $('.ruletip').width();
-						var mHeight = $('.ruletip').height();
-						var divLeft = e.clientX - 150;
-						var divTop = e.clientY - 48;
 						
-						if( divLeft + mWidth > sWidth ) divLeft -= mWidth;
-						if( divTop + mHeight > sHeight ) divTop -= mWidth;		
+						var divLeft = e.pageX - 150
+						var divTop = e.pageY - 50
+						
 						$('.ruletip').css({display:"block", "top": divTop, "left": divLeft});
 						
 						$(this).css("color","black");
