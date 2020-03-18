@@ -101,14 +101,6 @@
 		</th:block>
 		<th:block layout:fragment="customContents">                    
 		               <div class="card">
-		              	  <!-- 테이블 상단 메뉴탭 Start-->
-			                 <div class="card-header">
-			                 	<button type="button" class="btn btn-primary">
-			                 		<i class="ik ik-check-circle"></i>양식 생성
-			                 	</button>
-			                 </div>
-	                           <!-- 테이블 상단 메뉴탭 End-->
-	                           
 	                           <div class="electronic-approval-form">   
 	                                                  
                                <!-- 문서 양식 기본설정 테이블 Start -->
@@ -199,8 +191,13 @@
                                     	<h6>상세 입력 </h6>                                   
                                     <textarea id="ea-summernote" rows="10" ></textarea>                              
                                     </div>                      		
+                                <!-- 문서 양식 상세내용 summer note editor End -->
+                                <!-- 양식 생성 버튼 Start -->  
+                                    <div class="card-header d-block ea-submit-btn">                                   
+                                        <button type="button" class="btn btn-primary">양식 생성</button>
+                                    </div>
+                                 	<!-- 양식 생성 버튼  End -->  	    
                         		</div>                         		                                	 
-                                <!-- 문서 양식 상세내용 summer note editor End -->  	    
                         		</div>
                         		
                         		<!-- 양식생성 페이지 테이블 내 약칭,보존연한,보안등급 물음표 아이콘 Modal View Start --> 

@@ -5,18 +5,14 @@ package com.team02.groupware.controller;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.team02.groupware.service.ElectronicApprovalService;
 
 /*
@@ -27,6 +23,7 @@ import com.team02.groupware.service.ElectronicApprovalService;
 
 @Controller
 public class ElectronicApprovalController {
+	
 	
 	  @Autowired //ElectronicApprovalService 의존성 주입
 	  private ElectronicApprovalService eaService;
@@ -40,18 +37,8 @@ public class ElectronicApprovalController {
 	  * @author 김건훈
 	  */	
 	 @GetMapping("/selectAllOngoingDocumentList")
-	 public String selectAllOngoingDocumentList(Model model) {
+	 public String selectAllOngoingDocumentList() {
 		
-		model.addAttribute("approvalLine", eaService.selectApprovalLine());
-		model.addAttribute("deleteDocument", eaService.selectDeleteDocument());
-		model.addAttribute("eaReferrer", eaService.selectEaReferrer());
-		model.addAttribute("eaSecurity", eaService.selectEaSecurity());
-		
-		 //logger.info("approvalLine :: {}", eaService.selectApprovalLine().toString());
-		 //logger.info("deleteDocument :: {}", eaService.selectDeleteDocument().toString());
-		 //logger.info("eaReferrer :: {}", eaService.selectEaReferrer().toString());
-		 //logger.info("eaReferrer :: {}", eaService.selectEaSecurity().toString());
-		 
 			return "eaDocument/allOngoingDocumentList";
 	}
 	 
@@ -137,11 +124,11 @@ public class ElectronicApprovalController {
 	 	@ResponseBody
 		public Map<String,Object> ajaxSetDocumentCodeFormat(@RequestBody Map<String,Object> checkRadioMap){
 	 		
-	 		//System.out.println(checkRadioMap.toString());
-	 		//logger.info("ajax로 보내진 값 :: {}", checkRadioMap.toString());
+	 		logger.info("ajax로 보내진 check된 radio map :: {}", checkRadioMap.toString());
 	 		
 	 		String result = eaService.ajaxSetDocumentCodeFormat(checkRadioMap);
-	 		//System.out.println("문서 번호 가공 후 결과값------>"+result);
+	 		
+	 		logger.info("문서 번호 가공 후 결과값 :: {}", result);
 	 		
 	 		Map<String,Object> resultMap = new HashMap<String,Object>();
 	 		resultMap.put("result", result);

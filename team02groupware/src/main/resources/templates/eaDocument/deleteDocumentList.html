@@ -77,9 +77,15 @@
 												$('#all-ea-checkbox').siblings('input:checkbox').attr("checked", true);
 						}else{
 												$('#all-ea-checkbox').siblings('input:checkbox').attr("checked", false);
-						} 
+						}
+						 
+						//체크 경우에 따른 삭제 버튼 노출 여부 이벤트
+						 if(checkCount>0){
+												$('.table-row-delete-nav').css('visibility','visible')
+						 }else{
+												$('.table-row-delete-nav').css('visibility','hidden')
+						 }
 					});
-					
 					
 					/*
 					  * @brief 전체 체크박스 체크 이벤트
@@ -94,45 +100,59 @@
 						}else{			
 												$('.ea-checkbox').siblings('input:checkbox').attr("checked", false);
 												$(this).siblings('input:checkbox').attr("checked", false);
-						}	
+						}
+						
+						 //체크 경우에 따른 삭제 버튼 노출 여부 이벤트
+						 var checkCount  = $('input[name=\'ea-checkbox\']:checked').length
+						 if(checkCount>0){
+												$('.table-row-delete-nav').css('visibility','visible')
+						 }else{
+												$('.table-row-delete-nav').css('visibility','hidden')
+						 }
 					});
 				});
 			</script>
 		</th:block>
 		<th:block layout:fragment="customContents">                    
 		               <div class="card">
-		              	  <!-- 테이블 상단 메뉴탭 Start-->
+		              	  	<!-- 테이블 상단 메뉴탭 Start-->
 			                 <div class="card-header"><h3>삭제 문서 목록 <i class="ik ik-help-circle"></i></h3></div>
-	                            <!-- 테이블 상단 메뉴탭 End-->
-	                              
-	                            <!-- 삭제 문서 임시 보관함 검색창 Start -->
-	                              <div class="mb-2 clearfix">
-                                    <div class="collapse d-md-block display-options float-md-right" id="displayOptions">
-                                        <div class="d-block d-md-inline-block">
-                                            <div class="btn-group float-md-left mr-1 mb-1">
-                                                <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    		삭제 사유<i class="ik ik-chevron-down mr-0 align-middle"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                	<a class="dropdown-item">보존 연한 경과</a>
-                                                    <a class="dropdown-item">관리자에 의한 삭제</a>   
-                                                </div>
-                                            </div>
-                                            <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                                                <form action="">
-                                                    <input type="text" class="form-control" placeholder="검색" required>
-                                                    <button type="submit" class="btn btn-icon"><i class="ik ik-search"></i></button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                               <!-- 삭제 문서 임시 보관함 검색창 End --> 
-                               
-                               <!-- 삭제 문서 임시 보관함 테이블 Start -->
+	                        <!-- 테이블 상단 메뉴탭 End-->
+                                   <!-- 삭제 문서 임시 보관함 검색창 Start -->
                                    <div class="card-block">
+                                   	<div class="table-nav">
+                                   		<ul class="nav table-row-delete-nav" >
+                                   			<li class="nav-item">
+		                                    	<button type="button" class="btn btn-outline-primary">복원</button>
+		                                    </li>
+		                                    <li class="nav-item">
+		                                    	<button type="button" class="btn btn-outline-danger ea-list-delete">완전삭제</button>
+		                                    </li>
+		                                </ul>
+	                                    <div class="collapse d-md-block display-options float-md-right" id="displayOptions">
+	                                        <div class="d-block d-md-inline-block">
+	                                            <div class="btn-group float-md-left mr-1 mb-1">
+	                                                <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                                                    		삭제 사유<i class="ik ik-chevron-down mr-0 align-middle"></i>
+	                                                </button>
+	                                                <div class="dropdown-menu">
+	                                                	<a class="dropdown-item">보존 연한 경과</a>
+	                                                    <a class="dropdown-item">관리자에 의한 삭제</a>   
+	                                                </div>
+	                                            </div>
+	                                            <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+	                                                <form action="">
+	                                                    <input type="text" class="form-control" placeholder="검색" required>
+	                                                    <button type="submit" class="btn btn-icon"><i class="ik ik-search"></i></button>
+	                                                </form>
+	                                            </div>
+	                                        </div>
+	                                   	   </div>
+                                   	   </div>
+		                               <!-- 삭제 문서 임시 보관함 검색창 End --> 
+		                               <!-- 삭제 문서 임시 보관함 테이블 Start -->
                                         <div class="table-responsive">
-                                            <table class="table mb-0">
+                                            <table class="table table table-hover mb-0">
                                                 <thead>
                                                     <tr>
                                                     	<th>
@@ -148,7 +168,6 @@
                                                         <th>기안자</th>
                                                         <th>기안일</th>                                                 
                                                         <th>삭제사유</th>
-                                                        <th>복원/삭제</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -165,11 +184,7 @@
                                                         <td>그룹웨어 프로젝트 사업기획서</td>
                                                         <td>김건훈</td>
                                                         <td>2020-02-16</td>
-                                                     	<td>보존 연한 경과</td>                                                      
-                                                        <td>
-                                                        <a href="#!"><i class="ik ik-refresh-cw f-16 mr-15 text-green"></i></a>
-                                                        <a href="#!" class="ea-list-delete"><i class="ik ik-trash-2 f-16 text-red"></i></a>
-                                                        </td>
+                                                     	<td>보존 연한 경과</td>                                                        
                                                     </tr> 
                                                     <tr>
                                                     	<td> 
@@ -185,14 +200,50 @@
                                                         <td>김건훈</td>
                                                         <td>2020-02-16</td>
                                                         <td>관리자에 의한 삭제</td>
-                                                        <td>
-                                                        <a href="#!"><i class="ik ik-refresh-cw f-16 mr-15 text-green"></i></a>
-                                                        <a href="#!" class="ea-list-delete"><i class="ik ik-trash-2 f-16 text-red"></i></a>
-                                                        </td>
                                                     </tr>                                                                                                         
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <span class="contents-quantity">문서 수 : 2</span>
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination mb-0 pagination-btn-group">
+                                                <li class="page-item">
+                                                    <a class="page-link first" href="#">
+                                                        <i class="ik ik-chevrons-left"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link prev" href="#">
+                                                        <i class="ik ik-chevron-left"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="page-item active">
+                                                    <a class="page-link" href="#">1</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">2</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">3</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">4</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">5</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link next" href="#" aria-label="Next">
+                                                        <i class="ik ik-chevron-right"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link last" href="#">
+                                                        <i class="ik ik-chevrons-right"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </nav>
                                     </div>
                                  <!-- 삭제 문서 임시 보관함 테이블 End -->                               
                         		</div>	                              

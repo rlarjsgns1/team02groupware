@@ -85,16 +85,7 @@
 		</th:block>
 		<th:block layout:fragment="customContents">                    
 		               <div class="card">
-		              	  <!-- 테이블 상단 메뉴탭 Start-->
-			                 <div class="card-header">
-			                 	<button type="button" class="btn btn-primary">
-			                 		<i class="ik ik-check-circle"></i>기안하기
-			                 	</button>
-			                 </div>
-	                           <!-- 테이블 상단 메뉴탭 End-->
-	                           
-	                           <div class="electronic-approval-form">     
-	                                            
+	                           <div class="electronic-approval-form">                 
                                <!-- 문서 기안하기 기본설정 테이블 Start -->
                                     <div class="card-header d-block">
                                         <h6>기본설정</h6> 
@@ -157,7 +148,6 @@
                                         </div>
                                     </div>
                                     </div>
-                                
                                  <!-- 문서 기안하기 기본설정 테이블  End -->
                                  
                                  <!-- 문서 기안하기 결재선 지정 Start -->  
@@ -367,6 +357,13 @@
                                        <!-- <p>문서 종류 선택 시 상세 입력이 노출됩니다.</p> -->
                                     	<textarea id="ea-summernote" rows="10" ></textarea>
                                     </div>
+                                    
+                                    <!-- 기안하기 버튼 Start -->  
+                                    <div class="card-header d-block ea-submit-btn">                                   
+                                        <button type="button" class="btn btn-primary">기안하기</button>
+                                    </div>
+                                 	<!-- 기안하기 버튼  End -->
+                                 
                                   </div>            
                         		</div>
                         		<!-- 문서 기안하기 상세내용 summer note editor End -->    

@@ -73,9 +73,7 @@
 	.document-draft-btn{/* 기안하기 화면 기본설정 테이블 버튼 */
 		width: 155px;
 		display: inline-block;
-		
-		
-		
+				
 	} 
  	.note-toolbar>.note-btn-group,.note-toolbar>.btn-group,.note-toolbar>.note-style{/*  summer note 툴바 CSS */
 		/* margin-right : 0px !important; */
@@ -108,3 +106,41 @@
 	.document-code-setting-table td{ /* 관리자용 기본설정 페이지에서 문서번호 설정 테이블 CSS */
 		vertical-align: top !important;
 	}
+	
+	.pagination-btn-group{ /* 전자결재 관련 테이블 페이지네이션 버튼 관련 CSS */
+		text-align: center; 
+		margin-top: 50px;
+	}
+	
+	.contents-quantity{ /* 전자결재 관련 테이블 컨텐츠 수 표시 관련 CSS */
+		float: left; 
+		margin-top: 25px;
+	}
+	
+	.pagination{ /* 전자결재 관련 테이블 페이지네이션 버튼 관련 CSS */
+		justify-content: center;
+	}
+	
+	.table-nav{ /* 전자결재 관련 테이블 상단 삭제 및 검색 탭 관련 CSS */
+		margin-bottom: 20px;
+	}
+	
+	.table-row-delete-nav{ /* 전자결재 관련 테이블 row 삭제 버튼 포함 NAV 관련 CSS */
+		display: inline-block;
+		visibility: hidden;
+	}
+	
+	.ea-submit-btn{ /* 전자결재 submit 버튼 관련 CSS */
+		text-align: center;
+	}
+	
+	.ea-submit-btn>button{ /* 전자결재 submit 버튼 관련 CSS */
+		width: 100px;
+	}
+	
+	.table-row-delete-nav>li{
+		display: inline-block;
+		margin-right: 5px;
+	}
+	
+	

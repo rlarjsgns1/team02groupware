@@ -77,7 +77,14 @@
 												$('#all-ea-checkbox').siblings('input:checkbox').attr("checked", true);
 						}else{
 												$('#all-ea-checkbox').siblings('input:checkbox').attr("checked", false);
-						} 
+						}
+						 
+						 //체크 경우에 따른 삭제 버튼 노출 여부 이벤트
+						 if(checkCount>0){
+												$('.table-row-delete-nav').css('visibility','visible')
+						 }else{
+												$('.table-row-delete-nav').css('visibility','hidden')
+						 }
 					});
 					
 					
@@ -94,7 +101,15 @@
 						}else{			
 												$('.ea-checkbox').siblings('input:checkbox').attr("checked", false);
 												$(this).siblings('input:checkbox').attr("checked", false);
-						}	
+						}
+						
+						 //체크 경우에 따른 삭제 버튼 노출 여부 이벤트
+						 var checkCount  = $('input[name=\'ea-checkbox\']:checked').length
+						 if(checkCount>0){
+												$('.table-row-delete-nav').css('visibility','visible')
+						 }else{
+												$('.table-row-delete-nav').css('visibility','hidden')
+						 }
 					});
 				});
 			</script>
@@ -104,37 +119,41 @@
 		              	  <!-- 테이블 상단 메뉴탭 Start-->
 			                 <div class="card-header"><h3>전체 문서 목록 <i class="ik ik-help-circle"></i></h3></div>
 	                            <!-- 테이블 상단 메뉴탭 End-->
-	                              
-	                            <!-- 관리자용 전체문서목록 검색창 Start -->
-	                              <div class="mb-2 clearfix">
-                                    <div class="collapse d-md-block display-options float-md-right" id="displayOptions">
-                                        <div class="d-block d-md-inline-block">
-                                            <div class="btn-group float-md-left mr-1 mb-1">
-                                                <button class="btn btn-outline-dark btn-xs dropdown-toggle search-keyword-btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    		결재 상태<i class="ik ik-chevron-down mr-0 align-middle"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                	<a class="dropdown-item">모든 문서</a>
-                                                    <a class="dropdown-item">결재 중</a>
-                                                    <a class="dropdown-item">결재 완료</a>
-                                                    <a class="dropdown-item">반려</a>
-                                                </div>
-                                            </div>
-                                            <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                                                <form action="">
-                                                    <input type="text" class="form-control" placeholder="검색" required>
-                                                    <button type="submit" class="btn btn-icon"><i class="ik ik-search"></i></button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                               <!-- 관리자용 전체문서목록 검색창 End --> 
-                               
-                               <!-- 관리자용 전체문서목록 테이블 Start -->
+	                                                 
+	                           <!-- 테이블 상단 삭제 및 검색 탭 Start -->                      
                                    <div class="card-block">
+	                                   <div class="table-nav">
+	                                   	<ul class="nav table-row-delete-nav" >
+		                                    <li class="nav-item">
+		                                    	<button type="button" class="btn btn-outline-danger ea-list-delete">삭제</button>
+		                                    </li>
+		                                </ul>
+	                                    <div class="collapse d-md-block display-options float-md-right" id="displayOptions">
+	                                        <div class="d-block d-md-inline-block">
+	                                            <div class="btn-group float-md-left mr-1 mb-1">
+	                                                <button class="btn btn-outline-dark btn-xs dropdown-toggle search-keyword-btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                                                    		결재 상태<i class="ik ik-chevron-down mr-0 align-middle"></i>
+	                                                </button>
+	                                                <div class="dropdown-menu">
+	                                                	<a class="dropdown-item">모든 문서</a>
+	                                                    <a class="dropdown-item">결재 중</a>
+	                                                    <a class="dropdown-item">결재 완료</a>
+	                                                    <a class="dropdown-item">반려</a>
+	                                                </div>
+	                                            </div>
+	                                            <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+	                                                <form action="">
+	                                                    <input type="text" class="form-control" placeholder="검색" required>
+	                                                    <button type="submit" class="btn btn-icon"><i class="ik ik-search"></i></button>
+	                                                </form>
+	                                            </div>
+	                                        </div>
+	                                    </div>      
+	                                    </div>
+	                                    <!-- 테이블 상단 삭제 및 검색 탭 End -->
+	                                    <!-- 관리자용 전체문서목록 테이블 Start --> 
                                         <div class="table-responsive">
-                                            <table class="table mb-0">
+                                            <table class="table table-hover mb-0">
                                                 <thead>
                                                     <tr>
                                                     	<th>
@@ -150,8 +169,7 @@
                                                         <th>기안자</th>
                                                         <th>기안일</th>
                                                         <th>완료일</th>
-                                                        <th>결재상태</th>
-                                                        <th>수정/삭제</th>
+                                                        <th>결재 상태</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -170,10 +188,6 @@
                                                         <td>2020-02-16</td>
                                                      	<td>2020-02-16</td>
                                                      	<td>결재 완료</td>                                                      
-                                                        <td>
-                                                        <a href="#!"><i class="ik ik-edit f-16 mr-15 text-green"></i></a>
-                                                        <a href="#!" class="ea-list-delete"><i class="ik ik-trash-2 f-16 text-red"></i></a>
-                                                        </td>
                                                     </tr> 
                                                     <tr>
                                                     	<td> 
@@ -189,15 +203,52 @@
                                                         <td>김건훈</td>
                                                         <td>2020-02-16</td>
                                                      	<td></td>
-                                                        <td>결재 중</td>
-                                                        <td>
-                                                        <a href="#!"><i class="ik ik-edit f-16 mr-15 text-green"></i></a>
-                                                        <a href="#!" class="ea-list-delete"><i class="ik ik-trash-2 f-16 text-red"></i></a>
-                                                        </td>
+                                                        <td>결재 중</td> 
                                                     </tr>                                                                                                         
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <span class="contents-quantity">문서 수 : 2</span>
+                                       	<nav aria-label="Page navigation example">
+                                            <ul class="pagination mb-0 pagination-btn-group">
+                                                <li class="page-item">
+                                                    <a class="page-link first" href="#">
+                                                        <i class="ik ik-chevrons-left"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link prev" href="#">
+                                                        <i class="ik ik-chevron-left"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="page-item active">
+                                                    <a class="page-link" href="#">1</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">2</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">3</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">4</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">5</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link next" href="#" aria-label="Next">
+                                                        <i class="ik ik-chevron-right"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link last" href="#">
+                                                        <i class="ik ik-chevrons-right"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                       	 
                                     </div>
                                  <!-- 관리자용 전체문서목록 테이블 End -->                               
                         		</div>	                              
