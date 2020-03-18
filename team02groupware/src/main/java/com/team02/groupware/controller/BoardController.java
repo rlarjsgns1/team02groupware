@@ -1,5 +1,6 @@
 package com.team02.groupware.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team02.groupware.dto.BoardDto;
@@ -66,12 +68,18 @@ public class BoardController {
 		return "board/boardWriteForm";
 	}
 	@PostMapping("/boardInsert")
-	public String boardWrite(Model model, BoardDto bDto, RedirectAttributes redirectA ) {
+	public String boardWrite(Model model, BoardDto bDto, @RequestParam("file") MultipartFile file, RedirectAttributes redirectA ) throws IOException {
 		
 		System.out.println("보드인서트 비디티오 확인 : "+bDto.toString());
 		Map<String, Object> boardMap = new HashMap<String, Object>();
 		
 		boardMap = boardService.boardInsert(bDto);
+		
+		if(file.isEmpty() == false) {
+			boardService.boardFileInsert(boardMap, file);
+		}
+		
+		
 		
 		redirectA.addAttribute("boardNum", boardMap.get("boardNum"));
 		

@@ -151,7 +151,7 @@
 		
 	</select>
 	
-	<!-- 글쓰기 직후 해당 글 board_num select -->
+	<!-- 게시글 insert 직후 해당 글 board_num select -->
 	<select id="selectMaxBoardNum" resultType="int">
 		SELECT 
 			max(board_num)
@@ -163,14 +163,28 @@
 	<insert id="insertBoard" parameterType="BoardDto">
 		INSERT 
 			INTO board
-			(board_category, 
-			board_title, 
-			board_content_text, 
-			board_writer, 
-			board_write_date, 
-			board_view_count, 
-			board_comment_count)
+				(board_category, 
+				board_title, 
+				board_content_text, 
+				board_writer, 
+				board_write_date, 
+				board_view_count, 
+				board_comment_count)
+				
 		VALUES (#{boardCategory}, #{boardTitle}, #{boardContentText}, '관리자', NOW(), 0, 0)
+
+	</insert>
+	
+	<!-- 파일 insert -->
+	<insert id="boardFileInsert" parameterType="map">
+		INSERT 
+			INTO board_file
+				(board_num,
+				board_file_original_name,
+				board_file_stored_name,
+				board_file_size)
+				
+		VALUES (${boardNum}, #{originalFileName}, #{storedFileName}, ${fileSize})
 
 	</insert>
 	

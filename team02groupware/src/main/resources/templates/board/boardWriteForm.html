@@ -28,6 +28,7 @@
 	            lang: 'ko-KR'// set focus to editable area after initializing summernote
 	    });
 	    
+	    // 게시글 등록
 	    $('#boardInsertBtn').click(function(){
 	    	var boardCategory = $('[name=boardCategory]')
 	    	var boardTitle = $('[name=boardTitle]')
@@ -55,6 +56,7 @@
 	    	
 	    })
 	    
+	    // 게시글 등록 취소
 	    $('#cancleBtn').click(function(){
 	    	history.back()
 	    	
@@ -104,7 +106,7 @@
       
          
           <div style="margin: 25px 0 0 0">
-              <form action="/boardInsert" id="boardInsertForm" class="forms-sample" method="post">
+              <form action="/boardInsert" id="boardInsertForm" class="forms-sample" method="post" enctype="multipart/form-data">
                   <div class="row">
                       <div class="col-md-3">
                           <div class="form-group">
@@ -130,15 +132,16 @@
                           </div>
                       </div>
                   </div>
+                  
                   <div class="row">
 	                  <div class="form-group col-md-4" >
 	                      <label>파일 첨부</label>
-	                      <input type="file" name="img[]" class="file-upload-default">
+	                      <input type="file" name="file" class="file-upload-default"/>
+	                      
 	                      <div class="input-group col-xs-4">
-	                          <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Image">
-	                          
+	                          <input type="text" class="form-control file-upload-info" disabled placeholder="선택된 파일이 없습니다.">
 	                          <span class="input-group-append">
-	                          <button class="file-upload-browse btn btn-primary" type="button">첨부</button>
+	                          <button class="file-upload-browse btn btn-primary" type="button">파일 선택</button>
 	                          </span>
 	                      </div>
 	                  </div>
@@ -180,6 +183,7 @@
 	<script
 		src="plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 	<script src="plugins/jvectormap/jquery-jvectormap.min.js"></script>
+	<script src="/js/form-components.js"></script>
 	
 	<script src="plugins/moment/moment.js"></script>
 	

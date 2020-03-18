@@ -1,15 +1,24 @@
 package com.team02.groupware.service;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.team02.groupware.dto.BoardDto;
 import com.team02.groupware.dto.CommentDto;
@@ -23,6 +32,9 @@ public class BoardService {
 	
 	@Autowired
 	private BoardMapper boardMapper;
+	
+	@Value("${service.file.uploadurl}")
+	private String fileUploadPath;
 	
 	public Map<String, Object> getBoardList(BoardDto bDto, PagingDto pDto, SearchDto sDto){
 		// default값 설정
@@ -167,6 +179,41 @@ public class BoardService {
 		
 		return boardMap;
 	}
+	
+	public void boardFileInsert(Map<String, Object> boardMap, MultipartFile file) throws IOException {
+		
+		String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());	// 오리지날 파일명
+		String storedFileName = UUID.randomUUID().toString().replaceAll("-", "");		// DB에 저장될 파일명 랜덤생성
+		storedFileName += originalFileName.substring(originalFileName.lastIndexOf("."));	// 확장자 추가
+		int fileSize = (int) file.getSize();	// 파일 사이즈
+		
+		System.out.println("*** 파일 업로드 테스트 ***");
+		System.out.println("fileName : " + originalFileName);
+		System.out.println("fileOriginalName : " + file.getOriginalFilename());
+		System.out.println("fileStoredName : " + storedFileName);
+		System.out.println("fileSize : " + fileSize);
+		System.out.println("filegetContentType : " + file.getContentType());
+		System.out.println("filegetName : " + file.getName());
+		System.out.println("filegetBytes : " + file.getBytes());
+		System.out.println("filegetResource : " + file.getResource());
+		System.out.println("filegetInputStream : " + file.getInputStream());
+		System.out.println("*** 파일 업로드 테스트 ***");
+		
+		InputStream inputStream = file.getInputStream();		// 파일 읽을 준비
+		Files.copy(inputStream, Paths.get(fileUploadPath).resolve(storedFileName),	// copy(inputStream 객체, 파일 경로, 카피옵션) : 파일 복사해서 쓰기
+				StandardCopyOption.REPLACE_EXISTING);			// REPLACE_EXISTING?
+		
+		
+		boardMap.put("originalFileName", originalFileName);
+		boardMap.put("storedFileName", storedFileName);
+		boardMap.put("fileSize", fileSize);
+		
+		boardMapper.boardFileInsert(boardMap);
+
+	}
+	
+	
+	
 	
 	public Map<String, Object> selectBoardDetailView(BoardDto bDto){
 		

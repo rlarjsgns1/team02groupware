@@ -329,23 +329,48 @@
           
           <div class="card-body" style="position:relative; min-height: 300px;">
 	       	<div class="form-group row">
+	       		
 	         	<div class="col-md-8" style="padding:0 0 0 25px;">
 	             	<i class="ik ik-user"></i>
 	              	<label for="exampleInputUsername2" class="col-sm-3 col-form-label" style="padding:0; font-weight:bold;">[[${b.boardWriter}]]</label>
 	             </div>
+	             
+	             <!-- 첨부파일 리스트 -->
 	             <div class="col-md-4"style="text-align:right">
-	              	<span>첨부파일(1)</span>
+	              	<a href="#" onclick="oCL.show('attachLayer');return false;">첨부파일<span class="m-tcol-p">(1)</span></a>
+	              	<div id="attachLayer" class="ly_atch_file" style="display: block; z-index: 1000; top: 15px; right: 0px; width: 340px;">
+                       <ul>
+							<li>
+								<span class="file_name">fileName</span>
+								<div id="attahc" class="download_opt">
+									<a href="#" target="_blank">내PC 저장</a>
+								</div>
+							</li>
+                       </ul>
+                       <a href="#" onclick="oCL.hide('attachLayer');return false;" class="clse"><span class="blind">닫기</span></a>
+                       <div class="modal-content">
+	                               		 <div class="modal-body">
+	                                   		 <p id="modal-content-type">test</p>
+	                                	 </div>
+	                           		 </div>
+                   </div>
 	             </div>
+	             
 	        </div>
-	        
+	        <!-- 게시글 내용 -->
             <div style="padding: 0 30px; margin: 40px 0 0 0;">
             	<th:block th:utext="${b.boardContentText}">
             	</th:block>
 
             </div>
+            
             <div class="col-md-6" style="padding:0; margin: 30px 0 10px 0; position:absolute; bottom:0px;">
 
-            	<span style="font-weight:bold;">댓글</span> <span id="commentCount">[[${b.boardCommentCount}]]</span>ㅣ <span style="font-weight:bold;">조회수</span> <span>[[${b.boardViewCount}]]</span>
+            	<span style="font-weight:bold;">댓글</span>
+            	<span id="commentCount">[[${b.boardCommentCount}]]</span>
+            	ㅣ 
+            	<span style="font-weight:bold;">조회수</span>
+            	<span>[[${b.boardViewCount}]]</span>
             </div>
 	      </div>
 	      </th:block>
