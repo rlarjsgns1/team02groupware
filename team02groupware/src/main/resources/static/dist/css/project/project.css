@@ -82,6 +82,7 @@
 .select2-selection__choice{
 	margin-top: 0 !important;
 	margin: 5px 0;
+	
 }
 
 .member-select-wrap{
@@ -101,9 +102,17 @@
 .pr-update-modal{
 	font-size:16px;
 	width:100%;
+	padding-top:0px !important;
 }
-
-
+.pr-update-modal>.form-sample{
+	width:100%;
+}
+.datetimepicker-input{
+	width:50%;
+}
+.member-update-btn{
+	cursor:pointer;
+}
 .update-member-select{
 	over-flow-y: auto;
 	max-height:90px;
