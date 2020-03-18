@@ -10,6 +10,10 @@
 	font-size:15px;
 }
 
+.form-group label{
+	font-weight:500;
+	font-size:14px;
+}
 .form-radio{
 	display:flex;
 }
@@ -73,10 +77,11 @@
 }
 .select2-selection--multiple{
 	border:0 !important;
-	width:10rem;
+	margin-bottom:5px;
 }
 .select2-selection__choice{
 	margin-top: 0 !important;
+	margin: 5px 0;
 }
 
 .member-select-wrap{

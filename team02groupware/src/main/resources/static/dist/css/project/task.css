@@ -49,7 +49,16 @@
 	
 }
 
+.tasklist-add-btn{
+	padding:10px !important;
+}
+
 .tasklist-add-card .card-header{
 	cursor:pointer;
 	background-color: #dddddd;
+}
+
+.taskListInput{
+	margin:3px 3px;
+	padding:4px;
 }
