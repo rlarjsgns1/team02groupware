@@ -78,13 +78,16 @@
 .select2-selection--multiple{
 	border:0 !important;
 	margin-bottom:5px;
+	
 }
 .select2-selection__choice{
 	margin-top: 0 !important;
 	margin: 5px 0;
 	
 }
-
+.select2-search{
+	width:100px;
+}
 .member-select-wrap{
 	over-flow-x: hidden;
 	over-flow-y: auto;

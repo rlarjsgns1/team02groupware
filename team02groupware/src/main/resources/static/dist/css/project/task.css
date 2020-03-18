@@ -11,9 +11,22 @@
 .container-fluid {
 	padding-right: 0px;
 }
+.scroller-layout {
+	-webkit-overflow-scrolling: touch;
+	scroll-behavior: smooth;
+	display: flex;
+	user-select: none;
+	overflow-x:auto;
+	overflow-y:overlay;
+	z-index: 1;
+	cursor: url('/img/project/hand-move.png'), move;
+	align-items:stretch;
+	overflow-y:hidden;
 
+	
+}
 .task-row {
-	flex-wrap: nowrap !important;
+	flex-wrap: nowrap;
 }
 
 .card {
@@ -38,21 +51,14 @@
 }
 
 .card-body {
+	-webkit-box-flex:0;
+	flex:0 1 auto;
 	max-height: 29rem;
 	overflow-y: auto;
 	cursor: default;
 }
 
-.scroller-layout {
-	-webkit-overflow-scrolling: touch;
-	scroll-behavior: smooth;
-	display: flex;
-	overflow-x: auto;
-	user-select: none;
-	z-index: 1;
-	cursor: url('/img/project/hand-move.png'), move;
-	height: 100%;
-}
+
 
 .dd-item {
 	cursor: move;
