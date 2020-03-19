@@ -129,7 +129,6 @@
 	.table-row-delete-nav{ /* 전자결재 관련 테이블 row 삭제 버튼 포함 NAV 관련 CSS */
 		display: inline-block;
 		visibility: hidden;
-		margin-left: 20px;
 	}
 	
 	.ea-submit-btn{ /* 전자결재 submit 버튼 관련 CSS */
@@ -153,7 +152,11 @@
 		text-align: center;
 	}
 	
-	.ea-card-header{
+	.ea-card-header{ /* 전자결재 각 페이지 title 포함되어있는 head 부분 CSS */
 		border-bottom: 1px solid #f1f1f1 !important;
+	}
+	
+	.document-form-list-top-nav{
+		margin-left: 4px;
 	}
 	
