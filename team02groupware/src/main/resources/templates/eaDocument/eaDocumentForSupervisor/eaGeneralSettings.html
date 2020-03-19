@@ -81,7 +81,7 @@
 							$('#modal-content-type').text('최종 결재자가 부재 시 우선적으로 기안을 집행하고 이후 최종 결재자의 승인 또는 반려를 받는 방식의 허용 여부를 설정합니다.');
 							divLeft = e.pageX - 90
 						}else if(ruleTipType=='참조 열람 시기 설정'){
-							$('#modal-content-type').text('참조자의 문서 열람 가능 시기를 설정합니다.');
+							$('#modal-content-type').text('참조자의 문서 열람 가능 시기를 설정합니다. \'결재 시작\' 을 선택하면 문서가 등록됨과 동시에 \'진행 중인 문서 - 예정\' 에서 확인할 수 있으며, \'결재 완료\' 를 선택하면 문서의 모든 결재가 승인되었을 때 \'진행 중인 문서 - 확인\'에서만 확인 가능합니다.');
 						}else if(ruleTipType=='기안 취소 설정'){
 							$('#modal-content-type').text('기안자가 기안 취소한 문서의 처리 방법을 설정합니다.');
 						}
@@ -186,10 +186,34 @@
 				});
 			</script>
 		</th:block>
-		<th:block layout:fragment="customContents">                    
+		<th:block layout:fragment="customContents">
+						<div class="page-header">
+					       <div class="row align-items-end">
+					           <div class="col-lg-8">
+					               <div class="page-header-title">
+					                   <i class="ik ik-credit-card bg-blue"></i>
+					                   <div class="d-inline">
+					                       <h5>그룹웨어</h5>
+					                       <span>(주)TEAM02</span>
+					                   </div>
+					               </div>
+					           </div>
+					           <div class="col-lg-4">
+					               <nav class="breadcrumb-container" aria-label="breadcrumb">
+					                   <ol class="breadcrumb">
+					                       <li class="breadcrumb-item">
+					                           <a th:href="@{/index}"><i class="ik ik-home"></i></a>
+					                       </li>
+					                       <li class="breadcrumb-item">전자결재 설정</li>
+					                       <li class="breadcrumb-item active" aria-current="page">기본 설정</li>
+					                   </ol>
+					               </nav>
+					           </div>
+					       </div>
+					   </div>                    
 		               <div class="card">
 		              	  <!-- 테이블 상단 메뉴탭 Start-->
-			                 <div class="card-header">
+			                 <div class="card-header ea-card-header">
 			                 	<h3>기본 설정</h3>
 			                 </div>
 	                           <!-- 테이블 상단 메뉴탭 End-->

@@ -83,8 +83,36 @@
 				});
 			</script>
 		</th:block>
-		<th:block layout:fragment="customContents">                    
+		<th:block layout:fragment="customContents">
+						<div class="page-header">
+					       <div class="row align-items-end">
+					           <div class="col-lg-8">
+					               <div class="page-header-title">
+					                   <i class="ik ik-credit-card bg-blue"></i>
+					                   <div class="d-inline">
+					                       <h5>그룹웨어</h5>
+					                       <span>(주)TEAM02</span>
+					                   </div>
+					               </div>
+					           </div>
+					           <div class="col-lg-4">
+					               <nav class="breadcrumb-container" aria-label="breadcrumb">
+					                   <ol class="breadcrumb">
+					                       <li class="breadcrumb-item">
+					                           <a th:href="@{/index}"><i class="ik ik-home"></i></a>
+					                       </li>
+					                       <li class="breadcrumb-item active" aria-current="page">기안하기</li>
+					                   </ol>
+					               </nav>
+					           </div>
+					       </div>
+					   </div>                    
 		               <div class="card">
+	               		<!-- 기안하기 테이블 상단 메뉴탭 Start-->
+		                 <div class="card-header ea-card-header">
+		                 	<h3>기안하기</h3>
+		                 </div>
+                      	<!-- 기안하기 테이블 상단 메뉴탭 End-->
 	                           <div class="electronic-approval-form">                 
                                <!-- 문서 기안하기 기본설정 테이블 Start -->
                                     <div class="card-header d-block">

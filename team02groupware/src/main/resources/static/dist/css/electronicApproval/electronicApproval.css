@@ -68,6 +68,7 @@
 	
  	.electronic-approval-form{ /* 전자결재 FORM 요소 정렬 CSS */
 		width: 80%;
+		margin-top: 15px;
 	} 
 	
 	.document-draft-btn{/* 기안하기 화면 기본설정 테이블 버튼 */
@@ -128,6 +129,7 @@
 	.table-row-delete-nav{ /* 전자결재 관련 테이블 row 삭제 버튼 포함 NAV 관련 CSS */
 		display: inline-block;
 		visibility: hidden;
+		margin-left: 20px;
 	}
 	
 	.ea-submit-btn{ /* 전자결재 submit 버튼 관련 CSS */
@@ -146,5 +148,12 @@
 	.document-form-checkbox > label > span{ /* 양식 생성 page 변경 금지 CSS */
 		vertical-align: middle;
 		cursor: pointer;
+	}
+	.ea-table{ /* 전자결재 관련 테이블 CSS */
+		text-align: center;
+	}
+	
+	.ea-card-header{
+		border-bottom: 1px solid #f1f1f1 !important;
 	}
 	

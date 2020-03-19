@@ -141,14 +141,34 @@
 				});
 			</script>
 		</th:block>
-		<th:block layout:fragment="customContents">                    
+		<th:block layout:fragment="customContents">
+						<div class="page-header">
+					       <div class="row align-items-end">
+					           <div class="col-lg-8">
+					               <div class="page-header-title">
+					                   <i class="ik ik-credit-card bg-blue"></i>
+					                   <div class="d-inline">
+					                       <h5>그룹웨어</h5>
+					                       <span>(주)TEAM02</span>
+					                   </div>
+					               </div>
+					           </div>
+					           <div class="col-lg-4">
+					               <nav class="breadcrumb-container" aria-label="breadcrumb">
+					                   <ol class="breadcrumb">
+					                       <li class="breadcrumb-item">
+					                           <a th:href="@{/index}"><i class="ik ik-home"></i></a>
+					                       </li>
+					                       <li class="breadcrumb-item">전자결재 설정</li>
+					                       <li class="breadcrumb-item active" aria-current="page">양식함 관리</li>
+					                   </ol>
+					               </nav>
+					           </div>
+					       </div>
+					   </div>                    
 		               <div class="card">
-		               
-		               
-		              
-		               
 		              	  <!-- 테이블 상단 메뉴탭 Start-->
-			                 <div class="card-header"><h3>양식함 관리</h3></div>
+			                 <div class="card-header ea-card-header"><h3>양식함 관리</h3></div>
 	  							<div class="card-body">
 	                                <ul class="nav">
 	                                    <li class="nav-item">
@@ -197,7 +217,7 @@
                                    <!-- 테이블 상단 삭제 및 검색 탭 End --> 
                                     <!-- 양식 리스트 테이블 Start -->
                                         <div class="table-responsive">
-                                            <table class="table table-hover mb-0">
+                                            <table class="table table-hover mb-0 ea-table">
                                                 <thead>
                                                     <tr>
                                                     	<th>

@@ -4,7 +4,7 @@
       layout:decorate="~{layout/default}">
 <!--
    @file allOngoingDocumentList.html
-   @brief 결재 진행중인 문서 전체 view
+   @brief 결재 진행 중인 진행 문서 목록 view
    @author 김건훈
  -->	
 		<!-- CSS custom -->
@@ -14,7 +14,7 @@
 		</th:block>
 		
 		<th:block layout:fragment="customTitle">
-		<title>결재 진행 중인 전체 문서 목록</title>
+		<title>결재 진행 중인 진행 문서 목록</title>
 		</th:block>
 	
 		<!--  Script custom -->
@@ -26,7 +26,7 @@
 				$(function(){
 				
 					 /*
-					  * @brief 결재 진행중인 전체 문서 목록 page 물음표 아이콘 Modal Event
+					  * @brief 결재 진행 중인 진행 문서 목록 page 물음표 아이콘 Modal Event
 					  * @author 김건훈
 					  */	
 					$('.ik-help-circle').on('mouseover',function(e){
@@ -59,116 +59,60 @@
 						$(this).parent().siblings('.dropdown-toggle').append(tag);
 					});
 					
-					/*
-					  * @brief icheck plug-in 사용
-					  * @author 김건훈
-					  */
-
-					$(".ea-icheck").iCheck({
-
-						checkboxClass: 'icheckbox_square-blue'
-
-					});
-					 
-					 //페이지 로딩 시 체크박스 체크 초기화
-					$('#all-ea-checkbox,.ea-checkbox').iCheck('uncheck');
-					
-					 /*
-					  * @brief 각각 체크박스 체크 이벤트
-					  * @author 김건훈
-					  */
-
-					  $('.ea-checkbox').on('ifChecked', function(event){
-						  //console.log('체크박스클릭');
-						  var checkCount  = $('.ea-checkbox:checked').length;
-						  //console.log(checkCount);
-							  if(checkCount == 2){							
-								 	 $('#all-ea-checkbox').iCheck('check');
-							  }else{
-								  	 $('#all-ea-checkbox').iCheck('uncheck');
-							  }
-							  
-							  if(checkCount>0){
-									$('.table-row-delete-nav').css('visibility','visible')
-			 					}else{
-									$('.table-row-delete-nav').css('visibility','hidden')
-			 					}
-						  });
-					
-					  $('.ea-checkbox').on('ifUnchecked', function(event){
-						  //console.log('체크박스클릭');
-						  var checkCount  = $('.ea-checkbox:checked').length;
-						  //console.log(checkCount);
-							  if(checkCount == 2){							
-								 	 $('#all-ea-checkbox').iCheck('check');
-							  }else{
-								  	 $('#all-ea-checkbox').iCheck('uncheck');
-							  }
-							  
-							  if(checkCount>0){
-									$('.table-row-delete-nav').css('visibility','visible')
-			 					}else{
-									$('.table-row-delete-nav').css('visibility','hidden')
-			 					}
-						  });
-					  
-					 
-					
-					
-					 /*
-					  * @brief 전체 체크박스 체크 이벤트
-					  * @author 김건훈
-					  */
-					  
-					  $('#all-ea-checkbox').on('ifChecked', function(event){
-						  
-						  var checkCount  = $('.ea-checkbox:checked').length;
-						  	 	
-						  $('.ea-checkbox').iCheck('check');
-
-					  });
-					
-						
-					  $('#all-ea-checkbox').on('ifUnchecked', function(event){
-						 
-						  var checkCount  = $('.ea-checkbox:checked').length;
-						  
-						  if(checkCount == 2){
-						 		
-							  $('.ea-checkbox').iCheck('uncheck');
-						  }
-					  });
 				});
 			</script>
 		</th:block>
-		<th:block layout:fragment="customContents">                    
+		<th:block layout:fragment="customContents">
+						<div class="page-header">
+					       <div class="row align-items-end">
+					           <div class="col-lg-8">
+					               <div class="page-header-title">
+					                   <i class="ik ik-credit-card bg-blue"></i>
+					                   <div class="d-inline">
+					                       <h5>그룹웨어</h5>
+					                       <span>(주)TEAM02</span>
+					                   </div>
+					               </div>
+					           </div>
+					           <div class="col-lg-4">
+					               <nav class="breadcrumb-container" aria-label="breadcrumb">
+					                   <ol class="breadcrumb">
+					                       <li class="breadcrumb-item">
+					                           <a th:href="@{/index}"><i class="ik ik-home"></i></a>
+					                       </li>
+					                       <li class="breadcrumb-item">진행 중인 문서</li>
+					                       <li class="breadcrumb-item active" aria-current="page">진행</li>
+					                   </ol>
+					               </nav>
+					           </div>
+					       </div>
+					   </div>                    
 		               <div class="card">
-		              	  <!-- 결재 진행중인 전체 문서 목록 테이블 상단 메뉴탭 Start-->
-			                 <div class="card-header"><h3>결재 진행 중인 전체 문서 목록<i class="ik ik-help-circle"></i></h3></div>
-	                      <!-- 결재 진행중인 전체 문서 목록 테이블 상단 메뉴탭 End-->
-                                <!-- 결재 진행중인 전체 문서 목록 검색창 Start -->
+		              	  <!--결재 진행 중인 진행 문서 목록 테이블 상단 메뉴탭 Start-->
+			                 <div class="card-header ea-card-header">
+				                 <h3>결재 진행 중인 진행 문서 목록
+				                 <i class="ik ik-help-circle"></i>
+				                 </h3>
+			                 </div>
+	                      <!--결재 진행 중인 진행 문서 목록 테이블 상단 메뉴탭 End-->
+                                <!-- 결재 진행 중인 진행 문서 목록 검색창 Start -->
                                    <div class="card-block">
                                    <div class="table-nav">
                                    		<ul class="nav table-row-delete-nav" >
 		                                    <li class="nav-item">
-		                                    	<button type="button" class="btn btn-outline-primary">결재</button>
-		                                    </li>
-		                                    <li class="nav-item">
-		                                    	<button type="button" class="btn btn-outline-primary">확인</button>
+		                                    	<button type="button" class="btn btn-outline-primary">##</button>
 		                                    </li>
 		                                </ul>
                                    <div class="collapse d-md-block display-options float-md-right" id="displayOptions">
                                         <div class="d-block d-md-inline-block">
                                             <div class="btn-group float-md-left mr-1 mb-1">
-                                                <button class="btn btn-outline-dark btn-xs dropdown-toggle search-keyword-btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    		진행 상태<i class="ik ik-chevron-down mr-0 align-middle"></i>
+                                                <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    		문서 양식<i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                	<a class="dropdown-item">모든 문서</a>
-                                                    <a class="dropdown-item">대기</a>
-                                                    <a class="dropdown-item">예정</a>
-                                                    <a class="dropdown-item">진행</a>
-                                                    <a class="dropdown-item">확인</a>
+                                                	<a class="dropdown-item">프로젝트 사업기획서</a>
+                                                    <a class="dropdown-item">프로젝트 업무보고서</a>
+                                                    <a class="dropdown-item">프로젝트 완료보고서</a>
                                                 </div>
                                             </div>
                                             <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
@@ -180,45 +124,33 @@
                                         </div>
                                      </div>
                                     </div>
-                               <!-- 결재 진행중인 전체 문서 목록 검색창 End -->
-                               <!-- 결재 진행중인 전체 문서 목록 테이블 Start -->
+                               <!--결재 진행 중인 진행 문서 목록 검색창 End -->
+                               <!-- 결재 진행 중인 진행 문서 목록 Start -->
                                         <div class="table-responsive">
-                                            <table class="table mb-0 table-hover">
+                                            <table class="table mb-0 table-hover ea-table">
                                                 <thead>
                                                     <tr>
-                                                    	<th>
-                                                    		<input type="checkbox" class="ea-icheck" id="all-ea-checkbox">                                                	
-                                                    	</th>
                                                         <th>문서 번호</th>
                                                         <th>제목</th>
                                                         <th>기안자</th>
                                                         <th>기안일</th>
                                                         <th>구분</th>
-                                                        <th>상태</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                    	<td> 
-                                                    		<input type="checkbox" class="ea-icheck ea-checkbox">
-                                                    	</td>
-                                                        <td>프로젝트사업기획-20200316-0001</td>
-                                                        <td>그룹웨어 프로젝트 사업기획서</td>
+                                                        <td>프로젝트사업기획-20200716-0003</td>
+                                                        <td>ERM 개발 프로젝트 사업기획서</td>
                                                         <td>김건훈</td>
-                                                        <td>2020-02-16</td>
-                                                     	<td>기안</td>
-                                                     	<td>진행</td>                                                                                   
+                                                        <td>2020-07-16</td>
+                                                     	<td>기안</td>                                                                              
                                                     </tr> 
                                                     <tr>
-                                                    	<td> 
-                                                    		<input type="checkbox" class="ea-icheck ea-checkbox">
-                                                    	</td>
-                                                        <td>프로젝트완료보고-20200316-0002</td>
-                                                        <td>그룹웨어 프로젝트 완료보고서</td>
+                                                        <td>프로젝트완료보고-20200816-0003</td>
+                                                        <td>ERM 개발 프로젝트  완료보고서</td>
                                                         <td>김건훈</td>
-                                                        <td>2020-02-16</td>
-                                                     	<td>결재</td>
-                                                        <td>대기</td>
+                                                        <td>2020-08-16</td>
+                                                     	<td>결재</td> 
                                                     </tr>                                                                                                         
                                                 </tbody>
                                             </table>
@@ -264,18 +196,18 @@
                                             </ul>
                                         </nav>
                                     </div>
-                                 <!-- 결재 진행중인 전체 문서 목록 테이블 End -->                               
+                                 <!-- 결재 진행 중인 진행 문서 목록 테이블 End -->                               
                         		</div>	                              
 	                      
-	                      <!-- 결재 진행중인 전체 문서 목록 page modal view Start --> 
+	                      <!--결재 진행 중인 진행 문서 목록 page modal view Start --> 
 	                        <div class="modal-dialog modal-sm mt-0 mb-0 ruletip" role="document">
 					        	<div class="modal-content">
                                		 <div class="modal-body">
-                                   		 <p>접속한 사용자와 연관된 기안문서들 중 결재 진행 중인 모든 문서들이 이곳에 나타납니다. 처리 해야 할 문서들을 체크하여 일괄 결재 처리 및 회람,참조,수신 일괄 확인 처리가 가능합니다. </p>
+                                   		 <p>진행 문서함은 내가 올리거나 받은 문서 중에서 내 결재 순서를 지난 문서(참조 포함) 들이 쌓이는 곳 입니다. '구분' 은 기안 결재 처리 합의 재무 참조 중 내가 한 일을 안내해주는 항목 입니다.</p>
                                 	 </div>
                            		 </div>
                            	</div>
-                           <!-- 결재 진행중인 전체 문서 목록 page modal view End -->                                    	
+                           <!--결재 진행 중인 진행 문서 목록 page modal view End -->                                    	
 	</th:block>
 
 	<th:block layout:fragment="customJs">        

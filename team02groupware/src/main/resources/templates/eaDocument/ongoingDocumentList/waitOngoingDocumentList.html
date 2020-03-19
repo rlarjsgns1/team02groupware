@@ -3,8 +3,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 <!--
-   @file documentListForSupervisor.html
-   @brief 관리자용 전체 문서 리스트view
+   @file allOngoingDocumentList.html
+   @brief 결재 진행 중인 대기 문서 목록 view
    @author 김건훈
  -->	
 		<!-- CSS custom -->
@@ -14,7 +14,7 @@
 		</th:block>
 		
 		<th:block layout:fragment="customTitle">
-		<title>전체 문서 목록</title>
+		<title>결재 진행 중인 대기 문서 목록</title>
 		</th:block>
 	
 		<!--  Script custom -->
@@ -26,7 +26,7 @@
 				$(function(){
 				
 					 /*
-					  * @brief 관리자용 전체문서목록 page 물음표 아이콘 Modal Event
+					  * @brief 결재 진행 중인 대기 문서 목록 page 물음표 아이콘 Modal Event
 					  * @author 김건훈
 					  */	
 					$('.ik-help-circle').on('mouseover',function(e){
@@ -141,57 +141,78 @@
 				});
 			</script>
 		</th:block>
-		<th:block layout:fragment="customContents">                    
+		<th:block layout:fragment="customContents">
+						<div class="page-header">
+					       <div class="row align-items-end">
+					           <div class="col-lg-8">
+					               <div class="page-header-title">
+					                   <i class="ik ik-credit-card bg-blue"></i>
+					                   <div class="d-inline">
+					                       <h5>그룹웨어</h5>
+					                       <span>(주)TEAM02</span>
+					                   </div>
+					               </div>
+					           </div>
+					           <div class="col-lg-4">
+					               <nav class="breadcrumb-container" aria-label="breadcrumb">
+					                   <ol class="breadcrumb">
+					                       <li class="breadcrumb-item">
+					                           <a th:href="@{/index}"><i class="ik ik-home"></i></a>
+					                       </li>
+					                       <li class="breadcrumb-item">진행 중인 문서</li>
+					                       <li class="breadcrumb-item active" aria-current="page">대기</li>
+					                   </ol>
+					               </nav>
+					           </div>
+					       </div>
+					   </div>                    
 		               <div class="card">
-		              	  <!-- 테이블 상단 메뉴탭 Start-->
-			                 <div class="card-header"><h3>전체 문서 목록 <i class="ik ik-help-circle"></i></h3></div>
-	                            <!-- 테이블 상단 메뉴탭 End-->
-	                                                 
-	                           <!-- 테이블 상단 삭제 및 검색 탭 Start -->                      
+		              	  <!-- 결재 진행 중인 대기 문서 목록 테이블 상단 메뉴탭 Start-->
+			                 <div class="card-header ea-card-header"><h3>결재 진행 중인 대기 문서 목록<i class="ik ik-help-circle"></i></h3></div>
+	                      <!--결재 진행 중인 대기 문서 목록 테이블 상단 메뉴탭 End-->
+                                <!-- 결재 진행 중인 대기 문서 목록 검색창 Start -->
                                    <div class="card-block">
-	                                   <div class="table-nav">
-	                                   	<ul class="nav table-row-delete-nav" >
+                                   <div class="table-nav">
+                                   		<ul class="nav table-row-delete-nav" >
 		                                    <li class="nav-item">
-		                                    	<button type="button" class="btn btn-outline-danger ea-list-delete">삭제</button>
+		                                    	<button type="button" class="btn btn-outline-primary">결재</button>
 		                                    </li>
 		                                </ul>
-	                                    <div class="collapse d-md-block display-options float-md-right" id="displayOptions">
-	                                        <div class="d-block d-md-inline-block">
-	                                            <div class="btn-group float-md-left mr-1 mb-1">
-	                                                <button class="btn btn-outline-dark btn-xs dropdown-toggle search-keyword-btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                                    		결재 상태<i class="ik ik-chevron-down mr-0 align-middle"></i>
-	                                                </button>
-	                                                <div class="dropdown-menu">
-	                                                	<a class="dropdown-item">모든 문서</a>
-	                                                    <a class="dropdown-item">결재 중</a>
-	                                                    <a class="dropdown-item">결재 완료</a>
-	                                                    <a class="dropdown-item">반려</a>
-	                                                </div>
-	                                            </div>
-	                                            <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-	                                                <form action="">
-	                                                    <input type="text" class="form-control" placeholder="검색" required>
-	                                                    <button type="submit" class="btn btn-icon"><i class="ik ik-search"></i></button>
-	                                                </form>
-	                                            </div>
-	                                        </div>
-	                                    </div>      
-	                                    </div>
-	                                    <!-- 테이블 상단 삭제 및 검색 탭 End -->
-	                                    <!-- 관리자용 전체문서목록 테이블 Start --> 
+                                   <div class="collapse d-md-block display-options float-md-right" id="displayOptions">
+                                        <div class="d-block d-md-inline-block">
+                                            <div class="btn-group float-md-left mr-1 mb-1">
+                                                <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    		문서 양식<i class="ik ik-chevron-down mr-0 align-middle"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                	<a class="dropdown-item">프로젝트 사업기획서</a>
+                                                    <a class="dropdown-item">프로젝트 업무보고서</a>
+                                                    <a class="dropdown-item">프로젝트 완료보고서</a>
+                                                </div>
+                                            </div>
+                                            <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                                                <form action="">
+                                                    <input type="text" class="form-control" placeholder="검색" required>
+                                                    <button type="submit" class="btn btn-icon"><i class="ik ik-search"></i></button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                     </div>
+                                    </div>
+                               <!-- 결재 진행 중인 대기 문서 목록 검색창 End -->
+                               <!-- 결재 진행 중인 대기 문서 목록 Start -->
                                         <div class="table-responsive">
-                                            <table class="table table-hover mb-0">
+                                            <table class="table mb-0 table-hover ea-table">
                                                 <thead>
                                                     <tr>
                                                     	<th>
-                                                    		<input type="checkbox" class="ea-icheck" id="all-ea-checkbox">                                               	
+                                                    		<input type="checkbox" class="ea-icheck" id="all-ea-checkbox">                                                	
                                                     	</th>
                                                         <th>문서 번호</th>
                                                         <th>제목</th>
                                                         <th>기안자</th>
                                                         <th>기안일</th>
-                                                        <th>완료일</th>
-                                                        <th>결재 상태</th>
+                                                        <th>구분</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -199,29 +220,27 @@
                                                     	<td> 
                                                     		<input type="checkbox" class="ea-icheck ea-checkbox">
                                                     	</td>
-                                                        <td>프로젝트사업기획-20200316-0001</td>
-                                                        <td>그룹웨어 프로젝트 사업기획서</td>
-                                                        <td>김건훈</td>
-                                                        <td>2020-02-16</td>
-                                                     	<td>2020-02-16</td>
-                                                     	<td>결재 완료</td>                                                      
+                                                        <td>프로젝트사업기획-20200316-0002</td>
+                                                        <td>쇼핑몰 프로젝트 사업기획서</td>
+                                                        <td>김연지</td>
+                                                        <td>2020-03-16</td>
+                                                     	<td>결재</td>                                                                              
                                                     </tr> 
                                                     <tr>
                                                     	<td> 
                                                     		<input type="checkbox" class="ea-icheck ea-checkbox">
                                                     	</td>
-                                                        <td>프로젝트완료보고-20200316-0002</td>
-                                                        <td>그룹웨어 프로젝트 완료보고서</td>
+                                                        <td>프로젝트완료보고-20200416-0002</td>
+                                                        <td>쇼핑몰 프로젝트  완료보고서</td>
                                                         <td>김건훈</td>
-                                                        <td>2020-02-16</td>
-                                                     	<td></td>
-                                                        <td>결재 중</td> 
+                                                        <td>2020-04-16</td>
+                                                     	<td>협의</td>
                                                     </tr>                                                                                                         
                                                 </tbody>
                                             </table>
                                         </div>
                                         <span class="contents-quantity">문서 수 : 2</span>
-                                       	<nav aria-label="Page navigation example">
+                                        <nav aria-label="Page navigation example">
                                             <ul class="pagination mb-0 pagination-btn-group">
                                                 <li class="page-item">
                                                     <a class="page-link first" href="#">
@@ -260,24 +279,20 @@
                                                 </li>
                                             </ul>
                                         </nav>
-                                       	 
                                     </div>
-                                 <!-- 관리자용 전체문서목록 테이블 End -->                               
+                                 <!-- 결재 진행 중인 대기 문서 목록 테이블 End -->                               
                         		</div>	                              
 	                      
-	                      <!-- 관리자용 전체문서목록 page View Start --> 
+	                      <!-- 결재 진행 중인 대기 문서 목록 page modal view Start --> 
 	                        <div class="modal-dialog modal-sm mt-0 mb-0 ruletip" role="document">
 					        	<div class="modal-content">
                                		 <div class="modal-body">
-                                   		 <p>모든 결재자가 작성한 결재 문서의 목록을 확인하는 곳입니다. 수정 시 참조자,회람자 를 추가하거나 삭제 시 결재 완료 및 반려된 문서만 삭제할 수 있습니다.</p>
+                                   		 <p>대기 문서함은 결재나 합의 순서가 되었거나 협의 요청된 문서들이 쌓이는 곳 입니다. 구분은 결재 처리 합의 재무 협의 중 해야 할 일을 안내해주는 항목 입니다. </p>
                                 	 </div>
                            		 </div>
                            	</div>
-                           <!-- 관리자용 전체문서목록 page View End -->
-                           
-	                             
-	                                                  	
-		</th:block>
+                           <!--결재 진행 중인 대기 문서 목록 page modal view End -->                                    	
+	</th:block>
 
 	<th:block layout:fragment="customJs">        
         <script>window.jQuery || document.write('<script src="../src/js/vendor/jquery-3.3.1.min.js"><\/script>')</script>

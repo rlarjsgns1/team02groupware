@@ -33,14 +33,59 @@ public class ElectronicApprovalController {
 	
 	 /*
 	  * @method selectAllOngoingDocumentList()
-	  * @brief 전자결재 진행중인 전체문서 method
+	  * @brief 전자결재 진행중인 "전체" 문서 method
 	  * @author 김건훈
 	  */	
 	 @GetMapping("/selectAllOngoingDocumentList")
 	 public String selectAllOngoingDocumentList() {
 		
-			return "eaDocument/allOngoingDocumentList";
+			return "eaDocument/ongoingDocumentList/allOngoingDocumentList";
 	}
+	 
+	 /*
+	  * @method selectWaitOngoingDocumentList()
+	  * @brief 전자결재 진행중인 "대기" 문서 method
+	  * @author 김건훈
+	  */	
+	 @GetMapping("/selectWaitOngoingDocumentList")
+	 public String selectWaitOngoingDocumentList() {
+		
+			return "eaDocument/ongoingDocumentList/waitOngoingDocumentList.html";
+	}
+	 
+	 /*
+	  * @method selectCheckOngoingDocumentList()
+	  * @brief 전자결재 진행중인 "확인" 문서 method
+	  * @author 김건훈
+	  */	
+	 @GetMapping("/selectCheckOngoingDocumentList")
+	 public String selectCheckOngoingDocumentList() {
+		
+			return "eaDocument/ongoingDocumentList/checkOngoingDocumentList.html";
+	}
+	 
+	 /*
+	  * @method selectWillOngoingDocumentList()
+	  * @brief 전자결재 진행중인 "예정" 문서 method
+	  * @author 김건훈
+	  */	
+	 @GetMapping("/selectWillOngoingDocumentList")
+	 public String selectWillOngoingDocumentList() {
+		
+			return "eaDocument/ongoingDocumentList/willOngoingDocumentList.html";
+	}
+	 
+	 /*
+	  * @method selectAfterOngoingDocumentList()
+	  * @brief 전자결재 진행중인 "진행" 문서 method
+	  * @author 김건훈
+	  */	
+	 @GetMapping("/selectAfterOngoingDocumentList")
+	 public String selectAfterOngoingDocumentList() {
+		
+			return "eaDocument/ongoingDocumentList/afterOngoingDocumentList.html";
+	}
+	 
 	 
 	 /*
 	  * @method selectDocumentFormList()
@@ -49,7 +94,7 @@ public class ElectronicApprovalController {
 	  */
 	 @GetMapping("/selectDocumentFormList")
 	 public String selectDocumentFormList() {
-		 return "eaDocument/documentFormList";
+		 return "eaDocument/eaDocumentForSupervisor/documentFormList";
 	 }
 	 
 	 /*
@@ -59,7 +104,7 @@ public class ElectronicApprovalController {
 	  */
 	 @GetMapping("/insertDocumentForm")
 	 public String insertDocumentForm() {
-		 return "eaDocument/documentForm";
+		 return "eaDocument/eaDocumentForSupervisor/documentForm";
 	 }
 	 
 	 
@@ -80,7 +125,7 @@ public class ElectronicApprovalController {
 	  */
 	 @GetMapping("/insertDocumentDraft")
 	 public String insertDocumentDraft() {
-		 return "eaDocument/documentDraft";
+		 return "eaDocument/draftDocument/documentDraft";
 	 }
 	 
 	
@@ -91,7 +136,7 @@ public class ElectronicApprovalController {
 	  */	
 	 @GetMapping("/selectAllDocumentListForSupervisor")
 	 public String selectAllDocumentListForSupervisor() {
-			return "eaDocument/documentListForSupervisor";
+			return "eaDocument/eaDocumentForSupervisor/documentListForSupervisor";
 	}
 	 
 	 /*
@@ -101,7 +146,7 @@ public class ElectronicApprovalController {
 	  */	
 	 @GetMapping("/deleteDocumentList")
 	 public String deleteDocumentList() {
-			return "eaDocument/deleteDocumentList";
+			return "eaDocument/eaDocumentForSupervisor/deleteDocumentList";
 	}	 
 	 
 	 
@@ -112,7 +157,7 @@ public class ElectronicApprovalController {
 	  */	
 	 @GetMapping("/insertEaGeneralSettings")
 	 public String insertEaGeneralSettings() {
-			return "eaDocument/eaGeneralSettings";
+			return "eaDocument/eaDocumentForSupervisor/eaGeneralSettings";
 	}
 	 
 	 /*

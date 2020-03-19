@@ -118,8 +118,38 @@
 				});
 			</script>
 		</th:block>
-		<th:block layout:fragment="customContents">                    
+		<th:block layout:fragment="customContents">
+				       <div class="page-header">
+					       <div class="row align-items-end">
+					           <div class="col-lg-8">
+					               <div class="page-header-title">
+					                   <i class="ik ik-credit-card bg-blue"></i>
+					                   <div class="d-inline">
+					                       <h5>그룹웨어</h5>
+					                       <span>(주)TEAM02</span>
+					                   </div>
+					               </div>
+					           </div>
+					           <div class="col-lg-4">
+					               <nav class="breadcrumb-container" aria-label="breadcrumb">
+					                   <ol class="breadcrumb">
+					                       <li class="breadcrumb-item">
+					                           <a th:href="@{/index}"><i class="ik ik-home"></i></a>
+					                       </li>
+					                       <li class="breadcrumb-item">전자결재 설정</li>
+					                       <li class="breadcrumb-item" aria-current="page"><a th:href="@{/selectDocumentFormList}">양식함 관리</a></li>
+					                       	<li class="breadcrumb-item active" aria-current="page">양식 생성</li>
+					                   </ol>
+					               </nav>
+					           </div>
+					       </div>
+					   </div>                     
 		               <div class="card">
+			               <!-- 양식생성 테이블 상단 메뉴탭 Start-->
+			                 <div class="card-header ea-card-header">
+			                 	<h3>양식 생성</h3>
+			                 </div>
+	                      	<!-- 양식생성 테이블 상단 메뉴탭 End-->
 	                           <div class="electronic-approval-form">   
 	                                                  
                                <!-- 문서 양식 기본설정 테이블 Start -->
