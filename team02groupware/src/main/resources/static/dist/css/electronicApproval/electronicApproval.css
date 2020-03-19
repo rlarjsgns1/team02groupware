@@ -138,9 +138,13 @@
 		width: 100px;
 	}
 	
-	.table-row-delete-nav>li{
+	.table-row-delete-nav>li{ /* 전자결재 관련 테이블 row check시 테이블 상단에 삭제 버튼 포함된 <li> CSS */
 		display: inline-block;
 		margin-right: 5px;
 	}
 	
+	.document-form-checkbox > label > span{ /* 양식 생성 page 변경 금지 CSS */
+		vertical-align: middle;
+		cursor: pointer;
+	}
 	
