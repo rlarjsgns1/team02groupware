@@ -278,7 +278,10 @@
 										,selectPage=${pagingDto.selectPage}
 										,viewNum=${pagingDto.viewNum}
 										,boardCategory=${searchDto.boardCategory})}">
-									[[${b.boardTitle}]] 
+									[[${b.boardTitle}]]
+									<th:block th:if="${b.boardFileCheck == 'Y'}">
+										<i class="ik ik-save"></i>
+									</th:block> 
 									<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>
 											<i class="xi-new" style="color: red;"></i></a></th>
 								</th:block>
@@ -291,7 +294,10 @@
 										,selectPage=${pagingDto.selectPage}
 										,viewNum=${pagingDto.viewNum}
 										,boardCategory=${searchDto.boardCategory})}">
-									[[${b.boardTitle}]] 
+									[[${b.boardTitle}]]
+									<th:block th:if="${b.boardFileCheck == 'Y'}">
+										<i class="ik ik-file-text"></i>
+									</th:block>  
 									<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>
 											</a></th>
 								</th:block>
@@ -308,6 +314,9 @@
 										,viewNum=${pagingDto.viewNum}
 										,boardCategory=${searchDto.boardCategory})}">
 										 [[${b.boardTitle}]]
+										 <th:block th:if="${b.boardFileCheck == 'Y'}">
+											<i class="ik ik-save"></i>
+										</th:block> 
 										 <i class="xi-new"style="color: red;"></i></a>
 									</th>
 									
@@ -322,6 +331,9 @@
 										,boardCategory=${searchDto.boardCategory})}">
 										 [[${b.boardTitle}]]</a>
 									</th>
+									<th:block th:if="${b.boardFileCheck == 'Y'}">
+										<i class="ik ik-save"></i>
+									</th:block> 
 								</th:block>
 							</th:block>
 	
@@ -376,7 +388,10 @@
 										,selectPage=${pagingDto.selectPage}
 										,viewNum=${pagingDto.viewNum}
 										,boardCategory=${searchDto.boardCategory})}">
-										[[${b.boardTitle}]] 
+										[[${b.boardTitle}]]
+										<th:block th:if="${b.boardFileCheck == 'Y'}">
+											<i class="ik ik-save"></i>
+										</th:block>  
 									<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>
 											<i class="xi-new" style="color: red;"></i></a></td>
 								</th:block>
@@ -403,7 +418,10 @@
 										,selectPage=${pagingDto.selectPage}
 										,viewNum=${pagingDto.viewNum}
 										,boardCategory=${searchDto.boardCategory})}">
-										[[${b.boardTitle}]] 
+										[[${b.boardTitle}]]
+										<th:block th:if="${b.boardFileCheck == 'Y'}">
+											<i class="ik ik-save"></i>
+										</th:block>  
 									<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>
 									</a></td>
 								</th:block>
@@ -434,7 +452,12 @@
 										,viewNum=${pagingDto.viewNum}
 										,boardCategory=${searchDto.boardCategory})}"> 
 										[[${b.boardTitle}]]
-										<i class="xi-new" style="color: red;"></i></a></td>
+										<th:block th:if="${b.boardFileCheck == 'Y'}">
+											<i class="ik ik-save"></i>
+										</th:block> 
+										<i class="xi-new" style="color: red;"></i></a>
+										
+									</td>
 								</th:block>
 							</th:block>
 							<!-- 게시글 작성 시간이 24시간 지났을 경우 -->
@@ -457,7 +480,10 @@
 										,selectPage=${pagingDto.selectPage}
 										,viewNum=${pagingDto.viewNum}
 										,boardCategory=${searchDto.boardCategory})}"> 
-										[[${b.boardTitle}]]</a></td>
+										[[${b.boardTitle}]]</a>
+										<th:block th:if="${b.boardFileCheck == 'Y'}">
+											<i class="ik ik-save"></i>
+										</th:block> </td>
 								</th:block>
 							</th:block>
 						</th:block>

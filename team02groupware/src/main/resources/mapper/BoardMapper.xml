@@ -54,6 +54,7 @@
     	<result property="boardViewCount" column="board_view_count"/>
     	<result property="boardCommentCount" column="board_comment_count"/>
     	<result property="boardTimeCheck" column="board_time_check"/>
+    	<result property="boardFileCheck" column="board_file_check"/>
 
   	</resultMap>
   	
@@ -87,7 +88,8 @@
 			board_view_count, 
 			board_num, 
 			board_comment_count,
-			TIMESTAMPDIFF(MINUTE, b.board_write_date, NOW()) AS board_time_check 
+			TIMESTAMPDIFF(MINUTE, b.board_write_date, NOW()) AS board_time_check,
+			board_file_check 
 		FROM
 			board as b
 		WHERE
@@ -108,7 +110,8 @@
 			board_view_count, 
 			board_num, 
 			board_comment_count,
-			TIMESTAMPDIFF(MINUTE, b.board_write_date, NOW()) AS board_time_check 
+			TIMESTAMPDIFF(MINUTE, b.board_write_date, NOW()) AS board_time_check ,
+			board_file_check
 		FROM
 			board as b
 		
@@ -175,7 +178,7 @@
 
 	</insert>
 	
-	<!-- 파일 insert -->
+	<!-- 첨부파일 insert -->
 	<insert id="boardFileInsert" parameterType="map">
 		INSERT 
 			INTO board_file
@@ -188,6 +191,17 @@
 
 	</insert>
 	
+	<!-- 첨부파일 insert후 게시글 파일 유무 업데이트 -->
+	<update id="boardFileCheckUpdate" parameterType="map">
+		UPDATE 
+			board
+		SET
+			board_file_check='Y'
+		WHERE
+			board_num = ${boardNum} 
+
+	</update>
+	
 	<!-- 게시글 detailView -->
 	<select id="selectBoardDetailView" resultMap="selectBoardResult" parameterType="BoardDto">
 		SELECT
@@ -198,13 +212,43 @@
 			board_write_date, 
 			board_view_count, 
 			board_num, 
-			board_comment_count 
+			board_comment_count,
+			board_file_check 
 		FROM
 			board as b
 		WHERE
 			board_num = ${boardNum}
 
 	</select>
+	
+	<!-- 첨부파일리스트 Select -->
+	<select id="selectBoardAttachFile" resultMap="selectBoardAttachFileResult" parameterType="BoardDto">
+		SELECT 
+		board_file_num, 
+		board_file_original_name, 
+		board_file_stored_name, 
+		board_file_size
+	FROM 
+		board_file 
+		INNER JOIN 
+		board 
+		on board.board_num = board_file.board_num
+	WHERE
+		board.board_num = ${boardNum}
+
+	</select>
+	
+	<!-- 첨부파일리스트 resultMap -->
+	<resultMap id="selectBoardAttachFileResult" type="map">
+	
+    	<result property="boardFileNum" column="board_file_num"/>
+    	<result property="boardFileOriginalName" column="board_file_original_name"/>
+    	<result property="boardFileStoredName" column="board_file_stored_name"/>
+    	<result property="boardFileSize" column="board_file_size"/>
+
+  	</resultMap>
+	
+	
 	
 	<!-- 게시글 조회수 증가 -->
 	<update id="updateBoardViewCount" parameterType="BoardDto">

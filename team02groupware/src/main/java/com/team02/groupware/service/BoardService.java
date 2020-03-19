@@ -2,7 +2,9 @@ package com.team02.groupware.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
@@ -15,6 +17,8 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -36,6 +40,7 @@ public class BoardService {
 	@Value("${service.file.uploadurl}")
 	private String fileUploadPath;
 	
+	// 게시글리스트 Select
 	public Map<String, Object> getBoardList(BoardDto bDto, PagingDto pDto, SearchDto sDto){
 		// default값 설정
 		int viewNum;
@@ -156,7 +161,7 @@ public class BoardService {
 		return boardMap;
 	}
 	
-	
+	// 부서목록 select
 	public Map<String, Object> getDepartList(){
 
 		List<String> departList = new ArrayList<String>();
@@ -168,7 +173,7 @@ public class BoardService {
 
 		return boardMap;
 	}
-	
+	// 게시글 Insert
 	public Map<String, Object> boardInsert(BoardDto bDto){
 
 		boardMapper.insertBoard(bDto);
@@ -179,7 +184,7 @@ public class BoardService {
 		
 		return boardMap;
 	}
-	
+	// 게시글 파일 업로드
 	public void boardFileInsert(Map<String, Object> boardMap, MultipartFile file) throws IOException {
 		
 		String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());	// 오리지날 파일명
@@ -209,56 +214,73 @@ public class BoardService {
 		boardMap.put("fileSize", fileSize);
 		
 		boardMapper.boardFileInsert(boardMap);
+		boardMapper.boardFileCheckUpdate(boardMap);
 
 	}
 	
 	
 	
-	
+	// 게시글 디테일뷰 Select
 	public Map<String, Object> selectBoardDetailView(BoardDto bDto){
 		
 		Map<String, Object> boardMap = new HashMap<String, Object>();
 		List<BoardDto> boardList = new ArrayList<BoardDto>();
 		List<CommentDto> commentList = new ArrayList<CommentDto>();
+		List<Map<String,Object>> boardAttachFileList = new ArrayList<Map<String,Object>>();
 		
 		boardMapper.updateBoardViewCount(bDto);
 		boardList = boardMapper.selectBoardDetailView(bDto);
 		commentList = boardMapper.selectCommentList(bDto);
+		boardAttachFileList = boardMapper.selectBoardAttachFile(bDto);
+		
+		System.out.println("****** 디테일뷰 파일 테스트 ************");
+		System.out.println(boardAttachFileList.toString());
 		
 		boardMap.put("boardList", boardList);
 		boardMap.put("commentList", commentList);
+		boardMap.put("boardAttachFileList", boardAttachFileList);
 		System.out.println("보드디테일뷰 보드리스트 : " + boardList.toString());
 		System.out.println("보드디테일뷰 코멘트리스트 : " + commentList.toString());
 		
 		return boardMap;
 	}
 	
-	
+	// 게시글 수정Form
 	public Map<String, Object> selectBoardUpdateForm(BoardDto bDto){
 		
 		Map<String, Object> boardMap = new HashMap<String, Object>();
 		List<BoardDto> boardList = new ArrayList<BoardDto>();
 		
 		boardList = boardMapper.selectBoardDetailView(bDto);
+		System.out.println("게시글 수정폼 파일 체크 : " + boardList.get(0).getBoardFileCheck());
+		String boardFileCheck = boardList.get(0).getBoardFileCheck();
+		// 파일이 있을 시
+		if("Y".equals(boardFileCheck)) {
+			
+			List<Map<String,Object>> boardFileList = new ArrayList<Map<String,Object>>();
+			boardFileList = boardMapper.selectBoardAttachFile(bDto);
+			boardMap.put("boardFileList", boardFileList);
+		}
+		
 		
 		boardMap.put("boardList", boardList);
 		
 		return boardMap;
 
 	}
-	
+	// 게시글 Update
 	public void updateBoard(BoardDto bDto) {
 		
 		boardMapper.updateBoard(bDto);
 		
 	}
-	
+	// 게시글 Delete
 	public void deleteBoard(BoardDto bDto) {
 		
 		boardMapper.deleteBoard(bDto);
 		
 	}
-	
+	// 댓글 Insert
 	public Map<String, Object> commentInsert(BoardDto bDto, CommentDto cDto){
 		
 		Map<String, Object> boardMap = new HashMap<String, Object>();
@@ -280,19 +302,39 @@ public class BoardService {
 		
 		return boardMap;
 	}
-	
+	// 댓글 Update
 	public void commentUpdate(CommentDto cDto){
 		
 		boardMapper.updateComment(cDto);
 
 	}
 
-
+	// 댓글 Delete
 	public void commentDelete(BoardDto bDto, CommentDto cDto) {
 		
 		boardMapper.deleteComment(cDto);
 		boardMapper.deleteCommentCount(bDto);
 		
+	}
+
+	
+	// 파일 다운로드
+	public Resource boardFileDownload(String filename) throws MalformedURLException {
+		
+		
+		// 파일경로 접근
+		Path file = Paths.get(fileUploadPath).resolve(filename);	
+		
+		// 파일 경로 접근하여 파일 정보 전달
+		Resource resource = new UrlResource(file.toUri());
+		
+		//파일이 존재할 경우 리턴
+		if (resource.exists() || resource.isReadable()) {
+			
+			return resource;
+		}
+		
+		return null;
 	}
 	
 	

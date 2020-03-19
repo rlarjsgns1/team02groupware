@@ -10,12 +10,10 @@ public class BoardDto {
 	private String boardWriteDate;
 	private int boardViewCount;
 	private int boardCommentCount;
+	private String boardFileCheck = "N";
 	
 	private String boardSearchWord;
 	private int boardTimeCheck;
-	
-	
-	
 	
 	
 	
@@ -23,8 +21,15 @@ public class BoardDto {
 	public String toString() {
 		return "BoardDto [boardNum=" + boardNum + ", boardCategory=" + boardCategory + ", boardTitle=" + boardTitle
 				+ ", boardWriter=" + boardWriter + ", boardContentText=" + boardContentText + ", boardWriteDate="
-				+ boardWriteDate + ", boardSearchWord=" + boardSearchWord + ", boardViewCount=" + boardViewCount
-				+ ", boardCommentCount=" + boardCommentCount + ", boardTimeCheck=" + boardTimeCheck + "]";
+				+ boardWriteDate + ", boardViewCount=" + boardViewCount + ", boardCommentCount=" + boardCommentCount
+				+ ", boardFileCheck=" + boardFileCheck + ", boardSearchWord=" + boardSearchWord + ", boardTimeCheck="
+				+ boardTimeCheck + "]";
+	}
+	public String getBoardFileCheck() {
+		return boardFileCheck;
+	}
+	public void setBoardFileCheck(String boardFileCheck) {
+		this.boardFileCheck = boardFileCheck;
 	}
 	public String getBoardSearchWord() {
 		return boardSearchWord;

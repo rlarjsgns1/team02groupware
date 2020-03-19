@@ -50,6 +50,12 @@ public interface BoardMapper {
 
 	public void deleteCommentCount(BoardDto bDto);
 
+	public List<Map<String, Object>> selectBoardAttachFile(BoardDto bDto);
+
+	public void boardFileCheckUpdate(Map<String, Object> boardMap);
+
+	public List<Map<String, Object>> selectBoardFile(BoardDto bDto);
+
 	
 	
 	

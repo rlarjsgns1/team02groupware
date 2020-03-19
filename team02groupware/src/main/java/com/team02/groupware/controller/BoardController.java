@@ -1,13 +1,19 @@
 package com.team02.groupware.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,7 +37,7 @@ public class BoardController {
 	
 	
 	
-	
+	// 게시판 리스트 화면
 	@GetMapping("/boardList")
 	public String boardList(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto ) {
 		
@@ -57,7 +63,7 @@ public class BoardController {
 		return "board/boardList";
 	}
 	
-	
+	// 게시판 글쓰기 Form
 	@GetMapping("/boardWriteForm")
 	public String boardWriteForm(Model model ) {
 		
@@ -67,6 +73,7 @@ public class BoardController {
 		
 		return "board/boardWriteForm";
 	}
+	// 게시글 등록
 	@PostMapping("/boardInsert")
 	public String boardWrite(Model model, BoardDto bDto, @RequestParam("file") MultipartFile file, RedirectAttributes redirectA ) throws IOException {
 		
@@ -79,13 +86,13 @@ public class BoardController {
 			boardService.boardFileInsert(boardMap, file);
 		}
 		
-		
-		
+
 		redirectA.addAttribute("boardNum", boardMap.get("boardNum"));
 		
 		return "redirect:/boardDetailView";
 	}
-
+	
+	// 게시글 상세보기
 	@GetMapping("/boardDetailView")
 	public String BoardDetailView(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto, @RequestParam(value="boardNum", required = false) Object boardNum) {
 		
@@ -98,12 +105,33 @@ public class BoardController {
 		
 		model.addAttribute("boardList", boardMap.get("boardList"));
 		model.addAttribute("commentList", boardMap.get("commentList"));
+		model.addAttribute("boardAttachFileList", boardMap.get("boardAttachFileList"));
 		model.addAttribute("pagingDto", pDto);
 		model.addAttribute("searchDto", sDto);
 		
 		return "board/boardDetailView";
 	}
 	
+	// 파일 다운로드
+	@GetMapping("/board/file")
+	@ResponseBody
+	public ResponseEntity<Resource> serveFile(@RequestParam("fileName") String fileName,
+												@RequestParam("fileOriginalName") String fileOriginalName) throws MalformedURLException, UnsupportedEncodingException {
+		System.out.println("****컨트롤러 파일 다운로드****");
+		System.out.println("오리지날 파일네임 : " + fileOriginalName);
+		
+		// 서비스로 fileName 전달해서 파일정보 받아오기
+		Resource file = boardService.boardFileDownload(fileName);
+		String fileIncodingName = new String(fileOriginalName.getBytes("UTF-8"), "ISO-8859-1");
+		
+		// 브라우저에 파일 전달
+		ResponseEntity<Resource> re = ResponseEntity.ok().header(
+				HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileIncodingName + "\""
+		).body(file);
+		return re;
+	}
+	
+	// 게시글 수정 폼
 	@GetMapping("/boardUpdateForm")
 	public String boardUpdateForm(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto) {
 		
@@ -115,12 +143,14 @@ public class BoardController {
 		
 		model.addAttribute("departList", boardMap.get("departList"));
 		model.addAttribute("boardList", boardMap2.get("boardList"));
+		model.addAttribute("boardFileList", boardMap2.get("boardFileList"));
 		model.addAttribute("pagingDto", pDto);
 		model.addAttribute("searchDto", sDto);
 		
 		return "board/boardUpdateForm";
 	}
 	
+	// 게시글 수정
 	@PostMapping("/boardUpdate")
 	public String boardUpdate(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto, RedirectAttributes redirectA) {
 		
@@ -142,6 +172,7 @@ public class BoardController {
 		return "redirect:/boardDetailView";
 	}
 	
+	// 게시글 삭제
 	@GetMapping("/boardDelete")
 	public String boardDelete(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto, RedirectAttributes redirectA) {
 		
@@ -162,6 +193,7 @@ public class BoardController {
 		return "redirect:/boardList";
 	}
 	
+	// 댓글 입력
 	@PostMapping("/commentInsert")
 	public @ResponseBody Map<String, Object> ajaxResponse(Model model, BoardDto bDto, CommentDto cDto) {
 		
@@ -174,7 +206,7 @@ public class BoardController {
 		return boardMap;
 	}
 	
-	
+	// 댓글 수정
 	@PostMapping("/commentUpdate")
 	public @ResponseBody Map<String, Object> commentUpdate(Model model, CommentDto cDto) {
 		Map<String, Object> boardMap = new HashMap<String, Object>();
@@ -185,6 +217,7 @@ public class BoardController {
 		return boardMap;
 	}
 	
+	// 댓글 삭제
 	@PostMapping("/commentDelete")
 	public @ResponseBody Map<String, Object> commentDelete(Model model, BoardDto bDto, CommentDto cDto) {
 		

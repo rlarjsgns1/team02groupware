@@ -132,20 +132,21 @@
                           </div>
                       </div>
                   </div>
-                  
+                  <!-- 파일 첨부 -->
                   <div class="row">
-	                  <div class="form-group col-md-4" >
-	                      <label>파일 첨부</label>
+	                  <div class="form-group col-md-5" >
+	                      <label>파일 첨부 <span style="color:#919191">ㅣ</span>최대 5MB<span style="color:#919191;">까지 파일을 올리실 수 있습니다.</span></label>
 	                      <input type="file" name="file" class="file-upload-default"/>
 	                      
-	                      <div class="input-group col-xs-4">
-	                          <input type="text" class="form-control file-upload-info" disabled placeholder="선택된 파일이 없습니다.">
+	                      <div class="input-group col-xs-5">
+	                          <input type="text" class="form-control file-upload-info" placeholder="선택된 파일이 없습니다." readonly="readonly">
 	                          <span class="input-group-append">
 	                          <button class="file-upload-browse btn btn-primary" type="button">파일 선택</button>
 	                          </span>
 	                      </div>
 	                  </div>
                   </div>
+                  
                   <div class="row">
 	                  <div class="form-group col-md-12">
 	                      <label for="exampleTextarea1">내용</label>
@@ -183,7 +184,7 @@
 	<script
 		src="plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 	<script src="plugins/jvectormap/jquery-jvectormap.min.js"></script>
-	<script src="/js/form-components.js"></script>
+	<script src="/js/form-components-file.js"></script>
 	
 	<script src="plugins/moment/moment.js"></script>
 	
