@@ -247,6 +247,60 @@
     	<result property="boardFileSize" column="board_file_size"/>
 
   	</resultMap>
+  	
+  	
+  	<!-- 실제 경로 첨부파일Name Select  -->
+  	<select id="selectBoardFileForDelete" resultMap="selectBoardAttachFileResult" parameterType="int">
+  	/* selectBoardFileForDelete */
+  		SELECT 
+		board_file_num, 
+		board_file_original_name, 
+		board_file_stored_name, 
+		board_file_size
+	FROM 
+		board_file 
+		
+	WHERE
+		board_file_num = ${integerFileDeleteNum}
+  	</select>
+  	
+  	
+  	
+  	
+  	<!-- 첨부파일 DB삭제 -->
+	<delete id="boardFileDelete" parameterType="int">
+		DELETE 
+		FROM 
+			board_file 
+		WHERE board_file_num = ${integerFileDeleteNum}
+	</delete>
+	
+	<!-- 파일 삭제 후 게시글 파일 유무 체크 -->
+	<update id="boardFileCheck" parameterType="BoardDto">
+		<![CDATA[ 
+		UPDATE
+			board AS B
+		SET
+			B.board_file_check = (
+				CASE
+				
+				WHEN 0 < (			
+					SELECT 
+						COUNT(*)
+					FROM 				
+						board_file AS BF 
+					WHERE 
+						B.board_num = BF.board_num			
+				)
+				
+				THEN 'Y'
+				ELSE 'N'
+				END
+			)
+		WHERE
+			B.board_num = ${boardNum}
+		]]>
+	</update>
 	
 	
 	

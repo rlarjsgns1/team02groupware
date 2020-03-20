@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -39,6 +41,18 @@ public class BoardService {
 	
 	@Value("${service.file.uploadurl}")
 	private String fileUploadPath;
+	
+	/**
+	 * 업로드 폴더 없을 경우 생성
+	 */
+	@PostConstruct
+	public void init() {
+		try {
+			Files.createDirectories(Paths.get(fileUploadPath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	// 게시글리스트 Select
 	public Map<String, Object> getBoardList(BoardDto bDto, PagingDto pDto, SearchDto sDto){
@@ -233,7 +247,7 @@ public class BoardService {
 		commentList = boardMapper.selectCommentList(bDto);
 		boardAttachFileList = boardMapper.selectBoardAttachFile(bDto);
 		
-		System.out.println("****** 디테일뷰 파일 테스트 ************");
+		System.out.println("****** 서비스 셀렉트보드디테일뷰 파일 테스트 ************");
 		System.out.println(boardAttachFileList.toString());
 		
 		boardMap.put("boardList", boardList);
@@ -259,11 +273,23 @@ public class BoardService {
 			
 			List<Map<String,Object>> boardFileList = new ArrayList<Map<String,Object>>();
 			boardFileList = boardMapper.selectBoardAttachFile(bDto);
+			System.out.println("게시글 수정폼 파일 사이즈 체크 : " + boardFileList);
+			/*
+			 * long fileSize = 0; for(int i=0; i<boardFileList.size(); i++) { fileSize =
+			 * (long) boardFileList.get(i).get("boardFileSize");
+			 * System.out.println("파일사이즈 추출 : " + fileSize);
+			 * 
+			 * if(fileSize < 1024){ fileSize = fileSize+"바이트"; }else if(fileSize < 1048576){
+			 * fileSize = Math.floor((fileSize / 1024)*100)/100+"KB"; }else if(fileSize <
+			 * 1.0737e+9){ fileSize = Math.floor((fileSize / 1048576)*100)/100+"MB"; } }
+			 */
+
 			boardMap.put("boardFileList", boardFileList);
 		}
 		
 		
 		boardMap.put("boardList", boardList);
+		
 		
 		return boardMap;
 
@@ -321,7 +347,6 @@ public class BoardService {
 	// 파일 다운로드
 	public Resource boardFileDownload(String filename) throws MalformedURLException {
 		
-		
 		// 파일경로 접근
 		Path file = Paths.get(fileUploadPath).resolve(filename);	
 		
@@ -335,6 +360,56 @@ public class BoardService {
 		}
 		
 		return null;
+	}
+	
+	// 게시글 파일 수정
+	public void boardFileUpdate(BoardDto bDto, MultipartFile file) throws IOException {
+		
+		String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());	// 오리지날 파일명
+		String storedFileName = UUID.randomUUID().toString().replaceAll("-", "");		// DB에 저장될 파일명 랜덤생성
+		storedFileName += originalFileName.substring(originalFileName.lastIndexOf("."));	// 확장자 추가
+		int fileSize = (int) file.getSize();	// 파일 사이즈
+		
+		InputStream inputStream = file.getInputStream();		// 파일 읽을 준비
+		Files.copy(inputStream, Paths.get(fileUploadPath).resolve(storedFileName),	// copy(inputStream 객체, 파일 경로, 카피옵션) : 파일 복사해서 쓰기
+				StandardCopyOption.REPLACE_EXISTING);			// REPLACE_EXISTING?
+		
+				
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		
+		boardMap.put("originalFileName", originalFileName);
+		boardMap.put("storedFileName", storedFileName);
+		boardMap.put("fileSize", fileSize);
+		boardMap.put("boardNum", bDto.getBoardNum());
+		
+		boardMapper.boardFileInsert(boardMap);
+		boardMapper.boardFileCheckUpdate(boardMap);
+		
+		
+	}
+	
+	// 게시글 파일 삭제
+	public void boardFileDelete(int integerFileDeleteNum) throws IOException {
+		
+		List<Map<String,Object>> deleteBoardFileList = new ArrayList<Map<String,Object>>();
+		
+		deleteBoardFileList = boardMapper.selectBoardFileForDelete(integerFileDeleteNum);
+		
+		System.out.println("보드파일딜리트 딜리트보드파일리스트 : " + deleteBoardFileList.toString());
+		
+		String boardFileStoredName = null;
+		for(int i=0; i<deleteBoardFileList.size(); i++) {
+			boardFileStoredName = (String) deleteBoardFileList.get(i).get("boardFileStoredName");
+			Files.delete(Paths.get(fileUploadPath).resolve(boardFileStoredName));
+		}
+		
+		boardMapper.boardFileDelete(integerFileDeleteNum);
+		
+	}
+
+	public void boardFileCheck(BoardDto bDto) {
+		boardMapper.boardFileCheck(bDto);
+		
 	}
 	
 	

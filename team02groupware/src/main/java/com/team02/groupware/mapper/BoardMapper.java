@@ -56,6 +56,12 @@ public interface BoardMapper {
 
 	public List<Map<String, Object>> selectBoardFile(BoardDto bDto);
 
+	public void boardFileDelete(int integerFileDeleteNum);
+
+	public void boardFileCheck(BoardDto bDto);
+
+	public List<Map<String, Object>> selectBoardFileForDelete(int integerFileDeleteNum);
+
 	
 	
 	

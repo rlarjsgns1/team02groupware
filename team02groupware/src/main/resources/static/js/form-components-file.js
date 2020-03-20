@@ -35,6 +35,22 @@
           $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, '')+" "+fileSize);
     	}
     });
+    
+    $('.file-upload-cancle').on('click', function() {
+    	if(confirm('파일을 내리시겠습니까?')){
+    		
+    		var file = $(this).parent().parent().parent().find('.file-upload-default');
+    		var fileNum = $(this).prev().attr('fileNum')
+    		file.val("");
+    		$(this).prev().val("");
+    		$(this).next().val(fileNum);
+    		console.log(fileNum)
+    	}else{}
+        
+      });
+    
+    
+    
   });
 })(jQuery);
 

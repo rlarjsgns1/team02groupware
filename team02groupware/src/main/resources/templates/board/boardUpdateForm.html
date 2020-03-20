@@ -106,7 +106,7 @@
          
           <div style="margin: 25px 0 0 0">
              <th:block th:each="b:${boardList}">
-              <form id="boardUpdateForm" action="/boardUpdate" class="forms-sample" method="post">
+              <form id="boardUpdateForm" action="/boardUpdate" class="forms-sample" method="post" enctype="multipart/form-data">
                   <div class="row">
                       <div class="col-md-3">
                           <div class="form-group">
@@ -142,17 +142,21 @@
 	                      <input type="file" name="file" class="file-upload-default"/>
 	                      
 	                      <div class="input-group col-xs-5">
-	                      		<th:block th:each="f:${boardFileList}">
-	                      			<h1 th:text="${f.boardFileOriginalName}"></h1>
-	                      		</th:block>
-	                          <input type="text" class="form-control file-upload-info" placeholder="선택된 파일이 없습니다." readonly="readonly">
-	                          <a href="#" style="padding:0;"><i class="ik ik-x-square" style="color: red;"></i></a>
+	                      	<th:block th:if="${#strings.isEmpty(boardFileList)}">
+	                      		<input type="text" class="form-control file-upload-info" placeholder="선택된 파일이 없습니다." readonly="readonly">
+	                      	</th:block>
+                      		<th:block th:each="f:${boardFileList}">
+	                          <input type="text" class="form-control file-upload-info" placeholder="선택된 파일이 없습니다." readonly="readonly" 
+	                          	th:value="${f.boardFileOriginalName}" th:attr="fileNum=${f.boardFileNum}">
+	                          <a class="file-upload-cancle" href="#" style="padding:0;"><i class="ik ik-x-square" style="color: red;"></i></a>
+	                          <input type="hidden" class="file-delete-num" name="fileDeleteNum">
 	                          <div style="width:20px;"></div>
+                         	</th:block>
 	                          <span class="input-group-append">
 	                          
 	                          <button class="file-upload-browse btn btn-primary" type="button">파일 선택</button>
 	                          </span>
-	                          
+	              
 	                      </div>
 	                  </div>
                   </div>

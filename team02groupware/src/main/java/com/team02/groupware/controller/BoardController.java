@@ -147,18 +147,41 @@ public class BoardController {
 		model.addAttribute("pagingDto", pDto);
 		model.addAttribute("searchDto", sDto);
 		
+		System.out.println("***컨트롤러 게시글 수정폼 보드파일리스트 체크 *** : " + boardMap2.get("boardFileList"));
+		
 		return "board/boardUpdateForm";
 	}
 	
 	// 게시글 수정
 	@PostMapping("/boardUpdate")
-	public String boardUpdate(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto, RedirectAttributes redirectA) {
+	public String boardUpdate(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto, 
+			@RequestParam("file") MultipartFile file, @RequestParam(value="fileDeleteNum", required=false) String fileDeleteNum,RedirectAttributes redirectA) throws IOException {
 		
 		System.out.println("보드업데이트" + bDto.toString());
 		System.out.println("보드업데이트" + pDto.toString());
 		System.out.println("보드업데이트" + sDto.toString());
+		System.out.println("파일딜리트넘" + fileDeleteNum);
+		//System.out.println("파일딜리트넘 이즈엠티" + fileDeleteNum.isEmpty());
 		
 		boardService.updateBoard(bDto);
+		
+		// 파일 업로드시
+		if(file.isEmpty() == false) {
+			boardService.boardFileUpdate(bDto, file);
+			System.out.println("****보드업데이트 파일체크 이프문**** ");
+		}
+		
+		// 파일 제거시
+		if(fileDeleteNum != null) {
+			if(fileDeleteNum.isEmpty() == false) {
+				int integerFileDeleteNum = Integer.parseInt(fileDeleteNum);
+				
+				boardService.boardFileDelete(integerFileDeleteNum);	// 파일 삭제
+				boardService.boardFileCheck(bDto);	// 파일 삭제 후 게시글 파일 유무  업데이트
+			}
+			
+		}
+		
 		
 		redirectA.addAttribute("boardNum", bDto.getBoardNum());
 		redirectA.addAttribute("selectPage", pDto.getSelectPage());
