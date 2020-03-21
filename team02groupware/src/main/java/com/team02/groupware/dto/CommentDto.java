@@ -3,18 +3,32 @@ package com.team02.groupware.dto;
 public class CommentDto {
 
 	
+	private String commentWriter;
 	private String commentDate;
 	private String commentContent;
-	private String commentWriter;
+	private int commentNum;
 	
-
 	
 	
 	
 	@Override
 	public String toString() {
-		return "CommentDto [commentDate=" + commentDate + ", commentContent=" + commentContent + ", commentWriter="
-				+ commentWriter + "]";
+
+		return "CommentDto [commentWriter=" + commentWriter + ", commentDate=" + commentDate + ", commentContent="
+				+ commentContent + ", commentNum=" + commentNum + "]";
+	}
+	public int getCommentNum() {
+		return commentNum;
+	}
+	public void setCommentNum(int commentNum) {
+		this.commentNum = commentNum;
+	}
+	public String getCommentWriter() {
+		return commentWriter;
+	}
+	public void setCommentWriter(String commentWriter) {
+		this.commentWriter = commentWriter;
+
 	}
 	public String getCommentDate() {
 		return commentDate;
@@ -28,12 +42,7 @@ public class CommentDto {
 	public void setCommentContent(String commentContent) {
 		this.commentContent = commentContent;
 	}
-	public String getCommentWriter() {
-		return commentWriter;
-	}
-	public void setCommentWriter(String commentWriter) {
-		this.commentWriter = commentWriter;
-	}
 
+	
 	
 }

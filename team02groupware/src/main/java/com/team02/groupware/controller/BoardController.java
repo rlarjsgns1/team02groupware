@@ -1,22 +1,28 @@
 package com.team02.groupware.controller;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team02.groupware.dto.BoardDto;
+import com.team02.groupware.dto.CommentDto;
 import com.team02.groupware.dto.PagingDto;
 import com.team02.groupware.dto.SearchDto;
 import com.team02.groupware.service.BoardService;
@@ -31,7 +37,7 @@ public class BoardController {
 	
 	
 	
-	
+	// 게시판 리스트 화면
 	@GetMapping("/boardList")
 	public String boardList(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto ) {
 		
@@ -57,7 +63,7 @@ public class BoardController {
 		return "board/boardList";
 	}
 	
-	
+	// 게시판 글쓰기 Form
 	@GetMapping("/boardWriteForm")
 	public String boardWriteForm(Model model ) {
 		
@@ -67,19 +73,26 @@ public class BoardController {
 		
 		return "board/boardWriteForm";
 	}
+	// 게시글 등록
 	@PostMapping("/boardInsert")
-	public String boardWrite(Model model, BoardDto bDto, RedirectAttributes redirectA ) {
+	public String boardWrite(Model model, BoardDto bDto, @RequestParam("file") MultipartFile file, RedirectAttributes redirectA ) throws IOException {
 		
 		System.out.println("보드인서트 비디티오 확인 : "+bDto.toString());
 		Map<String, Object> boardMap = new HashMap<String, Object>();
 		
 		boardMap = boardService.boardInsert(bDto);
 		
+		if(file.isEmpty() == false) {
+			boardService.boardFileInsert(boardMap, file);
+		}
+		
+
 		redirectA.addAttribute("boardNum", boardMap.get("boardNum"));
 		
 		return "redirect:/boardDetailView";
 	}
-
+	
+	// 게시글 상세보기
 	@GetMapping("/boardDetailView")
 	public String BoardDetailView(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto, @RequestParam(value="boardNum", required = false) Object boardNum) {
 		
@@ -92,69 +105,154 @@ public class BoardController {
 		
 		model.addAttribute("boardList", boardMap.get("boardList"));
 		model.addAttribute("commentList", boardMap.get("commentList"));
+		model.addAttribute("boardAttachFileList", boardMap.get("boardAttachFileList"));
 		model.addAttribute("pagingDto", pDto);
 		model.addAttribute("searchDto", sDto);
 		
 		return "board/boardDetailView";
 	}
 	
-	@GetMapping("/boardUpdateForm")
-	public String boardUpdateForm(Model model) {
+	// 파일 다운로드
+	@GetMapping("/board/file")
+	@ResponseBody
+	public ResponseEntity<Resource> serveFile(@RequestParam("fileName") String fileName,
+												@RequestParam("fileOriginalName") String fileOriginalName) throws MalformedURLException, UnsupportedEncodingException {
+		System.out.println("****컨트롤러 파일 다운로드****");
+		System.out.println("오리지날 파일네임 : " + fileOriginalName);
 		
-		model.addAttribute("title", "boardUpdateForm");
+		// 서비스로 fileName 전달해서 파일정보 받아오기
+		Resource file = boardService.boardFileDownload(fileName);
+		String fileIncodingName = new String(fileOriginalName.getBytes("UTF-8"), "ISO-8859-1");
+		
+		// 브라우저에 파일 전달
+		ResponseEntity<Resource> re = ResponseEntity.ok().header(
+				HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileIncodingName + "\""
+		).body(file);
+		return re;
+	}
+	
+	// 게시글 수정 폼
+	@GetMapping("/boardUpdateForm")
+	public String boardUpdateForm(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto) {
+		
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		Map<String, Object> boardMap2 = new HashMap<String, Object>();
+		
+		boardMap = boardService.getDepartList();
+		boardMap2 = boardService.selectBoardUpdateForm(bDto);
+		
+		model.addAttribute("departList", boardMap.get("departList"));
+		model.addAttribute("boardList", boardMap2.get("boardList"));
+		model.addAttribute("boardFileList", boardMap2.get("boardFileList"));
+		model.addAttribute("pagingDto", pDto);
+		model.addAttribute("searchDto", sDto);
+		
+		System.out.println("***컨트롤러 게시글 수정폼 보드파일리스트 체크 *** : " + boardMap2.get("boardFileList"));
 		
 		return "board/boardUpdateForm";
 	}
 	
-	@GetMapping("/boardUpdate")
-	public String boardUpdate(Model model) {
+	// 게시글 수정
+	@PostMapping("/boardUpdate")
+	public String boardUpdate(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto, 
+			@RequestParam("file") MultipartFile file, @RequestParam(value="fileDeleteNum", required=false) String fileDeleteNum,RedirectAttributes redirectA) throws IOException {
 		
-		model.addAttribute("title", "boardUpdate");
+		System.out.println("보드업데이트" + bDto.toString());
+		System.out.println("보드업데이트" + pDto.toString());
+		System.out.println("보드업데이트" + sDto.toString());
+		System.out.println("파일딜리트넘" + fileDeleteNum);
+		//System.out.println("파일딜리트넘 이즈엠티" + fileDeleteNum.isEmpty());
 		
-		return "index";
+		boardService.updateBoard(bDto);
+		
+		// 파일 업로드시
+		if(file.isEmpty() == false) {
+			boardService.boardFileUpdate(bDto, file);
+			System.out.println("****보드업데이트 파일체크 이프문**** ");
+		}
+		
+		// 파일 제거시
+		if(fileDeleteNum != null) {
+			if(fileDeleteNum.isEmpty() == false) {
+				int integerFileDeleteNum = Integer.parseInt(fileDeleteNum);
+				
+				boardService.boardFileDelete(integerFileDeleteNum);	// 파일 삭제
+				boardService.boardFileCheck(bDto);	// 파일 삭제 후 게시글 파일 유무  업데이트
+			}
+			
+		}
+		
+		
+		redirectA.addAttribute("boardNum", bDto.getBoardNum());
+		redirectA.addAttribute("selectPage", pDto.getSelectPage());
+		redirectA.addAttribute("viewNum", pDto.getViewNum());
+		redirectA.addAttribute("boardCategory", sDto.getSearchBoardCategory());
+		redirectA.addAttribute("isSearchCheck", sDto.getIsSearchCheck());
+		redirectA.addAttribute("searchBy", sDto.getSearchBy());
+		redirectA.addAttribute("searchDate", sDto.getSearchDate());
+		redirectA.addAttribute("searchInput", sDto.getSearchInput());
+	
+		return "redirect:/boardDetailView";
 	}
 	
+	// 게시글 삭제
 	@GetMapping("/boardDelete")
-	public String boardDelete(Model model) {
+	public String boardDelete(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto, RedirectAttributes redirectA) {
 		
-		model.addAttribute("title", "boardDelete");
+		System.out.println("boardDelete bDto :  " + bDto);
+		System.out.println("boardDelete pDto :  " + pDto);
+		System.out.println("boardDelete sDto :  " + sDto);
 		
-		return "index";
+		boardService.deleteBoard(bDto);
+		
+		redirectA.addAttribute("selectPage", pDto.getSelectPage());
+		redirectA.addAttribute("viewNum", pDto.getViewNum());
+		redirectA.addAttribute("boardCategory", sDto.getBoardCategory());
+		redirectA.addAttribute("isSearchCheck", sDto.getIsSearchCheck());
+		redirectA.addAttribute("searchBy", sDto.getSearchBy());
+		redirectA.addAttribute("searchDate", sDto.getSearchDate());
+		redirectA.addAttribute("searchInput", sDto.getSearchInput());
+		
+		return "redirect:/boardList";
 	}
 	
-	@GetMapping("/commentWrite")
-	public String commentWrite(Model model) {
+	// 댓글 입력
+	@PostMapping("/commentInsert")
+	public @ResponseBody Map<String, Object> ajaxResponse(Model model, BoardDto bDto, CommentDto cDto) {
 		
-		model.addAttribute("title", "commentWrite");
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		System.out.println(bDto.getBoardNum());
+		System.out.println(cDto.getCommentContent());
 		
-		return "index";
+		boardMap = boardService.commentInsert(bDto, cDto);
+		
+		return boardMap;
 	}
 	
-	@GetMapping("/commentUpdate")
-	public String commentUpdate(Model model) {
+	// 댓글 수정
+	@PostMapping("/commentUpdate")
+	public @ResponseBody Map<String, Object> commentUpdate(Model model, CommentDto cDto) {
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		System.out.println("커멘트업데이트 cDto : " + cDto);
 		
-		model.addAttribute("title", "commentUpdate");
-		
-		return "index";
+		boardService.commentUpdate(cDto);
+		boardMap.put("commentDto", cDto);
+		return boardMap;
 	}
 	
-	@GetMapping("/commentDelete")
-	public String commentDelete(Model model) {
+	// 댓글 삭제
+	@PostMapping("/commentDelete")
+	public @ResponseBody Map<String, Object> commentDelete(Model model, BoardDto bDto, CommentDto cDto) {
 		
-		model.addAttribute("title", "commentDelete");
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		System.out.println(bDto.getBoardNum());
+		System.out.println(cDto.getCommentNum());
+		boardMap.put("boardDto", bDto);
+		boardMap.put("commentDto", cDto);
+		boardService.commentDelete(bDto, cDto);
 		
-		return "index";
+		return boardMap;
 	}
 	
-	@PostMapping("/ajaxResponse")
-	public @ResponseBody List<String> ajaxResponse(Model model, @RequestBody BoardDto map) {
-		
-		System.out.println("ajax로 보내진 배열의 값 : {}" + map);
-		System.out.println(map.getBoardCategory());
-		System.out.println(map.getBoardTitle());
-		model.addAttribute("title", "ajaxResponse");
-		List<String> list = new ArrayList<String>();
-		return list;
-	}
 
 }
