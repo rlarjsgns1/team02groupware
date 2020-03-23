@@ -3,8 +3,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 <!--
-   @file allOngoingDocumentList.html
-   @brief 결재 진행 중인 예정 문서 목록 view
+   @file returnDoneDocumentList.html
+   @brief 임시 저장 문서 목록 view
    @author 김건훈
  -->	
 		<!-- CSS custom -->
@@ -14,7 +14,7 @@
 		</th:block>
 		
 		<th:block layout:fragment="customTitle">
-		<title>결재 진행 중인 예정 문서 목록</title>
+		<title>임시 저장 문서 목록</title>
 		</th:block>
 	
 		<!--  Script custom -->
@@ -26,7 +26,7 @@
 				$(function(){
 				
 					 /*
-					  * @brief 결재 진행 중인 예정 문서 목록 page 물음표 아이콘 Modal Event
+					  * @brief 임시저장 문서 목록 page 물음표 아이콘 Modal Event
 					  * @author 김건훈
 					  */	
 					$('.ik-help-circle').on('mouseover',function(e){
@@ -59,10 +59,89 @@
 						$(this).parent().siblings('.dropdown-toggle').append(tag);
 					});
 					
+					/*
+					  * @brief icheck plug-in 사용
+					  * @author 김건훈
+					  */
+
+					$(".ea-icheck").iCheck({
+
+						checkboxClass: 'icheckbox_square-blue'
+
+					});
+					//페이지 로딩 시 체크박스 체크 초기화
+					$('#all-ea-checkbox,.ea-checkbox').iCheck('uncheck');
+					 
+					/*
+					  * @brief 각각 체크박스 체크 이벤트
+					  * @author 김건훈
+					  */
+
+					  $('.ea-checkbox').on('ifChecked', function(event){
+						  //console.log('체크박스클릭');
+						  var checkCount  = $('.ea-checkbox:checked').length;
+						  //console.log(checkCount);
+							  if(checkCount == 2){							
+								 	 $('#all-ea-checkbox').iCheck('check');
+							  }else{
+								  	 $('#all-ea-checkbox').iCheck('uncheck');
+							  }
+							  
+							  if(checkCount>0){
+									$('.table-row-delete-nav').css('visibility','visible')
+			 					}else{
+									$('.table-row-delete-nav').css('visibility','hidden')
+			 					}
+						  });
+					
+					  $('.ea-checkbox').on('ifUnchecked', function(event){
+						  //console.log('체크박스클릭');
+						  var checkCount  = $('.ea-checkbox:checked').length;
+						  //console.log(checkCount);
+							  if(checkCount == 2){							
+								 	 $('#all-ea-checkbox').iCheck('check');
+							  }else{
+								  	 $('#all-ea-checkbox').iCheck('uncheck');
+							  }
+							  
+							  if(checkCount>0){
+									$('.table-row-delete-nav').css('visibility','visible')
+			 					}else{
+									$('.table-row-delete-nav').css('visibility','hidden')
+			 					}
+						  });
+					  
+					 
+					
+					
+					 /*
+					  * @brief 전체 체크박스 체크 이벤트
+					  * @author 김건훈
+					  */
+					  
+					  $('#all-ea-checkbox').on('ifChecked', function(event){
+						  
+						  var checkCount  = $('.ea-checkbox:checked').length;
+						  	 	
+						  $('.ea-checkbox').iCheck('check');
+
+					  });
+					
+						
+					  $('#all-ea-checkbox').on('ifUnchecked', function(event){
+						 
+						  var checkCount  = $('.ea-checkbox:checked').length;
+						  
+						  if(checkCount == 2){
+						 		
+							  $('.ea-checkbox').iCheck('uncheck');
+						  }
+					  });
+					
 				});
 			</script>
 		</th:block>
-		<th:block layout:fragment="customContents">
+		<th:block layout:fragment="customContents"> 
 						<div class="page-header">
 					       <div class="row align-items-end">
 					           <div class="col-lg-8">
@@ -80,27 +159,23 @@
 					                       <li class="breadcrumb-item">
 					                           <a th:href="@{/index}"><i class="ik ik-home"></i></a>
 					                       </li>
-					                       <li class="breadcrumb-item">진행 중인 문서</li>
-					                       <li class="breadcrumb-item active" aria-current="page">예정</li>
+					                       <li class="breadcrumb-item">문서함</li>
+					                       <li class="breadcrumb-item active" aria-current="page">임시 저장</li>
 					                   </ol>
 					               </nav>
 					           </div>
 					       </div>
-					   </div>                    
+					   </div>                   
 		               <div class="card">
-		              	  <!--결재 진행 중인 예정 문서 목록 테이블 상단 메뉴탭 Start-->
-			                 <div class="card-header ea-card-header">
-				                 <h3>결재 진행 중인 예정 문서 목록
-				                 	<i class="ik ik-help-circle"></i>
-				                 </h3>
-			                 </div>
-	                      <!--결재 진행 중인 예정 문서 목록 테이블 상단 메뉴탭 End-->
-                                <!-- 결재 진행 중인 예정 문서 목록 검색창 Start -->
+		              	  <!-- 임시 저장 문서 목록 테이블 상단 메뉴탭 Start-->
+			                 <div class="card-header ea-card-header"><h3>임시 보관 문서함<i class="ik ik-help-circle"></i></h3></div>
+	                      <!-- 임시 저장 문서 목록 테이블 상단 메뉴탭 End-->
+                                <!-- 임시 저장 문서 목록 검색창 Start -->
                                    <div class="card-block">
                                    <div class="table-nav">
                                    		<ul class="nav table-row-delete-nav" >
 		                                    <li class="nav-item">
-		                                    	<button type="button" class="btn btn-outline-primary">##</button>
+		                                    	<button type="button" class="btn btn-outline-danger ea-list-delete">삭제</button>
 		                                    </li>
 		                                </ul>
                                    <div class="collapse d-md-block display-options float-md-right" id="displayOptions">
@@ -124,34 +199,34 @@
                                         </div>
                                      </div>
                                     </div>
-                               <!-- 결재 진행 중인 예정 문서 목록 검색창 End -->
-                               <!-- 결재 진행 중인 예정 문서 목록 Start -->
+                               <!-- 임시 저장 문서 목록 검색창 End -->
+                               <!-- 임시 저장 문서 목록 테이블 Start -->
                                         <div class="table-responsive">
                                             <table class="table mb-0 table-hover ea-table">
                                                 <thead>
                                                     <tr>
-                                                        <th>문서 번호</th>
+                                                    	<th>
+                                                    		<input type="checkbox" class="ea-icheck" id="all-ea-checkbox">                                                	
+                                                    	</th>
                                                         <th>제목</th>
-                                                        <th>기안자</th>
-                                                        <th>기안일</th>
-                                                        <th>구분</th>
+                                                        <th>문서 종류</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td>프로젝트사업기획-20200516-0007</td>
-                                                        <td>PMS 개발 프로젝트 사업기획서</td>
-                                                        <td>김연지</td>
-                                                        <td>2020-05-16</td>
-                                                     	<td>결재</td>                                                                              
-                                                    </tr> 
+                                                    	<td> 
+                                                    		<input type="checkbox" class="ea-icheck ea-checkbox">
+                                                    	</td>
+                                                        <td>그룹웨어 프로젝트 사업기획서</td>
+                                                     	<td>프로젝트사업기획서</td>                                                                               
+                                                    </tr>
                                                     <tr>
-                                                        <td>프로젝트완료보고-20200616-0008</td>
-                                                        <td>PMS 개발 프로젝트  완료보고서</td>
-                                                        <td>김건훈</td>
-                                                        <td>2020-06-16</td>
-                                                     	<td>결재</td> 
-                                                    </tr>                                                                                                         
+                                                    	<td> 
+                                                    		<input type="checkbox" class="ea-icheck ea-checkbox">
+                                                    	</td>
+                                                        <td>쇼핑몰 프로젝트 사업기획서</td>
+                                                     	<td>프로젝트사업기획서</td>                                                                               
+                                                    </tr>                                                                                                          
                                                 </tbody>
                                             </table>
                                         </div>
@@ -196,18 +271,18 @@
                                             </ul>
                                         </nav>
                                     </div>
-                                 <!-- 결재 진행 중인 예정 문서 목록 테이블 End -->                               
+                                 <!-- 임시 저장 문서 목록 테이블 End -->                               
                         		</div>	                              
 	                      
-	                      <!--결재 진행 중인 예정 문서 목록 page modal view Start --> 
+	                      <!-- 임시 저장 문서 목록 page modal view Start --> 
 	                        <div class="modal-dialog modal-sm mt-0 mb-0 ruletip" role="document">
 					        	<div class="modal-content">
                                		 <div class="modal-body">
-                                   		 <p>예정 문서함은 내가 받은 문서 중에서 내 결재 순서가 안된 문서(참조 포함)들이 쌓이는 곳 입니다. '구분' 은 결재,합의,참조 중 해야 할 일을 안내해주는 항목 입니다. </p>
+                                   		 <p>임시 보관 문서함은 사용자가 기안하기 페이지에서 임시 보관한 문서들이 쌓이는 곳 입니다. 임시 보관한 문서들을 조회하거나 삭제 할 수 있습니다.</p>
                                 	 </div>
                            		 </div>
                            	</div>
-                           <!--결재 진행 중인 예정 문서 목록 page modal view End -->                                    	
+                           <!-- 결재 후 반려 문서 목록 page modal view End -->                                    	
 	</th:block>
 
 	<th:block layout:fragment="customJs">        

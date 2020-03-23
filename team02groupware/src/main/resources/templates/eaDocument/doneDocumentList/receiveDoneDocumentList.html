@@ -4,29 +4,27 @@
       layout:decorate="~{layout/default}">
 <!--
    @file allOngoingDocumentList.html
-   @brief 결재 진행 중인 예정 문서 목록 view
+   @brief 결재 후 수신 문서 목록 view
    @author 김건훈
  -->	
 		<!-- CSS custom -->
 		<th:block layout:fragment="customCss">
 			<link rel="stylesheet" href="dist/css/electronicApproval/electronicApproval.css">
-			<link rel="stylesheet" href="icheck/skins/square/blue.css">
 		</th:block>
 		
 		<th:block layout:fragment="customTitle">
-		<title>결재 진행 중인 예정 문서 목록</title>
+		<title>결재 후 수신 문서 목록</title>
 		</th:block>
 	
 		<!--  Script custom -->
 		<th:block layout:fragment="customScript">
 			<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-			<script src="icheck/icheck.min.js"></script>
 			<script type="text/javascript">
 
 				$(function(){
 				
 					 /*
-					  * @brief 결재 진행 중인 예정 문서 목록 page 물음표 아이콘 Modal Event
+					  * @brief 결재 후 수신 문서 목록 page 물음표 아이콘 Modal Event
 					  * @author 김건훈
 					  */	
 					$('.ik-help-circle').on('mouseover',function(e){
@@ -57,12 +55,11 @@
 						//console.log(searchType);
 						$(this).parent().siblings('.dropdown-toggle').text(searchType);
 						$(this).parent().siblings('.dropdown-toggle').append(tag);
-					});
-					
+					});												
 				});
 			</script>
 		</th:block>
-		<th:block layout:fragment="customContents">
+		<th:block layout:fragment="customContents"> 
 						<div class="page-header">
 					       <div class="row align-items-end">
 					           <div class="col-lg-8">
@@ -80,22 +77,18 @@
 					                       <li class="breadcrumb-item">
 					                           <a th:href="@{/index}"><i class="ik ik-home"></i></a>
 					                       </li>
-					                       <li class="breadcrumb-item">진행 중인 문서</li>
-					                       <li class="breadcrumb-item active" aria-current="page">예정</li>
+					                       <li class="breadcrumb-item">문서함</li>
+					                       <li class="breadcrumb-item active" aria-current="page">수신</li>
 					                   </ol>
 					               </nav>
 					           </div>
 					       </div>
-					   </div>                    
+					   </div>                   
 		               <div class="card">
-		              	  <!--결재 진행 중인 예정 문서 목록 테이블 상단 메뉴탭 Start-->
-			                 <div class="card-header ea-card-header">
-				                 <h3>결재 진행 중인 예정 문서 목록
-				                 	<i class="ik ik-help-circle"></i>
-				                 </h3>
-			                 </div>
-	                      <!--결재 진행 중인 예정 문서 목록 테이블 상단 메뉴탭 End-->
-                                <!-- 결재 진행 중인 예정 문서 목록 검색창 Start -->
+		              	  <!--결재 후 수신 문서 목록 테이블 상단 메뉴탭 Start-->
+			                 <div class="card-header ea-card-header"><h3>결재 후 수신 문서 목록<i class="ik ik-help-circle"></i></h3></div>
+	                      <!--결재 후 수신 문서 목록 테이블 상단 메뉴탭 End-->
+                                <!-- 결재 후 수신 문서 목록 검색창 Start -->
                                    <div class="card-block">
                                    <div class="table-nav">
                                    		<ul class="nav table-row-delete-nav" >
@@ -124,8 +117,8 @@
                                         </div>
                                      </div>
                                     </div>
-                               <!-- 결재 진행 중인 예정 문서 목록 검색창 End -->
-                               <!-- 결재 진행 중인 예정 문서 목록 Start -->
+                               <!-- 결재 후 수신 문서 목록 검색창 End -->
+                               <!-- 결재 후 수신 문서 목록 테이블 Start -->
                                         <div class="table-responsive">
                                             <table class="table mb-0 table-hover ea-table">
                                                 <thead>
@@ -134,23 +127,23 @@
                                                         <th>제목</th>
                                                         <th>기안자</th>
                                                         <th>기안일</th>
-                                                        <th>구분</th>
+                                                        <th>문서 종류</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td>프로젝트사업기획-20200516-0007</td>
-                                                        <td>PMS 개발 프로젝트 사업기획서</td>
-                                                        <td>김연지</td>
-                                                        <td>2020-05-16</td>
-                                                     	<td>결재</td>                                                                              
+                                                        <td>프로젝트사업기획-20190701-007</td>
+                                                        <td>포털사이트개발 프로젝트 사업기획서</td>
+                                                        <td>이원준</td>
+                                                        <td>2019-07-01</td>
+                                                     	<td>프로젝트사업기획서</td>                                                                               
                                                     </tr> 
                                                     <tr>
-                                                        <td>프로젝트완료보고-20200616-0008</td>
-                                                        <td>PMS 개발 프로젝트  완료보고서</td>
-                                                        <td>김건훈</td>
-                                                        <td>2020-06-16</td>
-                                                     	<td>결재</td> 
+                                                        <td>프로젝트완료보고-20190801-008</td>
+                                                        <td>포털사이트개발 프로젝트 완료보고서</td>
+                                                        <td>이원준</td>
+                                                        <td>2019-08-01</td>
+                                                     	<td>프로젝트완료보고서</td>
                                                     </tr>                                                                                                         
                                                 </tbody>
                                             </table>
@@ -196,18 +189,18 @@
                                             </ul>
                                         </nav>
                                     </div>
-                                 <!-- 결재 진행 중인 예정 문서 목록 테이블 End -->                               
+                                 <!-- 결재 후 수신 문서 목록 테이블 End -->                               
                         		</div>	                              
 	                      
-	                      <!--결재 진행 중인 예정 문서 목록 page modal view Start --> 
+	                      <!-- 결재 후 수신 문서 목록 page modal view Start --> 
 	                        <div class="modal-dialog modal-sm mt-0 mb-0 ruletip" role="document">
 					        	<div class="modal-content">
                                		 <div class="modal-body">
-                                   		 <p>예정 문서함은 내가 받은 문서 중에서 내 결재 순서가 안된 문서(참조 포함)들이 쌓이는 곳 입니다. '구분' 은 결재,합의,참조 중 해야 할 일을 안내해주는 항목 입니다. </p>
+                                   		 <p>수신 문서함은 사용자가 수신한 문서들이 쌓이는 곳 입니다.</p>
                                 	 </div>
                            		 </div>
                            	</div>
-                           <!--결재 진행 중인 예정 문서 목록 page modal view End -->                                    	
+                           <!-- 결재 후 수신 문서 목록 page modal view End -->                                    	
 	</th:block>
 
 	<th:block layout:fragment="customJs">        

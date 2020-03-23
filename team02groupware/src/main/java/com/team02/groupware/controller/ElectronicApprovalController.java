@@ -88,6 +88,78 @@ public class ElectronicApprovalController {
 	 
 	 
 	 /*
+	  * @method selectAllDoneDocumentList()
+	  * @brief 결재 후 "전체" 문서 목록 method
+	  * @author 김건훈
+	  */	
+	 @GetMapping("/selectAllDoneDocumentList")
+	 public String selectAllDoneDocumentList() {
+			return "eaDocument/doneDocumentList/allDoneDocumentList.html";
+	}
+	 
+	 /*
+	  * @method selectDraftDoneDocumentList()
+	  * @brief 결재 후 "기안" 문서 목록 method
+	  * @author 김건훈
+	  */	
+	 @GetMapping("/selectDraftDoneDocumentList")
+	 public String selectDraftDoneDocumentList() {
+			return "eaDocument/doneDocumentList/draftDoneDocumentList.html";
+	}
+	 
+	 /*
+	  * @method selectApprovalDoneDocumentList()
+	  * @brief 결재 후 "결재" 문서 목록 method
+	  * @author 김건훈
+	  */	
+	 @GetMapping("/selectApprovalDoneDocumentList")
+	 public String selectApprovalDoneDocumentList() {
+			return "eaDocument/doneDocumentList/approvalDoneDocumentList.html";
+	}
+	 
+	 /*
+	  * @method selectReceiveDoneDocumentList()
+	  * @brief 결재 후 "수신" 문서 목록 method
+	  * @author 김건훈
+	  */	
+	 @GetMapping("/selectReceiveDoneDocumentList")
+	 public String selectReceiveDoneDocumentList() {
+			return "eaDocument/doneDocumentList/receiveDoneDocumentList.html";
+	}
+	 
+	 /*
+	  * @method selectPassAndReferDoneDocumentList()
+	  * @brief 결재 후 "회람/참조" 문서 목록 method
+	  * @author 김건훈
+	  */	
+	 @GetMapping("/selectPassAndReferDoneDocumentList")
+	 public String selectPassAndReferDoneDocumentList() {
+			return "eaDocument/doneDocumentList/passAndReferDoneDocumentList.html";
+	}
+	 
+	 /*
+	  * @method selectReturnDoneDocumentList()
+	  * @brief 결재 후 "반려" 문서 목록 method
+	  * @author 김건훈
+	  */	
+	 @GetMapping("/selectReturnDoneDocumentList")
+	 public String selectReturnDoneDocumentList() {
+			return "eaDocument/doneDocumentList/returnDoneDocumentList.html";
+	}
+	 
+	 
+	 /*
+	  * @method selectTemporarySaveDocumentList()
+	  * @brief 임시저장 문서 목록 method
+	  * @author 김건훈
+	  */	
+	 @GetMapping("/selectTemporarySaveDocumentList")
+	 public String selectTemporarySaveDocumentList() {
+			return "eaDocument/doneDocumentList/temporarySaveDocumentList.html";
+	}
+	 
+	 
+	 /*
 	  * @method selectDocumentFormList()
 	  * @brief 관리자용 양식함 리스트 method
 	  * @author 김건훈
