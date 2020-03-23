@@ -1,5 +1,13 @@
 @charset "UTF-8";
 
+/* ----------------tasklist clone----------------- */
+.tasklist-clone{
+	display:none;
+}
+
+.dd-item{
+	
+}
 .main-content {
 	padding-bottom: 0px !important;
 }
@@ -27,6 +35,7 @@
 }
 .task-row {
 	flex-wrap: nowrap;
+	margin-right:0px;
 }
 
 .card {

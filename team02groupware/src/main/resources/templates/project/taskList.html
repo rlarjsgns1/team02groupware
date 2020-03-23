@@ -13,45 +13,45 @@
 
 </th:block>
 <th:block layout:fragment="customScript">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			//업무리스트추가 버튼 클릭시 input으로 보이게
-			$(".tasklist-add-btn").click(function() {
-				$(".newTaskList").css('display', 'none');
-				$(".taskListInput").css('display', 'block');
+
+			//업무리스트추가 버튼 클릭이벤트
+			$("#tasklist-add-btn").click(function() {
+				var tasklistClone = $(".tasklist-clone:last").clone(true);
+				var tasklistInput = $('input[name="tasklistName"]');
+				tasklistClone.appendTo(".task-row");
+				tasklistClone.css("display", "block");
+				tasklistClone.find('.tasklistnameClone').text(tasklistInput.val());
+				tasklistInput.val('');
+				/* 
+				
+				//업무리스트 ajax 로 Insert
+				var menuId = $("ul.nav").first().attr("id");	
+				var request = $.ajax({
+					url : "/tasklistInsert",
+					method : "POST",
+					data : {
+						id : menuId
+
+					},
+					dataType : "json"
+				});
+
+				request.done(function(msg) {
+					$("#log").html(msg);
+				});
+
+				request.fail(function(jqXHR, textStatus) {
+					alert("Request failed: " + textStatus);
+				});
+				//업무리스트 clone */
 			})
-			
-			
-			
-		/* 	
-			//업무리스트 ajax 로 추가 
-			var menuId = $( "ul.nav" ).first().attr( "id" );
-			var request = $.ajax({
-			  url: "script.php",
-			  method: "POST",
-			  data: { id : menuId
-				  	
-			  		},
-			  dataType: "html"
-			});
-			 
-			request.done(function( msg ) {
-			  $( "#log" ).html( msg );
-			});
-			 
-			request.fail(function( jqXHR, textStatus ) {
-			  alert( "Request failed: " + textStatus );
-			});
-			 */
-			
-			//업무리스트 clone
-			
-			
 		});
 	</script>
 </th:block>
-
 
 <th:block layout:fragment="customContents">
 	<div class="container-fluid">
@@ -77,10 +77,9 @@
 		</div>
 		<div class="scroller-layout">
 			<div class="row task-row">
-							
-				<div class="card">
+				<div class="card tasklist-clone">
 					<div class="card-header">
-						<h6>수요일</h6>
+						<h6 class="tasklistnameClone">수요일</h6>
 						<div class="card-header-right">
 							<ul class="list-unstyled card-option">
 								<li><i class="ik ik-chevron-left action-toggle"></i></li>
@@ -102,35 +101,44 @@
 											the middle of text.</p>
 									</div>
 								</li>
-								<li class="dd-item" data-id="2">
+								<li class="dd-item" data-id="1">
 									<div class="dd-handle">
-										<h6>Event Done</h6>
-										<p>Contrary to popular belief, Lorem Ipsum is not simply
-											random text. It has roots in a piece of classical</p>
+										<h6>진행보고서</h6>
+										<p>If you are going to use a passage of Lorem Ipsum, you
+											need to be sure there isn't anything embarrassing hidden in
+											the middle of text.</p>
 									</div>
 								</li>
-								<li class="dd-item" data-id="2">
+								<li class="dd-item" data-id="1">
 									<div class="dd-handle">
-										<h6>Event Done</h6>
-										<p>Contrary to popular belief, Lorem Ipsum is not simply
-											random text. It has roots in a piece of classical</p>
+										<h6>진행보고서</h6>
+										<p>If you are going to use a passage of Lorem Ipsum, you
+											need to be sure there isn't anything embarrassing hidden in
+											the middle of text.</p>
 									</div>
 								</li>
 							</ol>
 						</div>
 					</div>
 				</div>
-				
-				<div class="card tasklist-add-card">
-					<div class="card-header tasklist-add-btn">
-						<h6 class="newTaskList" style="display: block;">+ 새 업무리스트 만들기</h6>
-						<input class="taskListInput" type="text" name="taskListName" placeholder="업무리스트 이름">
+			</div>
+			<div>
+				<div class="card">
+					<div class="card-header" style="padding-top: 20px;">
+						<div class="tasklistName input-group input-group-button"
+							style="margin: 0 auto;">
+							<input type="text" class="form-control" name="tasklistName"
+								placeholder="업무리스트 이름">
+							<div class="input-group-append">
+								<button class="btn btn-primary" id="tasklist-add-btn"
+									type="button">추가</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-				</div>
-				</div>
-		
+		</div>
+	</div>
 </th:block>
 <th:block layout:fragment="customJs">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
