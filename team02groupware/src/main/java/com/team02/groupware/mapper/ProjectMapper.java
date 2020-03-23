@@ -15,4 +15,7 @@ public interface ProjectMapper {
 
 	public int getProjectRowCount();	
 
+	public int taskInsert(Project project);
+	
+	public List<Project> getTasklist();	
 }
