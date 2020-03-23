@@ -160,7 +160,8 @@
 			                                                </div>
 			                                            </td>
                                                         <td class="table-active document-form-table-td"><span>보안 등급</span><i class="ik ik-help-circle"></i></td>
-                                                        <td><button class="btn btn-outline-dark btn-xs dropdown-toggle document-draft-btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <td>
+                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle document-draft-btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     		보안등급 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                				</button>
 			                                                <div class="dropdown-menu">
@@ -370,14 +371,27 @@
 										   </div>
 										 </div>  
 										<!-- 합의자 추가 Modal View End -->
-                                    
-                                    
                                  <!-- 문서 기안하기 결재선 지정 End -->
                                  
+                                 <!-- 문서 기안하기 프로젝트 선택 Start --> 
+                                 <div class="card-header d-block">                                   
+                                       <h6>프로젝트</h6>
+                                       <button class="btn btn-outline-dark btn-xs dropdown-toggle document-draft-btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  		프로젝트 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
+                             			</button>
+		                                 <div class="dropdown-menu">
+		                                 	<a class="dropdown-item">2팀 프로젝트 그룹웨어</a>
+		                                    <a class="dropdown-item">쇼핑몰 개발</a>
+		                                 </div>
+                                 </div>
+                                 <!-- 문서 기안하기 프로젝트 선택 End -->
+                                 
+                                 <!-- 문서 기안하기 제목 Start --> 
                                  <div class="card-header d-block">                                   
                                        <h6>제목</h6>
                                        <input type="text" class="form-control document-draft-title" >
                                  </div>
+                                 <!-- 문서 기안하기 제목 End -->  
                                  
                                  <!-- 문서 기안하기 상세내용 summer note editor Start -->    
                                     <div class="card-body  table-border-style">
@@ -385,17 +399,30 @@
                                        <!-- <p>문서 종류 선택 시 상세 입력이 노출됩니다.</p> -->
                                     	<textarea id="ea-summernote" rows="10" ></textarea>
                                     </div>
+                                 <!-- 문서 기안하기 상세내용 summer note editor End --> 
                                     
-                                    <!-- 기안하기 버튼 Start -->  
+                                 <!-- 문서 기안하기 파일첨부 Start --> 
+		                                 <div class="card-header d-block">                                   
+		                                       <h6>파일 첨부</h6>
+		                                       <ul class="nav">
+				                                    <li class="nav-item add-file-nav">
+				                                        <a class="text-primary" th:href="@{#}">파일 첨부</a>
+				                                    </li>
+				                                    <li class="nav-item add-file-nav">I</li>
+				                                    <li class="nav-item">
+				                                        <a class="text-primary" th:href="@{#}">관련문서 첨부</a>
+				                                    </li>
+	                               			   </ul>
+		                                 </div>
+                                 <!-- 문서 기안하기 파일첨부 End -->
+                           
+								 <!-- 기안하기 버튼 Start -->  
                                     <div class="card-header d-block ea-submit-btn">                                   
                                         <button type="button" class="btn btn-primary">기안하기</button>
                                     </div>
                                  	<!-- 기안하기 버튼  End -->
-                                 
                                   </div>            
                         		</div>
-                        		<!-- 문서 기안하기 상세내용 summer note editor End -->    
-                        		
                         		<!-- 기안하기 페이지 테이블 내 보존연한, 보안등급 물음표 아이콘 Modal View Start --> 
 	                        	<div class="modal-dialog modal-sm mt-0 mb-0 ruletip" role="document">
 						        	<div class="modal-content">

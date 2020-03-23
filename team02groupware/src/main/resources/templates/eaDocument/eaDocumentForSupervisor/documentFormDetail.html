@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<!--
+   @file documentFormDetail.html
+   @brief 양식 상세보기 view
+   @author 김건훈
+ -->	
+		<!-- CSS custom -->
+		<th:block layout:fragment="customCss">
+			<link rel="stylesheet" href="/dist/css/electronicApproval/electronicApproval.css">
+		</th:block>
+		
+		<th:block layout:fragment="customTitle">
+		<title>양식 상세보기</title>
+		</th:block>
+	
+		<!--  Script custom -->
+		<th:block layout:fragment="customScript">
+			<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+			<script type="text/javascript">
+				$(function(){
+
+					
+				});
+			</script>
+		</th:block>
+		<th:block layout:fragment="customContents">
+				       <div class="page-header">
+					       <div class="row align-items-end">
+					           <div class="col-lg-8">
+					               <div class="page-header-title">
+					                   <i class="ik ik-credit-card bg-blue"></i>
+					                   <div class="d-inline">
+					                       <h5>그룹웨어</h5>
+					                       <span>(주)TEAM02</span>
+					                   </div>
+					               </div>
+					           </div>
+					           <div class="col-lg-4">
+					               <nav class="breadcrumb-container" aria-label="breadcrumb">
+					                   <ol class="breadcrumb">
+					                       <li class="breadcrumb-item">
+					                           <a th:href="@{/index}"><i class="ik ik-home"></i></a>
+					                       </li>
+					                       <li class="breadcrumb-item">전자결재 설정</li>
+					                       <li class="breadcrumb-item" aria-current="page"><a th:href="@{/selectDocumentFormList}">양식함 관리</a></li>
+					                       	<li class="breadcrumb-item active" aria-current="page">양식 상세보기</li>
+					                   </ol>
+					               </nav>
+					           </div>
+					       </div>
+					   </div>                     
+		               <div class="card">
+			               <!-- 양식 상세보기 테이블 상단 메뉴탭 Start-->
+			                 <div class="card-header ea-card-header">
+			                 	<h3>양식 상세보기</h3>
+			                 </div>
+			                 <ul class="nav document-form-list-top-nav">
+	                                    <li class="nav-item">
+	                                        <a class="nav-link text-primary" th:href="@{updateDocumentForm}">양식 수정</a>
+	                                    </li>
+	                                    <li class="nav-item">
+	                                        <a class="nav-link text-primary" th:href="@{#}">양식 삭제</a>
+	                                    </li> 
+	                                </ul>
+	                      	<!-- 양식 상세보기 테이블 상단 메뉴탭 End-->
+	                           <div class="electronic-approval-form">   
+	                                                  
+                               <!-- 양식 상세보기 기본설정 테이블 Start -->
+                                    <div class="card-header d-block">
+                                        <h6>기본설정</h6> 
+                                    <div class="card-body p-0 table-border-style">
+                                        <div class="table-responsive">
+                                            <table class="table document-form-table ea-table">                                          
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="table-active document-form-table-td">분류</td>
+                                                        <td>프로젝트</td>
+                                                        <td class="table-active document-form-table-td">양식명</td>
+                                                        <td>프로젝트사업기획서</td>
+                                                    </tr>
+                                                     <tr>
+                                                        <td class="table-active document-form-table-td">약칭</td>
+                                                        <td>프로젝트사업기획</td>
+                                                        <td class="table-active document-form-table-td">설명</td>
+                                                        <td>프로젝트사업기획서다.</td>
+                                                    </tr>
+                                                     <tr>
+                                                        <td class="table-active document-form-table-td">보존 연한</td>
+                                                        <td>5년</td>
+                                                        <td class="table-active document-form-table-td">보안 등급</td>
+                                                        <td>C등급</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    </div>
+                                
+                                 <!-- 양식 상세보기 기본설정 테이블  End -->
+                                 
+                                 <!-- 양식 상세보기 결재라인 상세보기 Start -->  
+                                    <div class="card-header d-block">                                   
+                                       
+                                        <h6>결재 양식</h6>
+                                   		
+                                   		<!-- 결재라인 포맷 상세보기 Start -->
+                                       <div class="table-responsive">
+											<table style="height: 300px; width: 100%; table-layout: fixed; text-align: center; border: 1px solid #cdcdcd;">
+												<tbody>
+													<tr style="height: 50px;">
+														<td style="width: 96px; height: 140px; background: #f9f9f9; border: 1px solid #cdcdcd; "
+															rowspan="3">
+															<div class="col-md-12">
+																결재
+																<img src="img/electronicApproval/add.png"
+																	style="position: absolute; bottom: 80px; right: 5px; width: 20px; height: auto;">
+															</div>
+														</td>
+														<td style="background: #f9f9f9; border-: 1px solid #cdcdcd;"></td>
+														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;"></td>
+														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;"></td>
+														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;"></td>
+														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;"></td>
+														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;"></td>
+														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;"></td>
+													</tr>
+													<tr style="height: 100px; border: 1px solid #cdcdcd;">
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+													</tr>
+													<tr style="height: 50px; border: 1px solid #cdcdcd;">
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+														<td style="border: 1px solid #cdcdcd;"></td>
+													</tr>
+													<tr style="height: 50px; border: 1px solid #cdcdcd;">
+														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;">
+															<div class="col-md-12">합의
+																<img src="img/electronicApproval/add.png" style="position: absolute; right: 5px; width: 20px; height: auto;"	>							
+															</div>
+														</td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
+													</tr>
+													<tr style="height: 45px;">
+														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;">
+														<div class="col-md-12">참조</div>
+														</td>
+														<td colspan="7"> 
+								 						 </td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+                                       <!-- 결재라인 포맷 상세보기 End -->
+                                    </div>
+                                 <!-- 양식 상세보기 결재라인 상세보기 End -->
+                                 
+                                 <!-- 양식 상세보기 상세내용  -->    
+                                    <div class="card-body  table-border-style">
+                                    	<h6>상세 내용 </h6>                                   
+                                                                                                   상세내용입니다.        
+                                    </div>                      		
+                                <!-- 양식 상세보기 상세내용  -->	    
+                        		</div>                         		                                	 
+                        		</div>
+                        		
+                                		
+                        		
+		</th:block>
+
+	<th:block layout:fragment="customJs">        
+        <script>window.jQuery || document.write('<script src="../src/js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
+        <script src="/plugins/popper.js/dist/umd/popper.min.js"></script>
+        <script src="/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
+        <script src="/plugins/screenfull/dist/screenfull.js"></script>
+        <script src="/plugins/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+        <script src="/summernote/lang/summernote-ko-KR.js"></script>
+        <script src="/dist/js/theme.min.js"></script>
+        <script src="/js/layouts.js"></script>
+	</th:block>
+</html>

@@ -156,7 +156,11 @@
 		border-bottom: 1px solid #f1f1f1 !important;
 	}
 	
-	.document-form-list-top-nav{
+	.document-form-list-top-nav{ /* 양식함 관리 리스트 top nav 관련 CSS */
 		margin-left: 4px;
+	}
+	
+	.add-file-nav{
+		margin-right: 5px;
 	}
 	

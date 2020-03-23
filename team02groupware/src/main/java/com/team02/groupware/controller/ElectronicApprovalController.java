@@ -166,7 +166,7 @@ public class ElectronicApprovalController {
 	  */
 	 @GetMapping("/selectDocumentFormList")
 	 public String selectDocumentFormList() {
-		 return "eaDocument/eaDocumentForSupervisor/documentFormList";
+		 return "eaDocument/eaDocumentForSupervisor/documentFormList.html";
 	 }
 	 
 	 /*
@@ -176,7 +176,28 @@ public class ElectronicApprovalController {
 	  */
 	 @GetMapping("/insertDocumentForm")
 	 public String insertDocumentForm() {
-		 return "eaDocument/eaDocumentForSupervisor/documentForm";
+		 return "eaDocument/eaDocumentForSupervisor/documentForm.html";
+	 }
+	 
+	 
+	 /*
+	  * @method selectDocumentFormDetail()
+	  * @brief 관리자용 양식 상세보기
+	  * @author 김건훈
+	  */
+	 @GetMapping("/selectDocumentFormDetail")
+	 public String selectDocumentFormDetail() {
+		 return "eaDocument/eaDocumentForSupervisor/documentFormDetail.html";
+	 }
+	 
+	 /*
+	  * @method updateDocumentForm()
+	  * @brief 관리자용 양식 수정 화면
+	  * @author 김건훈
+	  */
+	 @GetMapping("/updateDocumentForm")
+	 public String updateDocumentForm() {
+		 return "eaDocument/eaDocumentForSupervisor/updateDocumentForm.html";
 	 }
 	 
 	 
@@ -187,7 +208,7 @@ public class ElectronicApprovalController {
 	  */
 	 @GetMapping("/approvalFormat")
 	 public String approvalFormat() {
-		 return "eaDocument/eaFormat/approvalFormat";
+		 return "eaDocument/eaFormat/approvalFormat.html";
 	 }
 	 
 	 /*
@@ -197,7 +218,7 @@ public class ElectronicApprovalController {
 	  */
 	 @GetMapping("/insertDocumentDraft")
 	 public String insertDocumentDraft() {
-		 return "eaDocument/draftDocument/documentDraft";
+		 return "eaDocument/draftDocument/documentDraft.html";
 	 }
 	 
 	
@@ -208,7 +229,7 @@ public class ElectronicApprovalController {
 	  */	
 	 @GetMapping("/selectAllDocumentListForSupervisor")
 	 public String selectAllDocumentListForSupervisor() {
-			return "eaDocument/eaDocumentForSupervisor/documentListForSupervisor";
+			return "eaDocument/eaDocumentForSupervisor/documentListForSupervisor.html";
 	}
 	 
 	 /*
@@ -218,7 +239,7 @@ public class ElectronicApprovalController {
 	  */	
 	 @GetMapping("/deleteDocumentList")
 	 public String deleteDocumentList() {
-			return "eaDocument/eaDocumentForSupervisor/deleteDocumentList";
+			return "eaDocument/eaDocumentForSupervisor/deleteDocumentList.html";
 	}	 
 	 
 	 
@@ -229,7 +250,7 @@ public class ElectronicApprovalController {
 	  */	
 	 @GetMapping("/insertEaGeneralSettings")
 	 public String insertEaGeneralSettings() {
-			return "eaDocument/eaDocumentForSupervisor/eaGeneralSettings";
+			return "eaDocument/eaDocumentForSupervisor/eaGeneralSettings.html";
 	}
 	 
 	 /*
