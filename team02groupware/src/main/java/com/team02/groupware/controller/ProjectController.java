@@ -37,6 +37,10 @@ public class ProjectController {
 	 * System.out.println(project.toString()); }
 	 */
 	
+	@GetMapping("/taskCalendar")
+	public String taskCalendar() {
+		return "project/taskCalendar";
+	}
 	
 	@GetMapping("/taskList")
 	public String taskList(Model model) {
