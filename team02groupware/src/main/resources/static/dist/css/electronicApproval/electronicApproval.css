@@ -160,7 +160,33 @@
 		margin-left: 4px;
 	}
 	
-	.add-file-nav{
+	.add-file-nav{ /* 첨부파일 영역 관련 CSS */
 		margin-right: 5px;
 	}
 	
+	.document-detail-view-top-table{ /* 문서상세보기 화면 상단 table 관련 CSS */
+		margin-bottom: 0px !important;
+		 border-right: 1px solid #cdcdcd !important;
+		 border-left: 1px solid #cdcdcd !important;
+		 border-top: 1px solid #cdcdcd !important;
+	}
+	
+	.detail-view-table-active{ /* 문서상세보기 화면 table 관련 CSS */
+		background: #f9f9f9;
+		border-right: 1px solid #cdcdcd !important;
+		width: 96px;
+	}
+	
+	.detail-view-table-inactive{ /* 문서상세보기 화면 table 관련 CSS */
+		width: 358.4px;
+		border-right: 1px solid #cdcdcd !important;
+	}
+	
+	.detail-view-document-type{ /* 문서상세보기 화면 상단 문서종류 관련 CSS */
+		font-size: 32px;
+		text-align: center;
+	}
+	
+	.detail-view-top-table-lg-td{ /* 문서상세보기 화면 상단 테이블 td 관련 CSS */
+		width: 140px !important;
+	}

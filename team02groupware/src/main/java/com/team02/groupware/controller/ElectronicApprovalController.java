@@ -9,9 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.team02.groupware.service.ElectronicApprovalService;
 
@@ -84,6 +86,21 @@ public class ElectronicApprovalController {
 	 public String selectAfterOngoingDocumentList() {
 		
 			return "eaDocument/ongoingDocumentList/afterOngoingDocumentList.html";
+	}
+	 
+	 
+	 /*
+	  * @method selectOngoingDocumentDetail()
+	  * @brief 전자결재 진행중인 문서 detail view method
+	  * @author 김건훈
+	  */	
+	 @GetMapping("/selectOngoingDocumentDetail")
+	 public String selectOngoingDocumentDetail(@RequestParam(value="type", required = false) String type, Model model) {
+		 	logger.info("결재 진행 중인 문서 목록에서 넘어온 문서 구분 값 :: {}", type);
+		 	
+		 	model.addAttribute("type", type);
+		 	
+			return "eaDocument/ongoingDocumentList/ongoingDocumentDetail.html";
 	}
 	 
 	 
