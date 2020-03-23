@@ -5,8 +5,8 @@
 	display:none;
 }
 
-.dd-item{
-	
+.task-clone{
+	display:none;
 }
 .main-content {
 	padding-bottom: 0px !important;

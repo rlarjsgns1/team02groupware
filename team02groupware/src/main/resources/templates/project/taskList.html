@@ -11,44 +11,66 @@
 </th:block>
 
 
-</th:block>
 <th:block layout:fragment="customScript">
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
+			$("#task-add-btn").click(function() {
+				//console.log('새업무만들기 클릭');
+				var taskClone = $(this).siblings('ol').find("li:last").clone();
+				var taskTitle = $('input[name="taskTitle"]:last');
+				//console.log(taskTitle.val());
+				if (taskTitle.val() == null || taskTitle.val() == ' ') {
+					return false;
+				}
+				taskClone.appendTo(".dd-list");
+				taskClone.css("display", "block");
+				taskClone.find(".tasktitleClone").text(taskTitle.val());
+				taskTitle.val(null);
+			})
+
+			$("#task-cancel-btn").click(function() {
+				var taskTitle = $('input[name="taskTitle"]:last');
+				taskTitle.val(null);
+			})
 
 			//업무리스트추가 버튼 클릭이벤트
 			$("#tasklist-add-btn").click(function() {
-				var tasklistClone = $(".tasklist-clone:last").clone(true);
-				var tasklistInput = $('input[name="tasklistName"]');
-				tasklistClone.appendTo(".task-row");
-				tasklistClone.css("display", "block");
-				tasklistClone.find('.tasklistnameClone').text(tasklistInput.val());
-				tasklistInput.val('');
-				/* 
-				
-				//업무리스트 ajax 로 Insert
-				var menuId = $("ul.nav").first().attr("id");	
-				var request = $.ajax({
-					url : "/tasklistInsert",
-					method : "POST",
-					data : {
-						id : menuId
+						var tasklistClone = $(".tasklist-clone:first").clone(true);
+						var tasklistInput = $('input[name="tasklistName"]');
 
-					},
-					dataType : "json"
-				});
+						if (tasklistInput.val() != null
+								&& tasklistInput.val() != '') {
+							tasklistClone.appendTo(".task-row");
+							tasklistClone.css("display", "block");
+							tasklistClone.find(".tasklistnameClone").text(tasklistInput.val());
+							tasklistInput.val(null);
+						}
 
-				request.done(function(msg) {
-					$("#log").html(msg);
-				});
+						/* 
+						
+						//업무리스트 ajax 로 Insert
+						var menuId = $("ul.nav").first().attr("id");	
+						var request = $.ajax({
+							url : "/tasklistInsert",
+							method : "POST",
+							data : {
+								id : menuId
 
-				request.fail(function(jqXHR, textStatus) {
-					alert("Request failed: " + textStatus);
-				});
-				//업무리스트 clone */
-			})
+							},
+							dataType : "json"
+						});
+
+						request.done(function(msg) {
+							$("#log").html(msg);
+						});
+
+						request.fail(function(jqXHR, textStatus) {
+							alert("Request failed: " + textStatus);
+						});
+						 */
+					})
 		});
 	</script>
 </th:block>
@@ -79,12 +101,11 @@
 			<div class="row task-row">
 				<div class="card tasklist-clone">
 					<div class="card-header">
-						<h6 class="tasklistnameClone">수요일</h6>
+						<h6 class="tasklistnameClone"></h6>
 						<div class="card-header-right">
 							<ul class="list-unstyled card-option">
 								<li><i class="ik ik-chevron-left action-toggle"></i></li>
-								<li><i class="ik ik-rotate-cw reload-card"
-									data-loading-effect="pulse"></i></li>
+								<li><i class="ik ik-rotate-cw reload-card" data-loading-effect="pulse"></i></li>
 								<li><i class="ik ik-minus minimize-card"></i></li>
 								<li><i class="ik ik-x close-card"></i></li>
 							</ul>
@@ -92,29 +113,15 @@
 					</div>
 					<div class="card-body completed-task">
 						<div class="dd" data-plugin="nestable">
+							<div class="form-group">
+								<input type="text" class="form-control" name="taskTitle" placeholder="새 업무 만들기">
+							</div>
+							<button type="button" class="btn btn-primary mr-2" id="task-add-btn">만들기</button>
+							<button class="btn btn-light" id="task-cancel-btn">취소</button>
 							<ol class="dd-list">
-								<li class="dd-item" data-id="1">
+								<li class="dd-item task-clone" data-id="1">
 									<div class="dd-handle">
-										<h6>진행보고서</h6>
-										<p>If you are going to use a passage of Lorem Ipsum, you
-											need to be sure there isn't anything embarrassing hidden in
-											the middle of text.</p>
-									</div>
-								</li>
-								<li class="dd-item" data-id="1">
-									<div class="dd-handle">
-										<h6>진행보고서</h6>
-										<p>If you are going to use a passage of Lorem Ipsum, you
-											need to be sure there isn't anything embarrassing hidden in
-											the middle of text.</p>
-									</div>
-								</li>
-								<li class="dd-item" data-id="1">
-									<div class="dd-handle">
-										<h6>진행보고서</h6>
-										<p>If you are going to use a passage of Lorem Ipsum, you
-											need to be sure there isn't anything embarrassing hidden in
-											the middle of text.</p>
+										<p class="tasktitleClone"></p>
 									</div>
 								</li>
 							</ol>
@@ -127,11 +134,9 @@
 					<div class="card-header" style="padding-top: 20px;">
 						<div class="tasklistName input-group input-group-button"
 							style="margin: 0 auto;">
-							<input type="text" class="form-control" name="tasklistName"
-								placeholder="업무리스트 이름">
+							<input type="text" class="form-control" name="tasklistName" placeholder="업무리스트 이름">
 							<div class="input-group-append">
-								<button class="btn btn-primary" id="tasklist-add-btn"
-									type="button">추가</button>
+								<button class="btn btn-primary" id="tasklist-add-btn" type="button">추가</button>
 							</div>
 						</div>
 					</div>
