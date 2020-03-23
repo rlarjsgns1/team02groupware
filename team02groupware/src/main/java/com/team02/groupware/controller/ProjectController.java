@@ -2,6 +2,7 @@ package com.team02.groupware.controller;
 
 
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.team02.groupware.dto.Project;
@@ -39,7 +39,12 @@ public class ProjectController {
 	
 	
 	@GetMapping("/taskList")
-	public String taskList() {
+	public String taskList(Model model) {
+		/*
+		 * List<Project> tasklist = projectService.getTasklist();
+		 * model.addAttribute("tasklist",tasklist);
+		 * System.out.println(projectService.getTasklist().toString());
+		 */
 		return "project/taskList";
 	}
 	

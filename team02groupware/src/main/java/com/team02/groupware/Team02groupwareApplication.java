@@ -10,6 +10,8 @@ public class Team02groupwareApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Team02groupwareApplication.class, args);
+		
 	}
+	
 
 }
