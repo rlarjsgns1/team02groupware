@@ -1,7 +1,8 @@
 (function($) {
   'use strict';
   $(function() {
-	  // 파일 선택 클릭시
+	  
+	// 파일 선택 클릭시
     $(document).on('click', '.file-upload-browse', function() {
       var file = $(this).parent().parent().find('.file-upload-default');
       file.trigger('click');
@@ -73,10 +74,14 @@
     $('.file-add-btn').on('click', function() {
     	
     	var fileInputGroupLength = $('.file-input-group').length;
+    	console.log(fileInputGroupLength);
     	
     	if(fileInputGroupLength >= 5){
+    		
     		alert('파일은 최대 5개까지 첨부하실 수 있습니다.')
+    		
     	}else{
+    		
     		var fileInputGroup = $('.file-input-group').eq(0).clone();
         	fileInputGroup.find('.file-upload-info').val('');
     	   			    
