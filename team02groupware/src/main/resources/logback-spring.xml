@@ -15,7 +15,7 @@
 		</encoder>
 	</appender>
 	
-	<logger name="com.team02.template" level="info" additivity="false">
+	<logger name="com.team02.groupware" level="info" additivity="false">
 		<appender-ref ref="STDOUT" />
 	</logger>
 	
