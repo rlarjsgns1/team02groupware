@@ -1,6 +1,7 @@
 package com.team02.groupware.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,17 @@ public class ProjectService {
 	@Autowired
 	private ProjectMapper projectMapper;
 
+	
+	public int taskInsert(Project project) {
+		return projectMapper.taskInsert(project);
+	}
+	
+	public List<Project> getTasklist(){
+		List<Project> tasklist = projectMapper.getTasklist();
+		return tasklist;
+		
+	}
+	
 	public int projectInsert(Project project) {
 		return projectMapper.projectInsert(project);
 	}
