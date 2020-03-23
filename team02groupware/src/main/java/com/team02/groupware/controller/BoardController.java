@@ -75,14 +75,22 @@ public class BoardController {
 	}
 	// 게시글 등록
 	@PostMapping("/boardInsert")
-	public String boardWrite(Model model, BoardDto bDto, @RequestParam("file") MultipartFile file, RedirectAttributes redirectA ) throws IOException {
+	public String boardWrite(Model model, BoardDto bDto, @RequestParam("file") MultipartFile[] file, RedirectAttributes redirectA ) throws IOException {
 		
 		System.out.println("보드인서트 비디티오 확인 : "+bDto.toString());
 		Map<String, Object> boardMap = new HashMap<String, Object>();
 		
 		boardMap = boardService.boardInsert(bDto);
 		
-		if(file.isEmpty() == false) {
+		System.out.println("*****게시글등록 테스트 파일 렝쓰 : " + file[0].isEmpty());
+		
+		int fileLength = file.length;
+		int fileEmptyCount = 0;
+		
+		for(int i=0; i < file.length; i++) {
+			if(file[i].isEmpty() == true) fileEmptyCount++;
+		}
+		if(fileLength != fileEmptyCount) {
 			boardService.boardFileInsert(boardMap, file);
 		}
 		

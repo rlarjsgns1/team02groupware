@@ -138,23 +138,41 @@
                   <!-- 파일 첨부 -->
                   <div class="row">
 	                  <div class="form-group col-md-5" >
-	                      <label>파일 첨부 <span style="color:#919191">ㅣ</span>최대 5MB<span style="color:#919191;">까지 파일을 올리실 수 있습니다.</span></label>
+	                  
+	                      <label>파일 첨부 
+		                      <span style="color:#919191">ㅣ</span>최대 5MB
+		                      <span style="color:#919191;">까지 파일을 올리실 수 있습니다.</span>
+	                      </label>
+	                      
 	                      <input type="file" name="file" class="file-upload-default"/>
 	                      
 	                      <div class="input-group col-xs-5">
+	                      
 	                      	<th:block th:if="${#strings.isEmpty(boardFileList)}">
+	                      	
 	                      		<input type="text" class="form-control file-upload-info" placeholder="선택된 파일이 없습니다." readonly="readonly">
+	                      		
 	                      	</th:block>
+	                      	
                       		<th:block th:each="f:${boardFileList}">
+                      		
 	                          <input type="text" class="form-control file-upload-info" placeholder="선택된 파일이 없습니다." readonly="readonly" 
 	                          	th:value="${f.boardFileOriginalName}" th:attr="fileNum=${f.boardFileNum}">
-	                          <a class="file-upload-cancle" href="#" style="padding:0;"><i class="ik ik-x-square" style="color: red;"></i></a>
+	                          	
+	                          <a class="file-update-cancle" href="#" style="padding:0;">
+	                          	<i class="ik ik-x-square" style="color: red;"></i>
+	                          </a>
+	                          
 	                          <input type="hidden" class="file-delete-num" name="fileDeleteNum">
+	                          
 	                          <div style="width:20px;"></div>
+	                          
                          	</th:block>
+                         	
 	                          <span class="input-group-append">
 	                          
-	                          <button class="file-upload-browse btn btn-primary" type="button">파일 선택</button>
+	                          	<button class="file-upload-browse btn btn-primary" type="button">파일 선택</button>
+	                          	
 	                          </span>
 	              
 	                      </div>
