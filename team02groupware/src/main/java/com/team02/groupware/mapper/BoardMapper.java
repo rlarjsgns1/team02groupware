@@ -24,6 +24,8 @@ public interface BoardMapper {
 	
 	public void insertBoard(BoardDto bDto);
 	
+	public void boardFileInsert(Map<String, Object> boardMap);
+	
 	public List<BoardDto> selectBoardDetailView(BoardDto bDto);
 	
 	public void updateBoardViewCount(BoardDto bDto);
@@ -47,6 +49,20 @@ public interface BoardMapper {
 	public void deleteComment(CommentDto cDto);
 
 	public void deleteCommentCount(BoardDto bDto);
+
+	public List<Map<String, Object>> selectBoardAttachFile(BoardDto bDto);
+
+	public void boardFileCheckUpdate(Map<String, Object> boardMap);
+
+	public List<Map<String, Object>> selectBoardFile(BoardDto bDto);
+
+	public void boardFileDelete(int integerFileDeleteNum);
+
+	public void boardFileCheck(BoardDto bDto);
+
+	public List<Map<String, Object>> selectBoardFileForDelete(int integerFileDeleteNum);
+
+	
 	
 	
 }

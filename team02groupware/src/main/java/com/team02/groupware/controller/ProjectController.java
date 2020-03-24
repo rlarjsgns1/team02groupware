@@ -2,6 +2,7 @@ package com.team02.groupware.controller;
 
 
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -38,7 +39,12 @@ public class ProjectController {
 	
 	
 	@GetMapping("/taskList")
-	public String taskList() {
+	public String taskList(Model model) {
+		/*
+		 * List<Project> tasklist = projectService.getTasklist();
+		 * model.addAttribute("tasklist",tasklist);
+		 * System.out.println(projectService.getTasklist().toString());
+		 */
 		return "project/taskList";
 	}
 	

@@ -77,7 +77,7 @@ public class Project {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Project [projectCode=");
 		builder.append(projectCode);
-		builder.append(", employeeNum=");
+		builder.append(", employeeCode=");
 		builder.append(employeeCode);
 		builder.append(", projectTitle=");
 		builder.append(projectTitle);
@@ -95,8 +95,92 @@ public class Project {
 		builder.append(projectEnd);
 		builder.append(", projectDeadline=");
 		builder.append(projectDeadline);
+		builder.append(", tasklistCode=");
+		builder.append(tasklistCode);
+		builder.append(", tasklistName=");
+		builder.append(tasklistName);
+		builder.append(", taskCode=");
+		builder.append(taskCode);
+		builder.append(", taskTitle=");
+		builder.append(taskTitle);
+		builder.append(", taskDesc=");
+		builder.append(taskDesc);
+		builder.append(", taskDate=");
+		builder.append(taskDate);
+		builder.append(", taskDeadline=");
+		builder.append(taskDeadline);
+		builder.append(", taskEnd=");
+		builder.append(taskEnd);
+		builder.append(", taskStatus=");
+		builder.append(taskStatus);
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	private String tasklistCode;
+	private String tasklistName;
+	
+	private String taskCode;
+	private String taskTitle;
+	private String taskDesc;
+	private String taskDate;
+	private String taskDeadline;
+	private String taskEnd;
+	private String taskStatus;
+	public String getTasklistCode() {
+		return tasklistCode;
+	}
+	public void setTasklistCode(String tasklistCode) {
+		this.tasklistCode = tasklistCode;
+	}
+	public String getTasklistName() {
+		return tasklistName;
+	}
+	public void setTasklistName(String tasklistName) {
+		this.tasklistName = tasklistName;
+	}
+	public String getTaskCode() {
+		return taskCode;
+	}
+	public void setTaskCode(String taskCode) {
+		this.taskCode = taskCode;
+	}
+	public String getTaskTitle() {
+		return taskTitle;
+	}
+	public void setTaskTitle(String taskTitle) {
+		this.taskTitle = taskTitle;
+	}
+	public String getTaskDesc() {
+		return taskDesc;
+	}
+	public void setTaskDesc(String taskDesc) {
+		this.taskDesc = taskDesc;
+	}
+	public String getTaskDate() {
+		return taskDate;
+	}
+	public void setTaskDate(String taskDate) {
+		this.taskDate = taskDate;
+	}
+	public String getTaskDeadline() {
+		return taskDeadline;
+	}
+	public void setTaskDeadline(String taskDeadline) {
+		this.taskDeadline = taskDeadline;
+	}
+	public String getTaskEnd() {
+		return taskEnd;
+	}
+	public void setTaskEnd(String taskEnd) {
+		this.taskEnd = taskEnd;
+	}
+	public String getTaskStatus() {
+		return taskStatus;
+	}
+	public void setTaskStatus(String taskStatus) {
+		this.taskStatus = taskStatus;
+	}
+	
 	
 }

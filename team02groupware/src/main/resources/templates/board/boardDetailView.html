@@ -40,6 +40,9 @@
 		pre{
 			white-space: pre-line;
 		}
+		.download_opt a{
+			color:#919191;
+		}
 		
 	</style>
 </th:block>
@@ -56,6 +59,7 @@
 		var commentList = [[${commentList}]];
 		var pagingDto = [[${pagingDto}]];
 		var searchDto = [[${searchDto}]];
+		var boardAttachFileList = [[${boardAttachFileList}]];
 		
 		
 	/*]]>*/
@@ -63,6 +67,7 @@
 		console.log('searchDto',searchDto)
 		console.log('commentList',commentList)
 		console.log('pagingDto',pagingDto)
+		console.log('boardAttachFileList',boardAttachFileList)
 		console.log(boardList[0].boardNum)
 		
 		var boardNum = boardList[0].boardNum
@@ -265,13 +270,19 @@
 						request.fail(function( jqXHR, textStatus ) {
 						  alert( "Request failed: " + textStatus );
 						});
-					
 				}
-				
-				
-				
-				
 			})
+			
+		
+       		$("#fileTag").click(function(){
+       			$("#attachLayer").show();
+       		})
+       		
+       		$("#fileTagClose").click(function(){
+       			$("#attachLayer").hide();
+       		})
+         	
+			
 			
 
 		})
@@ -329,23 +340,63 @@
           
           <div class="card-body" style="position:relative; min-height: 300px;">
 	       	<div class="form-group row">
-	         	<div class="col-md-8" style="padding:0 0 0 25px;">
+	       		
+	         	<div class="col-md-9" style="padding:0 0 0 25px;">
 	             	<i class="ik ik-user"></i>
 	              	<label for="exampleInputUsername2" class="col-sm-3 col-form-label" style="padding:0; font-weight:bold;">[[${b.boardWriter}]]</label>
 	             </div>
-	             <div class="col-md-4"style="text-align:right">
-	              	<span>첨부파일(1)</span>
+	             
+	             <!-- 첨부파일 리스트 -->
+	             
+	             <div class="col-md-3">
+	             	<!-- 첨부파일이 있을경우 실행 -->
+	             	<th:block th:if="${boardAttachFileList.size() != 0}">
+	             	
+	             	<!-- 첨부파일 유무,개수  -->
+	              	<div id="attachFileCheck" style="float:right; display:block;">
+		              	<a id="fileTag" href="#" onclick="$(''#attachLayer').show(); return false;" style="text-align:right">첨부파일
+		              	<span class="m-tcol-p">([[${boardAttachFileList.size()}]])</span></a>
+	              	</div>
+	              	
+	              	<div style="clear:both;"></div>
+	              	<div id="attachLayer" class="ly_atch_file" style="display:none; border: 1px solid #919191; padding: 10px 10px 5px 10px;">
+                       <ul>
+                       		<th:block th:each="f:${boardAttachFileList}">
+							<li>
+								<i class="ik ik-file"></i>
+								<span class="file_name" th:text="${f.boardFileOriginalName}"></span>
+								<div id="attahc" class="download_opt" style="float:right;">
+									<a th:href="@{board/file(fileName=${f.boardFileStoredName},fileOriginalName=${f.boardFileOriginalName})}" th:value="${f.boardFileNum}">내PC 저장</a>
+								</div>
+							</li>
+							</th:block>
+							
+	                       <li>	<!-- 첨부파일 닫기 버튼 -->
+		                       	<div style="float:right; margin-top:3px;"><a id="fileTagClose" href="#" onclick="$(''#attachLayer').hide();return false;" class="clse">
+		                       		<span class="blind"><i class="ik ik-x"></i></span></a>
+		                       	</div>
+	                       </li>
+                       </ul>
+                   </div>
+                   </th:block>
+                     
 	             </div>
+	             
 	        </div>
-	        
-            <div style="padding: 0 30px; margin: 40px 0 0 0;">
+	        <!-- 게시글 내용 -->
+            <div style="padding: 0 30px; margin: 40px 0 20px; 0;">
             	<th:block th:utext="${b.boardContentText}">
             	</th:block>
 
             </div>
+            
             <div class="col-md-6" style="padding:0; margin: 30px 0 10px 0; position:absolute; bottom:0px;">
 
-            	<span style="font-weight:bold;">댓글</span> <span id="commentCount">[[${b.boardCommentCount}]]</span>ㅣ <span style="font-weight:bold;">조회수</span> <span>[[${b.boardViewCount}]]</span>
+            	<span style="font-weight:bold;">댓글</span>
+            	<span id="commentCount">[[${b.boardCommentCount}]]</span>
+            	ㅣ 
+            	<span style="font-weight:bold;">조회수</span>
+            	<span>[[${b.boardViewCount}]]</span>
             </div>
 	      </div>
 	      </th:block>
