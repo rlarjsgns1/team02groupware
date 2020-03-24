@@ -40,27 +40,40 @@
     	}
     });
     
-    $(document).on('click', '.file-update-cancle', function() {
+    
+    $(document).on('click', '.file-update-cancle', function(e) {
+    	
+    	e.preventDefault();
     	
     	if(confirm('파일을 내리시겠습니까?')){
     		
-    		var file = $(this).parent().parent().find('.file-upload-default');
-    		var fileNum = $(this).prev().attr('fileNum')
+    		var file = $(this).parent().find('.file-upload-default');
+    		var fileNum = $(this).prev().attr('fileNum');
+    		var thisInputGroup = $(this).closest('.file-input-group');
+    		var delNumTag = '<input type="hidden" class="file-delete-num" name="fileDeleteNum" value='+fileNum+'>';
+    		
     		file.val("");
     		$(this).prev().val("");
     		$(this).next().val(fileNum);
-    		console.log(fileNum)
+    		
+    		$('#boardUpdateForm').append(delNumTag);
+    		thisInputGroup.remove();
+    		
+    		console.log(fileNum);
+    		
     	}else{}
         
-      });
+    });
+    
     
     $(document).on('click', '.file-upload-cancle',function(e) {
     	
-    	e.preventDefault()
+    	e.preventDefault();
     	
     	var inputGroup = $(this).closest('.file-input-group');
+    	var fileInputGroup = $('.file-group-div').find('.file-input-group');
+    	
     	console.log(inputGroup.length)
-    	var fileInputGroup = $('.file-group-div').find('.file-input-group')
     	
     	if(fileInputGroup.length == 1){
     		$(this).prev().val('');
@@ -69,8 +82,9 @@
     	}
     	
         
-      });
+    });
     
+    // 게시판 글쓰기화면 파일 추가버튼
     $('.file-add-btn').on('click', function() {
     	
     	var fileInputGroupLength = $('.file-input-group').length;
@@ -87,7 +101,38 @@
     	   			    
         	$('.file-group-div').append(fileInputGroup)
     	}
-      });
+    });
+    
+    // 게시판 수정화면 파일추가 버튼
+    $('.file-add-btn-update').on('click', function() {
+    	
+    	var fileInputGroupLength = $('.file-input-group').length;
+    	console.log(fileInputGroupLength);
+    	
+    	if(fileInputGroupLength >= 5){
+    		
+    		alert('파일은 최대 5개까지 첨부하실 수 있습니다.')
+    		
+    	}else{
+    		
+    		var fileInputGroup = '<div class="file-input-group input-group col-xs-5">'
+    			fileInputGroup += '<input type="file" name="file" class="file-upload-default"/>'
+    			fileInputGroup += '<input type="text" class="form-control file-upload-info" placeholder="선택된 파일이 없습니다." readonly="readonly">'
+    			fileInputGroup += '<a class="file-upload-cancle" href="#" style="padding:0;">'
+    			fileInputGroup += '<i class="ik ik-x-square" style="color: red;"></i>'
+    			fileInputGroup += '</a>'
+    			fileInputGroup += '<div style="width:20px;"></div>'
+    			fileInputGroup += '<span class="input-group-append">'
+    			fileInputGroup += '<button class="file-upload-browse btn btn-primary" type="button">파일 선택</button>'
+    			fileInputGroup += '</span>'
+    			fileInputGroup += '</div>'
+
+        	$('.file-group-div').append(fileInputGroup)
+    	}
+    	
+    });
+    
+    
 
   });
 })(jQuery);

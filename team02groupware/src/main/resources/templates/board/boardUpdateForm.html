@@ -54,10 +54,12 @@
 	    	
 	    })
 	    
-	     $('#cancleBtn').click(function(){	// 취소 버튼
+	    $('#cancleBtn').click(function(){	// 취소 버튼
 	    	history.back()
 
 	    })
+	    
+	    
 	    
 	});
 	
@@ -191,7 +193,7 @@
 		                      	
 	                      	</label>
 	                      
-	                      		<button type="button" class="file-add-btn btn btn-outline-dark btn-xs">파일 추가</button>
+	                      		<button type="button" class="file-add-btn-update btn btn-outline-dark btn-xs">파일 추가</button>
 	                      	
 	                      	<!-- 파일 선택 폼 -->
 	                      	<div class="file-group-div input-group col-xs-5">
@@ -227,23 +229,23 @@
 	                      				<input type="file" name="file" class="file-upload-default"/>	<!-- 파일 정보 저장 hidden input태그 -->
 	                      				
 	                        			<input type="text" class="form-control file-upload-info" placeholder="선택된 파일이 없습니다."
-	                        			readonly="readonly" th:value="${f.boardFileOriginalName}" th:attr="fileNum=${f.boardFileNum}">	
+	                        			readonly="readonly" th:value="${f.boardFileOriginalName + ' ' + f.fileSize + f.fileUnit}" 
+	                        			th:attr="fileNum=${f.boardFileNum}">	
 		                          			
 	                          			<a class="file-update-cancle" href="#" style="padding:0;">		
 	                          				<i class="ik ik-x-square" style="color: red;"></i>
 		                          		</a>
 		                          		
-		                          		<input type="hidden" class="file-delete-num" name="fileDeleteNum">	<!-- 삭제할 파일넘버 파라미터 전송용 인풋태그 -->
-		                          
-		                          		<div style="width:20px;"></div>			
-		                          
-		                          		<span class="input-group-append">
-		                          			<button class="file-upload-browse btn btn-primary" type="button">파일 선택</button>
-		                          		</span>
+		                          		<input type="hidden" name="boardFileNum" th:value="${f.boardFileNum}">
 		                          		
+		                          	
+		                          		<div style="width:20px;"></div>			
+
 	                          		</div>
 	                          		
                          		</th:block>
+                         		
+                         		
                          	
 	              
 	                      	</div>
@@ -261,8 +263,6 @@
                   	</div>
                   	
                   	
-                  	
-
                   	<input type="hidden" name="boardNum" th:value="${b.boardNum}">
                   	<input type="hidden" name="selectPage" th:value="${pagingDto.selectPage}">
                   	<input type="hidden" name="viewNum" th:value="${pagingDto.viewNum}">
@@ -285,6 +285,9 @@
    </div>
 
 </th:block>
+
+
+
 
 <th:block layout:fragment="customJs">
 
