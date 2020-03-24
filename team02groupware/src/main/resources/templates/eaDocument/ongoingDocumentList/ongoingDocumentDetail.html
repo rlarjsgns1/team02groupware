@@ -60,7 +60,7 @@
 				});
 				
 				
-				/*
+				 /*
 				  * @brief 문서 상세보기 페이지 댓글 삭제 아이콘 Event
 				  * @author 김건훈
 				  */	
@@ -72,7 +72,29 @@
 				$('.approval-comment').on('mouseleave',function(e){
 					$(this).find('.approval-commenter-cancel-img').css('display','none');
 			 	});	
-		   	});		
+			
+				
+				 /*
+				  * @brief 문서 상세보기 페이지 의견,이력 탭 Event
+				  * @author 김건훈
+				  */
+				$('.approval-comment-history-tabs').find('li').click(function(e){
+					//console.log($(this).text());
+					var tabType=$(this).text();
+					if(tabType=='의견'){
+						$('.approval-comment-body').css('display','block');
+						$('.approval-history-body').css('display','none');
+						$('#approval-comment-tab').addClass("approval-comment-history-tab-active");
+						$('#approval-history-tab').removeClass("approval-comment-history-tab-active");
+					}else if(tabType=='이력'){
+						$('.approval-history-body').css('display','block');
+						$('.approval-comment-body').css('display','none');
+						$('#approval-history-tab').addClass("approval-comment-history-tab-active");
+						$('#approval-comment-tab').removeClass("approval-comment-history-tab-active");
+					}
+				});
+		   	});
+			
 			
 			</script>
 		</th:block>
@@ -252,14 +274,11 @@
 	                                <div class="card-header d-block">
 	                                	<div class="approval-comment-history-tabs">
 			                                <ul class="nav">
-			                                    <li class="nav-item">
-			                                        <a class="approval-comment-tab" th:href="@{#}">의견</a>
-			                                    </li>
-			                                    <li class="nav-item">
-			                                        <a class="approval-history-tab" th:href="@{#}">이력</a>
-			                                    </li>
+			                                    <li class="nav-item approval-comment-tab approval-comment-history-tab-active" id="approval-comment-tab">의견</li>
+			                                    <li class="nav-item approval-history-tab" id="approval-history-tab">이력</li>
 			                            	</ul>
 		                            	</div>
+		                            	<!-- 의견관련 contents Start -->
 		                            	<div class="approval-comment-body">
 		                            		<p><span class="text-primary">0</span>개의 의견</p>
 
@@ -303,6 +322,39 @@
 	                            				<button type="button" class="btn btn-primary">등록</button>
 	                            			</div>
 		                            	</div>
+		                            	<!-- 의견관련 contents End -->
+		                            	<!-- 이력관련 contents Start -->
+		                            	<div class="approval-history-body">
+		                            		<div class="align-middle mb-25">
+		                            			<img src="img/electronicApproval/user.png" class="rounded-circle img-40 align-top mr-15">
+	                                            <div class="d-inline-block">
+	                                               <ul class="nav approval-commenter-ul">
+	                                               	 <li class="nav-item">
+	                                               		김건훈
+	                                               	 </li>
+	                                               	 <li class="nav-item">
+	                                               		2020-03-24 10:40:30
+	                                               	 </li>
+	                                                </ul>
+	                                                <p class="text-muted mb-0">기안</p>
+	                                            </div>
+	                                         </div>
+	                                         <div class="align-middle mb-25">
+		                            			<img src="img/electronicApproval/user.png" class="rounded-circle img-40 align-top mr-15">
+	                                            <div class="d-inline-block">
+	                                               <ul class="nav approval-commenter-ul">
+	                                               	 <li class="nav-item">
+	                                               		관리자
+	                                               	 </li>
+	                                               	 <li class="nav-item">
+	                                               		2020-03-24 11:50:30
+	                                               	 </li>
+	                                                </ul>
+	                                                <p class="text-muted mb-0">승인</p>
+	                                            </div>
+	                                         </div>        
+		                            	</div>
+		                            	<!-- 이력관련 contents End -->
 	                                </div>
 	                            <!-- 결재 진행 중인 문서 상세보기  상세내용 End  -->    	    
                         		</div>                         		                                	 

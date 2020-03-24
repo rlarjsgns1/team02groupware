@@ -191,23 +191,32 @@
 		width: 140px !important;
 	}
 	
-	.approval-comment-history-tabs{ /* 문서상세보기 화면 코멘트,이력 탭들 관련 CSS */
-		margin-bottom: 7.5px;
-	}
-	
 	.approval-comment-tab{ /* 문서상세보기 화면 코멘트 탭 관련 CSS */
 		background-color: #d9dde0;
 		padding: 8px 34px;
+		cursor: pointer;
 	}
 	
 	.approval-history-tab{ /* 문서상세보기 화면 이력 탭 관련 CSS  */
 		background-color: #d9dde0;
 		padding: 8px 34px;
+		cursor: pointer;
+	}
+	
+	.approval-comment-history-tab-active{ /* 활성화 된 의견 또는 이력 활성화 관련 CSS */
+		background-color: #f6f7f8 !important;
 	}
 	
 	.approval-comment-body{ /* 문서상세보기 화면 코멘트 바디 관련 CSS */
 		background-color: #f6f7f8;
 		padding: 30px 20px;
+		display: block;
+	}
+	
+	.approval-history-body{ /* 문서상세보기 화면 이력 바디 관련 CSS */
+		background-color: #f6f7f8;
+		padding: 30px 20px 10px 30px;
+		display: none;
 	}
 	
 	.approval-comment-text{ /* 문서상세보기 화면 코멘트 textarea 관련 CSS */
@@ -229,7 +238,7 @@
 	.approval-commenter-ul > li{ /* 문서상세보기 화면 코멘트 등록자 이름,등록일시 포함 ul 관련 CSS */
 		margin-right: 20px;
 	}
-	
+
 	.approval-commenter-cancel-img{ /* 문서상세보기 화면 코멘트 삭제 img 관련 CSS */
 		float: right; 
 		margin-top : 5px; 
