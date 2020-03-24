@@ -95,7 +95,13 @@
             inline: true,
             sideBySide: true
         });
-        $('#datepicker').datetimepicker({
+        $('#datepicker1').datetimepicker({
+            format: 'L'
+        });
+        $('#datepicker2').datetimepicker({
+            format: 'L'
+        });
+        $('#datepicker3').datetimepicker({
             format: 'L'
         });
         $('#timepicker').datetimepicker({

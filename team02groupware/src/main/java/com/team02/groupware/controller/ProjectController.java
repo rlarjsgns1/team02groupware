@@ -2,6 +2,7 @@ package com.team02.groupware.controller;
 
 
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.team02.groupware.dto.Project;
@@ -32,14 +32,24 @@ public class ProjectController {
 	@Autowired
 	private ProjectService projectService;
 
+	/*
+	 * @PostMapping("/projectUpdate") public String projectUpdate(Project project) {
+	 * System.out.println(project.toString()); }
+	 */
+	
 	
 	@GetMapping("/taskList")
-	public String taskList() {
-		return "projectlist/taskList";
+	public String taskList(Model model) {
+		/*
+		 * List<Project> tasklist = projectService.getTasklist();
+		 * model.addAttribute("tasklist",tasklist);
+		 * System.out.println(projectService.getTasklist().toString());
+		 */
+		return "project/taskList";
 	}
 	
 	@PostMapping("/projectInsert")
-	public String gInsert(Project project) {
+	public String projectInsert(Project project) {
 		System.out.println(project.toString());
 		int result = projectService.projectInsert(project);
 		System.out.println(result);
@@ -52,7 +62,8 @@ public class ProjectController {
 	
 	@GetMapping("/projectInsert")
 	public String projectInsert() {
-		return "projectlist/projectInsert";
+		System.out.println(" ------GetMapping  /projectInsert");
+		return "/projectInsert";
 	}
 	
 	
@@ -68,6 +79,6 @@ public class ProjectController {
 		model.addAttribute("startPageNum", map.get("startPageNum"));
 		model.addAttribute("endPageNum", map.get("endPageNum"));
 		//System.out.println(boardService.getBoardlist().toString());
-		return "projectlist/projectList";
+		return "project/projectList";
 	}
 }

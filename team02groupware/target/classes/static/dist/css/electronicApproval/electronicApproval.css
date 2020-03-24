@@ -9,10 +9,10 @@
 		margin-left: 15px;
 		cursor:pointer;
 	}
-	
+
 	.ruletip{		/* 사내전자결재규정 Modal css */
 		position: absolute;
-		 display : none; 
+		display : none; 
 		z-index: 1;	
 	}
 	
@@ -23,13 +23,19 @@
 	.border-checkbox-label { /* 양식함 테이블 row에 위치한 체크박스 css */
 		margin-bottom : 0px;
 	}
-	::after, ::before{ /* 양식함 테이블 row에 위치한 체크박스 css */
-		box-sizing : unset;
+	.document-form-check-box{ /* 양식함 테이블 row에 위치한 체크박스 css */
+		margin-top: 3px;
 	}
 
-	.document-form-table input{ /* 양식생성 테이블 row에 위치한 input box css */
+	.document-form-table input{ /* 전자결재  FORM(양식생성 테이블) row에 위치한 input box css */
 		border-color : #343a40; 
 	}
+	.document-form-table td{  /* 전자결재  FORM(양식생성, 기안하기) 테이블 요소 CSS */
+		border-right: 1px solid #dee2e6;
+	}
+	.document-form-table tr:last-child { /* 전자결재  FORM(양식생성, 기안하기) 테이블 요소 CSS */
+		border-bottom: 1px solid #dee2e6; 
+	} 
 	
 	.document-form-checkbox{ /* 양식생성 테이블 row에 위치한 check box css */
 		margin-top: 15px;
@@ -39,4 +45,118 @@
 		text-align: center;
 	}
 	
+	.btn{/* 버튼 관련 css */
+		height: unset;
+	}
+
+	.select2-container { /* select2 box css */
+  		width: 100% !important;
+	}
+	
+	.list-group li{ /* 결재자 설정부분 리스트 css */
+		border-color: #fff;
+  		
+	}
+	.search-keyword-btn{ /* 양식함 관리 화면 검색 select box css */
+	 width: 100px;
+	 height: 32px;
+	}
+	
+ 	.card .card-header{/*  card, card-header 밑줄제거 */
+	border-bottom: unset; 
+	} 
+	
+ 	.electronic-approval-form{ /* 전자결재 FORM 요소 정렬 CSS */
+		width: 80%;
+		margin-top: 15px;
+	} 
+	
+	.document-draft-btn{/* 기안하기 화면 기본설정 테이블 버튼 */
+		width: 155px;
+		display: inline-block;
+				
+	} 
+ 	.note-toolbar>.note-btn-group,.note-toolbar>.btn-group,.note-toolbar>.note-style{/*  summer note 툴바 CSS */
+		/* margin-right : 0px !important; */
+		
+	} 
+	
+	#approval-format-set-btn{ /* 양식 생성 화면 결재 양식 설정 btn CSS */
+		color: #007bff;
+		margin-left: 10px;
+		cursor: pointer;
+		font-size: 0.9rem;
+	}
+	
+	.document-draft-title, .company-code-title{ /* 기안하기 화면 제목 input box CSS */
+    	border-color: #343a40;
+	}
+	
+	.approval-format-type-title{ /* 결재 양식 화면 결재양식 설정 CSS */
+		padding-left: 20px;
+	}
+	
+	.table-hover{ /* 전자결재 관련 테이블 CSS*/
+		cursor: pointer;
+	}
+	
+	.document-form-type-list{ /* 양식 분류설정 <li> CSS */
+		cursor: pointer;
+	}
+	
+	.document-code-setting-table td{ /* 관리자용 기본설정 페이지에서 문서번호 설정 테이블 CSS */
+		vertical-align: top !important;
+	}
+	
+	.pagination-btn-group{ /* 전자결재 관련 테이블 페이지네이션 버튼 관련 CSS */
+		text-align: center; 
+		margin-top: 50px;
+	}
+	
+	.contents-quantity{ /* 전자결재 관련 테이블 컨텐츠 수 표시 관련 CSS */
+		float: left; 
+		margin-top: 25px;
+	}
+	
+	.pagination{ /* 전자결재 관련 테이블 페이지네이션 버튼 관련 CSS */
+		justify-content: center;
+	}
+	
+	.table-nav{ /* 전자결재 관련 테이블 상단 삭제 및 검색 탭 관련 CSS */
+		margin-bottom: 20px;
+	}
+	
+	.table-row-delete-nav{ /* 전자결재 관련 테이블 row 삭제 버튼 포함 NAV 관련 CSS */
+		display: inline-block;
+		visibility: hidden;
+	}
+	
+	.ea-submit-btn{ /* 전자결재 submit 버튼 관련 CSS */
+		text-align: center;
+	}
+	
+	.ea-submit-btn>button{ /* 전자결재 submit 버튼 관련 CSS */
+		width: 100px;
+	}
+	
+	.table-row-delete-nav>li{ /* 전자결재 관련 테이블 row check시 테이블 상단에 삭제 버튼 포함된 <li> CSS */
+		display: inline-block;
+		margin-right: 5px;
+	}
+	
+	.document-form-checkbox > label > span{ /* 양식 생성 page 변경 금지 CSS */
+		vertical-align: middle;
+		cursor: pointer;
+	}
+	.ea-table{ /* 전자결재 관련 테이블 CSS */
+		text-align: center;
+	}
+	
+	.ea-card-header{ /* 전자결재 각 페이지 title 포함되어있는 head 부분 CSS */
+		border-bottom: 1px solid #f1f1f1 !important;
+	}
+	
+	.document-form-list-top-nav{
+		margin-left: 4px;
+	}
 	

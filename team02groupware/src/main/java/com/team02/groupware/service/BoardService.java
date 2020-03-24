@@ -1,15 +1,33 @@
 package com.team02.groupware.service;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.team02.groupware.dto.BoardDto;
+import com.team02.groupware.dto.CommentDto;
 import com.team02.groupware.dto.PagingDto;
 import com.team02.groupware.dto.SearchDto;
 import com.team02.groupware.mapper.BoardMapper;
@@ -21,6 +39,22 @@ public class BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
 	
+	@Value("${service.file.uploadurl}")
+	private String fileUploadPath;
+	
+	/**
+	 * 업로드 폴더 없을 경우 생성
+	 */
+	@PostConstruct
+	public void init() {
+		try {
+			Files.createDirectories(Paths.get(fileUploadPath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// 게시글리스트 Select
 	public Map<String, Object> getBoardList(BoardDto bDto, PagingDto pDto, SearchDto sDto){
 		// default값 설정
 		int viewNum;
@@ -35,7 +69,7 @@ public class BoardService {
 		Map<String, Object> boardMap = new HashMap<String, Object>();
 		boardMap.put("boardDto", bDto);
 		boardMap.put("searchDto", sDto);
-		int boardCount = boardMapper.getBoardCount(boardMap);
+		int boardCount = boardMapper.selectBoardCount(boardMap);
 		System.out.println("보드서비스 겟보드 카운트 후");
 		System.out.println("보드카운트 : "+ boardCount);
 		
@@ -89,7 +123,7 @@ public class BoardService {
 		System.out.println(boardMap.get("boardDto").toString());
 		System.out.println(boardMap.get("searchDto").toString());
 		List<BoardDto> boardList = new ArrayList<BoardDto>();
-		boardList = boardMapper.getBoardList(boardMap);
+		boardList = boardMapper.selectBoardList(boardMap);
 		System.out.println("보드서비스 겟보드리스트 후");
 		System.out.println("보드리스트 : " + boardList.toString());
 		/* 페이징 값 셋팅 */
@@ -100,11 +134,11 @@ public class BoardService {
 		pDto.setNextBtn(isNextBtn);
 		
 		List<String> departList = new ArrayList<String>();
-		departList = boardMapper.getDepartList();
+		departList = boardMapper.selectDepartList();
 		System.out.println("디파트리스트 투스트링 : "+departList.toString());
 		
 		List<BoardDto> boardNoticeList = new ArrayList<BoardDto>();
-		boardNoticeList = boardMapper.getBoardNoticeList();
+		boardNoticeList = boardMapper.selectBoardNoticeList();
 		System.out.println("겟보드 노티스 리스트 : "+boardNoticeList.toString());
 		
 		
@@ -141,11 +175,11 @@ public class BoardService {
 		return boardMap;
 	}
 	
-	
+	// 부서목록 select
 	public Map<String, Object> getDepartList(){
 
 		List<String> departList = new ArrayList<String>();
-		departList = boardMapper.getDepartList();
+		departList = boardMapper.selectDepartList();
 		
 		Map<String, Object> boardMap = new HashMap<String, Object>();
 		
@@ -153,18 +187,243 @@ public class BoardService {
 
 		return boardMap;
 	}
-	
+	// 게시글 Insert
 	public Map<String, Object> boardInsert(BoardDto bDto){
 
-		boardMapper.boardInsert(bDto);
+		boardMapper.insertBoard(bDto);
 		
-		int maxBoardNum = boardMapper.getMaxBoardNum();
+		int maxBoardNum = boardMapper.selectMaxBoardNum();
 		Map<String, Object> boardMap = new HashMap<String, Object>();
 		boardMap.put("boardNum", maxBoardNum);
 		
 		return boardMap;
 	}
+	// 게시글 파일 업로드
+	public void boardFileInsert(Map<String, Object> boardMap, MultipartFile[] file) throws IOException {
+		
+		String originalFileName = null;
+		String storedFileName = null;
+		int fileSize = 0;
+		
+		List<Map<String,Object>> boardMapList = new ArrayList<Map<String,Object>>();
+		int boardNum = (int) boardMap.get("boardNum");
+		int listCountNum = -1;
+		
+		for(int i=0; i < file.length ; i++) {
+			
+			if(file[i].isEmpty() == true) {
+				
+				continue;
+			}
+			
+			originalFileName = StringUtils.cleanPath(file[i].getOriginalFilename());	// 원래 파일명
+			storedFileName = UUID.randomUUID().toString().replaceAll("-", "");			// 저장용 랜덤스트링 파일명 생성
+			storedFileName += originalFileName.substring(originalFileName.lastIndexOf(".")); // 확장자 추가
+			fileSize = (int) file[i].getSize();	// 파일 사이즈
+			
+			InputStream inputStream = file[i].getInputStream();		// 파일 읽을 준비
+			Files.copy(inputStream, Paths.get(fileUploadPath).resolve(storedFileName),	// copy(inputStream 객체, 파일 경로, 카피옵션) : 파일 복사해서 쓰기
+					StandardCopyOption.REPLACE_EXISTING);			// REPLACE_EXISTING?
+			
+			boardMap.put("boardNum", boardNum);
+			boardMap.put("originalFileName", originalFileName);
+			boardMap.put("storedFileName", storedFileName);
+			boardMap.put("fileSize", fileSize);
+			
+			boardMapList.add(boardMap);
+			
+			listCountNum++;
+			
+			boardMapper.boardFileInsert(boardMapList.get(listCountNum));
+			boardMapper.boardFileCheckUpdate(boardMapList.get(listCountNum));
+			
+		}
+		
+		
+		
+	}
 	
+	
+	
+	// 게시글 디테일뷰 Select
+	public Map<String, Object> selectBoardDetailView(BoardDto bDto){
+		
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		List<BoardDto> boardList = new ArrayList<BoardDto>();
+		List<CommentDto> commentList = new ArrayList<CommentDto>();
+		List<Map<String,Object>> boardAttachFileList = new ArrayList<Map<String,Object>>();
+		
+		boardMapper.updateBoardViewCount(bDto);
+		boardList = boardMapper.selectBoardDetailView(bDto);
+		commentList = boardMapper.selectCommentList(bDto);
+		boardAttachFileList = boardMapper.selectBoardAttachFile(bDto);
+		
+		System.out.println("****** 서비스 셀렉트보드디테일뷰 파일 테스트 ************");
+		System.out.println(boardAttachFileList.toString());
+		
+		boardMap.put("boardList", boardList);
+		boardMap.put("commentList", commentList);
+		boardMap.put("boardAttachFileList", boardAttachFileList);
+		System.out.println("보드디테일뷰 보드리스트 : " + boardList.toString());
+		System.out.println("보드디테일뷰 코멘트리스트 : " + commentList.toString());
+		
+		return boardMap;
+	}
+	
+	// 게시글 수정Form
+	public Map<String, Object> selectBoardUpdateForm(BoardDto bDto){
+		
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		List<BoardDto> boardList = new ArrayList<BoardDto>();
+		
+		boardList = boardMapper.selectBoardDetailView(bDto);
+		System.out.println("게시글 수정폼 파일 체크 : " + boardList.get(0).getBoardFileCheck());
+		String boardFileCheck = boardList.get(0).getBoardFileCheck();
+		
+		// 파일이 있을 시
+		if("Y".equals(boardFileCheck)) {
+			
+			List<Map<String,Object>> boardFileList = new ArrayList<Map<String,Object>>();
+			boardFileList = boardMapper.selectBoardAttachFile(bDto);
+			System.out.println("게시글 수정폼 파일 사이즈 체크 : " + boardFileList);
+			/*
+			 * long fileSize = 0; for(int i=0; i<boardFileList.size(); i++) { fileSize =
+			 * (long) boardFileList.get(i).get("boardFileSize");
+			 * System.out.println("파일사이즈 추출 : " + fileSize);
+			 * 
+			 * if(fileSize < 1024){ fileSize = fileSize+"바이트"; }else if(fileSize < 1048576){
+			 * fileSize = Math.floor((fileSize / 1024)*100)/100+"KB"; }else if(fileSize <
+			 * 1.0737e+9){ fileSize = Math.floor((fileSize / 1048576)*100)/100+"MB"; } }
+			 */
+
+			boardMap.put("boardFileList", boardFileList);
+		}
+		
+		
+		boardMap.put("boardList", boardList);
+		
+		
+		return boardMap;
+
+	}
+	// 게시글 Update
+	public void updateBoard(BoardDto bDto) {
+		
+		boardMapper.updateBoard(bDto);
+		
+	}
+	// 게시글 Delete
+	public void deleteBoard(BoardDto bDto) {
+		
+		boardMapper.deleteBoard(bDto);
+		
+		
+	}
+	// 댓글 Insert
+	public Map<String, Object> commentInsert(BoardDto bDto, CommentDto cDto){
+		
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");	
+		Date time = new Date();	
+		String currentTime = format1.format(time);
+		
+		boardMap.put("commentDto", cDto);
+		boardMap.put("currentTime", currentTime);
+		boardMap.put("boardDto", bDto);
+		boardMap.put("isCommentCount", "true");
+		boardMapper.insertComment(boardMap);
+		boardMapper.updateCommentCount(boardMap);
+		
+		int commentNum = boardMapper.selectMaxCommentNum();
+		System.out.println("커멘트 인서트 커멘트넘 : " + commentNum);
+		boardMap.put("commentNum", commentNum);
+		
+		return boardMap;
+	}
+	// 댓글 Update
+	public void commentUpdate(CommentDto cDto){
+		
+		boardMapper.updateComment(cDto);
+
+	}
+
+	// 댓글 Delete
+	public void commentDelete(BoardDto bDto, CommentDto cDto) {
+		
+		boardMapper.deleteComment(cDto);
+		boardMapper.deleteCommentCount(bDto);
+		
+	}
+
+	
+	// 파일 다운로드
+	public Resource boardFileDownload(String filename) throws MalformedURLException {
+		
+		// 파일경로 접근
+		Path file = Paths.get(fileUploadPath).resolve(filename);	
+		
+		// 파일 경로 접근하여 파일 정보 전달
+		Resource resource = new UrlResource(file.toUri());
+		
+		//파일이 존재할 경우 리턴
+		if (resource.exists() || resource.isReadable()) {
+			
+			return resource;
+		}
+		
+		return null;
+	}
+	
+	// 게시글 파일 수정
+	public void boardFileUpdate(BoardDto bDto, MultipartFile file) throws IOException {
+		
+		String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());	// 오리지날 파일명
+		String storedFileName = UUID.randomUUID().toString().replaceAll("-", "");		// DB에 저장될 파일명 랜덤생성
+		storedFileName += originalFileName.substring(originalFileName.lastIndexOf("."));	// 확장자 추가
+		int fileSize = (int) file.getSize();	// 파일 사이즈
+		
+		InputStream inputStream = file.getInputStream();		// 파일 읽을 준비
+		Files.copy(inputStream, Paths.get(fileUploadPath).resolve(storedFileName),	// copy(inputStream 객체, 파일 경로, 카피옵션) : 파일 복사해서 쓰기
+				StandardCopyOption.REPLACE_EXISTING);			// REPLACE_EXISTING?
+		
+				
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		
+		boardMap.put("originalFileName", originalFileName);
+		boardMap.put("storedFileName", storedFileName);
+		boardMap.put("fileSize", fileSize);
+		boardMap.put("boardNum", bDto.getBoardNum());
+		
+		boardMapper.boardFileInsert(boardMap);
+		boardMapper.boardFileCheckUpdate(boardMap);
+		
+		
+	}
+	
+	// 게시글 파일 삭제
+	public void boardFileDelete(int integerFileDeleteNum) throws IOException {
+		
+		List<Map<String,Object>> deleteBoardFileList = new ArrayList<Map<String,Object>>();
+		
+		deleteBoardFileList = boardMapper.selectBoardFileForDelete(integerFileDeleteNum);
+		
+		System.out.println("보드파일딜리트 딜리트보드파일리스트 : " + deleteBoardFileList.toString());
+		
+		String boardFileStoredName = null;
+		for(int i=0; i<deleteBoardFileList.size(); i++) {
+			boardFileStoredName = (String) deleteBoardFileList.get(i).get("boardFileStoredName");
+			Files.delete(Paths.get(fileUploadPath).resolve(boardFileStoredName));
+		}
+		
+		boardMapper.boardFileDelete(integerFileDeleteNum);
+		
+	}
+
+	public void boardFileCheck(BoardDto bDto) {
+		boardMapper.boardFileCheck(bDto);
+		
+	}
 	
 	
 	

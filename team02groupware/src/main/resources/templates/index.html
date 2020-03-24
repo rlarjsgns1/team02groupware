@@ -4,12 +4,35 @@
       layout:decorate="~{layout/default}">
 
 <th:block layout:fragment="customTitle">
-	<title>index</title>
+	<title>그룹웨어 메인화면</title>
 </th:block>
 
 <th:block layout:fragment="customContents">
-	
-인덱스입니다.
+	<div class="page-header">
+       <div class="row align-items-end">
+           <div class="col-lg-8">
+               <div class="page-header-title">
+                   <i class="ik ik-credit-card bg-blue"></i>
+                   <div class="d-inline">
+                       <h5>그룹웨어</h5>
+                       <span>(주)TEAM02</span>
+                   </div>
+               </div>
+           </div>
+           <div class="col-lg-4">
+               <nav class="breadcrumb-container" aria-label="breadcrumb">
+                   <ol class="breadcrumb">
+                       <li class="breadcrumb-item">
+                           <a th:href="@{/index}"><i class="ik ik-home"></i></a>
+                       </li>
+                   </ol>
+               </nav>
+           </div>
+       </div>
+    </div>
+    <div class="card">
+		<h1 style="text-align: center;">배포일자 : 2020-03-17</h1>
+    </div> 	
 </th:block>
 
 <th:block layout:fragment="customJs">

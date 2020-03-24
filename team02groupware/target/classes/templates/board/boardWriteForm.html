@@ -28,6 +28,42 @@
 	            lang: 'ko-KR'// set focus to editable area after initializing summernote
 	    });
 	    
+	    // 게시글 등록
+	    $('#boardInsertBtn').click(function(){
+	    	var boardCategory = $('[name=boardCategory]')
+	    	var boardTitle = $('[name=boardTitle]')
+	    	var boardContentText = $('[name=boardContentText]')
+	    	
+	    	console.log(boardCategory);
+	    	console.log(boardTitle);
+	    	console.log(boardContentText);
+	    	
+	    	if(boardCategory.val() == '카테고리 선택'){
+	    		alert('카테고리를 선택해 주세요.');
+	    		boardCategory.focus();
+	    		
+	    	}else if(boardTitle.val() == ''){
+	    		alert('제목을 입력해 주세요.');
+	    		boardTitle.focus();
+	    		
+	    	}else if(boardContentText.val() == ''){
+	    		alert('내용을 입력해 주세요.');
+	    		boardContentText.focus();
+	    	}else{
+	    		$('#boardInsertForm').submit();
+	    	}
+
+	    	
+	    })
+	    
+	    // 게시글 등록 취소
+	    $('#cancleBtn').click(function(){
+	    	history.back()
+	    	
+	    	
+	    })
+	    
+	    
 	});
 
 </script>
@@ -38,8 +74,7 @@
 		
 	<!-- 게시판 페이지 헤더 Start -->
 	<div class="col-md-12">
-	
-	
+
 	<div class="page-header" >
        <div class="row align-items-end">
            <div class="col-lg-8">
@@ -66,11 +101,13 @@
           </div>
        	</div>
       </div>
-       <!-- 글쓰기 폼 Start -->
       
-         
+       <!-- 글쓰기 폼 Start -->
           <div style="margin: 25px 0 0 0">
-              <form action="/boardInsert" class="forms-sample" method="post">
+          
+              <form action="/boardInsert" id="boardInsertForm" class="forms-sample" method="post" enctype="multipart/form-data">
+              
+              		<!-- 카테고리 선택 -->
                   <div class="row">
                       <div class="col-md-3">
                           <div class="form-group">
@@ -87,26 +124,52 @@
                       </div>
                   </div>
                   
+                  <!-- 제목 입력 -->
                   <div class="row">
                       <div class="col-md-8">
                           <div class="form-group">
                               <label for="exampleInputPassword4">제목</label>
-                      <input name="boardTitle" type="text" class="form-control" placeholder="게시글 제목을 입력하세요">
+                      <input id="boardTitle" name="boardTitle" type="text" class="form-control" placeholder="게시글 제목을 입력하세요">
+                      
                           </div>
                       </div>
                   </div>
+                  
+                  <!-- 파일 첨부 -->
                   <div class="row">
-	                  <div class="form-group col-md-4" >
-	                      <label>파일 첨부</label>
-	                      <input type="file" name="img[]" class="file-upload-default">
-	                      <div class="input-group col-xs-4">
-	                          <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Image">
+                  
+	                  <div class="file-group-div form-group col-md-5" >
+	                      <label>파일 첨부 
+	                      <span style="color:#919191">ㅣ</span>최대 5MB<span style="color:#919191;">까지 파일을 올리실 수 있습니다.</span>
+	                      <span style="color:#919191">ㅣ</span>
+	                      </label>
+	                      
+	                      	<button type="button" class="file-add-btn btn btn-outline-dark btn-xs">파일 추가</button>
+							
+						  <!-- 파일 input 그룹 -->
+
+	                      <div class="file-input-group input-group col-xs-5">
+	                      
+	                      	  <input type="file" name="file" class="file-upload-default"/>
+	                          <input type="text" class="form-control file-upload-info" placeholder="선택된 파일이 없습니다." readonly="readonly">
+	                          
+	                          <a class="file-upload-cancle" href="#" style="padding:0;">
+	                          	<i class="ik ik-x-square" style="color: red;"></i>
+	                          </a>
+	                          
+	                          <div style="width:20px;"></div>
+	                          
 	                          <span class="input-group-append">
-	                          <button class="file-upload-browse btn btn-primary" type="button">첨부</button>
+	                          	<button class="file-upload-browse btn btn-primary" type="button">파일 선택</button>
 	                          </span>
+	                          
 	                      </div>
+	                        
 	                  </div>
+	                  
                   </div>
+                  
+                  <!-- 내용 입력 섬머노트 에디터 -->
                   <div class="row">
 	                  <div class="form-group col-md-12">
 	                      <label for="exampleTextarea1">내용</label>
@@ -114,14 +177,12 @@
 	                  </div>
                   </div>
                   
-                  <button class="btn btn-light float-md-right">취소</button>
-                  <button type="submit" class="btn btn-primary mr-2 float-md-right">확인</button>
               </form>
+                  <button id="cancleBtn" class="btn btn-light float-md-right">취소</button>
+                  <button id="boardInsertBtn" type="button" class="btn btn-primary mr-2 float-md-right">확인</button>
           </div>
-      
       <!-- 글쓰기폼 End -->
-      
-       
+ 
    </div>
    
    
@@ -144,6 +205,7 @@
 	<script
 		src="plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 	<script src="plugins/jvectormap/jquery-jvectormap.min.js"></script>
+	<script src="/js/form-components-file.js"></script>
 	
 	<script src="plugins/moment/moment.js"></script>
 	

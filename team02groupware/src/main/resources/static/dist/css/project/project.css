@@ -1,73 +1,261 @@
 @charset "UTF-8";
 /*
 작성자: 김연지
-적용페이지: project관련페이지
+적용페이지: project/projectList(프로젝트 추가 모달창, 수정 모달창 포함)
 */
 
-/*---------------------------------------------- 프로젝트 추가 modal start---------------------------------------------- */
-
-.project-add-btn button{
-	margin:0 auto;
-}
-/*---------------------------------------------- 프로젝트 수정 modal start---------------------------------------------- */
-.pr-update-modal{
-	font-size:16px;
-}
-
-
-/*---------------------------------------------- 프로젝트 추가 modal end---------------------------------------------- */
 /*---------------------------------------------- 프로젝트 리스트 start ---------------------------------------------- */
 
-
-.pr-btn-wrap{
-	width:100%;
-	height:50px;
+.pr-wrap-content{
+	margin:0 auto;
+	max-width:1300px;
+	transform:translateZ(0);
 	
 }
-.pr-add-btn{
-	float:left;
-	height:50px;
-	width:180px;
-	font-size:16px;
-	font-weight:400;
-	margin-bottom:20px;
+
+
+/* ------프로젝트 추가 버튼 start---- */
+.pr-btn-wrap{
+	height:40px;
+	width:100%;
+	margin-left:4px;
+}
+/* ------프로젝트 추가 버튼 end----- */
+
+/* ------프로젝트 리스트 카드 start---- */
+.project-card{
+	display:flex;
 }
 .project-card .mt-3, .my-3 {
-	margin-top: 3rem !important;
+	margin-top: 4rem !important;
 }
+.project-list-wrap{
+	margin:5px;
+}
+
+
+@media only screen and (min-width: 560px) {
+.pr-header { 
+	min-width:200px; max-width: 200px; }
+
+}
+
+
 .project-list {
-	min-width:200px;
-	margin-right:10px;
-	margin-top:10px;
-	cursor:pointer;
+	margin:0 auto;
+	height:200px;
+	border:0.5px solid #fff;
+	box-sizing:border-box;
+	
 }
-.card-body{
-	margin-bottom:10px;
+
+.project-list:hover { 
+	cursor:pointer;
+	transition:.1s;
+	border:0.5px solid #2dce89;
+	bottom:4px;
+	display:flex;
+	}
+.project-list:hover .pr-ikon{
+	transition-timing-function:ease-in-out;
+	transition:.8s;
+	display:block;
+}
+
+.pr-header{
+	width:90%;
+	float:left;
+}
+.state{
+	height:100px;
+	max-width:85%;
 }
 .pr-title {
 	width:100%;
 	float: left;
-	font-size:1.5em;
-	line-height: 1.2em;
+	font-size:1.2em;
+	line-height: 1.3em;
 }
 .card-subtitle{
-	line-height: 1.1em;
-}
-.project-list .card-subtitle{
-	font-size: 1.2em;
-}
-.pr-ikon {
-	position: absolute;
-	bottom:70px;
-	right: 23px;
+	line-height: 1.3em;
+	min-height:45px;
+	min-width:40px;
+	font-size:1.1em;
 }
 
+.pr-ikon {
+	display:none;
+	position: absolute;
+	bottom:70px;
+	right:12px;
+	top:10px;
+	font-size:inherit !important;
+	list-style:none;
+}
+.pr-status{
+	margin-bottom:10px;
+
+}
 .btn-icon{
 	line-height:0 !important;
 }
 .pr-setting-btn{
-	margin-right:7px;
+	margin-bottom:8px;
+}
+
+.pr-progress{
+	position:relative;
+	top:10px;
+}
+
+/*-------프로젝트 리스트 테이블 --------  */
+#displayOptions{
+	position:absolute;
+	top:0px;
+	right:0px;
+	
+	
+}
+
+.pr-table-list{
+	display:none;
+	padding:50px;
 }
 
 /*---------------------------------------------- 프로젝트 리스트 end ---------------------------------------------- */
+
+
+
+/*---------------------------------------------- 프로젝트 추가 modal start---------------------------------------------- */
+
+.pr-add-modal{
+	font-size:15px;
+}
+
+.form-group label{
+	font-weight:500;
+	font-size:14px;
+}
+.form-radio{
+	display:flex;
+}
+.access-picker{
+	min-height:60px;
+	border:1px solid #eaeaea;
+	border-radius:3px;
+	margin:0 5px;
+	width:100%;
+}
+
+.privacy-btn{
+	margin-left:0px;
+}
+.public-btn{
+	margin-right:0px;
+}
+.first-label{
+	height:100%;
+	cursor:pointer;
+}
+
+.radio-btn{
+	margin-top:5px;
+	position:absolute;
+	top:8px;
+	left:5px;
+	margin-left:10px;
+}
+
+.btn-text{
+	float:left;
+	margin-left:20px;
+	padding-top:15px;
+}
+.btn-value{
+	font-size:14px;
+	line-height: 18px;
+}
+
+.btn-desc{
+	font-size:12px;
+	line-height: 16px;
+	color:#6c757d;
+}
+.add-btn-wrap{
+	display:block;
+	flex-shrink:0;
+	float:left;
+}
+
+.member-add-btn {
+	display:flex;
+	width:25px;
+	height:25px;
+	cursor: pointer;
+	float:left;
+	margin-right:10px;
+}
+.select2-selection--multiple{
+	border:0 !important;
+	margin-bottom:5px;
+	
+}
+.select2-selection__choice{
+	margin-top: 0 !important;
+	margin: 5px 0;
+	
+}
+.select2-search{
+	width:100px;
+}
+.member-select-wrap{
+	over-flow-x: hidden;
+	over-flow-y: auto;
+	max-height:90px;
+	display:flex;
+
+}
+.pr-add-btn{	
+	float:left;
+	height:50px;
+	font-size:14px;
+	font-weight:400;
+	margin-left:5px;
+}
+
+
+/*---------------------------------------------- 프로젝트 수정 modal start---------------------------------------------- */
+
+@media only screen and (min-width: 560px) { .edit-layout-modal .modal-dialog { max-width: 40%; } }
+
+
+.pr-update-modal{
+	font-size:16px;
+	width:100%;
+	padding-top:0px !important;
+}
+.pr-update-modal>.form-sample{
+	width:100%;
+}
+.datetimepicker-input{
+	width:50%;
+}
+.member-update-btn{
+	cursor:pointer;
+}
+.update-member-select{
+	over-flow-y: auto;
+	max-height:90px;
+	display:flex;
+	flex-direction:row;
+}
+.select2-selection__rendered{
+	width:300px;
+}
+
+/*---------------------------------------------- 프로젝트 추가 modal end---------------------------------------------- */
+
+
+
+
 

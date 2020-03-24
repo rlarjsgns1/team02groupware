@@ -83,8 +83,7 @@
 		var searchBy = searchDto.searchBy
 		var searchDate = searchDto.searchDate
 		var searchInput = searchDto.searchInput
-		
-		
+
 		console.log(selectPage);
 		console.log(viewNum);
 		console.log(boardCategory);
@@ -189,7 +188,8 @@
        </div>
    </div>
    <!-- 게시판 페이지 헤더 End -->
-
+	
+	
 	<div class="row">
 		<div class="col-md-12">
 			<!------ viewNum 드롭다운 Start ------>
@@ -260,59 +260,143 @@
 				
 				<!-- 등록된 게시글이 있을 경우 -->
 				<th:block th:if="${boardList.size() != 0}">
-					<!-- 공지사항 Start -->
+				
+					<!-- 검색상태가 아닐 경우 -->
 					<th:block th:if="${searchDto.isSearchCheck != 'true'}">
-						<th:block th:each="b:${boardNoticeList}">
-						<tr>
-							<td style="color:#ff4e59"><i class="ik ik-volume-1"></i></td>
-							<th class="noticeCategory">[[${b.boardCategory}]]</th>
-							
-						<!-- 댓글이 있는 경우 -->	
-						<th:block th:if="${b.boardCommentCount !=0 }">
-							<!-- 게시글 작성 시간이 24시간 이내일 경우 -->
-							<th:block th:if="${b.boardTimeCheck < 1440 }">
-								<th class="noticeTitle" ><a class="noticeTitle" href="#">[[${b.boardTitle}]] 
-								<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>
-										<i class="xi-new" style="color: red;"></i></a></th>
-							</th:block>
-							<!-- 게시글 작성 시간이 24시간 지났을 경우 -->
-							<th:block th:unless="${b.boardTimeCheck < 1440 }">
-								<th class="noticeTitle"><a class="noticeTitle" href="#">[[${b.boardTitle}]] 
-								<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>
-										</a></th>
-							</th:block>
-						</th:block>
 						
-						<!-- 댓글이 없는 경우 -->
-						<th:block th:if="${b.boardCommentCount == 0}">
-							<!-- 게시글 작성 시간이 24시간 이내일 경우 -->
-							<th:block th:if="${b.boardTimeCheck < 1440 }">
-								<th class="noticeTitle"><a class="noticeTitle" href="#"> [[${b.boardTitle}]]<i class="xi-new"
-									style="color: red;"></i></a></th>
+						<!-- 공지사항 리스트 Start -->
+						<th:block th:each="b:${boardNoticeList}">
+						
+							<tr>
+							
+								<td style="color:#ff4e59"><i class="ik ik-volume-1"></i></td>
+								<th class="noticeCategory">[[${b.boardCategory}]]</th>
+								
+							<!-- 댓글이 있는 경우 -->	
+							<th:block th:if="${b.boardCommentCount !=0 }">
+							
+								<!-- 게시글 작성 시간이 24시간 이내일 경우 -->
+								<th:block th:if="${b.boardTimeCheck < 1440 }">
+								
+									<th class="noticeTitle" >	<!-- 공지사항 th태그 -->
+										<a class="noticeTitle" 
+											th:href="@{/boardDetailView(
+											
+													boardNum=${b.boardNum}
+													,selectPage=${pagingDto.selectPage}
+													,viewNum=${pagingDto.viewNum}
+													,boardCategory=${searchDto.boardCategory})}">	<!-- a태그 detailView로 전달할 파라미터값 설정 -->
+													
+										[[${b.boardTitle}]]		<!-- 공지 제목 -->
+									
+										<th:block th:if="${b.boardFileCheck == 'Y'}"> <!-- 파일 유무 체크 -->
+											<i class="ik ik-save"></i>
+										</th:block>
+										 
+										<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>	<!-- 댓글 수 -->
+										<i class="xi-new" style="color: red;"></i></a>	<!-- 새 글 표시 -->
+									</th>
+									
+								</th:block>
+								
+								<!-- 게시글 작성 시간이 24시간 지났을 경우 -->
+								<th:block th:unless="${b.boardTimeCheck < 1440 }">
+								
+									<th class="noticeTitle">	<!-- 공지사항 th태그-->
+									
+										<a class="noticeTitle" 
+											th:href="@{/boardDetailView(
+											
+													boardNum=${b.boardNum}
+													,selectPage=${pagingDto.selectPage}
+													,viewNum=${pagingDto.viewNum}
+													,boardCategory=${searchDto.boardCategory})}">	<!-- a태그 detailView로 전달할 파라미터값 설정 -->
+													
+											[[${b.boardTitle}]]		<!-- 공지사항 제목 -->
+											
+											<th:block th:if="${b.boardFileCheck == 'Y'}">	<!-- 파일 유무 체크 -->
+												<i class="ik ik-file-text"></i>
+											</th:block>  
+											
+											<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>	<!-- 댓글 수 -->
+										</a>
+										
+									</th>
+									
+								</th:block>
 								
 							</th:block>
-							<!-- 게시글 작성 시간이 24시간 지났을 경우 -->
-							<th:block th:unless="${b.boardTimeCheck < 1440 }">
-								<th class="noticeTitle"><a class="noticeTitle" href="#"> [[${b.boardTitle}]]</a></th>
+							
+							<!-- 댓글이 없는 경우 -->
+							<th:block th:if="${b.boardCommentCount == 0}">
+							
+								<!-- 게시글 작성 시간이 24시간 이내일 경우 -->
+								<th:block th:if="${b.boardTimeCheck < 1440 }">
+								
+									<th class="noticeTitle">	<!-- 공지사항 th태그 -->
+										<a class="noticeTitle" 
+											th:href="@{/boardDetailView(
+											
+													boardNum=${b.boardNum}
+													,selectPage=${pagingDto.selectPage}
+													,viewNum=${pagingDto.viewNum}
+													,boardCategory=${searchDto.boardCategory})}">	<!-- a태그 detailView로 전달할 파라미터값 설정 -->
+													
+											[[${b.boardTitle}]]		<!-- 공지사항 제목 -->
+										
+											<th:block th:if="${b.boardFileCheck == 'Y'}">	<!-- 파일 유무 체크 -->
+												<i class="ik ik-save"></i>
+											</th:block> 
+											
+											<i class="xi-new"style="color: red;"></i>	<!-- 신규 글 -->
+										 </a>
+									</th>
+									
+								</th:block>
+								
+								<!-- 게시글 작성 시간이 24시간 지났을 경우 -->
+								<th:block th:unless="${b.boardTimeCheck < 1440 }">
+								
+									<th class="noticeTitle">	<!-- 공지사항 th태그 -->
+									
+										<a class="noticeTitle" 
+											th:href="@{/boardDetailView(
+											
+													boardNum=${b.boardNum}
+													,selectPage=${pagingDto.selectPage}
+													,viewNum=${pagingDto.viewNum}
+													,boardCategory=${searchDto.boardCategory})}">	<!-- a태그 detailView로 전달할 파라미터값 설정 -->
+													
+											 [[${b.boardTitle}]]	<!-- 공지사항 제목 -->
+											 
+										 </a>
+									</th>
+									
+									<th:block th:if="${b.boardFileCheck == 'Y'}">	<!-- 파일 유무 체크 -->
+										<i class="ik ik-save"></i>	
+									</th:block> 
+									
+								</th:block>
+								
 							</th:block>
-						</th:block>
-
-						<td th:text="${b.boardWriter}"></td>
-						
-						<!-- 작성일 표시 당일일 경우 시 분 표시 -->
-						<th:block
-							th:if="${#dates.format(#dates.createNow(), 'yyyy-MM-dd') == #strings.substring(b.boardWriteDate,0,10)}">
-							<td th:text="${#strings.substring(b.boardWriteDate,11,16)}"></td>
-						</th:block>
-						
-						<!-- 작성일 표시 당일 아닐 경우 연월일 표시 -->
-						<th:block
-							th:unless="${#dates.format(#dates.createNow(), 'yyyy-MM-dd') == #strings.substring(b.boardWriteDate,0,10)}">
-							<td th:text="${#strings.substring(b.boardWriteDate,0,10)}"></td>
-						</th:block>
-						<td th:text="${b.boardViewCount}"></td>
-
-						</tr>
+	
+								<td th:text="${b.boardWriter}"></td>	<!-- 작성자 -->
+								
+								<!-- 작성일 표시 당일일 경우 시 분 표시 -->
+								<th:block
+									th:if="${#dates.format(#dates.createNow(), 'yyyy-MM-dd') == #strings.substring(b.boardWriteDate,0,10)}">
+									<td th:text="${#strings.substring(b.boardWriteDate,11,16)}"></td>
+								</th:block>
+								
+								<!-- 작성일 표시 당일 아닐 경우 연월일 표시 -->
+								<th:block
+									th:unless="${#dates.format(#dates.createNow(), 'yyyy-MM-dd') == #strings.substring(b.boardWriteDate,0,10)}">
+									<td th:text="${#strings.substring(b.boardWriteDate,0,10)}"></td>
+								</th:block>
+								
+								<td th:text="${b.boardViewCount}"></td>	<!-- 조회수 -->
+	
+							</tr>
 						</th:block>
 					</th:block>
 					<!-- 공지사항 End -->
@@ -323,62 +407,251 @@
 							<td th:text="${b.boardNum}"></td>
 							<td th:text="${b.boardCategory}"></td>
 							
-						<!-- 댓글이 있는 경우 -->	
+						<!-- 댓글이 있는 경우 -->
 						<th:block th:if="${b.boardCommentCount !=0 }">
+						
 							<!-- 게시글 작성 시간이 24시간 이내일 경우 -->
 							<th:block th:if="${b.boardTimeCheck < 1440 }">
+							
+								<!-- 검색 시 -->
 								<th:block th:if="${searchDto.isSearchCheck == 'true'}">
+
+									<td>
 									
-									<td><a href="#"><th:block th:utext="${b.boardSearchWord}"></th:block>
-									<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>
-											<i class="xi-new" style="color: red;"></i></a></td>
+										<a th:href="@{/boardDetailView(
+										
+													boardNum=${b.boardNum}
+													,selectPage=${pagingDto.selectPage}
+													,viewNum=${pagingDto.viewNum}
+													,boardCategory=${searchDto.boardCategory}
+													,isSearchCheck=${searchDto.isSearchCheck}
+													,searchBy=${searchDto.searchBy}
+													,searchDate=${searchDto.searchDate}
+													,searchInput=${searchDto.searchInput})}">	<!-- a태그 detailView 파라미터값 설정 -->
+													
+											<th:block th:utext="${b.boardSearchWord}"></th:block>	<!-- 검색 단어 색으로 강조 표시 -->
+											
+											<th:block th:if="${b.boardFileCheck == 'Y'}">	<!-- 파일 유무 표시 -->
+												<i class="ik ik-save"></i>
+											</th:block> 
+											
+											<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>	<!-- 댓글 수 -->
+											
+											<i class="xi-new" style="color: red;"></i>	<!-- 신규 표시 -->
+										</a>
+										
+									</td>
+									
 								</th:block>
+								
+								<!-- 검색 아닐 시 -->
 								<th:block th:if="${searchDto.isSearchCheck != 'true'}">
-									<td><a href="#">[[${b.boardTitle}]] 
-									<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>
-											<i class="xi-new" style="color: red;"></i></a></td>
+								
+									<td>
+									
+										<a th:href="@{/boardDetailView(
+										
+													boardNum=${b.boardNum}
+													,selectPage=${pagingDto.selectPage}
+													,viewNum=${pagingDto.viewNum}
+													,boardCategory=${searchDto.boardCategory})}">	<!-- a태그 detailView 파라미터값 설정 -->
+											
+											[[${b.boardTitle}]]	<!-- 글 제목 -->
+											
+											<th:block th:if="${b.boardFileCheck == 'Y'}">	<!-- 파일 유무 체크 -->
+												<i class="ik ik-save"></i>
+											</th:block>  
+											
+											<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>		<!-- 댓글 수  -->
+											
+											<i class="xi-new" style="color: red;"></i>	<!-- 신규 표시 -->
+											
+										</a>
+										
+									</td>
+									
 								</th:block>
+								
 							</th:block>
+							
 							<!-- 게시글 작성 시간이 24시간 지났을 경우 -->
 							<th:block th:unless="${b.boardTimeCheck < 1440 }">
+							
+								<!-- 검색 시-->
 								<th:block th:if="${searchDto.isSearchCheck == 'true'}">
-									<td><a href="#"><th:block th:utext="${b.boardSearchWord}"></th:block>
-									<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>
-											</a></td>
+								
+									<td>
+									
+										<a th:href="@{/boardDetailView(
+										
+											boardNum=${b.boardNum}
+											,selectPage=${pagingDto.selectPage}
+											,viewNum=${pagingDto.viewNum}
+											,boardCategory=${searchDto.boardCategory}
+											,isSearchCheck=${searchDto.isSearchCheck}
+											,searchBy=${searchDto.searchBy}
+											,searchDate=${searchDto.searchDate}
+											,searchInput=${searchDto.searchInput})}">	<!-- a태그 detailView 파라미터값 설정 -->
+											
+											<th:block th:utext="${b.boardSearchWord}"></th:block>	<!-- 검색 단어 색으로 강조 표시 -->
+											
+											<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>	<!-- 댓글수 -->
+										
+										</a>
+										
+									</td>
 								</th:block>
+								
+								<!-- 검색 아닐 시 -->
 								<th:block th:if="${searchDto.isSearchCheck != 'true'}">
-									<td><a href="#">[[${b.boardTitle}]] 
-									<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>
-											</a></td>
+								
+									<td>
+									
+										<a th:href="@{/boardDetailView(
+										
+													boardNum=${b.boardNum}
+													,selectPage=${pagingDto.selectPage}
+													,viewNum=${pagingDto.viewNum}
+													,boardCategory=${searchDto.boardCategory})}">	<!-- a태그 detailView 파라미터값 설정 -->
+													
+											[[${b.boardTitle}]]		<!-- 글 제목 -->
+											
+											<th:block th:if="${b.boardFileCheck == 'Y'}">	<!-- 파일 유무 체크 -->
+												<i class="ik ik-save"></i>
+											</th:block>  
+											
+											<span th:text="[+${b.boardCommentCount}+]" class="commentCount"></span>	<!-- 댓글 수 -->
+											
+										</a>
+										
+									</td>
+									
 								</th:block>
+								
 							</th:block>
+							
 						</th:block>
 						
 						<!-- 댓글이 없는 경우 -->
 						<th:block th:if="${b.boardCommentCount == 0}">
+						
 							<!-- 게시글 작성 시간이 24시간 이내일 경우 -->
 							<th:block th:if="${b.boardTimeCheck < 1440 }">
+								
+								<!-- 검색 시 -->
 								<th:block th:if="${searchDto.isSearchCheck == 'true'}">
-									<td><a href="#"><th:block th:utext="${b.boardSearchWord}"></th:block>
-									<i class="xi-new" style="color: red;"></i></a></td>
+								
+									<td>
+										
+										<a th:href="@{/boardDetailView(
+										
+													boardNum=${b.boardNum}
+													,selectPage=${pagingDto.selectPage}
+													,viewNum=${pagingDto.viewNum}
+													,boardCategory=${searchDto.boardCategory}
+													,isSearchCheck=${searchDto.isSearchCheck}
+													,searchBy=${searchDto.searchBy}
+													,searchDate=${searchDto.searchDate}
+													,searchInput=${searchDto.searchInput})}">	<!-- a태그 detailView 파라미터값 설정 -->
+													
+											<th:block th:utext="${b.boardSearchWord}"></th:block>	<!-- 검색 단어 색으로 강조 표시 -->
+											
+											<th:block th:if="${b.boardFileCheck == 'Y'}">	<!-- 파일 유무 체크 -->
+												<i class="ik ik-save"></i>
+											</th:block> 
+											
+											<i class="xi-new" style="color: red;"></i>		<!-- 신규 표시 -->
+											
+										</a>
+										
+									</td>
+									
 								</th:block>
+								
+								<!-- 검색 아닐 시 -->
 								<th:block th:if="${searchDto.isSearchCheck != 'true'}">
-									<td><a href="#"> [[${b.boardTitle}]]<i class="xi-new"
-										style="color: red;"></i></a></td>
+								
+									<td>
+										<a th:href="@{/boardDetailView(
+										
+													boardNum=${b.boardNum}
+													,selectPage=${pagingDto.selectPage}
+													,viewNum=${pagingDto.viewNum}
+													,boardCategory=${searchDto.boardCategory})}"> 	<!-- a태그 detailView 파라미터값 설정 -->
+													
+											[[${b.boardTitle}]]		<!-- 글 제목 -->
+											
+											<th:block th:if="${b.boardFileCheck == 'Y'}">	<!-- 파일 유무 체크 -->
+												<i class="ik ik-save"></i>
+											</th:block> 
+											
+											<i class="xi-new" style="color: red;"></i>	<!-- 신규 표시 -->
+											
+										</a>
+										
+									</td>
+									
 								</th:block>
+								
 							</th:block>
+							
 							<!-- 게시글 작성 시간이 24시간 지났을 경우 -->
 							<th:block th:unless="${b.boardTimeCheck < 1440 }">
+							
+								<!-- 검색 시 -->
 								<th:block th:if="${searchDto.isSearchCheck == 'true'}">
-									<td><a href="#"><th:block th:utext="${b.boardSearchWord}"></th:block></a></td>
+								
+									<td>
+										<a th:href="@{/boardDetailView(
+										
+													boardNum=${b.boardNum}
+													,selectPage=${pagingDto.selectPage}
+													,viewNum=${pagingDto.viewNum}
+													,boardCategory=${searchDto.boardCategory}
+													,isSearchCheck=${searchDto.isSearchCheck}
+													,searchBy=${searchDto.searchBy}
+													,searchDate=${searchDto.searchDate}
+													,searchInput=${searchDto.searchInput})}">	<!-- a태그 detailView 파라미터값 설정 -->
+													
+											<th:block th:utext="${b.boardSearchWord}"></th:block>	<!-- 검색 단어 색으로 강조표시 -->
+											
+											<th:block th:if="${b.boardFileCheck == 'Y'}">	<!-- 파일 유무 체크 -->
+													<i class="ik ik-save"></i>
+											</th:block> 
+										
+										</a>
+										
+									</td>
 								</th:block>
+								
+								<!-- 검색 아닐 시 -->
 								<th:block th:if="${searchDto.isSearchCheck != 'true'}">
-									<td><a href="#"> [[${b.boardTitle}]]</a></td>
+								
+									<td>
+										<a th:href="@{/boardDetailView(
+										
+													boardNum=${b.boardNum}
+													,selectPage=${pagingDto.selectPage}
+													,viewNum=${pagingDto.viewNum}
+													,boardCategory=${searchDto.boardCategory})}">	<!-- a태그 detailView 파라미터값 설정 --> 
+													
+											[[${b.boardTitle}]]		<!-- 글 제목 -->
+											
+										</a>
+									
+										<th:block th:if="${b.boardFileCheck == 'Y'}">	<!-- 파일 유무 체크 -->
+											<i class="ik ik-save"></i>
+										</th:block>
+										
+									</td>
+									
 								</th:block>
+								
 							</th:block>
+							
 						</th:block>
 
-						<td th:text="${b.boardWriter}"></td>
+						<td th:text="${b.boardWriter}"></td>		<!-- 작성자 -->
 						
 						<!-- 작성일 표시 당일일 경우 시 분 표시 -->
 						<th:block
@@ -391,10 +664,13 @@
 							th:unless="${#dates.format(#dates.createNow(), 'yyyy-MM-dd') == #strings.substring(b.boardWriteDate,0,10)}">
 							<td th:text="${#strings.substring(b.boardWriteDate,0,10)}"></td>
 						</th:block>
-						<td th:text="${b.boardViewCount}"></td>
+						
+						<td th:text="${b.boardViewCount}"></td>		<!-- 조회수 -->
 
 					</tr>
+					
 					</th:block>
+					
 				</th:block>
 				
 			</table>
@@ -507,7 +783,7 @@
 		                       <button id="searchBtn" class="btn btn-primary" type="button">검색</button>
 		                   </div>
 		               	</div>
-				</form>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -515,6 +791,7 @@
 	</div>
 </div>
 </div>
+
 
 
 	
