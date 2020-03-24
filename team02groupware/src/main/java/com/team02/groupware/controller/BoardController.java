@@ -233,7 +233,7 @@ public class BoardController {
 	
 	// 게시글 삭제
 	@GetMapping("/boardDelete")
-	public String boardDelete(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto, RedirectAttributes redirectA) {
+	public String boardDelete(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto, RedirectAttributes redirectA) throws IOException {
 		
 		System.out.println("boardDelete bDto :  " + bDto);
 		System.out.println("boardDelete pDto :  " + pDto);

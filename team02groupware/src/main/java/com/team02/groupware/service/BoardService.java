@@ -342,11 +342,21 @@ public class BoardService {
 		
 	}
 	// 게시글 Delete
-	public void deleteBoard(BoardDto bDto) {
+	public void deleteBoard(BoardDto bDto) throws IOException {
+		
+		List<Map<String, Object>> boardMapList = new ArrayList<Map<String,Object>>();
+		
+		boardMapList = boardMapper.selectBoardAttachFile(bDto);
+		if(boardMapList.size() > 0) {
+			
+			for(int i = 0; i < boardMapList.size(); i++) {
+				
+				boardFileDelete((int) boardMapList.get(i).get("boardFileNum"));
+			}
+		}
 		
 		boardMapper.deleteBoard(bDto);
-		
-		
+
 	}
 	// 댓글 Insert
 	public Map<String, Object> commentInsert(BoardDto bDto, CommentDto cDto){

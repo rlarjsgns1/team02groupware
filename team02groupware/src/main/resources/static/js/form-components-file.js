@@ -19,9 +19,27 @@
     	  console.log(files[0]);
     	var fileSize = files[0].size;
     	var maxSize = 5 * 1024 * 1024;	// 5MB
+    	var addFileSize = 0;
+    	
+    	$(this).siblings('.fileSizeCheck').val('');
+    	
+    	$('.fileSizeCheck').each(function (index, item){
+    		
+    		console.log('횟수체크')
+    		
+    		addFileSize += Number($(this).val());
+    	});
+    	
+    	console.log('파일사이즈 합계 : ', addFileSize)
+    	console.log('현재 파일 사이즈 : ', fileSize)
+    	
+    	addFileSize += fileSize;
+    	console.log('두개 합한거 : ', addFileSize)
+
+    	$(this).siblings('.fileSizeCheck').val(fileSize);
     	
     	// 파일 사이즈 유효성검사
-    	if(fileSize > maxSize){
+    	if(addFileSize > maxSize){
     		file.val("");
     		console.log(file.val());
     		alert('첨부파일의 용량은 5MB 이내로 등록 가능합니다.')
@@ -36,6 +54,7 @@
         		fileSize = Math.floor((fileSize / 1048576)*100)/100+"MB";
         	}
         	
+          
           $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, '')+" "+fileSize);
     	}
     });

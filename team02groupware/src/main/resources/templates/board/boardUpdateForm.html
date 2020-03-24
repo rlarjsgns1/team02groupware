@@ -207,7 +207,7 @@
 	                      				
 	                      				<input type="text" class="form-control file-upload-info" placeholder="선택된 파일이 없습니다." readonly="readonly">
 	                      				
-	                      				<a class="file-update-cancle" href="#" style="padding:0;">		
+	                      				<a class="file-upload-cancle" href="#" style="padding:0;">		
 	                          				<i class="ik ik-x-square" style="color: red;"></i>
 		                          		</a>
 		                          		
@@ -216,6 +216,8 @@
 		                          		<span class="input-group-append">
 		                          			<button class="file-upload-browse btn btn-primary" type="button">파일 선택</button>
 		                          		</span>
+		                          		
+		                          		<input type="hidden" class="fileSizeCheck">
 		                          		
 	                      			</div>
 	                      			
@@ -237,6 +239,8 @@
 		                          		</a>
 		                          		
 		                          		<input type="hidden" name="boardFileNum" th:value="${f.boardFileNum}">
+		                          		
+		                          		<input type="hidden" class="fileSizeCheck" th:value="${f.boardFileSize}">
 		                          		
 		                          	
 		                          		<div style="width:20px;"></div>			
