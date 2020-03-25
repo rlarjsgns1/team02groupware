@@ -108,17 +108,17 @@
 			</div>
 			<!--------------------------프로젝트 리스트 start --------------------------->
 			<div class="project-card card-group mb-4">
-				<div class="project-list-wrap" th:each="l : ${projectList}">
+				<div class="project-list-wrap" th:each="pl : ${projectList}">
 					<div class="project-list card">
 						<div class="card-body">
 							<div class="pr-header justify-content-between align-items-center">
 							
 								<div class="state">
-									<input type="hidden" class="project-code-input" th:value="${l.projectCode}">
+									<input type="hidden" class="project-code-input" th:value="${pl.projectCode}">
 									<h3 class="pr-title text-success"
-										th:text="${#strings.abbreviate(l.projectTitle,30)}"></h3>
+										th:text="${#strings.abbreviate(pl.projectTitle,30)}"></h3>
 									<p class="card-subtitle text-muted fw-500"
-										th:text="${#strings.abbreviate(l.projectDesc,28)}"></p>
+										th:text="${#strings.abbreviate(pl.projectDesc,28)}"></p>
 								</div>
 								
 								<div class="pr-ikon icon">

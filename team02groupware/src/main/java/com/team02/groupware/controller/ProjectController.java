@@ -47,18 +47,12 @@ public class ProjectController {
 	//업무리스트 조회 메서드
 	@GetMapping("/taskList")
 	public String taskList(Model model, @RequestParam(value="projectCode") String projectCode) {
-	
 		System.out.println("binding test: " + projectCode);
 		List<Project> taskList = new ArrayList<Project>();
 		taskList = projectService.selectTasklist(projectCode);
 		
 		
 		System.out.println("프로젝트 확인: "+taskList.toString());
-		/*
-		 * Project tasklist = projectService.selectTasklist();
-		 * model.addAttribute("tasklist",tasklist);
-		 * System.out.println(projectService.getTasklist().toString());
-		 */
 		model.addAttribute("taskList", taskList);
 		
 		

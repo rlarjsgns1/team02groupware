@@ -48,24 +48,20 @@
 	
 	<!-- 업무리스트 조회 -->
 	<select id="selectTasklist" parameterType="String" resultMap="projectResultMap">
-		SELECT 
-			*
-		FROM
-			(SELECT
-			PL.project_title,
-			PL.project_code,
-			TL.tasklist_name,
-			TL.tasklist_code		
-				FROM
-				project_task_list AS TL
-				INNER JOIN
-				project_list AS PL
-			WHERE
-				TL.project_code=PL.project_code
-			)AS T
-		WHERE
-			T.project_code=#{projectCode}
 		
+		SELECT
+			PL.project_title
+			,PL.project_code
+			,TL.tasklist_name
+			,TL.tasklist_code		
+		FROM
+			project_task_list AS TL
+			INNER JOIN
+			project_list AS PL
+		WHERE
+			TL.project_code=PL.project_code
+			AND 
+			PL.project_code=#{projectCode};
 	</select>
 
 	<!-- 프로젝트 추가  -->

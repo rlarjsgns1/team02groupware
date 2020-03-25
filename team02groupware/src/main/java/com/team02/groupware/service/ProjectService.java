@@ -18,11 +18,12 @@ public class ProjectService {
 	@Autowired
 	private ProjectMapper projectMapper;
 
-	
+	//업무리스트 추가
 	public int tasklistInsert(Project project) {
 		return projectMapper.tasklistInsert(project);
 	}
 	
+	//업무리스트조회
 	public List<Project> selectTasklist(String projectCode){
 		
 		List<Project> projectList = new ArrayList<Project>();
@@ -31,12 +32,12 @@ public class ProjectService {
 		return projectList;
 		
 	}
-	
+	//프로젝트 추가
 	public int projectInsert(Project project) {
 		return projectMapper.projectInsert(project);
 	}
 	
-	
+	//프로젝트 리스트 조회
 	public Map<String, Object> getProjectlist(int currentPage) {
 		// 몇개의 행을 보여줄지
 		final int ROW_PER_PAGE = 10;
