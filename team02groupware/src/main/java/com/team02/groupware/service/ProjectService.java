@@ -1,5 +1,6 @@
 package com.team02.groupware.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,13 +19,16 @@ public class ProjectService {
 	private ProjectMapper projectMapper;
 
 	
-	public int taskInsert(Project project) {
-		return projectMapper.taskInsert(project);
+	public int tasklistInsert(Project project) {
+		return projectMapper.tasklistInsert(project);
 	}
 	
-	public List<Project> getTasklist(){
-		List<Project> tasklist = projectMapper.getTasklist();
-		return tasklist;
+	public List<Project> selectTasklist(String projectCode){
+		
+		List<Project> projectList = new ArrayList<Project>();
+		projectList = projectMapper.selectTasklist(projectCode);
+		
+		return projectList;
 		
 	}
 	

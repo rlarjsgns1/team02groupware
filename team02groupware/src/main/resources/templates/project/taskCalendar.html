@@ -15,12 +15,8 @@
 	<title>업무캘린더</title>
 </th:block>
 <th:block layout:fragment="customScript">
-
-
-
 </th:block>
 <th:block layout:fragment="customContents">
-	<div class="container-fluid">
 		<div class="page-header">
 			<div class="row align-items-end">
 				<div class="col-lg-8">
@@ -35,10 +31,8 @@
 				<div class="col-lg-4">
 					<nav class="breadcrumb-container" aria-label="breadcrumb">
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="../index.html"><i
-									class="ik ik-home"></i></a></li>
-							<li class="breadcrumb-item"><a href="#">Apps</a></li>
-							<li class="breadcrumb-item active" aria-current="page">Calendar</li>
+							<li class="breadcrumb-item"><a href="/index"><i class="ik ik-home"></i></a></li>
+							<li class="breadcrumb-item active" aria-current="page">업무캘린더</li>
 						</ol>
 					</nav>
 				</div>
@@ -81,9 +75,9 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">Close</button>
-							<button class="btn btn-danger delete-event" type="submit">Delete</button>
-							<button class="btn btn-success save-event" type="submit">Save</button>
+								data-dismiss="modal">확인</button>
+							<button class="btn btn-danger delete-event" type="submit">삭제</button>
+							<button class="btn btn-success save-event" type="submit">저장</button>
 						</div>
 					</div>
 				</form>
@@ -173,7 +167,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 	<aside class="right-sidebar">
 		<div class="sidebar-chat" data-plugin="chat-sidebar">
 			<div class="sidebar-chat-info">

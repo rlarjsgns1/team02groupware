@@ -1,7 +1,7 @@
 package com.team02.groupware.controller;
 
 
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,46 +32,52 @@ public class ProjectController {
 	@Autowired
 	private ProjectService projectService;
 
-	/*
-	 * @PostMapping("/projectUpdate") public String projectUpdate(Project project) {
-	 * System.out.println(project.toString()); }
-	 */
+	//내 업무 조회 메서드
+	@GetMapping("/myTasks")
+	public String myTasks() {
+		return "project/myTasks";
+	}
 	
+	//캘린더 조회 메서드
 	@GetMapping("/taskCalendar")
 	public String taskCalendar() {
 		return "project/taskCalendar";
 	}
 	
+	//업무리스트 조회 메서드
 	@GetMapping("/taskList")
-	public String taskList(Model model) {
+	public String taskList(Model model, @RequestParam(value="projectCode") String projectCode) {
+	
+		System.out.println("binding test: " + projectCode);
+		List<Project> taskList = new ArrayList<Project>();
+		taskList = projectService.selectTasklist(projectCode);
+		
+		
+		System.out.println("프로젝트 확인: "+taskList.toString());
 		/*
-		 * List<Project> tasklist = projectService.getTasklist();
+		 * Project tasklist = projectService.selectTasklist();
 		 * model.addAttribute("tasklist",tasklist);
 		 * System.out.println(projectService.getTasklist().toString());
 		 */
+		model.addAttribute("taskList", taskList);
+		
+		
 		return "project/taskList";
 	}
 	
+	//프로젝트 추가 메서드
 	@PostMapping("/projectInsert")
 	public String projectInsert(Project project) {
 		System.out.println(project.toString());
 		int result = projectService.projectInsert(project);
 		System.out.println(result);
 		if(result > 0 ) {
-			return "redirect:/projectList";
+			return "redirect:/taskList";
 		}
 		return "redirect:/projectInsert";
 	}
 	
-	
-	@GetMapping("/projectInsert")
-	public String projectInsert() {
-		System.out.println(" ------GetMapping  /projectInsert");
-		return "/projectInsert";
-	}
-	
-	
-	
+	//프로젝트  리스트 조회 메서드
 	@GetMapping("/projectList")
 	public String getProjectList(@RequestParam(value="currentPage", required=false, defaultValue="1") int currentPage
 			,Model model) {

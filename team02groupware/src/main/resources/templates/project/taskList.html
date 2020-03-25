@@ -16,89 +16,85 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
-			$("#task-add-btn").click(function() {
-				//console.log('새업무만들기 클릭');
-				var taskClone = $(this).siblings('ol').find("li:last").clone();
-				var taskTitle = $('input[name="taskTitle"]:last');
-				//console.log(taskTitle.val());
-				if (taskTitle.val() == null || taskTitle.val() == ' ') {
-					return false;
-				}
-				taskClone.appendTo(".dd-list");
+			//업무 추가 버튼 클릭시 복제 이벤트
+			$(document).on('click','.task-add-btn',function() {
+				console.log('새 업무만들기 클릭');
+				//업무 li 태그 복제
+				var taskClone = $(this).siblings('.dd-list').find("li:last").clone();
+				//업무제목 선택
+				var taskTitle = $(this).siblings('.form-group').find('input[name="taskTitle"]:last');
+				
+				var nearDdlist = $(this).siblings('.dd-list');
+				console.log(taskTitle.val());
+				
+				if (taskTitle.val() != null && taskTitle.val() != '') {
+				taskClone.appendTo(nearDdlist);
 				taskClone.css("display", "block");
 				taskClone.find(".tasktitleClone").text(taskTitle.val());
-				taskTitle.val(null);
+				taskTitle.val('');
+				}
 			})
 
-			$("#task-cancel-btn").click(function() {
+			//새 업무 추가 input 취소 버튼 클릭시 value 공백
+			$(".task-cancel-btn").click(function() {
 				var taskTitle = $('input[name="taskTitle"]:last');
-				taskTitle.val(null);
+				taskTitle.val('');
 			})
 
 			//업무리스트추가 버튼 클릭이벤트
-			$("#tasklist-add-btn").click(function() {
+			$(document).on('keydown','.tasklistName',function(key) {
+				if(key.keyCode==13){
 						var tasklistClone = $(".tasklist-clone:first").clone(true);
 						var tasklistInput = $('input[name="tasklistName"]');
 
-						if (tasklistInput.val() != null
-								&& tasklistInput.val() != '') {
+						if (tasklistInput.val() != null && tasklistInput.val() != '') {
 							tasklistClone.appendTo(".task-row");
 							tasklistClone.css("display", "block");
 							tasklistClone.find(".tasklistnameClone").text(tasklistInput.val());
-							tasklistInput.val(null);
+							tasklistInput.val('');
+					
 						}
-
-						/* 
-						
-						//업무리스트 ajax 로 Insert
-						var menuId = $("ul.nav").first().attr("id");	
-						var request = $.ajax({
-							url : "/tasklistInsert",
-							method : "POST",
-							data : {
-								id : menuId
-
-							},
-							dataType : "json"
-						});
-
-						request.done(function(msg) {
-							$("#log").html(msg);
-						});
-
-						request.fail(function(jqXHR, textStatus) {
-							alert("Request failed: " + textStatus);
-						});
-						 */
+					$('.scroller-layout').animate({
+						scrollLeft: $('.tasklistName').offset().left},1);
+					
+				}
 					})
+			//업무리스트이름 취소버튼 클릭시 input value 공백 처리		
+			$("#tasklist-cancel-btn").click(function() {
+				var tasklistName = $('input[name="tasklistName"]:last');
+				tasklistName.val('');
+			})
 		});
 	</script>
 </th:block>
 
 <th:block layout:fragment="customContents">
-	<div class="container-fluid">
 		<div class="page-header">
 			<div class="row align-items-end">
 				<div class="col-lg-8">
 					<div class="page-header-title">
-						<i class="ik ik-server bg-blue"></i>
+						<i class="ik ik-file-text bg-blue"></i>
 						<div class="d-inline">
 							<h5>업무리스트</h5>
+							<span>lorem ipsum dolor sit amet, consectetur adipisicingelit</span>
 						</div>
 					</div>
 				</div>
-				<nav class="breadcrumb-container" aria-label="breadcrumb">
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="../index.html"><i
-								class="ik ik-home"></i></a></li>
-						<li class="breadcrumb-item"><a href="#">Apps</a></li>
-						<li class="breadcrumb-item active" aria-current="page">Taskboard</li>
-					</ol>
-				</nav>
+				<div class="col-lg-4">
+					<nav class="breadcrumb-container" aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/index"><i
+									class="ik ik-home"></i></a></li>
+							<li class="breadcrumb-item"><a href="/projectList">프로젝트</a></li>
+							<li class="breadcrumb-item active" aria-current="page" >업무리스트</li>
+						</ol>
+					</nav>
+				</div>
 			</div>
 		</div>
 		<div class="scroller-layout">
 			<div class="row task-row">
+			<!-- 업무 클론 div -->
 				<div class="card tasklist-clone">
 					<div class="card-header">
 						<h6 class="tasklistnameClone"></h6>
@@ -116,10 +112,10 @@
 							<div class="form-group">
 								<input type="text" class="form-control" name="taskTitle" placeholder="새 업무 만들기">
 							</div>
-							<button type="button" class="btn btn-primary mr-2" id="task-add-btn">만들기</button>
-							<button class="btn btn-light" id="task-cancel-btn">취소</button>
+							<button type="button" class="task-add-btn btn btn-primary mr-2">만들기</button>
+							<button class="task-cancel-btn btn btn-light">취소</button>
 							<ol class="dd-list">
-								<li class="dd-item task-clone" data-id="1">
+								<li class="task-clone dd-item" data-id="1">
 									<div class="dd-handle">
 										<p class="tasktitleClone"></p>
 									</div>
@@ -128,22 +124,67 @@
 						</div>
 					</div>
 				</div>
+				
+				<th:block th:each="tl:${taskList}">
+					<div class="card tasklist">
+					
+						<div class="card-header">
+							<h6 class="tasklistname" th:text="${tl.tasklistName}"></h6>
+							<div class="card-header-right">
+								<ul class="list-unstyled card-option">
+									<li><i class="ik ik-chevron-left action-toggle"></i></li>
+									<li><i class="ik ik-rotate-cw reload-card" data-loading-effect="pulse"></i></li>
+									<li><i class="ik ik-minus minimize-card"></i></li>
+									<li><i class="ik ik-x close-card"></i></li>
+								</ul>
+							</div>
+						</div>
+						
+						<div class="card-body completed-task">
+							<div class="dd" data-plugin="nestable">
+								<div class="form-group">
+									<input type="text" class="form-control" name="taskTitle" placeholder="새 업무 만들기">
+								</div>
+								<button type="button" class="task-add-btn btn btn-primary mr-2">만들기</button>
+								<button class="task-cancel-btn btn btn-light">취소</button>
+								
+								<ol class="dd-list">
+								
+									<li class="task dd-item" data-id="1">
+										<div class="dd-handle">
+											<p class="tasktitleClone" >업무1</p>
+										</div>
+									</li>
+									<li class="task dd-item" data-id="1">
+										<div class="dd-handle">
+											<p class="tasktitleClone">업무1</p>
+										</div>
+									</li>
+									
+								</ol>
+							</div>
+						</div>
+						
+					</div>
+				</th:block>
+				
+				
 			</div>
 			<div>
+			<!-- 업무리스트 입력 div -->
 				<div class="card">
 					<div class="card-header" style="padding-top: 20px;">
 						<div class="tasklistName input-group input-group-button"
 							style="margin: 0 auto;">
-							<input type="text" class="form-control" name="tasklistName" placeholder="업무리스트 이름">
+							<input type="text" class="tasklistName form-control" name="tasklistName" placeholder="업무리스트 이름">
 							<div class="input-group-append">
-								<button class="btn btn-primary" id="tasklist-add-btn" type="button">추가</button>
+								<button class="btn btn-default" id="tasklist-cancel-btn" type="button">취소</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 </th:block>
 <th:block layout:fragment="customJs">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -151,13 +192,6 @@
 		window.jQuery
 				|| document
 						.write('<script src="src/js/vendor/jquery-3.3.1.min.js"><\/script>')
-	</script>
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-	<script>
-		window.jQuery
-				|| document
-						.write(
-								'<script src="../src/js/vendor/jquery-3.3.1.min.js"><\/script>')
 	</script>
 	<script src="plugins/popper.js/dist/umd/popper.min.js"></script>
 	<script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>

@@ -13,25 +13,23 @@
 }
 
 .header-top>.container-fluid {
-	padding: 0 10px;
+	padding: 0 15px;
 }
 
 .container-fluid {
 	padding-right: 0px;
 }
+.page-header{
+	margin-right:20px;
+}
 .scroller-layout {
-	-webkit-overflow-scrolling: touch;
-	scroll-behavior: smooth;
-	display: flex;
+	display:flex;
 	user-select: none;
 	overflow-x:auto;
-	overflow-y:overlay;
-	z-index: 1;
 	cursor: url('/img/project/hand-move.png'), move;
 	align-items:stretch;
 	overflow-y:hidden;
-
-	
+	height:-webkit-fill-available;
 }
 .task-row {
 	flex-wrap: nowrap;
@@ -67,11 +65,14 @@
 	cursor: default;
 }
 
-
+.dd-handle{
+	padding:14px;
+}
 
 .dd-item {
 	cursor: move;
 }
+
 
 .tasklist-add-btn {
 	padding: 10px !important;

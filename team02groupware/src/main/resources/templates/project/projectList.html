@@ -5,6 +5,7 @@
 <!-- 사용자css -->
 <th:block layout:fragment="customCss">
 	<link rel="stylesheet" href="dist/css/project/project.css">
+	<link rel="stylesheet" href="dist/css/project/modal.css">
 	<link rel="stylesheet" href="/plugins/select2/dist/css/select2.min.css">
 	<link rel="stylesheet" href="/plugins/datedropper/datedropper.min.css">
 	<link rel="stylesheet"
@@ -16,9 +17,6 @@
 <th:block layout:fragment="customScript">
 
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-
-
-
 	<script type="text/javascript">
 		$(function() {
 			//프로젝트 submit 버튼 클릭시 프로젝트제목 유효성검사
@@ -40,7 +38,10 @@
 
 			//프로젝트 클릭시 /taskList로 이동
 			$(".project-list").on('click', function() {
-				location.href = '/taskList';
+				var projectCode = $(this).find('.project-code-input').val();
+				console.log(projectCode);
+				location.href = '/taskList?projectCode='+projectCode+'';
+				
 			})
 
 			//멤버수정버튼 클릭시 셀렉트 활성화
@@ -63,6 +64,30 @@
 <th:block layout:fragment="customContents">
 
 	<!--------------------------새 프로젝트 추가 버튼 --------------------------->
+	
+		<div class="page-header">
+			<div class="row align-items-end">
+				<div class="col-lg-8">
+					<div class="page-header-title">
+						<i class="ik ik-file-text bg-blue"></i>
+						<div class="d-inline">
+							<h5>프로젝트</h5>
+							<span>lorem ipsum dolor sit amet, consectetur adipisicing
+								elit</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<nav class="breadcrumb-container" aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/index"><i
+									class="ik ik-home"></i></a></li>
+							<li class="breadcrumb-item active" aria-current="page">프로젝트</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
 	<div class="pr-wrap">
 		<div class="pr-wrap-content">
 			<div class="pr-btn-wrap">
@@ -73,7 +98,7 @@
 				<div class="collapse d-md-block display-options" id="displayOptions">
 					<span
 						class="mr-3 d-inline-block float-md-left dispaly-option-buttons">
-						 <a href="#" class="mr-1 view-grid"> <i
+						<a href="#" class="mr-1 view-grid"> <i
 							class="ik ik-grid view-icon"></i>
 					</a><a href="#" class="mr-1 view-list active"> <i
 							class="ik ik-menu view-icon"></i>
@@ -87,12 +112,15 @@
 					<div class="project-list card">
 						<div class="card-body">
 							<div class="pr-header justify-content-between align-items-center">
+							
 								<div class="state">
+									<input type="hidden" class="project-code-input" th:value="${l.projectCode}">
 									<h3 class="pr-title text-success"
 										th:text="${#strings.abbreviate(l.projectTitle,30)}"></h3>
 									<p class="card-subtitle text-muted fw-500"
 										th:text="${#strings.abbreviate(l.projectDesc,28)}"></p>
 								</div>
+								
 								<div class="pr-ikon icon">
 									<li><button type="button"
 											class="pr-setting-btn btn btn-icon btn-outline-secondary"
@@ -108,7 +136,9 @@
 									</li>
 
 								</div>
+								
 							</div>
+							
 							<div class="pr-progress">
 								<div class="pr-status">
 									<a href="#" class="badge badge-primary mb-1">진행중</a>
@@ -123,6 +153,7 @@
 										class="float-right">0/0개 업무</span>
 								</div>
 							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -315,20 +346,22 @@
 											</div>
 										</form>
 									</div>
+									</div>
 							</form>
 						</div>
 					</div>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary">수정</button>
-					<button type="button" class="btn btn-danger list-delete">삭제</button>
-				</div>
+			
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">취소</button>
+						<button type="button" class="btn btn-primary">수정</button>
+						<button type="button" class="btn btn-danger project-delete-btn">삭제</button>
+					</div>
 			</div>
 		</div>
 	</div>
-	</div>
+	
 	<!--------------------------프로젝트 설정(수정) 버튼 클릭시 모달창 end --------------------------->
 
 
@@ -423,13 +456,12 @@
 	<script src="plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
 	<script src="plugins/screenfull/dist/screenfull.js"></script>
 	<script src="plugins/datatables.net/js/jquery.dataTables.min.js"></script>
-	<script
-		src="plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+	<script src="plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
 	<script
 		src="plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
 	<script
 		src="plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-
+<script src="plugins/summernote/dist/summernote-bs4.min.js"></script>
 	<script src="plugins/moment/moment.js"></script>
 	<script src="plugins/d3/dist/d3.min.js"></script>
 	<script src="plugins/c3/c3.min.js"></script>
@@ -456,7 +488,9 @@
 		ga('create', 'UA-XXXXX-X', 'auto');
 		ga('send', 'pageview');
 	</script>
-	<script src="/plugins/select2/dist/js/select2.min.js"></script>
+	<script src="plugins/select2/dist/js/select2.min.js"></script>
+	<script src="dist/js/project/layouts.js"></script>
+	<script src="plugins/sweetalert/dist/sweetalert.min.js"></script>
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 	<script>
