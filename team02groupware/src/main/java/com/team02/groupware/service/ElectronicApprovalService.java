@@ -25,33 +25,16 @@ public class ElectronicApprovalService {
 	 @Autowired //ElectronicApprovalMapper 의존성 주입
 	 private ElectronicApprovalMapper eaMapper;
 	 
-	 
-	//결재라인 조회 method
-	 public List<ElectronicApprovalDocument> selectApprovalLine(){
 		
-		 List<ElectronicApprovalDocument> approvalLine = eaMapper.selectApprovalLine();
-		 return approvalLine; 
-	 };
-	 
-	//임시삭제문서 조회 method 
-	 public List<ElectronicApprovalDocument> selectDeleteDocument(){
+	 /*
+	  * @method selectEaDocumentForm()
+	  * @brief 양식함관리 페이지 내 문서양식 테이블 조회 method
+	  * @author 김건훈
+	  */
+	 public List<ElectronicApprovalDocument> selectEaDocumentForm(){
 		
-		 List<ElectronicApprovalDocument> deleteDocument = eaMapper.selectDeleteDocument();
-		 return deleteDocument; 
-	 };
-	
-	//참조자 조회 method 
-	 public List<ElectronicApprovalDocument> selectEaReferrer(){
-		
-		 List<ElectronicApprovalDocument> eaReferrer = eaMapper.selectEaReferrer();
-		 return eaReferrer;
-	 };
-		
-	//보안등급 조회 method 
-	 public List<ElectronicApprovalDocument> selectEaSecurity(){
-		
-		 List<ElectronicApprovalDocument> eaSecurity = eaMapper.selectEaSecurity();
-		 return eaSecurity;
+		 List<ElectronicApprovalDocument> eaDocumentForm = eaMapper.selectEaDocumentForm();
+		 return eaDocumentForm;
 	 };
 	 
 	 /*

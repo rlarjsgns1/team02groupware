@@ -12,18 +12,12 @@ import com.team02.groupware.dto.ElectronicApprovalDocument;
 
 @Mapper
 public interface ElectronicApprovalMapper {
-	
-	
-	 	//결재라인 조회 method 
-	 public List<ElectronicApprovalDocument> selectApprovalLine();
 		
-		//임시삭제문서 조회 method 
-	 public List<ElectronicApprovalDocument> selectDeleteDocument();
-		 
-	 	//참조자 조회 method 
-	 public List<ElectronicApprovalDocument> selectEaReferrer();
-		
-	 	//보안등급 조회 method 
-	 public List<ElectronicApprovalDocument> selectEaSecurity();
+	 /*
+	  * @method selectEaDocumentForm()
+	  * @brief 양식함관리 페이지 내 문서양식 테이블 조회 method
+	  * @author 김건훈
+	  */
+	 public List<ElectronicApprovalDocument> selectEaDocumentForm();
 		 
 }

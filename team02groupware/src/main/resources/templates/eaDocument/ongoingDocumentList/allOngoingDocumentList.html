@@ -138,6 +138,19 @@
 							  $('.ea-checkbox').iCheck('uncheck');
 						  }
 					  });
+					  
+					  
+					  /*
+					   * @brief 상세보기 화면으로 이동 Event
+					   * @author 김건훈
+					   */
+					   $('.ongoing-document-content').click(function(){
+						  //console.log('tr 클릭 이벤트'); 
+						  var docType = $(this).find('.ongoing-document-type').text();
+						  //console.log(docType);
+						  $(location).attr('href','/selectOngoingDocumentDetail?docType='+docType);
+					   });
+					  
 				});
 			</script>
 		</th:block>
@@ -222,7 +235,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr onClick="location.href='/selectOngoingDocumentDetail?type=기안'">
+                                                    <tr class="ongoing-document-content">
                                                     	<td> 
                                                     		<input type="checkbox" class="ea-icheck ea-checkbox">
                                                     	</td>
@@ -230,10 +243,10 @@
                                                         <td>그룹웨어 프로젝트 사업기획서</td>
                                                         <td>김건훈</td>
                                                         <td>2020-02-16</td>
-                                                     	<td>기안</td>
+                                                     	<td class="ongoing-document-type">기안</td>
                                                      	<td>진행</td>                                                                                   
                                                     </tr> 
-                                                    <tr onClick="location.href='/selectOngoingDocumentDetail?type=결재'">
+                                                    <tr class="ongoing-document-content">
                                                     	<td> 
                                                     		<input type="checkbox" class="ea-icheck ea-checkbox">
                                                     	</td>
@@ -241,7 +254,7 @@
                                                         <td>그룹웨어 프로젝트 완료보고서</td>
                                                         <td>김건훈</td>
                                                         <td>2020-03-16</td>
-                                                     	<td>결재</td>
+                                                     	<td class="ongoing-document-type">결재</td>
                                                         <td>대기</td>
                                                     </tr>                                                                                                         
                                                 </tbody>

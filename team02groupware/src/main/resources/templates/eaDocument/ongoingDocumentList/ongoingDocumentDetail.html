@@ -129,7 +129,7 @@
 			                 	<h3>문서 상세보기</h3>
 			                 </div>
 			                 <ul class="nav document-form-list-top-nav">
-			                 	<li class="nav-item">
+			                 	<li class="nav-item"  th:if="${docType eq '결재' || docType eq '기안'}">
                                     <a class="nav-link text-primary" th:href="@{#}">결재선 변경</a>
                                 </li>
                                 <li class="nav-item">
@@ -138,10 +138,10 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-primary" th:href="@{#}">참조자 변경</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item" th:if="${docType eq '회람'}">
                                     <a class="nav-link text-primary" th:href="@{#}">회람자 변경</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item" th:if="${docType eq '수신'}">
                                     <a class="nav-link text-primary" th:href="@{#}">수신자 변경</a>
                                 </li>
                                 <li class="nav-item">
@@ -150,10 +150,10 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-primary" th:href="@{#}">보안 등급 변경</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item" th:if="${docType eq '기안'}">
                                     <div class="nav-link"><span><a class="text-primary" href="#">내용 수정</a></span><i class="ik ik-help-circle"></i></div>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item" th:if="${docType eq '기안'}">
                                     <div class="nav-link"><span><a class="text-primary" href="#">기안 취소</a></span><i class="ik ik-help-circle"></i></div>
                                 </li>
                              </ul>

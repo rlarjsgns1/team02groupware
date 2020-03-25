@@ -4,50 +4,28 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.team02.groupware.mapper.ElectronicApprovalMapper"> 
  
-  <resultMap type="ElectronicApprovalDocument" id="eaResultMap">
-  	<result property="dCode" column="d_code"/>
-  	<result property="dApprover" column="d_approver"/>
-  	<result property="dApprovalOrder" column="d_approval_order"/>
-  	<result property="dApprovalStatus" column="d_approval_status"/>
-  	<result property="dDeleteReason" column="d_delete_reason"/>
-  	<result property="dReferrer" column="d_referrer"/>
+ <!-- 양식함관리 페이지 내 문서양식 테이블 dto map -->
+  <resultMap type="ElectronicApprovalDocument" id="eaDocumentFormResultMap">
+  	<result property="dFormCode" column="d_form_code"/>
   	<result property="dSecurityLevel" column="d_security_level"/>
-  	<result property="dViewLevel" column="d_view_level"/>
+  	<result property="dFormTypeCode" column="d_form_type_code"/>
+  	<result property="dApprovalFormatCode" column="d_approval_format_code"/>
+  	<result property="dFormName" column="d_form_name"/>
+  	<result property="dFormAbbreviation" column="d_form_abbreviation"/>
+  	<result property="dFormDetailExplanation" column="d_form_detail_explanation"/>
+  	<result property="dSecurityLevelChangeable" column="d_security_level_changeable"/>
+  	<result property="dExpiryDate" column="d_expiry_date"/>
+  	<result property="dExpiryDateChangeable" column="d_expiry_date_changeable"/>
+  	<result property="dFormDetailContent" column="d_form_detail_content"/>
   </resultMap>
   
- 	 <!-- 결재문서 조회  -->
-  <select id="selectApprovalLine" resultMap="eaResultMap">
-  /* 결재라인 조회 */  
+
+  <!-- 양식함관리 페이지 내 문서양식 테이블 조회  -->
+  <select id="selectEaDocumentForm" resultMap="eaDocumentFormResultMap">
+  /* 문서양식 테이블 조회 쿼리문 실행 */  
 	SELECT 
 		*
 	FROM 
-		ea_approval_line;
-  </select>
-  
-      <!-- 임시 삭제문서 조회  -->
-  <select id="selectDeleteDocument" resultMap="eaResultMap">
-  /* 임시 삭제문서 조회 쿼리문 실행 */  
-	SELECT 
-		*
-	FROM 
-		ea_delete_document;
-  </select>
- 
-       <!-- 참조자 조회  -->
-  <select id="selectEaReferrer" resultMap="eaResultMap">
-  /* 참조자 조회 쿼리문 실행 */  
-	SELECT 
-		*
-	FROM 
-		ea_referrer;
-  </select> 
-  
-        <!-- 보안등급 조회  -->
-  <select id="selectEaSecurity" resultMap="eaResultMap">
-  /* 보안등급 조회 쿼리문 실행 */  
-	SELECT 
-		*
-	FROM 
-		ea_security_level;
+		ea_document_form;
   </select>
   </mapper>

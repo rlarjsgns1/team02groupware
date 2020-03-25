@@ -4,6 +4,7 @@ package com.team02.groupware.controller;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.team02.groupware.dto.ElectronicApprovalDocument;
 import com.team02.groupware.service.ElectronicApprovalService;
 
 /*
@@ -95,10 +98,10 @@ public class ElectronicApprovalController {
 	  * @author 김건훈
 	  */	
 	 @GetMapping("/selectOngoingDocumentDetail")
-	 public String selectOngoingDocumentDetail(@RequestParam(value="type", required = false) String type, Model model) {
-		 	logger.info("결재 진행 중인 문서 목록에서 넘어온 문서 구분 값 :: {}", type);
+	 public String selectOngoingDocumentDetail(@RequestParam(value="docType", required = false) String docType, Model model) {
+		 	logger.info("결재 진행 중인 문서 목록에서 넘어온 문서 구분 값 :: {}", docType);
 		 	
-		 	model.addAttribute("type", type);
+		 	model.addAttribute("docType", docType);
 		 	
 			return "eaDocument/ongoingDocumentList/ongoingDocumentDetail.html";
 	}
@@ -183,6 +186,8 @@ public class ElectronicApprovalController {
 	  */
 	 @GetMapping("/selectDocumentFormList")
 	 public String selectDocumentFormList() {
+		 List<ElectronicApprovalDocument> eaDocumentForm = eaService.selectEaDocumentForm();
+		 logger.info("문서 양식 테이블 조회 결과값 :: {}", eaDocumentForm.toString());
 		 return "eaDocument/eaDocumentForSupervisor/documentFormList.html";
 	 }
 	 
