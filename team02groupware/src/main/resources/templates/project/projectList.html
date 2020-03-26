@@ -18,82 +18,101 @@
 
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript">
-		$(function() {
-			//프로젝트 submit 버튼 클릭시 프로젝트제목 유효성검사
-			$(".pr-submit-btn").click(function(checkInput) {
-				if ($('[name="projectTitle"]').val() == '') {
-					$('[name="projectTitle"]').css("border", "1px solid red");
-					$('[name="projectTitle"]').focus();
-					return false;
-				}
+		$(
+				function() {
+				//프로젝트 추가 모달
+					//submit 버튼 클릭시 프로젝트제목 유효성검사
+					$(".pr-submit-btn").click(
+							function(checkInput) {
+								if ($('[name="projectTitle"]').val() == '') {
+									$('[name="projectTitle"]').css("border",
+											"1px solid red");
+									$('[name="projectTitle"]').focus();
+									return false;
+								}
+								projectAddForm.action = "/projectInsert";
+								projectAddForm.submit();
 
-				projectAddForm.action = "/projectInsert";
-				projectAddForm.submit();
+							})
+					//멤버추가버튼 클릭시 셀렉트 활성화
+					$(".member-add-btn").click(function() {
+						$('#add-select2').select2('open');
+					})
 
-			})
-			//멤버추가버튼 클릭시 셀렉트 활성화
-			$(".member-add-btn").click(function() {
-				$('#add-select2').select2('open');
-			})
+				//프로젝트 클릭시 /taskList로 이동
+					$(".project-list").on('click',
+							function(projectListClick) {
+								var projectCode = $(this).find(
+										'.project-code-input').val();
+								var projectTitle = $(this).find('h3').text();
+								console.log(projectCode);
+								console.log(projectTitle);
+								location.href = '/taskList?projectCode='
+										+ projectCode + '&projectTitle='
+										+ projectTitle + '';
 
-			//프로젝트 클릭시 /taskList로 이동
-			$(".project-list").on('click', function() {
-				var projectCode = $(this).find('.project-code-input').val();
-				console.log(projectCode);
-				location.href = '/taskList?projectCode='+projectCode+'';
+							})
+
+				//프로젝트 수정 모달
+					$(".pr-setting-btn").on('click', function() {
+					//프로젝트 모달 바깥 영역 클릭X
+						event.stopPropagation();
+						$('#editLayoutItem').modal({
+							backdrop : 'static'
+						});
+					//모달 상단에 프로젝트 제목
+						var projectTitle = $(this).parents('.project-list').find('h3').text();
+					 	var updateModalTop = $('#editLayoutItem').find('.modal-title');
+						console.log(projectTitle);
+						console.log(updateModalTop);
+						updateModalTop.text(projectTitle);
+					})
+					
+					
+					
+					
+					//멤버수정버튼 클릭시 셀렉트 활성화
+					$(".member-update-btn").click(function() {
+						$('#update-select2').select2('open');
+					})
+					
 				
-			})
 
-			//멤버수정버튼 클릭시 셀렉트 활성화
-			$(".member-update-btn").click(function() {
-				$('#update-select2').select2('open');
-			})
-			//프로젝트 수정버튼 클릭시 모달창, 모달창 바깥쪽 클릭해도 닫히지 않게
-			$(".pr-setting-btn").on('click', function() {
-				event.stopPropagation();
-				$('#editLayoutItem').modal({
-					backdrop : 'static'
-				});
-
-			})
-
-		})
+				})
 	</script>
 
 </th:block>
 <th:block layout:fragment="customContents">
 
 	<!--------------------------새 프로젝트 추가 버튼 --------------------------->
-	
-		<div class="page-header">
-			<div class="row align-items-end">
-				<div class="col-lg-8">
-					<div class="page-header-title">
-						<i class="ik ik-file-text bg-blue"></i>
-						<div class="d-inline">
-							<h5>프로젝트</h5>
-							<span>lorem ipsum dolor sit amet, consectetur adipisicing
-								elit</span>
-						</div>
+
+	<div class="page-header">
+		<div class="row align-items-end">
+			<div class="col-lg-8">
+				<div class="page-header-title">
+					<i class="ik ik-folder bg-blue"></i>
+					<div class="d-inline">
+						<h5>프로젝트</h5>
+						<span>프로젝트를 생성하고 수정할 수 있습니다.</span>
 					</div>
 				</div>
-				<div class="col-lg-4">
-					<nav class="breadcrumb-container" aria-label="breadcrumb">
-						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="/index"><i
-									class="ik ik-home"></i></a></li>
-							<li class="breadcrumb-item active" aria-current="page">프로젝트</li>
-						</ol>
-					</nav>
-				</div>
+			</div>
+			<div class="col-lg-4">
+				<nav class="breadcrumb-container" aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/index"><i
+								class="ik ik-home"></i></a></li>
+						<li class="breadcrumb-item active" aria-current="page">프로젝트</li>
+					</ol>
+				</nav>
 			</div>
 		</div>
+	</div>
 	<div class="pr-wrap">
 		<div class="pr-wrap-content">
 			<div class="pr-btn-wrap">
 				<button type="button" class="btn btn-success btn-rounded"
-					data-toggle="modal" data-target="#exampleModalCenter">새
-					프로젝트 추가</button>
+					data-toggle="modal" data-target="#exampleModalCenter">새 프로젝트 추가</button>
 
 				<div class="collapse d-md-block display-options" id="displayOptions">
 					<span
@@ -112,33 +131,26 @@
 					<div class="project-list card">
 						<div class="card-body">
 							<div class="pr-header justify-content-between align-items-center">
-							
+
 								<div class="state">
-									<input type="hidden" class="project-code-input" th:value="${pl.projectCode}">
+									<input type="hidden" class="project-code-input"
+										th:value="${pl.projectCode}">
 									<h3 class="pr-title text-success"
 										th:text="${#strings.abbreviate(pl.projectTitle,30)}"></h3>
 									<p class="card-subtitle text-muted fw-500"
 										th:text="${#strings.abbreviate(pl.projectDesc,28)}"></p>
 								</div>
-								
-								<div class="pr-ikon icon">
-									<li><button type="button"
-											class="pr-setting-btn btn btn-icon btn-outline-secondary"
-											data-toggle="modal" data-target="#editLayoutItem"
-											data-backdrop="static" data-keyboard="false">
-											<i class="ik ik-settings"></i>
-										</button></li>
-									<li>
-										<button type="button"
-											class="pr-star-btn btn btn-icon btn-outline-primary">
-											<i class="ik ik-star"></i>
-										</button>
-									</li>
 
+								<div class="pr-ikon icon">
+									<label for="pr-setting-btn">
+										<button type="button"
+											class="pr-setting-btn btn btn-icon btn-outline-secondary">
+											<i class="ik ik-settings" id="pr-setting-btn"></i>
+										</button>
+									</label>
 								</div>
-								
 							</div>
-							
+
 							<div class="pr-progress">
 								<div class="pr-status">
 									<a href="#" class="badge badge-primary mb-1">진행중</a>
@@ -153,7 +165,7 @@
 										class="float-right">0/0개 업무</span>
 								</div>
 							</div>
-							
+
 						</div>
 					</div>
 				</div>
@@ -166,8 +178,6 @@
 
 
 	<!------------------새 프로젝트 추가 버튼 클릭시 모달창 start --------------------->
-
-
 	<div class="modal fade" id="exampleModalCenter" tabindex="-1"
 		role="dialog" aria-labelledby="exampleModalCenterLabel"
 		aria-hidden="true">
@@ -190,8 +200,8 @@
 								placeholder="EE001~EE004">
 						</div>
 						<div class="form-group">
-							<label for="projectTitle">프로젝트 제목</label> <input type="text"
-								id="projectTitle" name="projectTitle" class="form-control"
+							<label for="add-projectTitle">프로젝트 제목</label> <input type="text"
+								id="add-projectTitle" name="projectTitle" class="form-control"
 								placeholder="예) 웹사이트 개발">
 						</div>
 						<div class="form-group">
@@ -206,10 +216,8 @@
 									<label class="first-label" for="privacyProject">
 										<div class="radio radio-inline">
 											<div class="radio-btn">
-												<label for="privacyProject"> <input type="radio"
-													checked="checked" name="projectAccess" value="비공개"
-													id="privacyProject"> <i class="helper"></i>
-												</label>
+												<input type="radio" checked="checked" name="projectAccess"
+													value="비공개" id="privacyProject"> <i class="helper"></i>
 											</div>
 											<div class="btn-text">
 												<div class="btn-value">비공개</div>
@@ -223,10 +231,8 @@
 									<label class="first-label" for="publicProject">
 										<div class="radio radio-inline">
 											<div class="radio-btn">
-												<label for="publicProject"> <input type="radio"
-													name="projectAccess" value="공개" id="publicProject">
-													<i class="helper"></i>
-												</label>
+												<input type="radio" name="projectAccess" value="공개"
+													id="publicProject"> <i class="helper"></i>
 											</div>
 											<div class="btn-text">
 												<div class="btn-value">공개</div>
@@ -295,34 +301,34 @@
 				<div class="modal-body">
 					<div class="row">
 						<div class="pr-update-modal card-body">
-							<form class="forms-sample" th:action="@{/projectUpdate}"
-								method="post">
+							<form class="forms-sample" method="post">
 								<div class="form-group">
 									<label for="projectTitle">제목</label> <input type="text"
-										class="form-control" id="projectTitle" name=projectTitle>
+										class="form-control" id="projectTitle" name="projectTitle">
 								</div>
 								<div class="form-group">
-									<label for="projectDesc">설명(선택사항)</label> <input type="text"
-										class="form-control" id="projectDesc" name=projectDesc>
+									<label for="projectDes">설명(선택사항)</label> <input type="text"
+										class="form-control" id="projectDes" name="projectDesc">
 								</div>
 								<div class="form-group">
-									<label for="Date">시작일</label> <input type="text"
+									<label for="datepicker1">시작일</label> <input type="text"
 										name="projectStart" class="form-control datetimepicker-input"
 										id="datepicker1" data-toggle="datetimepicker"
 										data-target="#datepicker1">
 								</div>
 								<div class="form-group">
-									<label for="Date">마감일</label> <input type="text"
+									<label for="datepicker2">마감일</label> <input type="text"
 										name="projectDeadline"
 										class="form-control datetimepicker-input" id="datepicker2"
 										data-toggle="datetimepicker" data-target="#datepicker2">
 								</div>
 								<div class="form-group">
-									<label for="Date">실제 완료일</label> <input type="text"
+									<label for="datepicker3">실제 완료일</label> <input type="text"
 										name="projectEnd" class="form-control datetimepicker-input"
 										id="datepicker3" data-toggle="datetimepicker"
 										data-target="#datepicker3">
 								</div>
+								<div class="form-group"></div>
 								<div class="form-group">
 									<label>프로젝트 멤버(선택사항)</label>
 									<div>
@@ -346,22 +352,22 @@
 											</div>
 										</form>
 									</div>
-									</div>
+								</div>
 							</form>
 						</div>
 					</div>
 				</div>
-			
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">취소</button>
-						<button type="button" class="btn btn-primary">수정</button>
-						<button type="button" class="btn btn-danger project-delete-btn">삭제</button>
-					</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary">수정</button>
+					<button type="button" class="btn btn-danger project-delete-btn">삭제</button>
+				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<!--------------------------프로젝트 설정(수정) 버튼 클릭시 모달창 end --------------------------->
 
 
@@ -456,12 +462,13 @@
 	<script src="plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
 	<script src="plugins/screenfull/dist/screenfull.js"></script>
 	<script src="plugins/datatables.net/js/jquery.dataTables.min.js"></script>
-	<script src="plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+	<script
+		src="plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
 	<script
 		src="plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
 	<script
 		src="plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-<script src="plugins/summernote/dist/summernote-bs4.min.js"></script>
+	<script src="plugins/summernote/dist/summernote-bs4.min.js"></script>
 	<script src="plugins/moment/moment.js"></script>
 	<script src="plugins/d3/dist/d3.min.js"></script>
 	<script src="plugins/c3/c3.min.js"></script>

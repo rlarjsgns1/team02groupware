@@ -1,6 +1,18 @@
 @charset "UTF-8";
 
+
+
+/* ----------------프로젝트리스트로 이동----------------- */
+.ik-chevron-left{
+	cursor:pointer;
+}
+
+.pr-ikon{
+	user-select:none;
+}
+
 /* ----------------tasklist clone----------------- */
+
 .tasklist-clone{
 	display:none;
 }

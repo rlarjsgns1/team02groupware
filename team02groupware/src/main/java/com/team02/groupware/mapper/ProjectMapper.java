@@ -9,6 +9,13 @@ import com.team02.groupware.dto.Project;
 
 @Mapper
 public interface ProjectMapper {
+	
+	//프로젝트 한개 조회
+	public Project selectForProUpdate(String projectCode);
+	
+	//프로젝트 수정
+	public int projectUpdate(Project project);
+	
 	//프로젝트 추가
 	public int projectInsert(Project project);
 	

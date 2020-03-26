@@ -45,6 +45,27 @@
 
 	</insert>
 	
+	<!-- 업무 상세 조회 -->
+<!-- 	<select id="selectTasklist" parameterType="String" resultMap="projectResultMap">
+		
+		SELECT
+			PL.project_title
+			,PL.project_code
+			,TL.tasklist_name
+			,TL.tasklist_code		
+		FROM
+			project_task_list AS TL
+			INNER JOIN
+			project_list AS PL
+		WHERE
+			TL.project_code=PL.project_code
+			AND 
+			PL.project_code=#{projectCode};
+			
+	</select>
+	 -->
+	
+	
 	
 	<!-- 업무리스트 조회 -->
 	<select id="selectTasklist" parameterType="String" resultMap="projectResultMap">
@@ -63,6 +84,45 @@
 			AND 
 			PL.project_code=#{projectCode};
 	</select>
+
+
+	<!-- 프로젝트 수정 메서드 -->
+	<update id="projectUpdate" parameterType="com.team02.groupware.dto.Project">
+		UPDATE
+			project_list
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="projectCode neq null and projectCode neq ''.toString()">
+			project_code=#{projectCode},
+			</if>
+			<if test="projectTitle neq null and projectTitle neq ''.toString()">
+			project_title=#{projectTitle},
+			</if>
+			project_date=NOW(),
+			project_status=#{projectStatus},
+			<if test="projectAccess neq null and projectAccess neq ''.toString()">
+			project_access=#{projectAccess},
+			</if>
+			project_desc=#{projectDesc},
+			project_deadline=NOW(),
+			project_start=NOW(),
+			project_end=NOW()
+		</trim>
+		WHERE
+			project_code=#{projectCode};
+	</update>
+
+	<!-- 프로젝트 한개 상세정보 조회-->
+	<select id="selectForProUpdate" parameterType="String" resultMap="projectResultMap">
+	SELECT
+		PL.*
+	FROM
+		project_list AS PL
+	WHERE
+		project_code = #{projectCode};
+		
+	</select>
+
+
 
 	<!-- 프로젝트 추가  -->
 	<insert id="projectInsert" parameterType="com.team02.groupware.dto.Project">
@@ -107,9 +167,6 @@
 			,#{projectEnd}
 			)
 	</insert>
-
-
-
 
 	<!-- 게시판 리스트 조회 -->
 	<select id="getProjectRowCount" resultType="int">

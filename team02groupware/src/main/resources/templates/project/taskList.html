@@ -64,6 +64,10 @@
 				var tasklistName = $('input[name="tasklistName"]:last');
 				tasklistName.val('');
 			})
+			
+			$(".ik-chevron-left").click(function(){
+				location.href="/projectList";
+			})
 		});
 	</script>
 </th:block>
@@ -73,10 +77,10 @@
 			<div class="row align-items-end">
 				<div class="col-lg-8">
 					<div class="page-header-title">
-						<i class="ik ik-file-text bg-blue"></i>
+						<i class="ik ik-chevron-left bg-blue"></i>
 						<div class="d-inline">
 							<h5 th:text="${projectTitle}"></h5>
-							<span>lorem ipsum dolor sit amet, consectetur adipisicingelit</span>
+							<span>칸반보드에서 업무를 추가하고 이동할 수 있습니다.</span>
 						</div>
 					</div>
 				</div>

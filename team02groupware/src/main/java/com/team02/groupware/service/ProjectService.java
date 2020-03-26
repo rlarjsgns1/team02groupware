@@ -32,6 +32,18 @@ public class ProjectService {
 		return projectList;
 		
 	}
+	
+	//프로젝트 수정
+	public int projectUpdate(Project project) {
+		return projectMapper.projectUpdate(project);
+	}
+	
+	//프로젝트 한개 조회
+	public Project selectForProUpdate(String projectCode) {
+		return projectMapper.selectForProUpdate(projectCode);
+	}
+	
+	
 	//프로젝트 추가
 	public int projectInsert(Project project) {
 		return projectMapper.projectInsert(project);
