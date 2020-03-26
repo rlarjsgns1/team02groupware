@@ -1,71 +1,120 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<aside class="right-sidebar" th:fragment="rightFragment">
-	<div class="sidebar-chat" data-plugin="chat-sidebar">
-		<div class="sidebar-chat-info">
-			<h6>Chat List</h6>
-			<form class="mr-t-10">
-				<div class="form-group">
-					<input type="text" class="form-control"
-						placeholder="Search for friends ..."> <i
-						class="ik ik-search"></i>
-				</div>
-			</form>
-		</div>
-		<div class="chat-list">
-			<div class="list-group row">
-				<a href="javascript:void(0)" class="list-group-item"
-					data-chat-user="Gene Newman">
-					<figure class="user--online">
-						<img src="img/users/1.jpg" class="rounded-circle" alt="">
-					</figure>
-					<span><span class="name">Gene Newman</span> <span
-						class="username">@gene_newman</span> </span>
-				</a> <a href="javascript:void(0)" class="list-group-item"
-					data-chat-user="Billy Black">
-					<figure class="user--online">
-						<img src="img/users/2.jpg" class="rounded-circle" alt="">
-					</figure>
-					<span><span class="name">Billy Black</span> <span
-						class="username">@billyblack</span> </span>
-				</a> <a href="javascript:void(0)" class="list-group-item"
-					data-chat-user="Herbert Diaz">
-					<figure class="user--online">
-						<img src="img/users/3.jpg" class="rounded-circle" alt="">
-					</figure>
-					<span><span class="name">Herbert Diaz</span> <span
-						class="username">@herbert</span> </span>
-				</a> <a href="javascript:void(0)" class="list-group-item"
-					data-chat-user="Sylvia Harvey">
-					<figure class="user--busy">
-						<img src="img/users/4.jpg" class="rounded-circle" alt="">
-					</figure>
-					<span><span class="name">Sylvia Harvey</span> <span
-						class="username">@sylvia</span> </span>
-				</a> <a href="javascript:void(0)" class="list-group-item active"
-					data-chat-user="Marsha Hoffman">
-					<figure class="user--busy">
-						<img src="img/users/5.jpg" class="rounded-circle" alt="">
-					</figure>
-					<span><span class="name">Marsha Hoffman</span> <span
-						class="username">@m_hoffman</span> </span>
-				</a> <a href="javascript:void(0)" class="list-group-item"
-					data-chat-user="Mason Grant">
-					<figure class="user--offline">
-						<img src="img/users/1.jpg" class="rounded-circle" alt="">
-					</figure>
-					<span><span class="name">Mason Grant</span> <span
-						class="username">@masongrant</span> </span>
-				</a> <a href="javascript:void(0)" class="list-group-item"
-					data-chat-user="Shelly Sullivan">
-					<figure class="user--offline">
-						<img src="img/users/2.jpg" class="rounded-circle" alt="">
-					</figure>
-					<span><span class="name">Shelly Sullivan</span> <span
-						class="username">@shelly</span></span>
-				</a>
+
+<!-- 
+	스타일 적용
+	style="right: 240px;"
+ -->
+
+<th:block th:fragment="rightFragment">
+
+	<script type="text/javascript">
+	
+		$(function(){
+			
+			$('.chat-list-room').dblclick(function(){
+				console.log('gd')
+			});
+		});
+	
+	</script> 
+	
+	<aside class="right-sidebar">
+	
+		<div class="sidebar-chat" data-plugin="chat-sidebar">
+			<div class="sidebar-chat-info">
+				
+				<h6 class="f-13">
+		            <a href="#!" class="chat-list-search" ><i class="ik ik-plus-square f-18 text-secondary"></i></a>				
+					대화방 리스트					
+				</h6>
+	
+				<form class="mr-t-10">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="대화방, 참여자 검색"> 
+						<i class="ik ik-search"></i>
+					</div>
+				</form>
 			</div>
+	
+			<div class="chat-list">
+			
+				<div class="col-xs-12">
+							
+	            	<!-- 대화방리스트 div Start-->
+                   	<div class="align-middle mb-25 chat-list-room">
+                   
+                       	<img src="../messenger/img/pengsu2.jpg" alt="user image" class="rounded-circle img-40 align-top mr-15">	<!-- 대표 이미지 -->
+                       
+                       	<div class="d-inline-block">
+                       
+                           	<a href="#!"><span class="chat-list-title">경영팀 대화방</span></a>		<!-- 대화방 제목 -->
+                           
+                           	<p class="text-muted mb-0">넵</p>		<!-- 대화방 최근 메시지 -->
+                           
+                           	<span class="status active"></span>			<!-- 안읽은 메시지 갯수  -->
+                           
+                           	<span class="chat-list-time status deactive text-mute">	<!-- 최근 메시지 시간 표시 -->
+                           		오전 11:54
+                           	</span>
+                           
+                       	</div>
+                       
+                   	</div>
+	                   	<!-- 대화방리스트 div End -->
+	                   
+	                   	<!-- 대화방리스트 div Start-->
+	                   	<div class="align-middle mb-25 chat-list-room">
+	                   
+	                       	<img src="../messenger/img/pengsu.jpg" alt="user image" class="rounded-circle img-40 align-top mr-15">	<!-- 대표 이미지 -->
+	                       
+	                       	<div class="d-inline-block">
+	                       
+	                           	<a href="#!"><span class="chat-list-title">34기 대화방</span></a>		<!-- 대화방 제목 -->
+	                           
+	                           	<p class="text-muted mb-0">하하</p>		<!-- 대화방 최근 메시지 -->
+	                           
+	                           	<span class="status active"></span>			<!-- 안읽은 메시지 갯수  -->
+	                           
+	                           	<span class="chat-list-time status deactive text-mute">	<!-- 최근 메시지 시간 표시 -->
+	                           		오전 11:54
+	                           	</span>
+	                           
+	                       	</div>
+	                       
+	                   	</div>
+	                   	<!-- 대화방리스트 div End -->
+	                   
+	                   	<!-- 대화방리스트 div Start-->
+	                   	<div class="align-middle mb-25 chat-list-room">
+	                   
+	                       	<img src="../messenger/img/pengsu2.jpg" alt="user image" class="rounded-circle img-40 align-top mr-15">	<!-- 대표 이미지 -->
+	                       
+	                       	<div class="d-inline-block">
+	                       
+	                           	<a href="#!"><span class="chat-list-title">2팀 대화방</span></a>		<!-- 대화방 제목 -->
+	                           
+	                           	<p class="text-muted mb-0">ㅎㅇ</p>		<!-- 대화방 최근 메시지 -->
+	                           
+	                           	<span class="status active"></span>			<!-- 안읽은 메시지 갯수  -->
+	                           
+	                           	<span class="chat-list-time status deactive text-mute">	<!-- 최근 메시지 시간 표시 -->
+	                           		오전 11:54
+	                           	</span>
+	                           
+	                       	</div>
+	                       
+	                   	</div>
+	                   	<!-- 대화방리스트 div End -->
+				</div>
+				
+			</div>	
+	
 		</div>
-	</div>
-</aside>
+	
+	</aside>
+</th:block>
+
+
+
 </html>

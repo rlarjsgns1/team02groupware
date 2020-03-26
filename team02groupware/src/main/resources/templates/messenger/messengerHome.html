@@ -14,6 +14,12 @@
 
 <style>
 
+	-webkit-scrollbar { 
+
+    display: none !important; 
+
+	}
+
 	/*** 대화방 리스트 ***/
 
 	.chat-list{
@@ -22,6 +28,12 @@
 	.chat-list-header-title{
 		font-weight: bold;
 		font-size: 0.9rem;
+	}
+	.chat-list-body{
+		height: 500px;
+		overflow-y: scroll;
+		overflow-x: hidden;
+		-ms-overflow-style: none;
 	}
 	.chat-list-title{
 		font-weight: bold;
@@ -45,17 +57,48 @@
 	
 	.chat-room-detail{
 		padding: 0px;
+		
+		height: 450px;
 	}
 	.chat-room-title{
 		font-weight: bold;
 		font-size: 0.9rem;
 	}
+	.chat-room-header{
+		
+		/* position: fixed; */
+		
+	}
+	.chat-room-body{
+		height: 430px;
+		overflow-y: scroll;
+		overflow-x: hidden;
+		-ms-overflow-style: none;
+	}
+		
+	
 	.chat-room-sender-name{
 		font-size: 0.75rem;
 	}
-	.chat-room-message{
 	
+	.received-chat .chat-room-message{
+		display: block !important;
+		width: fit-content;
 	}
+	.send-chat .chat-room-message{
+		display: block;
+		width: fit-content;
+		text-align: right !important; 
+	}
+	.chat-card .send-chat {
+    text-align: right;
+    float: right;
+    }
+	
+	.chat-room-input{
+		padding: 10px 20px;
+	}
+	
 
 
 
@@ -72,11 +115,23 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 	<script type="text/javascript" th:inline="javascript">
-	
+		
+	$(function(){
+		
+		$('.chat-list-room').click(function(){
+			
+			console.log('gd')
+			
+		})
+		
+	}
+
+
+	</script> 
 		
 	
-	</script>
 </th:block>
+
 
 <th:block layout:fragment="customContents">
 
@@ -115,7 +170,182 @@
 	
 	<div class="row">
 	
-		<!-- 대화방 리스트 Start-->
+		<!-- 채팅방 디테일뷰 Start-->
+		<div class="chat-room-detail col-xl-9 col-md-9">
+	        <div class="card chat-card">
+	        
+	        	<!-- 채팅방 상세 헤더 Start -->
+	            <div class="chat-room-header card-header row">
+	            
+					<!-- 채팅방 제목 -->	
+	            	<div class="col-md-8">
+	                	<span class="chat-room-title"><i class="ik ik-message-square"></i>  2팀 대화방</span>	
+	            		<a href="#"><i class="ik ik-user f-16 text-secondary"></i>2</a>
+	            	</div>
+	            	
+	            	<!-- 검색, 파일첨부, 취소 버튼 -->
+	               	<div class="col-md-4" >
+	               		<div style="float:right">
+	               		<a href="#"><i class="ik ik-search f-18 text-secondary"></i></a>
+	               		
+	                    <a href="#"><i class="ik ik-file-plus f-18 text-secondary"></i></a>
+	                    <a href="#"><i class="ik ik-x close-card f-18 text-secondary"></i></a>
+	               		
+	               		</div>
+	               	</div>
+	            	
+	            	
+	                <!-- <div class="card-header-right">
+	                    <ul class="list-unstyled card-option" style="width: 28px;">
+	                        <li><i class="ik ik-chevron-left action-toggle"></i></li>
+	                        <li><i class="ik ik-minus minimize-card"></i></li>
+	                        <li><i class="ik ik-x close-card"></i></li>
+	                    </ul>
+	                
+	                </div> -->
+	                
+	            </div>
+	            <!-- 채팅방 상세 헤더 End -->
+	            
+	            <div class="chat-room-body card-block">
+	            
+	            
+	                <!-- 받은 메시지 Start -->
+	                <div class="row mb-20 received-chat">
+	                
+	                    <div class="col-auto pr-0">
+	                        <img src="../img/users/2.jpg" alt="user image" class="rounded-circle img-40">	<!-- 이미지 표시 -->
+	                    </div>
+	                    
+	                    <div class="col">
+	                    	
+	                    	<h6 class="chat-room-name f-14">이원준</h6>		<!-- 아이디 표시 -->
+	                    	
+	                        <div class="msg chat-room-message">				<!--  메시지 표시 -->
+	                            <p class="mb-0">안녕하세요</p>
+	                        </div>
+	                        <div class="msg chat-room-message">
+	                            <p class="mb-0">안녕하세요</p>
+	                        </div>
+	                        <div class="msg chat-room-message">
+	                            <p class="mb-0">안녕하세요</p>
+	                        </div>
+	                        <div class="msg chat-room-message">
+	                            <p class="mb-0">안녕하세요</p>
+	                        </div>
+
+	                        <p class="text-muted mb-0"><i class="fa fa-clock-o mr-10"></i>10:20am</p>	<!-- 시간 표시 -->
+	                        
+	                    </div>
+	                    
+	                </div>
+	                <!-- 받은 메시지 End -->
+	                
+	                <!-- 받은 메시지 Start -->
+	                <div class="row mb-20 received-chat">
+	                    <div class="col-auto pr-0">
+	                        <img src="../img/users/2.jpg" alt="user image" class="rounded-circle img-40">
+	                    </div>
+	                    
+	                    <div class="col">
+	                    	
+	                    	<h6 class="chat-room-name f-14">이원준</h6>
+	                    	
+	                        <div class="msg chat-room-message">
+	                            <p class="mb-0">안녕하세요</p>
+	                        </div>
+	                       
+	                        
+	                        
+	                        <p class="text-muted mb-0"><i class="fa fa-clock-o mr-10"></i>10:21am</p>
+	                    </div>
+	                    
+	                </div>
+	                <!-- 받은 메시지 End -->
+	                
+	               
+	                
+	                
+	                
+	                <!-- 보낸 메시지 Start -->
+	                <div class="row mb-20 send-chat">
+	                
+	                    <div class="col">
+	                    
+	                        <div class="msg chat-room-message">		<!-- 메시지 표시 -->
+	                            <p class="mb-0">ㅎㅇㅎㅇ</p>
+	                        </div>
+	                        <div class="msg chat-room-message">
+	                            <p class="mb-0">ㅎㅇㅎㅇ</p>
+	                        </div>
+	                        <div class="msg chat-room-message">
+	                            <p class="mb-0">ㅎㅇㅎㅇ</p>
+	                        </div>
+
+	                        <p class="text-muted mb-0"><i class="fa fa-clock-o mr-10"></i>10:20am</p>	<!-- 시간 표시 -->
+	                        
+	                    </div>
+	                        
+	                    <div class="col-auto pl-0">
+	                        <img src="../img/users/3.jpg" alt="user image" class="rounded-circle img-40">	<!-- 이미지 표시 -->
+	                    </div>
+	                    
+		                
+	                </div>
+	                
+		            <div style="clear: both;"></div>
+	                
+	                <!-- 보낸 메시지 End -->
+	                
+	                <!-- 보낸 메시지 Start -->
+	                <div class="row mb-20 send-chat">
+	                
+	                    <div class="col">
+	                    
+	                        <div class="msg chat-room-message">		<!-- 메시지 표시 -->
+	                            <p class="mb-0">ㅎㅇㅎㅇ</p>
+	                        </div>
+	                        
+
+	                        <p class="text-muted mb-0"><i class="fa fa-clock-o mr-10"></i>10:21am</p>	<!-- 시간 표시 -->
+	                        
+	                    </div>
+	                        
+	                    <div class="col-auto pl-0">
+	                        <img src="../img/users/3.jpg" alt="user image" class="rounded-circle img-40">	<!-- 이미지 표시 -->
+	                    </div>
+	                    
+		                
+	                </div>
+	                
+	                <div style="clear: both;"></div>
+	                <!-- 보낸 메시지 End -->
+	                
+	               
+	                
+  
+	            </div>
+	            
+	            	<!-- 채팅 입력창 Start -->
+	                <div class="chat-room-input right-icon-control">
+	                
+	                    <div class="input-group input-group-button">
+	                    
+	                        <input type="text" class="form-control" placeholder="메시지를 입력하세요 (Shift + Enter로 줄바꿈이 가능합니다)">
+	                        
+	                        <div class="input-group-append">
+	                            <button class="btn btn-primary" type="button"><i class="ik ik-message-square"></i></button>
+	                        </div>
+	                        
+	                    </div>
+	                    
+	                </div>
+	                <!-- 채팅 입력창 End -->
+	        </div>
+	    </div>
+	    <!-- 채팅방 디테일뷰 End-->
+	    
+	    <!-- 대화방 리스트 Start-->
 		<div class="chat-list col-xl-3 col-md-3">
             <div class="card new-cust-card">
             
@@ -127,10 +357,12 @@
 	                    </div>
 	                    
 		                <div class="col-md-4" >
+		                
 		                	<!-- 검색, 대화방추가 아이콘 -->
 		                	<div style="float:right;">
+		                	
 			                    <a href="#!" class="chat-list-search" ><i class="ik ik-search f-18 text-secondary"></i></a>		
-			                    <a href="#!" class="chat-list-search" ><i class="ik ik-plus-square f-18 text-primary"></i></a>
+			                    <a href="#!" class="chat-list-search" ><i class="ik ik-plus-square f-18 text-secondary"></i></a>
 			                    
 		                	</div>
 		                </div>
@@ -139,13 +371,13 @@
 		                   <input type="text" class="form-control" placeholder="방제목, 참여자 검색"> 
 		               	</div>    
 
-                </div>
+                </div> 
+                <!-- 대화방 리스트 헤더 End-->
                 
-                <!-- 대화방 리스트 헤더 Start-->
-                
-                <div class="card-block">
+                <!-- 대화방리스트 body Start -->
+                <div class="card-block chat-list-body">
                 	
-                	<!-- 대화방 div Start-->
+                	<!-- 대화방리스트 div Start-->
                     <div class="align-middle mb-25">
                     
                         <img src="../messenger/img/pengsu2.jpg" alt="user image" class="rounded-circle img-40 align-top mr-15">	<!-- 대표 이미지 -->
@@ -165,8 +397,9 @@
                         </div>
                         
                     </div>
-                    <!-- 대화방 div End -->
+                    <!-- 대화방리스트 div End -->
                     
+                    <!-- 대화방리스트 div Start-->
                     <div class="align-middle mb-25">
                     
                         <img src="../messenger/img/pengsu.jpg" alt="user image" class="rounded-circle img-40 align-top mr-15">	<!-- 대표 이미지 -->
@@ -186,7 +419,9 @@
                         </div>
                         
                     </div>
+                    <!-- 대화방리스트 div End -->
                     
+                    <!-- 대화방리스트 div Start-->
                     <div class="align-middle mb-25">
                     
                         <img src="../messenger/img/pengsu2.jpg" alt="user image" class="rounded-circle img-40 align-top mr-15">	<!-- 대표 이미지 -->
@@ -206,155 +441,17 @@
                         </div>
                         
                     </div>
-                    
-                    
-                    
+                    <!-- 대화방리스트 div End -->
+
                 </div>
+                <!-- 대화방리스트 body End -->
+                
             </div>
         </div>
 		<!-- 대화방 리스트 End -->
-		
-		<!-- 채팅방 상세 -->
-		<div class="chat-room-detail col-xl-7 col-md-7">
-	        <div class="card chat-card">
-	        
-	        	<!-- 채팅방 상세 헤더 Start -->
-	            <div class="card-header row">
-	            
-					<!-- 채팅방 제목 -->	
-	            	<div class="col-md-8">
-	                	<span class="chat-room-title"><i class="ik ik-message-square"></i>  2팀 대화방</span>	
-	            	
-	            	</div>
-	            	
-	            	<!-- 검색, 파일첨부, 취소 버튼 -->
-	               	<div class="col-md-4" >
-	               		<div style="float:right">
-	               		<a href="#!"><i class="ik ik-search f-18 text-secondary"></i></a>
-	                    <a href="#!"><i class="ik ik-file-plus f-18 text-primary"></i></a>
-	                    <a href="#!"><i class="ik ik-x close-card f-18 text-warning"></i></a>
-	               		
-	               		</div>
-	               	</div>
-	            	
-	            	
-	                <!-- <div class="card-header-right">
-	                    <ul class="list-unstyled card-option" style="width: 28px;">
-	                        <li><i class="ik ik-chevron-left action-toggle"></i></li>
-	                        <li><i class="ik ik-minus minimize-card"></i></li>
-	                        <li><i class="ik ik-x close-card"></i></li>
-	                    </ul>
-	                    
-	                    
-	                    
-	                    
-	                 
-	                </div> -->
-	                
-	            </div>
-	            <!-- 채팅방 상세 헤더 End -->
-	            
-	            <div class="card-block">
-	            
-	            	<!-- 받은 메시지 Start -->
-	                <div class="row mb-20 received-chat">
-	                    <div class="col-auto pr-0">
-	                        <img src="../img/users/2.jpg" alt="user image" class="rounded-circle img-40">
-	                    </div>
-	                    
-	                    <div class="col">
-	                    	
-	                    	<h6 class="chat-room-name">이원준</h6>
-	                        <div class="msg">
-	                        	
-	                            <p class="chat-room-message mb-0">안녕하세요</p>
-	                          
-	                        </div>
-	                        <p class="text-muted mb-0"><i class="fa fa-clock-o mr-10"></i>10:20am</p>
-	                    </div>
-	                    
-	                </div>
-	                <div class="row mb-20 received-chat">
-	                    <div class="col-auto pr-0">
-	                        <img src="../img/users/2.jpg" alt="user image" class="rounded-circle img-40">
-	                    </div>
-	                    
-	                    <div class="col">
-	                    	
-	                    	<h6 class="chat-room-name">이원준</h6>
-	                        <div class="msg">
-	                        	
-	                            <p class="chat-room-message mb-0">안녕하세요</p>
-	                          
-	                        </div>
-	                        <p class="text-muted mb-0"><i class="fa fa-clock-o mr-10"></i>10:20am</p>
-	                    </div>
-	                    
-	                </div>
-	                <div class="row mb-20 received-chat">
-	                    <div class="col-auto pr-0">
-	                        <img src="../img/users/2.jpg" alt="user image" class="rounded-circle img-40">
-	                    </div>
-	                    
-	                    <div class="col">
-	                    	
-	                    	<h6 class="chat-room-name">이원준</h6>
-	                        <div class="msg">
-	                        	
-	                            <p class="chat-room-message mb-0">안녕하세요</p>
-	                          
-	                        </div>
-	                        <p class="text-muted mb-0"><i class="fa fa-clock-o mr-10"></i>10:20am</p>
-	                    </div>
-	                    
-	                </div>
-	                <!-- 받은 메시지 End -->
-	                
-	                <!-- 보낸 메시지 Start -->
-	                <div class="row mb-20 send-chat">
-	                    <div class="col">
-	                        <div class="msg">
-	                            <p class="mb-0">Nice to meet you!</p>
-	                        </div>
-	                        <p class="text-muted mb-0"><i class="fa fa-clock-o mr-10"></i>10:20am</p>
-	                    </div>
-	                    <div class="col-auto pl-0">
-	                        <img src="../img/users/3.jpg" alt="user image" class="rounded-circle img-40">
-	                    </div>
-	                </div>
-	                <!-- 보낸 메시지 End -->
-	                
-	                
-	                
-	                <!-- 채팅 입력창 Start -->
-	                <div class="right-icon-control">
-	                
-	                    <div class="input-group input-group-button">
-	                    
-	                        <input type="text" class="form-control" placeholder="Send message">
-	                        
-	                        <div class="input-group-append">
-	                            <button class="btn btn-primary" type="button"><i class="ik ik-message-square"></i></button>
-	                        </div>
-	                        
-	                    </div>
-	                    
-	                </div>
-	                <!-- 채팅 입력창 End -->
-	                
-	            </div>
-	        </div>
-	    </div>
+	    
 	</div>
 
-	
-	
-	
-	
-	
-	
-	
-	
 </th:block>
 
 
