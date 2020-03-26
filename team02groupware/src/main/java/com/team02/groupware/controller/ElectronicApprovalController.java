@@ -185,9 +185,13 @@ public class ElectronicApprovalController {
 	  * @author 김건훈
 	  */
 	 @GetMapping("/selectDocumentFormList")
-	 public String selectDocumentFormList() {
-		 List<ElectronicApprovalDocument> eaDocumentForm = eaService.selectEaDocumentForm();
-		 logger.info("문서 양식 테이블 조회 결과값 :: {}", eaDocumentForm.toString());
+	 public String selectDocumentFormList(Model model) {
+		 List<ElectronicApprovalDocument> eaDocumentFormList = eaService.selectEaDocumentForm();
+		 List<ElectronicApprovalDocument> eaDocumentFormTypeList = eaService.selectEaDocumentFormType();
+		 logger.info("문서 양식 테이블 조회 결과값 :: {}", eaDocumentFormList);
+		 logger.info("문서 양식 분류 테이블 조회 결과값 :: {}", eaDocumentFormTypeList);
+		 model.addAttribute("eaDocumentFormList", eaDocumentFormList);
+		 model.addAttribute("eaDocumentFormTypeList", eaDocumentFormTypeList);
 		 return "eaDocument/eaDocumentForSupervisor/documentFormList.html";
 	 }
 	 

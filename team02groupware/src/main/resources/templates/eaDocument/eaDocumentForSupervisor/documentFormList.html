@@ -82,7 +82,7 @@
 						  //console.log('체크박스클릭');
 						  var checkCount  = $('.ea-checkbox:checked').length;
 						  //console.log(checkCount);
-							  if(checkCount == 2){							
+							  if(checkCount == 3){							
 								 	 $('#all-ea-checkbox').iCheck('check');
 							  }else{
 								  	 $('#all-ea-checkbox').iCheck('uncheck');
@@ -99,7 +99,7 @@
 						  //console.log('체크박스클릭');
 						  var checkCount  = $('.ea-checkbox:checked').length;
 						  //console.log(checkCount);
-							  if(checkCount == 2){							
+							  if(checkCount == 3){							
 								 	 $('#all-ea-checkbox').iCheck('check');
 							  }else{
 								  	 $('#all-ea-checkbox').iCheck('uncheck');
@@ -133,7 +133,7 @@
 						 
 						  var checkCount  = $('.ea-checkbox:checked').length;
 						  
-						  if(checkCount == 2){
+						  if(checkCount == 3){
 						 		
 							  $('.ea-checkbox').iCheck('uncheck');
 						  }
@@ -224,37 +224,25 @@
                                                     		<input type="checkbox" class="ea-icheck" id="all-ea-checkbox">                                               	
                                                     	</th>
                                                         <th>분류</th>
-                                                        <th>사용 여부</th>
                                                         <th>양식명</th>
                                                         <th>약칭</th>
                                                         <th>설명</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
+                                                    <tr th:each="dfl:${eaDocumentFormList}">
                                                     	<td> 
                                                     		<input type="checkbox" class="ea-icheck ea-checkbox">
                                                     	</td>
-                                                        <td data-toggle="modal" data-target="#editLayoutItem">프로젝트	</td>
-                                                        <td data-toggle="modal" data-target="#editLayoutItem">사용</td>
-                                                        <td data-toggle="modal" data-target="#editLayoutItem">프로젝트사업기획서</td>
-                                                        <td data-toggle="modal" data-target="#editLayoutItem">프로젝트사업기획</td>
-                                                     	<td data-toggle="modal" data-target="#editLayoutItem">프로젝트사업기획서다.</td>
-                                                    </tr> 
-                                                    <tr>
-                                                    	<td> 
-                                                    		 <input type="checkbox" class="ea-icheck ea-checkbox">
-                                                    	</td>
-                                                        <td data-toggle="modal" data-target="#editLayoutItem">프로젝트	</td>
-                                                        <td data-toggle="modal" data-target="#editLayoutItem">사용</td>
-                                                        <td data-toggle="modal" data-target="#editLayoutItem">프로젝트완료보고서</td>
-                                                        <td data-toggle="modal" data-target="#editLayoutItem">프로젝트완료보고</td>
-                                                     	<td data-toggle="modal" data-target="#editLayoutItem">프로젝트완료보고서다.</td>                                                       
-                                                    </tr>                                                                                                         
+                                                        <td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormType}">프로젝트</td>
+                                                        <td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormName}">프로젝트사업기획서</td>
+                                                        <td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormAbbreviation}">프로젝트사업기획</td>
+                                                     	<td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormDetailExplanation}">프로젝트사업기획서다.</td>
+                                                    </tr>                                                                                                        
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <span class="contents-quantity">양식 수 : 2</span>
+                                        <span class="contents-quantity">양식 수 : 3</span>
 	                                 	<nav aria-label="Page navigation example">
                                             <ul class="pagination mb-0 pagination-btn-group">
                                                 <li class="page-item">
@@ -360,8 +348,10 @@
 	                                            </div>
 	                                        </div>
 	                                   	</li>
+	                                   	<th:block th:each="dftl:${eaDocumentFormTypeList}">
 	                                   	<li class="list-group-item list-group-item-action document-form-type-list">
-	                                       	<p class="mb-10">공통 
+	                                       	<p class="mb-10">
+	                                       		<span th:text="${dftl.dFormType}"></span>
 	                                       		<span class="float-right">
 	                                       			<a href="#">
 	                                       				<i class="ik ik-edit f-16 mr-15 text-green"></i>
@@ -371,19 +361,8 @@
 	                                   				</a>
 	                                   			</span>
 	                                   		</p>
-	                                   	</li>
-	                                   	<li class="list-group-item list-group-item-action document-form-type-list">
-	                                   		<p class="mb-10">프로젝트 
-	                                       		<span class="float-right">
-	                                       			<a href="#">
-	                                       				<i class="ik ik-edit f-16 mr-15 text-green"></i>
-	                                       			</a>
-	                                       			<a href="#">
-	                                       				<i class="ik ik-trash-2 f-16 text-red"></i>
-	                                   				</a>
-	                                   			</span>
-	                                   		</p>
-	                                   	</li>
+	                                   	</li>	        
+	                                   	</th:block>
 	                                   </ul>
 	                               	 </div>
 	                              </div>

@@ -33,9 +33,21 @@ public class ElectronicApprovalService {
 	  */
 	 public List<ElectronicApprovalDocument> selectEaDocumentForm(){
 		
-		 List<ElectronicApprovalDocument> eaDocumentForm = eaMapper.selectEaDocumentForm();
-		 return eaDocumentForm;
+		 List<ElectronicApprovalDocument> eaDocumentFormList = eaMapper.selectEaDocumentForm();
+		 return eaDocumentFormList;
 	 };
+	 
+	 /*
+	  * @method selectEaDocumentFormType()
+	  * @brief 양식함관리 페이지 내 분류설정 테이블 조회 method
+	  * @author 김건훈
+	  */
+	 public List<ElectronicApprovalDocument> selectEaDocumentFormType(){
+		
+		 List<ElectronicApprovalDocument> eaDocumentFormTypeList = eaMapper.selectEaDocumentFormType();
+		 return eaDocumentFormTypeList;
+	 };
+	 
 	 
 	 /*
 	  * @method ajaxSetDocumentCodeFormat()

@@ -19,5 +19,11 @@ public interface ElectronicApprovalMapper {
 	  * @author 김건훈
 	  */
 	 public List<ElectronicApprovalDocument> selectEaDocumentForm();
-		 
+		
+	 /*
+	  * @method selectEaDocumentFormType()
+	  * @brief 양식함관리 페이지 내 분류설정 테이블 조회 method
+	  * @author 김건훈
+	  */
+	 public List<ElectronicApprovalDocument> selectEaDocumentFormType();
 }

@@ -24,6 +24,15 @@ public class ElectronicApprovalDocument {
 	private String dFormDetailContent; //문서 양식 상세내용
 	
 	/**
+	 * @brief 문서양식 분류 테이블 컬럼별 전역변수
+	 * @author 김건훈
+	 */
+	//문서양식 분류 코드는 문서양식 테이블 컬럼별 전역변수 내 에 있음
+	private String dFormType; //문서 양식 분류 명
+	
+	
+	
+	/**
 	 * @brief 문서양식 테이블 컬럼별 전역변수 getters&setters
 	 * @author 김건훈
 	 */
@@ -94,10 +103,20 @@ public class ElectronicApprovalDocument {
 		this.dFormDetailContent = dFormDetailContent;
 	}
 	
+	
 	/**
-	 * @brief 문서양식 테이블 컬럼별 전역변수 toString
+	 * @brief 문서양식 분류 테이블 컬럼별 전역변수 getters&setters
 	 * @author 김건훈
 	 */
+	public String getdFormType() {
+		return dFormType;
+	}
+	public void setdFormType(String dFormType) {
+		this.dFormType = dFormType;
+	}
+	
+	
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -123,10 +142,12 @@ public class ElectronicApprovalDocument {
 		builder.append(dExpiryDateChangeable);
 		builder.append(", dFormDetailContent=");
 		builder.append(dFormDetailContent);
+		builder.append(", dFormType=");
+		builder.append(dFormType);
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 	
 	
 }

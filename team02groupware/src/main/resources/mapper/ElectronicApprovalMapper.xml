@@ -17,6 +17,12 @@
   	<result property="dExpiryDate" column="d_expiry_date"/>
   	<result property="dExpiryDateChangeable" column="d_expiry_date_changeable"/>
   	<result property="dFormDetailContent" column="d_form_detail_content"/>
+  	<result property="dFormType" column="d_form_type"/>
+  </resultMap>
+  
+   <!-- 양식함관리 페이지 내 분류설정 테이블 dto map -->
+  <resultMap type="ElectronicApprovalDocument" id="eaDocumentFormTypeResultMap">
+	<result property="dFormType" column="d_form_type"/>
   </resultMap>
   
 
@@ -26,6 +32,17 @@
 	SELECT 
 		*
 	FROM 
-		ea_document_form;
+		ea_document_form AS edf INNER JOIN ea_document_form_type AS edft 
+		
+		ON edf.d_form_type_code = edft.d_form_type_code
+  </select>
+  
+  <!-- 양식함관리 페이지 내 분류설정 테이블 조회  -->
+  <select id="selectEaDocumentFormType" resultMap="eaDocumentFormTypeResultMap">
+  /* 문서양식 분류설정 테이블 조회 쿼리문 실행 */  
+	SELECT 
+		d_form_type
+	FROM 
+		ea_document_form_type;
   </select>
   </mapper>
