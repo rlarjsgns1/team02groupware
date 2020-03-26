@@ -48,6 +48,28 @@ public class ElectronicApprovalService {
 		 return eaDocumentFormTypeList;
 	 };
 	 
+	 /*
+	  * @method selectEaDocumentSetting()
+	  * @brief 전자결재 기본설정 테이블 조회 method
+	  * @author 김건훈
+	  */
+	 public List<ElectronicApprovalDocument> selectEaDocumentSetting(){
+		
+		 List<ElectronicApprovalDocument> eaDocumentSetting = eaMapper.selectEaDocumentSetting();
+		 return eaDocumentSetting;
+	 };
+	 
+	 
+	 /*
+	  * @method updateEaRule()
+	  * @brief 전자결재 사내 전자결재 규정 UPDATE method
+	  * @author 김건훈
+	  */
+	 public int updateEaRule(String eaRuleVal){
+		
+		 int result = eaMapper.updateEaRule(eaRuleVal);
+		 return result;
+	 };
 	 
 	 /*
 	  * @method ajaxSetDocumentCodeFormat()

@@ -25,6 +25,22 @@
 	<result property="dFormType" column="d_form_type"/>
   </resultMap>
   
+  <!-- 전자결재 기본설정 테이블 dto map -->
+  <resultMap type="ElectronicApprovalDocument" id="eaDocumentSettingResultMap">
+	<result property="dCompanyCodeUsage" column="d_company_code_usage"/>
+	<result property="dAbbreviationUsage" column="d_abbreviation_usage"/>
+	<result property="dUnitNameUsage" column="d_unit_name_usage"/>
+	<result property="dRegisterTimeFormat" column="d_register_time_format"/>
+	<result property="dSerialNumberFormat" column="d_serial_number_format"/>
+	<result property="dExpiredDateDelete" column="d_expired_date_delete"/>
+	<result property="dDecideFirstUsage" column="d_decide_first_usage"/>
+	<result property="dDecideInsteadUsage" column="d_decide_instead_usage"/>
+	<result property="dDecideAfterUsage" column="d_decide_after_usage"/>
+	<result property="dReferTime" column="d_refer_time"/>
+	<result property="dDraftCancelUsage" column="d_draft_cancel_usage"/>
+	<result property="dEaRule" column="d_ea_rule"/>
+  </resultMap>
+  
 
   <!-- 양식함관리 페이지 내 문서양식 테이블 조회  -->
   <select id="selectEaDocumentForm" resultMap="eaDocumentFormResultMap">
@@ -45,4 +61,23 @@
 	FROM 
 		ea_document_form_type;
   </select>
+  
+  <!-- 전자결재 기본설정 테이블 조회  -->
+  <select id="selectEaDocumentSetting" resultMap="eaDocumentSettingResultMap">
+  /* 전자결재 기본설정 테이블 조회 쿼리문 실행 */  
+	SELECT 
+		*
+	FROM 
+		ea_document_setting;
+  </select>
+  
+  <!-- 전자결재 사내 전자결재 규정 UPDATE  -->
+  <update id="updateEaRule" parameterType="String">
+  /* 전자결재 사내 전자결재 규정 UPDATE 쿼리문 실행 */  
+	UPDATE 
+		ea_document_setting 
+	SET
+		d_ea_rule=#{eaRuleVal};
+
+  </update>
   </mapper>

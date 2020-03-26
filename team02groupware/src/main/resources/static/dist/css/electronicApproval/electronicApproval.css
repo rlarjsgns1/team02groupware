@@ -76,10 +76,7 @@
 		display: inline-block;
 				
 	} 
- 	.note-toolbar>.note-btn-group,.note-toolbar>.btn-group,.note-toolbar>.note-style{/*  summer note 툴바 CSS */
-		/* margin-right : 0px !important; */
-		
-	} 
+
 	
 	#approval-format-set-btn{ /* 양식 생성 화면 결재 양식 설정 btn CSS */
 		color: #007bff;
@@ -245,5 +242,21 @@
 		width: 8px; 
 		height: auto;
 		cursor: pointer;
+		display: none;
+	}
+	
+	.ea-rule-update-before{ /* 사내 전자결재 규정 수정 전 화면 관련 CSS */
+		display: block;
+	}
+	
+	.ea-rule-update-after{ /* 사내 전자결재 규정 수정 중 화면 관련 CSS */
+		display: none;
+	}
+	
+	.ea-rule-update-btn-before{ /* 사내 전자결재 규정 수정 전 버튼 관련 CSS */
+		display: block;
+	}
+	
+	.ea-rule-update-btn-after{ /* 사내 전자결재 규정 수정 중 버튼 관련 CSS */
 		display: none;
 	}

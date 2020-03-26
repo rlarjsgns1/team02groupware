@@ -11,6 +11,7 @@
 		<th:block layout:fragment="customCss">
 			<link rel="stylesheet" href="dist/css/electronicApproval/electronicApproval.css">
 			<link rel="stylesheet" href="icheck/skins/square/blue.css">
+			<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 		</th:block>
 		
 		<th:block layout:fragment="customTitle">
@@ -138,6 +139,93 @@
 							  $('.ea-checkbox').iCheck('uncheck');
 						  }
 					  });
+					  
+					  
+					  /*
+					   * @brief 사내 전자결재 수정 form 전환 Event
+					   * @author 김건훈
+					   */
+					   $('.ea-rule-update-btn').on('click',function(){
+						   //console.log('사내전자 결재 수정 버튼 클릭')
+						   $('.ea-rule-update-after').css('display','block');
+						   $('.ea-rule-update-btn-after').css('display','block');
+						   
+						   $('.ea-rule-update-before').css('display','none');
+						   $('.ea-rule-update-btn-before').css('display','none');
+						   
+						   var eaRuleContents = $('#ea-rule-contents').text();
+						   $('#ea-rule-update-summernote').summernote('insertText',eaRuleContents);
+					   });
+					  
+					   $('.ea-rule-cancel-btn').on('click',function(){
+						   //console.log('사내전자 결재 수정 취소 버튼 클릭')
+						   $('.ea-rule-update-after').css('display','none');
+						   $('.ea-rule-update-btn-after').css('display','none');
+						   
+						   $('.ea-rule-update-before').css('display','block');
+						   $('.ea-rule-update-btn-before').css('display','block');
+						   
+						   $('#ea-rule-update-summernote').summernote('reset');
+						   
+					   });
+					   
+					   
+					   /*
+					    * @brief 사내 전자결재 수정 완료 Event
+					    * @author 김건훈
+					    */
+					    $('#ea-rule-update-submit-btn').on('click',function(){
+					    	//console.log('수정완료 버튼 클릭')
+					    	var eaRuleVal=$('#ea-rule-update-summernote').val();
+					    	//console.log(eaRuleVal);
+					    	
+					    	  var request = $.ajax({
+								    url: "/ajaxUpdateEaRule",
+								    method: "POST",
+								    data: {eaRuleVal : eaRuleVal},
+								    dataType: "json"
+								  });
+								   
+								  request.done(function(data) {
+								  	
+								  	
+								  });
+								   
+								  request.fail(function( jqXHR, textStatus ) {
+								    alert( "Request failed: " + textStatus );
+								  });  
+					    });   
+						   
+						   
+					   /*
+					   * @brief 사내 전자결재 수정 화면 summernote plug-in 사용
+					   * @author 김건훈
+					   */
+					   $('#ea-rule-update-summernote').summernote({   
+				             height: 300,                 
+				             minHeight: null,             
+				             maxHeight: null,             
+				             focus: true,      
+				             lang: "ko-KR",
+				             popover: {
+				                 image: [],
+				                 link: [],
+				                 air: []
+				               },
+				             toolbar: [
+				                    ['Font Style', ['fontname']],
+				                    ['style', ['bold', 'italic', 'underline']],
+				                    ['font', ['strikethrough']],
+				                    ['fontsize', ['fontsize']],
+				                    ['color', ['color']],
+				                    ['para', ['paragraph']],
+				                    ['height', ['height']],
+				                    ['Insert', ['picture']],
+				                    ['Insert', ['link']],
+				                    ['table', ['table']]
+				                	  ]   
+				     });
+					 
 				});
 			</script>
 		</th:block>
@@ -179,7 +267,7 @@
 	                                        <a class="nav-link text-primary" href="#" data-toggle="modal" data-target="#formTypeSetting">분류설정</a>
 	                                    </li>
 	                                    <li class="nav-item">
-	                                        <div class="nav-link"><span><a class="text-primary" href="#" data-toggle="modal" data-target="#eaRule">사내전자결재규정</a></span><i class="ik ik-help-circle"></i></div>
+	                                        <div class="nav-link"><span><a class="text-primary" href="#" data-toggle="modal" data-target="#eaRule" data-backdrop="static" data-keyboard="false">사내전자결재규정</a></span><i class="ik ik-help-circle"></i></div>
 	                                    </li>
 	                                </ul>
 	                            <!-- 테이블 상단 메뉴탭 End-->
@@ -375,22 +463,26 @@
 	                       </div>  
 	                      <!-- 양식함 페이지 분류설정 Modal View End -->
 	                      
-	                      <!-- 전자결재 규정 Modal View Start -->
+	                      <!-- 사내 전자결재 규정 Modal View Start -->
 	                        <div class="modal fade show" id="eaRule" tabindex="-1" role="dialog" aria-hidden="true">
 	                          <div class="modal-dialog modal-lg mt-0 mb-0 modal-dialog-centered" role="document">
 	                           <div class="modal-content">
 	                              <div class="modal-header">
 	                                  <h5 class="modal-title">사내 전자결재 규정</h5>
-	                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	                                      <span aria-hidden="true">&times;</span>
-	                                  </button>
 	                              </div>
-	                              <div class="modal-body">
-	                                	<h5>전자결재규정을작성하시오.</h5>
+	                              <div class="modal-body ea-rule-update-before">
+	                                  <pre id="ea-rule-contents"><th:block th:utext="${eaDocumentSetting.get(0).dEaRule}"></th:block></pre>
 	                              </div>
-	                              <div class="modal-footer">
-	                                  <button type="button" class="btn btn-primary">수정</button>
-	                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+	                              <div class="modal-body ea-rule-update-after">
+	                                 <textarea id="ea-rule-update-summernote" rows="10"></textarea>
+	                              </div>
+	                              <div class="modal-footer ea-rule-update-btn-before">
+	                                  <button type="button" class="btn btn-primary ea-rule-update-btn">규정 수정</button>
+	                                  <button type="button" class="btn btn-secondary ea-rule-cancel-btn" data-dismiss="modal">취소</button>
+	                              </div>
+	                              <div class="modal-footer ea-rule-update-btn-after">
+	                                  <button type="button" class="btn btn-primary" id="ea-rule-update-submit-btn">수정 완료</button>
+	                                  <button type="button" class="btn btn-secondary ea-rule-cancel-btn" data-dismiss="modal">취소</button>
 	                              </div>
 	                          	</div>
 	                         </div>
@@ -406,7 +498,8 @@
         <script src="/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
         <script src="/plugins/screenfull/dist/screenfull.js"></script>
         <script src="/plugins/sweetalert/dist/sweetalert.min.js"></script>
-        <script src="/plugins/summernote/dist/summernote-bs4.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+        <script src="/summernote/lang/summernote-ko-KR.js"></script>
         <script src="/dist/js/theme.min.js"></script>
         <script src="/js/layouts.js"></script>
 	</th:block>

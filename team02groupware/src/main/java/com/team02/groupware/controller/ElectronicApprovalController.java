@@ -188,10 +188,13 @@ public class ElectronicApprovalController {
 	 public String selectDocumentFormList(Model model) {
 		 List<ElectronicApprovalDocument> eaDocumentFormList = eaService.selectEaDocumentForm();
 		 List<ElectronicApprovalDocument> eaDocumentFormTypeList = eaService.selectEaDocumentFormType();
-		 logger.info("문서 양식 테이블 조회 결과값 :: {}", eaDocumentFormList);
-		 logger.info("문서 양식 분류 테이블 조회 결과값 :: {}", eaDocumentFormTypeList);
+		 List<ElectronicApprovalDocument> eaDocumentSetting = eaService.selectEaDocumentSetting();
+		 //logger.info("문서 양식 테이블 조회 결과값 :: {}", eaDocumentFormList);
+		 //logger.info("문서 양식 분류 테이블 조회 결과값 :: {}", eaDocumentFormTypeList);
+		 logger.info("전자결재 기본설정 테이블 조회 결과값 :: {}", eaDocumentSetting.toString());
 		 model.addAttribute("eaDocumentFormList", eaDocumentFormList);
 		 model.addAttribute("eaDocumentFormTypeList", eaDocumentFormTypeList);
+		 model.addAttribute("eaDocumentSetting", eaDocumentSetting);
 		 return "eaDocument/eaDocumentForSupervisor/documentFormList.html";
 	 }
 	 
@@ -298,4 +301,22 @@ public class ElectronicApprovalController {
 	 		resultMap.put("result", result);
 	 		return resultMap;
 		}
+	 	
+	 	 /*
+		  * @method ajaxUpdateEaRule()
+		  * @brief 사내 전자결재 규정 update method
+		  * @author 김건훈
+		  */	
+		 	@PostMapping(value="/ajaxUpdateEaRule",produces = "application/json")
+		 	@ResponseBody
+			public Map<String,Object> ajaxUpdateEaRule(@RequestParam(value = "eaRuleVal") String eaRuleVal){
+		 		
+		 		logger.info("ajax로 보내진 사내전자결재규정 text editor 값 :: {}", eaRuleVal);
+		 		int result = eaService.updateEaRule(eaRuleVal);
+		 		logger.info("사내 전자결재 규정 UPDATE METHOD 정상 처리 여부 :: {}", result);
+		 		
+		 		Map<String,Object> resultMap = new HashMap<String,Object>();
+		 		resultMap.put("result", 1);
+		 		return resultMap;
+			}
 }

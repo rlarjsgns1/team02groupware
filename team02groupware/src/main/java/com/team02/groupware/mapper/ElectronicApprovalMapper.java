@@ -26,4 +26,18 @@ public interface ElectronicApprovalMapper {
 	  * @author 김건훈
 	  */
 	 public List<ElectronicApprovalDocument> selectEaDocumentFormType();
+	 
+	 /*
+	  * @method selectEaDocumentSetting()
+	  * @brief 전자결재 기본설정 테이블 조회 method
+	  * @author 김건훈
+	  */
+	 public List<ElectronicApprovalDocument> selectEaDocumentSetting();
+	 
+	 /*
+	  * @method updateEaRule()
+	  * @brief 전자결재 사내 전자결재 규정 UPDATE method
+	  * @author 김건훈
+	  */
+	 public int updateEaRule(String eaRuleVal);
 }
