@@ -29,6 +29,10 @@
 	color: #979797;
 	font-size: 12px;
 }
+.chat-list-room{
+	border-radius: 5px / 5px;
+	
+}
 
 
 /*** 대화방 상세보기 ***/
