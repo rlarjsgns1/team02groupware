@@ -97,8 +97,8 @@
 		cursor: pointer;
 	}
 	
-	.document-form-type-list{ /* 양식 분류설정 <li> CSS */
-		cursor: pointer;
+	.document-form-type-clone{ /* 양식 분류설정 <li> clone 용 CSS */
+		display: none;
 	}
 	
 	.document-code-setting-table td{ /* 관리자용 기본설정 페이지에서 문서번호 설정 테이블 CSS */

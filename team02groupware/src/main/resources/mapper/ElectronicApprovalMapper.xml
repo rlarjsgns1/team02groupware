@@ -23,6 +23,7 @@
    <!-- 양식함관리 페이지 내 분류설정 테이블 dto map -->
   <resultMap type="ElectronicApprovalDocument" id="eaDocumentFormTypeResultMap">
 	<result property="dFormType" column="d_form_type"/>
+	<result property="dFormTypeCode" column="d_form_type_code"/>
   </resultMap>
   
   <!-- 전자결재 기본설정 테이블 dto map -->
@@ -57,7 +58,7 @@
   <select id="selectEaDocumentFormType" resultMap="eaDocumentFormTypeResultMap">
   /* 문서양식 분류설정 테이블 조회 쿼리문 실행 */  
 	SELECT 
-		d_form_type
+		*
 	FROM 
 		ea_document_form_type;
   </select>
@@ -80,4 +81,22 @@
 		d_ea_rule=#{eaRuleVal};
 
   </update>
+  
+  <!-- 문서 분류 코드 최대값 구하는 쿼리문  -->
+  <select id="selectEaDocumentFormTypeMaxCode" resultType="int">
+  /*문서 분류 코드 최대값 구하는 method */  
+	SELECT 
+		MAX(RIGHT(d_form_type_code,3)) 
+	FROM 
+		ea_document_form_type
+  </select>
+  
+  <!-- 문서 분류 insert 쿼리문  -->
+  <insert id="insertDocumentFormType" parameterType="ElectronicApprovalDocument">
+  /*문서 분류 insert method */  
+  	INSERT INTO ea_document_form_type
+		(d_form_type_code, d_form_type)
+	VALUES 
+		(#{dFormTypeCode}, #{dFormType})
+  </insert>
   </mapper>

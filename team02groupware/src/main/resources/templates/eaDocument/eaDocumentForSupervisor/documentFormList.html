@@ -22,212 +22,7 @@
 		<th:block layout:fragment="customScript">
 			<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 			<script src="icheck/icheck.min.js"></script>
-			<script type="text/javascript">
-
-				$(function(){
-				
-					 /*
-					  * @brief 사내전자결재규정 물음표 아이콘 Modal Event
-					  * @author 김건훈
-					  */	
-					$('.ik-help-circle').on('mouseover',function(e){
-			 
-						var divLeft = e.pageX - 150
-						var divTop = e.pageY - 50
-						
-						$('.ruletip').css({display:"block", "top": divTop, "left": divLeft});
-						
-						$(this).css("color","black");
-					});
-					
-					$('.ik').on('mouseleave',function(){
-						
-						$('.ruletip').css("display","none");
-						$(this).css("color","#bcc8d8");
-					});
-					
-					
-					/*
-					  * @brief 검색창 드롭다운 검색키워드 변경 이벤트
-					  * @author 김건훈
-					  */	
-					$('.dropdown-item').on('click',function(){
-						//console.log('드롭다운버튼클릭');
-						var searchType = $(this).text();
-						var tag = "<i class=\"ik ik-chevron-down mr-0 align-middle\"></i>";
-						//console.log(searchType);
-						$(this).parent().siblings('.dropdown-toggle').text(searchType);
-						$(this).parent().siblings('.dropdown-toggle').append(tag);
-					});
-					
-					 /*
-					  * @brief icheck plug-in 사용
-					  * @author 김건훈
-					  */
-
-					$(".ea-icheck").iCheck({
-
-						checkboxClass: 'icheckbox_square-blue'
-
-					});
-					 
-					 //페이지 로딩 시 체크박스 체크 초기화
-					$('#all-ea-checkbox,.ea-checkbox').iCheck('uncheck');
-					
-					 /*
-					  * @brief 각각 체크박스 체크 이벤트
-					  * @author 김건훈
-					  */
-
-					  $('.ea-checkbox').on('ifChecked', function(event){
-						  //console.log('체크박스클릭');
-						  var checkCount  = $('.ea-checkbox:checked').length;
-						  //console.log(checkCount);
-							  if(checkCount == 3){							
-								 	 $('#all-ea-checkbox').iCheck('check');
-							  }else{
-								  	 $('#all-ea-checkbox').iCheck('uncheck');
-							  }
-							  
-							  if(checkCount>0){
-									$('.table-row-delete-nav').css('visibility','visible')
-			 					}else{
-									$('.table-row-delete-nav').css('visibility','hidden')
-			 					}
-						  });
-					
-					  $('.ea-checkbox').on('ifUnchecked', function(event){
-						  //console.log('체크박스클릭');
-						  var checkCount  = $('.ea-checkbox:checked').length;
-						  //console.log(checkCount);
-							  if(checkCount == 3){							
-								 	 $('#all-ea-checkbox').iCheck('check');
-							  }else{
-								  	 $('#all-ea-checkbox').iCheck('uncheck');
-							  }
-							  
-							  if(checkCount>0){
-									$('.table-row-delete-nav').css('visibility','visible')
-			 					}else{
-									$('.table-row-delete-nav').css('visibility','hidden')
-			 					}
-						  });
-					  
-					 
-					
-					
-					 /*
-					  * @brief 전체 체크박스 체크 이벤트
-					  * @author 김건훈
-					  */
-					  
-					  $('#all-ea-checkbox').on('ifChecked', function(event){
-						  
-						  var checkCount  = $('.ea-checkbox:checked').length;
-						  	 	
-						  $('.ea-checkbox').iCheck('check');
-
-					  });
-					
-						
-					  $('#all-ea-checkbox').on('ifUnchecked', function(event){
-						 
-						  var checkCount  = $('.ea-checkbox:checked').length;
-						  
-						  if(checkCount == 3){
-						 		
-							  $('.ea-checkbox').iCheck('uncheck');
-						  }
-					  });
-					  
-					  
-					  /*
-					   * @brief 사내 전자결재 수정 form 전환 Event
-					   * @author 김건훈
-					   */
-					   $('.ea-rule-update-btn').on('click',function(){
-						   //console.log('사내전자 결재 수정 버튼 클릭')
-						   $('.ea-rule-update-after').css('display','block');
-						   $('.ea-rule-update-btn-after').css('display','block');
-						   
-						   $('.ea-rule-update-before').css('display','none');
-						   $('.ea-rule-update-btn-before').css('display','none');
-						   
-						   var eaRuleContents = $('#ea-rule-contents').text();
-						   $('#ea-rule-update-summernote').summernote('insertText',eaRuleContents);
-					   });
-					  
-					   $('.ea-rule-cancel-btn').on('click',function(){
-						   //console.log('사내전자 결재 수정 취소 버튼 클릭')
-						   $('.ea-rule-update-after').css('display','none');
-						   $('.ea-rule-update-btn-after').css('display','none');
-						   
-						   $('.ea-rule-update-before').css('display','block');
-						   $('.ea-rule-update-btn-before').css('display','block');
-						   
-						   $('#ea-rule-update-summernote').summernote('reset');
-						   
-					   });
-					   
-					   
-					   /*
-					    * @brief 사내 전자결재 수정 완료 Event
-					    * @author 김건훈
-					    */
-					    $('#ea-rule-update-submit-btn').on('click',function(){
-					    	//console.log('수정완료 버튼 클릭')
-					    	var eaRuleVal=$('#ea-rule-update-summernote').val();
-					    	//console.log(eaRuleVal);
-					    	
-					    	  var request = $.ajax({
-								    url: "/ajaxUpdateEaRule",
-								    method: "POST",
-								    data: {eaRuleVal : eaRuleVal},
-								    dataType: "json"
-								  });
-								   
-								  request.done(function(data) {
-								  	
-								  	
-								  });
-								   
-								  request.fail(function( jqXHR, textStatus ) {
-								    alert( "Request failed: " + textStatus );
-								  });  
-					    });   
-						   
-						   
-					   /*
-					   * @brief 사내 전자결재 수정 화면 summernote plug-in 사용
-					   * @author 김건훈
-					   */
-					   $('#ea-rule-update-summernote').summernote({   
-				             height: 300,                 
-				             minHeight: null,             
-				             maxHeight: null,             
-				             focus: true,      
-				             lang: "ko-KR",
-				             popover: {
-				                 image: [],
-				                 link: [],
-				                 air: []
-				               },
-				             toolbar: [
-				                    ['Font Style', ['fontname']],
-				                    ['style', ['bold', 'italic', 'underline']],
-				                    ['font', ['strikethrough']],
-				                    ['fontsize', ['fontsize']],
-				                    ['color', ['color']],
-				                    ['para', ['paragraph']],
-				                    ['height', ['height']],
-				                    ['Insert', ['picture']],
-				                    ['Insert', ['link']],
-				                    ['table', ['table']]
-				                	  ]   
-				     });
-					 
-				});
-			</script>
+			<script src="dist/js/electronicApproval/documentFormList.js"></script>
 		</th:block>
 		<th:block layout:fragment="customContents">
 						<div class="page-header">
@@ -425,21 +220,34 @@
 	                              </div>
 	                              <div class="modal-body">
 	                                  <div class="card-block widget-last-task">
-	                                  <ul class="list-group approverGroupList" style="overflow-y: inherit; overflow-x:hidden; max-height: 200px; -webkit-overflow-scrolling: touch;">
+	                                  <ul class="list-group approverGroupList document-form-type-ul" style="overflow-y: inherit; overflow-x:hidden; max-height: 200px; -webkit-overflow-scrolling: touch;">
 	                                   	<li class="list-group-item list-group-item-action disabled">
 	                                        <div class="right-icon-control m-t-15">
 	                                            <div class="input-group input-group-button">
-	                                                <input type="text" class="form-control" placeholder="분류를 추가하십시오.">
+	                                                <input type="text" class="form-control" placeholder="분류를 추가하십시오." id="add-document-form-type-input">
 	                                                <div class="input-group-append">
-	                                                    <button class="btn btn-primary" type="button"><i class="ik ik-plus"></i></button>
+	                                                    <button class="btn btn-primary" type="button" id="add-document-form-type-btn"><i class="ik ik-plus"></i></button>
 	                                                </div>
 	                                            </div>
 	                                        </div>
 	                                   	</li>
-	                                   	<th:block th:each="dftl:${eaDocumentFormTypeList}">
-	                                   	<li class="list-group-item list-group-item-action document-form-type-list">
+	                                   	<li class="list-group-item document-form-type-clone document-form-type-li">
 	                                       	<p class="mb-10">
-	                                       		<span th:text="${dftl.dFormType}"></span>
+	                                       		<span id="document-form-type-name"></span>
+	                                       		<span class="float-right">
+	                                       			<a href="#">
+	                                       				<i class="ik ik-edit f-16 mr-15 text-green"></i>
+	                                       			</a>
+	                                       			<a href="#">
+	                                       				<i class="ik ik-trash-2 f-16 text-red"></i>
+	                                   				</a>
+	                                   			</span>
+	                                   		</p>
+	                                   	</li>
+	                                   	<th:block th:each="dftl:${eaDocumentFormTypeList}">
+	                                   	<li class="list-group-item document-form-type-li">
+	                                       	<p class="mb-10">
+	                                       		<span th:text="${dftl.dFormType}" th:value="${dftl.dFormTypeCode}"></span>
 	                                       		<span class="float-right">
 	                                       			<a href="#">
 	                                       				<i class="ik ik-edit f-16 mr-15 text-green"></i>
@@ -454,10 +262,6 @@
 	                                   </ul>
 	                               	 </div>
 	                              </div>
-	                              <div class="modal-footer">
-	                                  <button type="button" class="btn btn-primary">확인</button>
-	                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-	                              </div>
 	                          	</div>
 	                         </div>
 	                       </div>  
@@ -471,7 +275,7 @@
 	                                  <h5 class="modal-title">사내 전자결재 규정</h5>
 	                              </div>
 	                              <div class="modal-body ea-rule-update-before">
-	                                  <pre id="ea-rule-contents"><th:block th:utext="${eaDocumentSetting.get(0).dEaRule}"></th:block></pre>
+	                                  <pre id="ea-rule-contents" style="font-family:'noto sans CJK kr', 'sans-serif'; letter-spacing:-1.5px;"><th:block th:utext="${eaDocumentSetting.get(0).dEaRule}"></th:block></pre>
 	                              </div>
 	                              <div class="modal-body ea-rule-update-after">
 	                                 <textarea id="ea-rule-update-summernote" rows="10"></textarea>
@@ -481,7 +285,7 @@
 	                                  <button type="button" class="btn btn-secondary ea-rule-cancel-btn" data-dismiss="modal">취소</button>
 	                              </div>
 	                              <div class="modal-footer ea-rule-update-btn-after">
-	                                  <button type="button" class="btn btn-primary" id="ea-rule-update-submit-btn">수정 완료</button>
+	                                  <button type="button" class="btn btn-primary" id="ea-rule-update-submit-btn" data-dismiss="modal">수정 완료</button>
 	                                  <button type="button" class="btn btn-secondary ea-rule-cancel-btn" data-dismiss="modal">취소</button>
 	                              </div>
 	                          	</div>

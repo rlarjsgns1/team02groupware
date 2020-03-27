@@ -40,4 +40,18 @@ public interface ElectronicApprovalMapper {
 	  * @author 김건훈
 	  */
 	 public int updateEaRule(String eaRuleVal);
+	 
+	 /*
+	  * @method updateEaRule()
+	  * @brief 문서 분류 코드 최대값 구하는 method 
+	  * @author 김건훈
+	  */
+	 public int selectEaDocumentFormTypeMaxCode();
+	 
+	 /*
+	  * @method insertDocumentFormType()
+	  * @brief 문서 분류 코드 최대값으로 insert method
+	  * @author 김건훈
+	  */
+	 public int insertDocumentFormType(ElectronicApprovalDocument eaDto);
 }

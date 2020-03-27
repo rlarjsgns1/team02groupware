@@ -190,8 +190,8 @@ public class ElectronicApprovalController {
 		 List<ElectronicApprovalDocument> eaDocumentFormTypeList = eaService.selectEaDocumentFormType();
 		 List<ElectronicApprovalDocument> eaDocumentSetting = eaService.selectEaDocumentSetting();
 		 //logger.info("문서 양식 테이블 조회 결과값 :: {}", eaDocumentFormList);
-		 //logger.info("문서 양식 분류 테이블 조회 결과값 :: {}", eaDocumentFormTypeList);
-		 logger.info("전자결재 기본설정 테이블 조회 결과값 :: {}", eaDocumentSetting.toString());
+		 logger.info("문서 양식 분류 테이블 조회 결과값 :: {}", eaDocumentFormTypeList);
+		 //logger.info("전자결재 기본설정 테이블 조회 결과값 :: {}", eaDocumentSetting.toString());
 		 model.addAttribute("eaDocumentFormList", eaDocumentFormList);
 		 model.addAttribute("eaDocumentFormTypeList", eaDocumentFormTypeList);
 		 model.addAttribute("eaDocumentSetting", eaDocumentSetting);
@@ -291,11 +291,11 @@ public class ElectronicApprovalController {
 	 	@ResponseBody
 		public Map<String,Object> ajaxSetDocumentCodeFormat(@RequestBody Map<String,Object> checkRadioMap){
 	 		
-	 		logger.info("ajax로 보내진 check된 radio map :: {}", checkRadioMap.toString());
+	 		//logger.info("ajax로 보내진 check된 radio map :: {}", checkRadioMap.toString());
 	 		
 	 		String result = eaService.ajaxSetDocumentCodeFormat(checkRadioMap);
 	 		
-	 		logger.info("문서 번호 가공 후 결과값 :: {}", result);
+	 		//logger.info("문서 번호 가공 후 결과값 :: {}", result);
 	 		
 	 		Map<String,Object> resultMap = new HashMap<String,Object>();
 	 		resultMap.put("result", result);
@@ -311,12 +311,32 @@ public class ElectronicApprovalController {
 		 	@ResponseBody
 			public Map<String,Object> ajaxUpdateEaRule(@RequestParam(value = "eaRuleVal") String eaRuleVal){
 		 		
-		 		logger.info("ajax로 보내진 사내전자결재규정 text editor 값 :: {}", eaRuleVal);
+		 		//logger.info("ajax로 보내진 사내전자결재규정 text editor 값 :: {}", eaRuleVal);
 		 		int result = eaService.updateEaRule(eaRuleVal);
-		 		logger.info("사내 전자결재 규정 UPDATE METHOD 정상 처리 여부 :: {}", result);
+		 		//logger.info("사내 전자결재 규정 UPDATE METHOD 정상 처리 여부 :: {}", result);
 		 		
 		 		Map<String,Object> resultMap = new HashMap<String,Object>();
-		 		resultMap.put("result", 1);
+		 		resultMap.put("result", result);
 		 		return resultMap;
 			}
+		 	
+		 	 /*
+			  * @method ajaxInsertDocumentFormType()
+			  * @brief 문서 양식 분류 insert method
+			  * @author 김건훈
+			  */	
+			 	@PostMapping(value="/ajaxInsertDocumentFormType",produces = "application/json")
+			 	@ResponseBody
+				public Map<String,Object> ajaxInsertDocumentFormType(@RequestParam(value = "inputDocumentFormTypeVal") String inputDocumentFormTypeVal){
+			 		
+			 		//logger.info("ajax로 보내진 입력한 문서 양식 분류 value:: {}", inputDocumentFormTypeVal); 	
+			 		ElectronicApprovalDocument eaDto = new ElectronicApprovalDocument();
+			 		eaDto.setdFormType(inputDocumentFormTypeVal);
+			 		int result = eaService.insertDocumentFormType(eaDto);
+			 		//logger.info("문서양식분류 insert 처리 결과:: {}", result); 	
+			 		Map<String,Object> resultMap = new HashMap<String,Object>();
+			 		resultMap.put("result", result);
+			 		
+			 		return resultMap;
+				}
 }

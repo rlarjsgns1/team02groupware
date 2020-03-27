@@ -72,6 +72,40 @@ public class ElectronicApprovalService {
 	 };
 	 
 	 /*
+	  * @method insertDocumentFormType()
+	  * @brief 문서 분류 insert method(문서 분류 코드 최대값 비교, 중복검사 처리 : result=0 중복되는 값 존재 result=1 db에 정상적으로 값 저장)
+	  * @author 김건훈
+	  */
+	 public int insertDocumentFormType(ElectronicApprovalDocument eaDto){
+		
+		 //System.out.println(eaDto.getdFormType()+"<------- 컨트롤러에서 넘어온 문서 분류 val");
+		 
+		 //중복검사
+		 int result=0;
+		 List<ElectronicApprovalDocument> documentFormTypeList = eaMapper.selectEaDocumentFormType();
+		 for(int i = 0; i<documentFormTypeList.size(); i++) {
+			 //System.out.println(documentFormTypeList.get(i).getdFormType()+"<--------db 에서 뽑아온 문서 양식 분류명");
+			 if(documentFormTypeList.get(i).getdFormType().equals(eaDto.getdFormType())) {
+				 //System.out.println("이미 중복된 문서양식분류명 존재");
+				 return result;
+			 }
+		 }
+		 
+		 //문서 분류 양식 코드 최대값 구하여 db에 값 저장
+		 int maxCode = eaMapper.selectEaDocumentFormTypeMaxCode();
+		 //System.out.println(maxCode+"<-------- db 에서 가져온 문서 분류코드 최대값");
+		 String maxCodeFormat = "EATY"+String.format("%03d", maxCode+1);
+		 //System.out.println(maxCodeFormat+"<-------- 가져온 문서 분류코드 최대값 +1 후 빈자리에 0으로 채워넣은 포맷 적용한 문서 분류코드 최대값");
+		 
+		 eaDto.setdFormTypeCode(maxCodeFormat);
+		 
+		 result = eaMapper.insertDocumentFormType(eaDto);
+		 
+		 return result;
+	 };
+	 
+	 
+	 /*
 	  * @method ajaxSetDocumentCodeFormat()
 	  * @brief 관리자용 전자결재 기본설정 화면 문서번호 처리 service method
 	  * @author 김건훈
