@@ -18,6 +18,14 @@ public class ProjectService {
 	@Autowired
 	private ProjectMapper projectMapper;
 
+	
+	//업무리스트별 업무상세정보 조회
+	public List<Project> getTaskdetail(String tasklistCode){
+		List<Project> taskDetail = new ArrayList<Project>();
+		taskDetail = projectMapper.getTaskdetail(tasklistCode);
+		return taskDetail;
+	}
+	
 	//업무리스트 추가
 	public int tasklistInsert(Project project) {
 		return projectMapper.tasklistInsert(project);

@@ -3,6 +3,7 @@ package com.team02.groupware.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team02.groupware.dto.Project;
@@ -37,6 +39,9 @@ public class ProjectController {
 	@Autowired
 	private ProjectService projectService;
 
+	
+	
+	
 	//내 업무 조회 메서드
 	@GetMapping("/myTasks")
 	public String myTasks() {
@@ -48,18 +53,30 @@ public class ProjectController {
 	public String taskCalendar() {
 		return "project/taskCalendar";
 	}
+	//업무상세정보 조회 메서드
+	
+	/*
+	@GetMapping("/taskList")
+	public String getTaskdetail(Model model, @RequestParam(value="tasklistCode",required=false) String tasklistCode) {
+		System.out.println("binding test: "+ tasklistCode);
+		return "project/taskList";
+	}
+	
+	*/
+	
+	
 	
 	//업무리스트 조회 메서드
 	@GetMapping("/taskList")
 	public String taskList(	Model model, @RequestParam(value="projectCode",required = false) String projectCode,
-							@RequestParam(value="projectTitle",required = false) String projectTitle,HttpServletRequest request) throws UnsupportedEncodingException {
+							@RequestParam(value="projectTitle",required = false) String projectTitle,
+							@RequestParam(value="tasklistCode",required = false) String tasklistCode,
+							HttpServletRequest request) throws UnsupportedEncodingException {
 		request.setCharacterEncoding("UTF-8");
 		//System.out.println("binding test: " + projectCode);
 		System.out.println("binding test: " + projectTitle);
-
 		List<Project> taskList = new ArrayList<Project>();
 		taskList = projectService.selectTasklist(projectCode);
-		
 		System.out.println("프로젝트 확인: "+taskList.toString());
 		model.addAttribute("taskList", taskList);
 		model.addAttribute("projectTitle", projectTitle);
@@ -67,15 +84,40 @@ public class ProjectController {
 	}
 	
 	
-	//프로젝트 수정 메서드
+	//프로젝트 수정 메서드 포스트 맵핑
+	public String projectUpdate(Project project) {
+		System.out.println(project.toString());
+		int result = projectService.projectUpdate(project);
+		if(result>0) {
+			return "redirect:/projectList";
+		}
+		return "redirect:/projectList";
+	}
+	
+	//프로젝트 수정 메서드 겟 맵핑
 	@GetMapping("/projectUpdate")
-	public String projectUpdate(@RequestParam(value="projectCode") String projectCode, Model model) {
-		System.out.println("binding test=" + projectCode);
-		System.out.println("binding test2=" + projectService.selectForProUpdate(projectCode).toString());
-		model.addAttribute("Project", projectService.selectForProUpdate(projectCode));
+	public String projectUpdate() {
+		
 		return "project/projectList";
 		
 	}
+	
+	//프로젝트 수정을 위한 1개정보 불러오는 ajax 메서드 겟 맵핑
+		@GetMapping("/ajaxProjectSelectForUpdate")
+		@ResponseBody
+		public Map<String, Object> projectSelectForUpdate(@RequestParam(value="projectCode") String projectCode) {
+			System.out.println("binding test=" + projectCode);
+			Project resultProject=projectService.selectForProUpdate(projectCode);
+			
+			System.out.println("binding test2=" + resultProject.toString());
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("title", resultProject.getProjectTitle());
+			resultMap.put("desc", resultProject.getProjectDesc());
+			resultMap.put("start", resultProject.getProjectStart());
+			resultMap.put("dead", resultProject.getProjectDeadline());
+			resultMap.put("end", resultProject.getProjectEnd());
+			return resultMap;
+		}
 	
 	
 	

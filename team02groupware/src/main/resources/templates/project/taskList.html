@@ -12,64 +12,8 @@
 
 
 <th:block layout:fragment="customScript">
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script type="text/javascript">
-		$(function() {
-			//업무 추가 버튼 클릭시 복제 이벤트
-			$(document).on('click','.task-add-btn',function() {
-				console.log('새 업무만들기 클릭');
-				//업무 li 태그 복제
-				var taskClone = $(this).siblings('.dd-list').find("li:last").clone();
-				//업무제목 선택
-				var taskTitle = $(this).siblings('.form-group').find('input[name="taskTitle"]:last');
-				
-				var nearDdlist = $(this).siblings('.dd-list');
-				console.log(taskTitle.val());
-				
-				if (taskTitle.val() != null && taskTitle.val() != '') {
-				taskClone.appendTo(nearDdlist);
-				taskClone.css("display", "block");
-				taskClone.find(".tasktitleClone").text(taskTitle.val());
-				taskTitle.val('');
-				}
-			})
-
-			//새 업무 추가 input 취소 버튼 클릭시 value 공백
-			$(".task-cancel-btn").click(function() {
-				var taskTitle = $('input[name="taskTitle"]:last');
-				taskTitle.val('');
-			})
-
-			//업무리스트추가 버튼 클릭이벤트
-			$(document).on('keydown','.tasklistName',function(key) {
-				if(key.keyCode==13){
-						var tasklistClone = $(".tasklist-clone:first").clone(true);
-						var tasklistInput = $('input[name="tasklistName"]');
-
-						if (tasklistInput.val() != null && tasklistInput.val() != '') {
-							tasklistClone.appendTo(".task-row");
-							tasklistClone.css("display", "block");
-							tasklistClone.find(".tasklistnameClone").text(tasklistInput.val());
-							tasklistInput.val('');
-					
-						}
-					$('.scroller-layout').animate({
-						scrollLeft: $('.tasklistName').offset().left},1);
-					
-				}
-					})
-			//업무리스트이름 취소버튼 클릭시 input value 공백 처리		
-			$("#tasklist-cancel-btn").click(function() {
-				var tasklistName = $('input[name="tasklistName"]:last');
-				tasklistName.val('');
-			})
-			
-			$(".ik-chevron-left").click(function(){
-				location.href="/projectList";
-			})
-		});
-	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="dist/js/project/taskList.js"></script>
 </th:block>
 
 <th:block layout:fragment="customContents">
@@ -77,10 +21,10 @@
 			<div class="row align-items-end">
 				<div class="col-lg-8">
 					<div class="page-header-title">
-						<i class="ik ik-chevron-left bg-blue"></i>
+						<i class="back-btn ik ik-chevron-left bg-blue"></i>
 						<div class="d-inline">
 							<h5 th:text="${projectTitle}"></h5>
-							<span>칸반보드에서 업무를 추가하고 이동할 수 있습니다.</span>
+							<span>칸반보드에서 업무를 생성하고 이동할 수 있습니다.</span>
 						</div>
 					</div>
 				</div>
@@ -114,7 +58,7 @@
 					<div class="card-body completed-task">
 						<div class="dd" data-plugin="nestable">
 							<div class="form-group">
-								<input type="text" class="form-control" name="taskTitle" placeholder="새 업무 만들기">
+								<input type="text" class="tasklistTitle form-control" name="taskTitle" placeholder="새 업무 만들기">
 							</div>
 							<button type="button" class="task-add-btn btn btn-primary mr-2">만들기</button>
 							<button class="task-cancel-btn btn btn-light">취소</button>
@@ -133,7 +77,8 @@
 					<div class="card tasklist">
 					
 						<div class="card-header">
-							<h6 class="tasklistname" th:text="${tl.tasklistName}"></h6>
+							<h6 class="tasklistname" th:text="${tl.tasklistName}"></h6>	
+							<input type="hidden" class="tasklist-code-input" th:value="${tl.tasklistCode}">				
 							<div class="card-header-right">
 								<ul class="list-unstyled card-option">
 									<li><i class="ik ik-chevron-left action-toggle"></i></li>
@@ -143,32 +88,22 @@
 								</ul>
 							</div>
 						</div>
-						
 						<div class="card-body completed-task">
-							<div class="dd" data-plugin="nestable">
-								<div class="form-group">
-									<input type="text" class="form-control" name="taskTitle" placeholder="새 업무 만들기">
-								</div>
-								<button type="button" class="task-add-btn btn btn-primary mr-2">만들기</button>
-								<button class="task-cancel-btn btn btn-light">취소</button>
-								
-								<ol class="dd-list">
-								
-									<li class="task dd-item" data-id="1">
-										<div class="dd-handle">
-											<p class="tasktitleClone" >업무1</p>
-										</div>
-									</li>
-									<li class="task dd-item" data-id="1">
-										<div class="dd-handle">
-											<p class="tasktitleClone">업무1</p>
-										</div>
-									</li>
-									
-								</ol>
+						<div class="dd" data-plugin="nestable">
+							<div class="form-group">
+								<input type="text" class="tasklistTitle form-control" name="taskTitle" placeholder="새 업무 만들기">
 							</div>
+							<button type="button" class="task-add-btn btn btn-primary mr-2">만들기</button>
+							<button class="task-cancel-btn btn btn-light">취소</button>
+							<ol class="dd-list">
+								<li class="task-clone dd-item" data-id="1">
+									<div class="dd-handle">
+										<p class="tasktitleClone"></p>
+									</div>
+								</li>
+							</ol>
 						</div>
-						
+					</div>
 					</div>
 				</th:block>
 				

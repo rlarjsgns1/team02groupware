@@ -38,39 +38,7 @@
         });
     })
 
-/*
- * @file layouts.js
- * @brief 전자결재 관련 테이블 row 삭제시 SweetAlert Library 수정
- * @author 김건훈
- */
-$(document).ready(function() {
-        var listDelete = $('.ea-list-delete');
-        listDelete.on('click', function() {
-            swal({
-                title: "선택한 항목을 삭제하시겠습니까?",
-                text: "선택한 문서를 삭제하시겠습니까?",
-                icon: "warning",
-                buttons: ["취소", "삭제"],
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    swal({
-                        title: "삭제되었습니다.",
-                        text: "선택한 문서가 삭제되었습니다.",
-                        icon: "success",
-                    });
-                } else {
-                    swal("삭제가 취소되었습니다.");
-                }
-            });
-        });
-        $('.html-editor').summernote({
-          height: 300,
-          tabsize: 2
-        });
-    }) 
-    
+
     
     
     
@@ -83,8 +51,7 @@ $(document).ready(function() {
             var listDelete = $('.project-delete-btn');
             listDelete.on('click', function() {
                 swal({
-                    title: "선택한 항목을 삭제하시겠습니까?",
-                    text: "선택한 프로젝트를 삭제하시겠습니까?",
+                    title: "해당 프로젝트를 삭제하시겠습니까?",
                     icon: "warning",
                     buttons: ["취소", "삭제"],
                     dangerMode: true,
@@ -92,8 +59,7 @@ $(document).ready(function() {
                 .then((willDelete) => {
                     if (willDelete) {
                         swal({
-                            title: "삭제되었습니다.",
-                            text: "선택한 프로젝트가 삭제되었습니다.",
+                            title: "프로젝트가 삭제되었습니다.",
                             icon: "success",
                         });
                     } else {
