@@ -77,9 +77,12 @@ public class ProjectController {
 		System.out.println("binding test: " + projectTitle);
 		List<Project> taskList = new ArrayList<Project>();
 		taskList = projectService.selectTasklist(projectCode);
-		System.out.println("프로젝트 확인: "+taskList.toString());
+		List<Project> taskDetail = new ArrayList<Project>();
+		taskDetail= projectService.getTaskdetail(projectCode);
+		System.out.println(taskDetail);
 		model.addAttribute("taskList", taskList);
 		model.addAttribute("projectTitle", projectTitle);
+		model.addAttribute("taskDetail", taskDetail);
 		return "project/taskList";
 	}
 	

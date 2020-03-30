@@ -11,7 +11,7 @@ import com.team02.groupware.dto.Project;
 public interface ProjectMapper {
 	
 	//업무리스트별 업무상세정보 조회
-	public List<Project> getTaskdetail(String tasklistCode);
+	public List<Project> getTaskdetail(String projectCode);
 	
 	//업무리스트추가
 	public int tasklistInsert(Project project);

@@ -16,6 +16,7 @@
 		<result property="projectStart" column="project_start" />
 		<result property="projectEnd" column="project_end" />
 		
+		<result property="taskCode" column="task_code" />
 		<result property="taskTitle" column="task_title" />
 		<result property="taskDesc" column="task_desc" />
 		<result property="taskDate" column="task_date" />
@@ -32,11 +33,13 @@
 	<!-- 업무 상세정보 조회 -->
 	<select id="getTaskdetail" parameterType="String" resultMap="projectResultMap">
 			SELECT
-				TD.*
+				TD.tasklist_code,
+				TD.task_title,
+				TD.task_code
 			FROM
 				project_task_detail AS TD
 			WHERE
-				TD.tasklist_code=#{tasklistCode};
+				TD.project_code=#{projectCode};
 	
 	</select>
 

@@ -20,9 +20,9 @@ public class ProjectService {
 
 	
 	//업무리스트별 업무상세정보 조회
-	public List<Project> getTaskdetail(String tasklistCode){
+	public List<Project> getTaskdetail(String projectCode){
 		List<Project> taskDetail = new ArrayList<Project>();
-		taskDetail = projectMapper.getTaskdetail(tasklistCode);
+		taskDetail = projectMapper.getTaskdetail(projectCode);
 		return taskDetail;
 	}
 	

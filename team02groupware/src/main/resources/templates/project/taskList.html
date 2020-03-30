@@ -73,12 +73,16 @@
 					</div>
 				</div>
 				
+				
+				
+				
+				
 				<th:block th:each="tl:${taskList}">
 					<div class="card tasklist">
 					
 						<div class="card-header">
 							<h6 class="tasklistname" th:text="${tl.tasklistName}"></h6>	
-							<input type="hidden" class="tasklist-code-input" th:value="${tl.tasklistCode}">				
+							<input type="hidden" name="tasklistCodehidden" class="tasklist-code-input" th:value="${tl.tasklistCode}">				
 							<div class="card-header-right">
 								<ul class="list-unstyled card-option">
 									<li><i class="ik ik-chevron-left action-toggle"></i></li>
@@ -95,10 +99,10 @@
 							</div>
 							<button type="button" class="task-add-btn btn btn-primary mr-2">만들기</button>
 							<button class="task-cancel-btn btn btn-light">취소</button>
-							<ol class="dd-list">
+							<ol class="dd-list"  th:each="td:${taskDetail}" th:if="${td.tasklistCode}==${tl.tasklistCode}" >
 								<li class="task-clone dd-item" data-id="1">
 									<div class="dd-handle">
-										<p class="tasktitleClone"></p>
+										<p class="tasktitleClone" th:text="${td.taskTitle}"></p>
 									</div>
 								</li>
 							</ol>
@@ -124,6 +128,7 @@
 				</div>
 			</div>
 		</div>
+		
 </th:block>
 <th:block layout:fragment="customJs">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
