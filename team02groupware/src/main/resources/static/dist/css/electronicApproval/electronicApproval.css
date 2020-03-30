@@ -260,3 +260,8 @@
 	.ea-rule-update-btn-after{ /* 사내 전자결재 규정 수정 중 버튼 관련 CSS */
 		display: none;
 	}
+	.document-form-type-update-done-btn{ /* 문서 양식 분류 수정완료 버튼 */
+		display: none;
+		width:20%;
+		color: white;
+	}

@@ -332,11 +332,52 @@ public class ElectronicApprovalController {
 			 		//logger.info("ajax로 보내진 입력한 문서 양식 분류 value:: {}", inputDocumentFormTypeVal); 	
 			 		ElectronicApprovalDocument eaDto = new ElectronicApprovalDocument();
 			 		eaDto.setdFormType(inputDocumentFormTypeVal);
-			 		int result = eaService.insertDocumentFormType(eaDto);
 			 		//logger.info("문서양식분류 insert 처리 결과:: {}", result); 	
+			 		Map<String,Object> resultMap = new HashMap<String,Object>();
+			 		resultMap = eaService.insertDocumentFormType(eaDto);
+			 		
+			 		return resultMap;
+				}
+			 	
+		 	 /*
+			  * @method ajaxDeleteDocumentFormType()
+			  * @brief 문서 양식 분류 Delete method
+			  * @author 김건훈
+			  */	
+			 	@PostMapping(value="/ajaxDeleteDocumentFormType",produces = "application/json")
+			 	@ResponseBody
+				public Map<String,Object> ajaxDeleteDocumentFormType(@RequestParam(value = "deleteFormTypeCode") String deleteFormTypeCode){
+			 		
+			 		//logger.info("ajax로 보내진 삭제할 문서분류코드값:: {}", deleteFormTypeCode); 	
+			 		
+			 		int result = eaService.deleteDocumentFormType(deleteFormTypeCode);
+			 		
 			 		Map<String,Object> resultMap = new HashMap<String,Object>();
 			 		resultMap.put("result", result);
 			 		
 			 		return resultMap;
 				}
+			 	
+			 	/*
+				  * @method ajaxUpdateDocumentFormType()
+				  * @brief 문서 양식 분류 update method
+				  * @author 김건훈
+				  */	
+				 	@PostMapping(value="/ajaxUpdateDocumentFormType",produces = "application/json")
+				 	@ResponseBody
+					public Map<String,Object> ajaxUpdateDocumentFormType(	@RequestParam(value = "updateDocumentFormCode") String updateDocumentFormCode,
+																			@RequestParam(value = "updateDocumentFormInputVal") String updateDocumentFormInputVal){
+				 		
+				 		logger.info("ajax로 보내진 수정 관련 문서분류코드값:: {}", updateDocumentFormCode); 	
+				 		logger.info("ajax로 보내진 수정할 문서분류변경값:: {}", updateDocumentFormInputVal); 	
+				 		
+				 		ElectronicApprovalDocument eaDto = new ElectronicApprovalDocument();
+				 		eaDto.setdFormTypeCode(updateDocumentFormCode);
+				 		eaDto.setdFormType(updateDocumentFormInputVal);
+				 		int result = eaService.updateDocumentFormType(eaDto);
+				 		Map<String,Object> resultMap = new HashMap<String,Object>();
+				 		resultMap.put("result", result);
+				 		
+				 		return resultMap;
+					}
 }

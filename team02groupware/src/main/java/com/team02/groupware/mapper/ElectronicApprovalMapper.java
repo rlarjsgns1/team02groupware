@@ -42,16 +42,44 @@ public interface ElectronicApprovalMapper {
 	 public int updateEaRule(String eaRuleVal);
 	 
 	 /*
-	  * @method updateEaRule()
-	  * @brief 문서 분류 코드 최대값 구하는 method 
+	  * @method selectEaDocumentFormTypeMaxCode()
+	  * @brief 문서 양식 분류 코드 최대값 구하는 method 
 	  * @author 김건훈
 	  */
 	 public int selectEaDocumentFormTypeMaxCode();
 	 
 	 /*
 	  * @method insertDocumentFormType()
-	  * @brief 문서 분류 코드 최대값으로 insert method
+	  * @brief 문서 양식 분류 코드 최대값으로 insert method
 	  * @author 김건훈
 	  */
 	 public int insertDocumentFormType(ElectronicApprovalDocument eaDto);
+	 
+	 /*
+	  * @method deleteDocumentFormType()
+	  * @brief  문서 양식 분류 delete method
+	  * @author 김건훈
+	  */
+	 public int deleteDocumentFormType(String deleteFormTypeCode);
+	 
+	 /*
+	  * @method selectDocumentFormForDeleteDocumentFormType()
+	  * @brief 문서 양식 분류 삭제시 해당 분류를 사용하는 문서 양식 수 조회 method 
+	  * @author 김건훈
+	  */
+	 public int selectDocumentFormForDeleteDocumentFormType(String deleteFormTypeCode);
+	 
+	 /*
+	  * @method updateDocumentFormForDeleteDocumentFormType()
+	  * @brief  문서 양식 분류 삭제시 해당 양식 분류를 사용하는 문서 양식 존재 시 문서 양식 분류를 공통 분류로 update method
+	  * @author 김건훈
+	  */
+	 public int updateDocumentFormForDeleteDocumentFormType(String deleteFormTypeCode);
+	 
+	 /*
+	  * @method updateDocumentFormType()
+	  * @brief  문서 양식 분류 UPDATE method
+	  * @author 김건훈
+	  */
+	 public int updateDocumentFormType(ElectronicApprovalDocument eaDto);
 }

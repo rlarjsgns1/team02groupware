@@ -82,7 +82,7 @@
 
   </update>
   
-  <!-- 문서 분류 코드 최대값 구하는 쿼리문  -->
+  <!-- 문서 양식 분류 코드 최대값 구하는 쿼리문  -->
   <select id="selectEaDocumentFormTypeMaxCode" resultType="int">
   /*문서 분류 코드 최대값 구하는 method */  
 	SELECT 
@@ -91,7 +91,7 @@
 		ea_document_form_type
   </select>
   
-  <!-- 문서 분류 insert 쿼리문  -->
+  <!-- 문서 양식 분류 insert 쿼리문  -->
   <insert id="insertDocumentFormType" parameterType="ElectronicApprovalDocument">
   /*문서 분류 insert method */  
   	INSERT INTO ea_document_form_type
@@ -99,4 +99,46 @@
 	VALUES 
 		(#{dFormTypeCode}, #{dFormType})
   </insert>
+  
+   <!-- 문서 양식 분류 delete 쿼리문 -->
+  <delete id="deleteDocumentFormType" parameterType="String">
+  /* 문서 분류 delete 쿼리문 쿼리문 실행 */  
+	DELETE 
+		FROM 
+			ea_document_form_type 
+		WHERE 
+			d_form_type_code=#{deleteFormTypeCode}
+  </delete>
+  
+    <!-- 문서 양식 분류 삭제시 해당 분류를 사용하는 문서 양식 수 조회 쿼리문  -->
+  <select id="selectDocumentFormForDeleteDocumentFormType" resultType="int" parameterType="String">
+  /* 문서 양식 분류 삭제시 해당 분류를 사용하는 문서 양식 수 조회 쿼리문  */  
+	SELECT 
+		COUNT(1)
+	FROM
+		ea_document_form
+	WHERE
+		d_form_type_code=#{deleteFormTypeCode}
+  </select>
+  
+    <!-- 문서 양식 분류 삭제시 해당 양식 분류를 사용하는 문서 양식 존재 시 문서 양식 분류를 공통 분류로 update 쿼리문  -->
+  <update id="updateDocumentFormForDeleteDocumentFormType" parameterType="String">
+  /* 문서 양식 분류 삭제시 해당 양식 분류를 사용하는 문서 양식 존재 시 문서 양식 분류를 공통 분류로 update 쿼리문 실행 */  
+	UPDATE ea_document_form
+	SET
+		d_form_type_code='EATY001'
+	WHERE
+		d_form_type_code=#{deleteFormTypeCode}
+  </update>
+  
+   <!-- 문서 양식 분류 UPDATE  -->
+  <update id="updateDocumentFormType" parameterType="ElectronicApprovalDocument">
+  /*  문서 양식 분류 UPDATE 쿼리문 실행 */  
+	UPDATE ea_document_form_type
+	SET
+		d_form_type=#{dFormType}
+	WHERE 
+	d_form_type_code=#{dFormTypeCode}
+
+  </update>
   </mapper>

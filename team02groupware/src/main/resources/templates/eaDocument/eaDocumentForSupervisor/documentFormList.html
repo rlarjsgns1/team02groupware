@@ -233,8 +233,8 @@
 	                                   	</li>
 	                                   	<li class="list-group-item document-form-type-clone document-form-type-li">
 	                                       	<p class="mb-10">
-	                                       		<span id="document-form-type-name"></span>
-	                                       		<span class="float-right">
+	                                       		<span class="document-form-type-name"></span>
+	                                       		<span class="float-right document-form-type-update-delete-btn">
 	                                       			<a href="#">
 	                                       				<i class="ik ik-edit f-16 mr-15 text-green"></i>
 	                                       			</a>
@@ -242,19 +242,25 @@
 	                                       				<i class="ik ik-trash-2 f-16 text-red"></i>
 	                                   				</a>
 	                                   			</span>
+	                                   			<span class="float-right document-form-type-update-done-btn">
+	                                   				<button class="btn btn-primary">수정</button>
+	                                   			</span>
 	                                   		</p>
 	                                   	</li>
 	                                   	<th:block th:each="dftl:${eaDocumentFormTypeList}">
 	                                   	<li class="list-group-item document-form-type-li">
 	                                       	<p class="mb-10">
-	                                       		<span th:text="${dftl.dFormType}" th:value="${dftl.dFormTypeCode}"></span>
-	                                       		<span class="float-right">
+	                                       		<span th:text="${dftl.dFormType}" th:value="${dftl.dFormTypeCode}" class="document-form-type-name"></span>
+	                                       		<span class="float-right document-form-type-update-delete-btn" th:unless="${dftl.dFormTypeCode} eq EATY001">
 	                                       			<a href="#">
 	                                       				<i class="ik ik-edit f-16 mr-15 text-green"></i>
 	                                       			</a>
 	                                       			<a href="#">
 	                                       				<i class="ik ik-trash-2 f-16 text-red"></i>
 	                                   				</a>
+	                                   			</span>
+	                                   			<span class="float-right document-form-type-update-done-btn">
+	                                   				<button class="btn btn-primary">수정</button>
 	                                   			</span>
 	                                   		</p>
 	                                   	</li>	        

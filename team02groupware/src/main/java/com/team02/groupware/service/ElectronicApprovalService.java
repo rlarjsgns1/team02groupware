@@ -2,6 +2,7 @@ package com.team02.groupware.service;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,12 +74,14 @@ public class ElectronicApprovalService {
 	 
 	 /*
 	  * @method insertDocumentFormType()
-	  * @brief 문서 분류 insert method(문서 분류 코드 최대값 비교, 중복검사 처리 : result=0 중복되는 값 존재 result=1 db에 정상적으로 값 저장)
+	  * @brief 문서 양식 분류 insert method(문서 분류 코드 최대값 비교, 중복검사 처리 : result=0 중복되는 값 존재 result=1 db에 정상적으로 값 저장)
 	  * @author 김건훈
 	  */
-	 public int insertDocumentFormType(ElectronicApprovalDocument eaDto){
+	 public  Map<String,Object> insertDocumentFormType(ElectronicApprovalDocument eaDto){
 		
 		 //System.out.println(eaDto.getdFormType()+"<------- 컨트롤러에서 넘어온 문서 분류 val");
+		 
+		 Map<String,Object> resultMap = new HashMap<String,Object>();
 		 
 		 //중복검사
 		 int result=0;
@@ -87,11 +90,12 @@ public class ElectronicApprovalService {
 			 //System.out.println(documentFormTypeList.get(i).getdFormType()+"<--------db 에서 뽑아온 문서 양식 분류명");
 			 if(documentFormTypeList.get(i).getdFormType().equals(eaDto.getdFormType())) {
 				 //System.out.println("이미 중복된 문서양식분류명 존재");
-				 return result;
+				 resultMap.put("result", result);
+				 return resultMap;
 			 }
 		 }
 		 
-		 //문서 분류 양식 코드 최대값 구하여 db에 값 저장
+		 //문서 양식 분류 코드 최대값 구하여 db에 값 저장
 		 int maxCode = eaMapper.selectEaDocumentFormTypeMaxCode();
 		 //System.out.println(maxCode+"<-------- db 에서 가져온 문서 분류코드 최대값");
 		 String maxCodeFormat = "EATY"+String.format("%03d", maxCode+1);
@@ -100,10 +104,37 @@ public class ElectronicApprovalService {
 		 eaDto.setdFormTypeCode(maxCodeFormat);
 		 
 		 result = eaMapper.insertDocumentFormType(eaDto);
-		 
-		 return result;
+		 resultMap.put("result", result);
+		 resultMap.put("formTypeCode", maxCodeFormat);
+		 return resultMap;
 	 };
 	 
+	 /*
+	  * @method deleteDocumentFormType()
+	  * @brief  문서 양식 분류 delete method(문서 양식 분류 삭제시 해당 양식 분류를 사용하는 문서 양식 수 select 및 존재 시 문서 양식 분류를 공통 분류로 update)
+	  * @author 김건훈
+	  */
+	 public int deleteDocumentFormType(String deleteFormTypeCode){
+		 int selectForDelete = eaMapper.selectDocumentFormForDeleteDocumentFormType(deleteFormTypeCode);
+		 //System.out.println(selectForDelete+"<---삭제하려는 문서 양식 분류 코드를 사용하는 문서 양식 수 조회");
+		
+		 if(selectForDelete>0) {
+			 eaMapper.updateDocumentFormForDeleteDocumentFormType(deleteFormTypeCode);
+		 }
+		 
+		 int deleteResult = eaMapper.deleteDocumentFormType(deleteFormTypeCode);
+		 return deleteResult;
+	 };
+	 
+	 /*
+	  * @method updateDocumentFormType()
+	  * @brief  문서 양식 분류 UPDATE method
+	  * @author 김건훈
+	  */
+	 public int updateDocumentFormType(ElectronicApprovalDocument eaDto){
+		 int result = eaMapper.updateDocumentFormType(eaDto);
+		 return result;
+	 };
 	 
 	 /*
 	  * @method ajaxSetDocumentCodeFormat()

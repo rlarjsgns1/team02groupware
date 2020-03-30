@@ -226,15 +226,106 @@ $(function(){
 		 */
 	    
 		var deleteDocumentFormTypeFn = function(){
-			console.log('분류삭제');
+			//console.log('분류삭제');	
+			swal({
+                title: "선택한 분류를 삭제하시겠습니까?",
+                text: "해당 분류를 삭제하시면 기존 분류의 해당하는 문서 양식은 \"공통\" 분류로 지정됩니다. 계속하시겠습니까?",
+                icon: "warning",
+                buttons: ["취소", "삭제"],
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                	//console.log('삭제처리')
+                	var deleteFormTypeCode=$(this).parents('span').siblings('.document-form-type-name').attr('value');
+                	//console.log(deleteFormTypeCode);
+                	//$(this).parents('.document-form-type-li').remove();
+                	var documentFormTypeLi=$(this).parents('.document-form-type-li');
+                	var request = $.ajax({
+        			    url: "/ajaxDeleteDocumentFormType",
+        			    method: "POST",
+        			    data: {deleteFormTypeCode : deleteFormTypeCode},
+        			    dataType: "json"
+        			  	});
+        			   
+        			   request.done(function(data) {	
+        				   //console.log('문서양식 분류 삭제완료');
+        				   //console.log(data.result);
+        				   documentFormTypeLi.remove();
+        				   swal({
+                               title: "삭제되었습니다.",
+                               text: "선택한 분류가 삭제되었습니다.",
+                               icon: "success",
+                           });
+        			   });
+        			   
+        			  
+        			   request.fail(function( jqXHR, textStatus ) {
+        			    alert( "Request failed: " + textStatus );
+        			   }); 
+
+                   
+                } else {
+                    swal("삭제가 취소되었습니다.");
+                }
+            });
 		}
 		$('.document-form-type-li').find('.ik-trash-2').on('click', deleteDocumentFormTypeFn);
 		/*
 		 * @brief 문서 분류 수정 Event
 		 * @author 김건훈
 		 */
+		var updateDocumentFormLi=null;
+		var updateDocumentFormName=null;
+		var updateDocumentFormCode=null;
+		var updateDocumentFormBtn=null;
+		
 		var updateDocumentFormTypeFn = function(){
-			console.log('분류수정');
+			//console.log('분류수정');
+			if($('.update-document-form-input').length>0){
+				var updateDocumentFormInputVal = $('.update-document-form-input').val();
+				$('.update-document-form-input').replaceWith('<span class="document-form-type-name" value="'+updateDocumentFormCode+'">'+updateDocumentFormInputVal+'</span>');
+				updateDocumentFormBtn.css('display','block');
+				
+				
+				if(updateDocumentFormName!=updateDocumentFormInputVal&&updateDocumentFormInputVal!=''){
+					var request = $.ajax({
+						url: "/ajaxUpdateDocumentFormType",
+						method: "POST",
+						data: {	updateDocumentFormCode : updateDocumentFormCode,
+							updateDocumentFormInputVal : updateDocumentFormInputVal
+							  },
+						dataType: "json"
+					});
+					
+					request.done(function(data) {
+						console.log(data.result);
+						  swal({
+							   title: "수정되었습니다.",
+							   text: "문서 분류가 수정 되었습니다.",
+							   icon: "success"
+						   });
+					});
+					
+					
+					request.fail(function( jqXHR, textStatus ) {
+						alert( "Request failed: " + textStatus );
+					}); 
+				}
+				
+				
+			}
+			
+			updateDocumentFormLi=$(this).closest('.document-form-type-li').find('.document-form-type-name')
+			updateDocumentFormName=updateDocumentFormLi.text();
+			updateDocumentFormCode=updateDocumentFormLi.attr('value');
+			updateDocumentFormBtn=$(this).closest('.document-form-type-li').find('.document-form-type-update-delete-btn');
+			updateDocumentFormDoneBtn=$(this).closest('.document-form-type-li').find('.document-form-type-update-done-btn');
+			if($('.update-document-form-input').length==0){
+				updateDocumentFormLi.replaceWith('<input type="text" id="'+updateDocumentFormCode+'" class="update-document-form-input" style="width:70%" value="'+updateDocumentFormName+'">');
+				updateDocumentFormBtn.css('display','none');
+				
+			}
 		}
 		$('.document-form-type-li').find('.ik-edit').on('click', updateDocumentFormTypeFn);
 		/*
@@ -255,7 +346,7 @@ $(function(){
 			   request.done(function(data) {
 			   //console.log(data.result);
 			   if(data.result==0){
-				   console.log(inputDocumentFormTypeVal);
+				   //console.log(inputDocumentFormTypeVal);
 				   swal({
 					   title: "중복된 분류명입니다.",
 					   text: "["+inputDocumentFormTypeVal+"]"+" 은(는) 중복된 분류명입니다.",
@@ -263,9 +354,12 @@ $(function(){
 				   });
 				   
 			   }else{
+				   //console.log(data.formTypeCode);
 				   var documentFormTypeLi = $('.document-form-type-clone:last').clone();
 				   //console.log(documentFormTypeLi)
-				   documentFormTypeLi.find('#document-form-type-name').text(inputDocumentFormTypeVal);
+				   
+				   documentFormTypeLi.find('.document-form-type-name').text(inputDocumentFormTypeVal);
+				   documentFormTypeLi.find('.document-form-type-name').attr('value',data.formTypeCode);
 				   documentFormTypeLi.css('display','block');
 				   documentFormTypeLi.appendTo('.document-form-type-ul');
 				   
