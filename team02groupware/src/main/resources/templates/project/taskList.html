@@ -12,130 +12,144 @@
 
 
 <th:block layout:fragment="customScript">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="dist/js/project/taskList.js"></script>
 </th:block>
 
 <th:block layout:fragment="customContents">
-		<div class="page-header">
-			<div class="row align-items-end">
-				<div class="col-lg-8">
-					<div class="page-header-title">
-						<i class="back-btn ik ik-chevron-left bg-blue"></i>
-						<div class="d-inline">
-							<h5 th:text="${projectTitle}"></h5>
-							<span>칸반보드에서 업무를 생성하고 이동할 수 있습니다.</span>
-						</div>
+	<div class="task-page-header page-header">
+		<div class="row align-items-end">
+			<div class="col-lg-8">
+				<div class="page-header-title">
+					<i class="back-btn ik ik-chevron-left bg-blue"></i>
+					<div class="d-inline">
+						<h5 th:text="${projectTitle}"></h5>
+						<span>칸반보드에서 업무를 생성하고 이동할 수 있습니다.</span>
 					</div>
 				</div>
-				<div class="col-lg-4">
-					<nav class="breadcrumb-container" aria-label="breadcrumb">
-						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="/index"><i
-									class="ik ik-home"></i></a></li>
-							<li class="breadcrumb-item"><a href="/projectList">프로젝트</a></li>
-							<li class="breadcrumb-item active" aria-current="page" >업무리스트</li>
-						</ol>
-					</nav>
-				</div>
+			</div>
+			<div class="col-lg-4">
+				<nav class="breadcrumb-container" aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/index"><i
+								class="ik ik-home"></i></a></li>
+						<li class="breadcrumb-item"><a href="/projectList">프로젝트</a></li>
+						<li class="breadcrumb-item active" aria-current="page">업무리스트</li>
+					</ol>
+				</nav>
 			</div>
 		</div>
-		<div class="scroller-layout">
-			<div class="row task-row">
+	</div>
+	<div class="scroller-layout">
+		<div class="row task-row">
 			<!-- 업무 클론 div -->
-				<div class="card tasklist-clone">
-					<div class="card-header">
-						<h6 class="tasklistnameClone"></h6>
+			<div class="task-card card tasklist-clone" style="display: none;">
+				<div class="task-card-header card-header">
+					<h6 class="tasklistnameClone"></h6>
+					<div class="card-header-right">
+						<ul class="list-unstyled card-option">
+							<li><i class="ik ik-chevron-left action-toggle"></i></li>
+							<li><i class="ik ik-rotate-cw reload-card"
+								data-loading-effect="pulse"></i></li>
+							<li><i class="ik ik-minus minimize-card"></i></li>
+							<li><i class="ik ik-x close-card"></i></li>
+						</ul>
+					</div>
+				</div>
+				<div class="task-card-body card-body completed-task">
+					<div class="dd" data-plugin="nestable">
+						<div class="task-form-group form-group">
+							<input type="text" class="tasklistTitle form-control"
+								name="taskTitle" placeholder="새 업무 만들기">
+						</div>
+						<div class="task-btn">
+							<button type="button" class="task-add-btn btn btn-primary mr-2">만들기</button>
+							<button class="task-cancel-btn btn btn-light">취소</button>
+						</div>
+						<ol class="task-dd-list dd-list">
+							<li class="task-clone dd-item" data-id="1" style="display: none;">
+								<div class="task-dd-handle dd-handle">
+									<p class="tasktitleClone"></p>
+								</div>
+							</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+
+
+
+
+
+			<th:block th:each="tl:${taskList}">
+				<div class="task-card card tasklist">
+
+					<div class="task-card-header card-header">
+						<h6 class="tasklistname" th:text="${tl.tasklistName}"></h6>
+						<input type="hidden" name="tasklistCodehidden"
+							class="tasklist-code-input" th:value="${tl.tasklistCode}">
 						<div class="card-header-right">
 							<ul class="list-unstyled card-option">
 								<li><i class="ik ik-chevron-left action-toggle"></i></li>
-								<li><i class="ik ik-rotate-cw reload-card" data-loading-effect="pulse"></i></li>
+								<li><i class="ik ik-rotate-cw reload-card"
+									data-loading-effect="pulse"></i></li>
 								<li><i class="ik ik-minus minimize-card"></i></li>
 								<li><i class="ik ik-x close-card"></i></li>
 							</ul>
 						</div>
 					</div>
-					<div class="card-body completed-task">
+					<div class="task-card-body card-body completed-task">
 						<div class="dd" data-plugin="nestable">
-							<div class="form-group">
-								<input type="text" class="tasklistTitle form-control" name="taskTitle" placeholder="새 업무 만들기">
+							<div class="task-form-group form-group">
+								<input type="text" class="tasklistTitle form-control"
+									name="taskTitle" placeholder="새 업무 만들기">
 							</div>
-							<button type="button" class="task-add-btn btn btn-primary mr-2">만들기</button>
 							<button class="task-cancel-btn btn btn-light">취소</button>
-							<ol class="dd-list">
-								<li class="task-clone dd-item" data-id="1">
-									<div class="dd-handle">
-										<p class="tasktitleClone"></p>
-									</div>
-								</li>
+							<button type="button" class="task-add-btn2 btn btn-primary mr-2">만들기</button>
+					
+							<ol class="task-dd-list dd-list">
+								<th:block th:each="td:${taskDetail}" th:if="${td.tasklistCode}==${tl.tasklistCode}">
+									<li class="task-dd-item dd-item" data-id="1">
+										<div class="task-dd-handle dd-handle">
+											<p class="tasktitleClone" th:text="${td.taskTitle}"></p>
+										</div>
+									</li>
+								</th:block>
 							</ol>
 						</div>
 					</div>
 				</div>
-				
-				
-				
-				
-				
-				<th:block th:each="tl:${taskList}">
-					<div class="card tasklist">
-					
-						<div class="card-header">
-							<h6 class="tasklistname" th:text="${tl.tasklistName}"></h6>	
-							<input type="hidden" name="tasklistCodehidden" class="tasklist-code-input" th:value="${tl.tasklistCode}">				
-							<div class="card-header-right">
-								<ul class="list-unstyled card-option">
-									<li><i class="ik ik-chevron-left action-toggle"></i></li>
-									<li><i class="ik ik-rotate-cw reload-card" data-loading-effect="pulse"></i></li>
-									<li><i class="ik ik-minus minimize-card"></i></li>
-									<li><i class="ik ik-x close-card"></i></li>
-								</ul>
-							</div>
-						</div>
-						<div class="card-body completed-task">
-						<div class="dd" data-plugin="nestable">
-							<div class="form-group">
-								<input type="text" class="tasklistTitle form-control" name="taskTitle" placeholder="새 업무 만들기">
-							</div>
-							<button type="button" class="task-add-btn btn btn-primary mr-2">만들기</button>
-							<button class="task-cancel-btn btn btn-light">취소</button>
-							<ol class="dd-list"  th:each="td:${taskDetail}" th:if="${td.tasklistCode}==${tl.tasklistCode}" >
-								<li class="task-clone dd-item" data-id="1">
-									<div class="dd-handle">
-										<p class="tasktitleClone" th:text="${td.taskTitle}"></p>
-									</div>
-								</li>
-							</ol>
-						</div>
-					</div>
-					</div>
-				</th:block>
-				
-				
-			</div>
-			<div>
+			</th:block>
+
+
+		</div>
+		<div>
 			<!-- 업무리스트 입력 div -->
-				<div class="card">
-					<div class="card-header" style="padding-top: 20px;">
-						<div class="tasklistName input-group input-group-button"
-							style="margin: 0 auto;">
-							<input type="text" class="tasklistName form-control" name="tasklistName" placeholder="업무리스트 이름">
-							<div class="input-group-append">
-								<button class="btn btn-default" id="tasklist-cancel-btn" type="button">취소</button>
-							</div>
+			<div class="task-card card">
+				<div class="task-card-header card-header" style="padding-top: 20px;">
+					<div class="tasklistName input-group input-group-button"
+						style="margin: 0 auto;">
+						<input type="text" class="tasklistName form-control"
+							name="tasklistName" placeholder="업무리스트 이름">
+						<div class="input-group-append">
+							<button class="btn btn-default" id="tasklist-cancel-btn"
+								type="button">취소</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		
+	</div>
+
 </th:block>
 <th:block layout:fragment="customJs">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script>
 		window.jQuery
 				|| document
-						.write('<script src="src/js/vendor/jquery-3.3.1.min.js"><\/script>')
+						.write(
+								'<script src="src/js/vendor/jquery-3.3.1.min.js"><\/script>')
 	</script>
 	<script src="plugins/popper.js/dist/umd/popper.min.js"></script>
 	<script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>

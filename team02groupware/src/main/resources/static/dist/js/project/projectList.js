@@ -8,8 +8,7 @@ $(
 				function() {
 				//프로젝트 추가 모달
 					//submit 버튼 클릭시 프로젝트제목 유효성검사
-					$(".pr-submit-btn").click(
-							function(checkInput) {
+					$(".pr-submit-btn").click(function(checkInput) {
 								if ($('[name="projectTitle"]').val() == '') {
 									$('[name="projectTitle"]').css("border",
 											"1px solid red");
@@ -26,8 +25,7 @@ $(
 					})
 
 				//프로젝트 클릭시 /taskList로 이동
-					$(".project-list").on('click',
-							function(projectListClick) {
+					$(".project-list").on('click',function(projectListClick) {
 								var projectCode = $(this).find(
 										'.project-code-input').val();
 								var projectTitle = $(this).find('h3').text();
