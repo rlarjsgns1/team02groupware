@@ -138,6 +138,19 @@
 							  $('.ea-checkbox').iCheck('uncheck');
 						  }
 					  });
+					  
+					  
+					  /*
+					   * @brief 상세보기 화면으로 이동 Event
+					   * @author 김건훈
+					   */
+					   $('.ongoing-document-content').click(function(){
+						  //console.log('tr 클릭 이벤트'); 
+						  var docType = $(this).find('.ongoing-document-type').text();
+						  //console.log(docType);
+						  $(location).attr('href','/selectOngoingDocumentDetail?docType='+docType);
+					   });
+					  
 				});
 			</script>
 		</th:block>
@@ -216,7 +229,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
+                                                    <tr class="ongoing-document-content">
                                                     	<td> 
                                                     		<input type="checkbox" class="ea-icheck ea-checkbox">
                                                     	</td>
@@ -224,9 +237,9 @@
                                                         <td>쇼핑몰 프로젝트 사업기획서</td>
                                                         <td>김연지</td>
                                                         <td>2020-03-16</td>
-                                                     	<td>결재</td>                                                                              
+                                                     	<td class="ongoing-document-type">결재</td>                                                                              
                                                     </tr> 
-                                                    <tr>
+                                                    <tr class="ongoing-document-content">
                                                     	<td> 
                                                     		<input type="checkbox" class="ea-icheck ea-checkbox">
                                                     	</td>
@@ -234,7 +247,7 @@
                                                         <td>쇼핑몰 프로젝트  완료보고서</td>
                                                         <td>김건훈</td>
                                                         <td>2020-04-16</td>
-                                                     	<td>협의</td>
+                                                     	<td class="ongoing-document-type">협의</td>
                                                     </tr>                                                                                                         
                                                 </tbody>
                                             </table>
