@@ -1,44 +1,48 @@
 @charset "UTF-8";
 
-/* ----------------tasklist clone----------------- */
-.tasklist-clone{
-	display:none;
+
+
+/* ----------------프로젝트리스트로 이동----------------- */
+.ik-chevron-left{
+	cursor:pointer;
 }
 
-.dd-item{
-	
+.pr-ikon{
+	user-select:none;
 }
+
+/* ----------------tasklist clone----------------- */
+
+
 .main-content {
 	padding-bottom: 0px !important;
 }
 
 .header-top>.container-fluid {
-	padding: 0 10px;
+	padding: 0 15px;
 }
 
 .container-fluid {
 	padding-right: 0px;
 }
+.task-page-header{
+	margin-right:20px;
+}
 .scroller-layout {
-	-webkit-overflow-scrolling: touch;
-	scroll-behavior: smooth;
-	display: flex;
+	display:flex;
 	user-select: none;
 	overflow-x:auto;
-	overflow-y:overlay;
-	z-index: 1;
 	cursor: url('/img/project/hand-move.png'), move;
 	align-items:stretch;
 	overflow-y:hidden;
-
-	
+	height:-webkit-fill-available;
 }
 .task-row {
 	flex-wrap: nowrap;
 	margin-right:0px;
 }
 
-.card {
+.task-card {
 	margin: 0 10px;
 	width: 280px;
 	height: fit-content;
@@ -47,7 +51,7 @@
 	user-select: none;
 }
 
-.card-header {
+.task-card-header {
 	cursor: move;
 	height: 60px;
 	line-height: -1px;
@@ -55,11 +59,11 @@
 	padding: 0;
 }
 
-.card-header h6 {
+.task-card-header h6 {
 	margin-top: .5rem;
 }
 
-.card-body {
+.task-card-body {
 	-webkit-box-flex:0;
 	flex:0 1 auto;
 	max-height: 29rem;
@@ -69,15 +73,22 @@
 
 
 
-.dd-item {
+.task-dd-handle{
+	padding:12px 16px;
+}
+
+.task-dd-item {
 	cursor: move;
+}
+.task-dd-list{
+	  padding-top: 10px;
 }
 
 .tasklist-add-btn {
 	padding: 10px !important;
 }
 
-.tasklist-add-card .card-header {
+.tasklist-add-card .task-card-header {
 	cursor: pointer;
 	background-color: #dddddd;
 }

@@ -2,23 +2,53 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team02.groupware.mapper.ProjectMapper">
 	<!-- resultMap 을 효율적으로 사용하기 위함 -->
-	<resultMap type="com.team02.groupware.dto.Project"
-		id="projectResultMap">
-		<result property="projectCode" column="project_code" />
+	
+	<resultMap type="com.team02.groupware.dto.Project" id="projectResultMap">
 		<result property="employeeCode" column="employee_code" />
-		<result property="projectTitle" column="project_title" />
-		<result property="projectDate" column="project_date" />
+		
+		<result property="projectCode" column="project_code" />
 		<result property="projectStatus" column="project_status" />
 		<result property="projectAccess" column="project_access" />
+		<result property="projectTitle" column="project_title" />
+		<result property="projectDate" column="project_date" />
 		<result property="projectDesc" column="project_desc" />
 		<result property="projectDeadline" column="project_deadline" />
 		<result property="projectStart" column="project_start" />
 		<result property="projectEnd" column="project_end" />
+		
 		<result property="taskCode" column="task_code" />
+		<result property="taskTitle" column="task_title" />
+		<result property="taskDesc" column="task_desc" />
+		<result property="taskDate" column="task_date" />
+		<result property="taskDeadline" column="task_deadline" />
+		<result property="taskStart" column="task_start" />
+		<result property="taskEnd" column="task_end" />
+		<result property="taskStatus" column="task_status" />
+		
+		<result property="tasklistCode" column="tasklist_code" />
 		<result property="tasklistName" column="tasklist_name" />
 	</resultMap>
 
-	<insert id="taskInsert" parameterType="com.team02.groupware.dto.Project">
+
+	<!-- 업무 상세정보 조회 -->
+	<select id="getTaskdetail" parameterType="String" resultMap="projectResultMap">
+			SELECT
+				TD.tasklist_code,
+				TD.task_title,
+				TD.task_code
+			FROM
+				project_task_detail AS TD
+			WHERE
+				TD.project_code=#{projectCode};
+	
+	</select>
+
+
+
+
+
+	<!-- 업무리스트추가 -->
+	<insert id="tasklistInsert" parameterType="Project">
 		INSERT INTO
 			project_task_list
 			(tasklist_code
@@ -27,24 +57,48 @@
 			)
 		VALUES (
 			#{projectCode}
-			,{taskCode}
-			,{tasklistName}
+			,#{taskCode}
+			,#{tasklistName}
 		)
-
-
 	</insert>
+	
 
-	<select id="getTasklist" parameterType="map" resultType="Project">
+	<!-- 업무리스트 조회 -->
+	<select id="selectTasklist" parameterType="String" resultMap="projectResultMap">
+		
 		SELECT
-			task_code AS taskCode
-			,project_code AS projectCode
-			,tasklist_name AS tasklistName
+			PL.project_title
+			,PL.project_code
+			,TL.tasklist_name
+			,TL.tasklist_code		
 		FROM
-			project_task_list;
+			project_task_list AS TL
+			INNER JOIN
+			project_list AS PL
+		WHERE
+			TL.project_code=PL.project_code
+			AND 
+			PL.project_code=#{projectCode};
+	</select>
+
+
+	
+
+	<!-- 프로젝트 한개 상세정보 조회-->
+	<select id="selectForProUpdate" parameterType="String" resultMap="projectResultMap">
+	SELECT
+		PL.*
+	FROM
+		project_list AS PL
+	WHERE
+		project_code = #{projectCode};
 		
 	</select>
 
-	<insert id="projectInsert" parameterType="com.team02.groupware.dto.Project">
+
+
+	<!-- 프로젝트 추가  -->
+	<insert id="projectInsert" parameterType="Project">
 		<selectKey keyProperty="projectCode" resultType="String" order="BEFORE">
 			SELECT
 				CASE
@@ -87,9 +141,7 @@
 			)
 	</insert>
 
-
-
-
+	<!-- 게시판 리스트 조회 -->
 	<select id="getProjectRowCount" resultType="int">
 		SELECT
 			COUNT(1)
@@ -97,7 +149,7 @@
 			project_list
 
 	</select>
-	<!-- 게시판 리스트 조회 -->
+	
 	<!--parametertype= "java.util.Map" -->
 	<select id="getProjectlist" parameterType="map" resultType="Project">
 		SELECT
