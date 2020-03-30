@@ -271,35 +271,43 @@ $(function(){
             });
 		}
 		$('.document-form-type-li').find('.ik-trash-2').on('click', deleteDocumentFormTypeFn);
+		
+		
 		/*
 		 * @brief 문서 분류 수정 Event
 		 * @author 김건훈
 		 */
-		var updateDocumentFormLi=null;
-		var updateDocumentFormName=null;
-		var updateDocumentFormCode=null;
-		var updateDocumentFormBtn=null;
 		
 		var updateDocumentFormTypeFn = function(){
 			//console.log('분류수정');
-			if($('.update-document-form-input').length>0){
+			$(this).parents('span').siblings('.document-form-type-update-done-btn').css('display','block');
+			$('.document-form-type-update-delete-btn').css('display','none');
+			
+			var updateDocumentFormLi=$(this).closest('.document-form-type-li').find('.document-form-type-name');
+			var updateDocumentFormName=updateDocumentFormLi.text();
+			//console.log(updateDocumentFormName+'<----수정하기 전 기존 값');
+			var updateDocumentFormCode=updateDocumentFormLi.attr('value');
+			updateDocumentFormLi.replaceWith('<input type="text" id="'+updateDocumentFormCode+'" class="update-document-form-input" style="width:70%" value="'+updateDocumentFormName+'">');
+			
+
+			$('.document-form-type-update-done-btn').off('click').on('click',function(){
+				//console.log('문서양식 수정완료 버튼클릭')
 				var updateDocumentFormInputVal = $('.update-document-form-input').val();
-				$('.update-document-form-input').replaceWith('<span class="document-form-type-name" value="'+updateDocumentFormCode+'">'+updateDocumentFormInputVal+'</span>');
-				updateDocumentFormBtn.css('display','block');
+				//console.log(updateDocumentFormInputVal+'<----수정하기 위해 input에 입력한 문서양식분류 수정값 ')
 				
-				
-				if(updateDocumentFormName!=updateDocumentFormInputVal&&updateDocumentFormInputVal!=''){
+				if(updateDocumentFormInputVal!=updateDocumentFormName){
+					//console.log('입력한 값이 기존의 값과 달라야만 update 가능')
 					var request = $.ajax({
 						url: "/ajaxUpdateDocumentFormType",
 						method: "POST",
 						data: {	updateDocumentFormCode : updateDocumentFormCode,
-							updateDocumentFormInputVal : updateDocumentFormInputVal
+								updateDocumentFormInputVal : updateDocumentFormInputVal
 							  },
 						dataType: "json"
 					});
 					
 					request.done(function(data) {
-						console.log(data.result);
+						//console.log(data.result);
 						  swal({
 							   title: "수정되었습니다.",
 							   text: "문서 분류가 수정 되었습니다.",
@@ -307,27 +315,20 @@ $(function(){
 						   });
 					});
 					
-					
 					request.fail(function( jqXHR, textStatus ) {
 						alert( "Request failed: " + textStatus );
 					}); 
 				}
 				
+				$('.update-document-form-input').replaceWith('<span value="'+updateDocumentFormCode+'" class="document-form-type-name">'+updateDocumentFormInputVal+'</span>');
+				$('.document-form-type-update-done-btn').css('display','none');
+				$('.document-form-type-update-delete-btn').css('display','block');
 				
+			  });
 			}
-			
-			updateDocumentFormLi=$(this).closest('.document-form-type-li').find('.document-form-type-name')
-			updateDocumentFormName=updateDocumentFormLi.text();
-			updateDocumentFormCode=updateDocumentFormLi.attr('value');
-			updateDocumentFormBtn=$(this).closest('.document-form-type-li').find('.document-form-type-update-delete-btn');
-			updateDocumentFormDoneBtn=$(this).closest('.document-form-type-li').find('.document-form-type-update-done-btn');
-			if($('.update-document-form-input').length==0){
-				updateDocumentFormLi.replaceWith('<input type="text" id="'+updateDocumentFormCode+'" class="update-document-form-input" style="width:70%" value="'+updateDocumentFormName+'">');
-				updateDocumentFormBtn.css('display','none');
-				
-			}
-		}
 		$('.document-form-type-li').find('.ik-edit').on('click', updateDocumentFormTypeFn);
+		
+		
 		/*
 		 * @brief 문서 분류 추가 Event
 		 * @author 김건훈
