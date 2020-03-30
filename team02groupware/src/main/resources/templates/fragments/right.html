@@ -8,57 +8,12 @@
 
 <th:block th:fragment="rightFragment">
 
-	<style>
+	<link rel="stylesheet" href="messenger/css/Messenger.css">	<!-- 채팅방 css -->
 	
-	.chat-list-room-info{
-		width: 190px;
-	}
-	.chat-list-room-user{
-		color: #979797;
-	}
-	.chat-list-room-badge{
-		color: #fff; 
-		padding: 3px;
-		width: 28px;
-		float: right;"
-	}
-	
-	</style>
 	
 	<script type="text/javascript">
 	
-		/* $(function(){
-			
-			// 채팅방 리스트 더블클릭
-			$('.chat-list-room').dblclick(function(){
-				console.log('gd')
-				
-				var chatRoom = $('.chat-room');
-				chatRoom.css('display','block')
-			});
-			
-			// 채팅방 메뉴바 클릭
-			$(document).on('click','.menu-btn',function(){
-				
-				var menuItem = $('.menu-item')
-				
-				if(menuItem.css('display') == 'none'){
-					menuItem.css('display', 'block')
-				}else if(menuItem.css('display') == 'block'){
-					menuItem.css('display', 'none')
-				}
-				
-			})
-			
-			
-			function fn_chatRoom(roomName){
-				
-				
-			}
-			
-			
-			
-		}); */
+		
 	
 	</script> 
 	
@@ -68,7 +23,7 @@
 			<div class="sidebar-chat-info">
 				
 				<h6 class="f-13">
-		            <a href="#!" class="chat-list-search" ><i class="ik ik-plus-square f-18 text-secondary"></i></a>				
+		            <a href="#!" class="chat-list-search" data-toggle="modal" data-target="#create-chat-room-modal"><i class="ik ik-plus-square f-18 text-secondary"></i></a>				
 					대화방 리스트					
 				</h6>
 	
@@ -313,7 +268,141 @@
             <!-- 채팅 입력창 End -->
     </div>
 	<!-- 대화방 상세보기 End-->
-<script src="messenger/js/front.js"></script>
+	
+	<!-- 새로운 대화방 생성 Modal Start-->
+	<div class="modal fade show" id="create-chat-room-modal" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal mt-0 mb-0 modal-dialog-centered" role="document">
+ 			<div class="modal-content">
+ 				
+ 				<!-- 모달 헤더 Start-->
+	    		<div class="modal-header" style="padding-bottom: 0px;">
+	    			<div class="row">
+	    			
+	    				<div class="col-md-12">
+			          		<h6 class="modal-title f-16">새로운 대화방</h6>
+			          	</div>
+			          	
+			      		<div class="col-md-12" style="margin-bottom: 0px">
+			      			<form class="mr-t-10">
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="제목을 입력해주세요"> 
+									
+								</div>
+							</form>
+			      		</div>
+			      			
+	    			</div>
+	    			
+	      		</div>
+	      		<!-- 모달 헤더 End-->
+	      		
+		      	<div class="modal-body">
+		      		
+		      		<!-- 사용자 선택시 네임태그 생성 Start -->
+	      			<form action="">
+                         <div class="name-tag-area">
+	                         
+	                         <div class="name-tag">
+		                         <a href="#" class="badge badge-light mb-1" style="position: relative; width: 60px;">
+		                         	<img src="../messenger/img/pengsu2.jpg" alt="user image" class="rounded-circle img-40 align-top mr-15">
+		                         	<i class="ik ik-x"></i>
+		                         	<span class="tag-user-name">이원준</span>
+		                         	<input type="hidden">
+		                         </a>
+	                         </div>
+	                  
+                         </div>
+                         
+                     </form>
+		      		<!-- 사용자 선택시 네임태그 생성 End -->
+		      		
+		      		<!-- 사용자 선택 라디오박스  Start-->
+	  		  		<div class="form-radio row chat-radio-user-choice">
+		                <form>
+		                	<div class="chat-radio-group row">
+		                	
+			                	<div class="chat-radio-group-header col-md-12"> 
+			                		<span class="f-14 chat-radio-group-name">경영지원부</span> 
+			                	</div>
+			                	
+			                	<div class="radio radio-inline radio chat-radio-user col-md-12">
+			                        <label>
+			                            <input type="radio" name="radio" >
+			                        	<img src="../messenger/img/pengsu2.jpg" alt="user image" class="rounded-circle img-40 align-top mr-15">
+			                            <span class="chat-radio-user-name">경영지원부 개발1팀 이원준</span>
+			                            <i class="helper"></i>
+			                        </label>
+			                  	</div>
+			                  	<div class="radio radio-inline radio chat-radio-user col-md-12">
+			                        <label>
+			                            <input type="radio" name="radio2" >
+			                        	<img src="../messenger/img/pengsu2.jpg" alt="user image" class="rounded-circle img-40 align-top mr-15">
+			                            <span class="chat-radio-user-name">경영지원부 개발1팀 이원준</span>
+			                            <i class="helper"></i>
+			                        </label>
+			                  	</div>
+			                  	<div class="radio radio-inline radio chat-radio-user col-md-12">
+			                        <label>
+			                            <input type="radio" name="radio3" >
+			                        	<img src="../messenger/img/pengsu2.jpg" alt="user image" class="rounded-circle img-40 align-top mr-15">
+			                            <span class="chat-radio-user-name">경영지원부 개발1팀 이원준</span>
+			                            <i class="helper"></i>
+			                        </label>
+			                  	</div>
+			                  	<div class="radio radio-inline radio chat-radio-user col-md-12">
+			                        <label>
+			                            <input type="radio" name="radio4" >
+			                        	<img src="../messenger/img/pengsu2.jpg" alt="user image" class="rounded-circle img-40 align-top mr-15">
+			                            <span class="chat-radio-user-name">경영지원부 개발1팀 이원준</span>
+			                            <i class="helper"></i>
+			                        </label>
+			                  	</div>
+			                  	<div class="radio radio-inline radio chat-radio-user col-md-12">
+			                        <label>
+			                            <input type="radio" name="radio5" >
+			                        	<img src="../messenger/img/pengsu2.jpg" alt="user image" class="rounded-circle img-40 align-top mr-15">
+			                            <span class="chat-radio-user-name">경영지원부 개발1팀 이원준</span>
+			                            <i class="helper"></i>
+			                        </label>
+			                  	</div>
+			                  	
+		                	</div>
+		                	
+		                	<div class="chat-radio-group row">
+		                	
+			                	<div class="chat-radio-group-header col-md-12"> 
+			                		<span class="f-14 chat-radio-group-name">마케팅부</span> 
+			                	</div>
+			                	
+			                	<div class="radio radio-inline radio chat-radio-user col-md-12">
+			                        <label>
+			                            <input type="radio" name="radio6" >
+			                        	<img src="../messenger/img/pengsu2.jpg" alt="user image" class="rounded-circle img-40 align-top mr-15">
+			                            <span class="chat-radio-user-name">마케팅부 개발1팀 이원준</span>
+			                            <i class="helper"></i>
+			                        </label>
+			                  	</div>
+			                  	
+		                	</div>
+		               
+		                  	
+		                </form>
+		            </div>
+		            <!-- 사용자 선택 라디오박스  End-->
+	        
+		       </div>
+	       
+		       <div class="modal-footer">
+		           <button type="button" class="btn btn-primary" data-dismiss="modal" id=approverAddBtn>확인</button>
+		           <button type="button" class="btn btn-secondary" data-dismiss="modal" id=approverCancelBtn>취소</button>
+		       </div>
+	       
+	   		</div>
+	  	</div>
+	</div>  
+	<!-- 새로운 대화방 생성 Modal End-->
+	
+<script src="messenger/js/front.js"></script>	<!-- 메신저 화면 js -->
 	
 </th:block>
 

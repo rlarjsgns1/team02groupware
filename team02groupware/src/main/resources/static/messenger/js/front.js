@@ -33,7 +33,9 @@ $(function(){
 	});
 	
 	// 채팅방 메뉴바 클릭
-	$(document).on('click','.menu-btn',function(){
+	$(document).on('click','.menu-btn',function(n){
+		
+		n.preventDefault();
 		
 		var menuItem = $('.menu-item')
 		
@@ -46,8 +48,9 @@ $(function(){
 	})
 	
 	// 채팅방 close 클릭
-	$(document).on('click','.chat-room-close',function(){
+	$(document).on('click','.chat-room-close',function(n){
 		
+		n.preventDefault();
 		fn_chatRoomClose();
 	})
 	
