@@ -38,12 +38,13 @@
         });
     })
 
-/*
- * @file layouts.js
- * @brief 전자결재 관련 테이블 row 삭제시 SweetAlert Library 수정
- * @author 김건훈
- */
+    
 $(document).ready(function() {
+	/*
+	 * @file layouts.js
+	 * @brief 전자결재 관련 테이블 row 삭제시 SweetAlert Library 수정
+	 * @author 김건훈
+	 */
         var listDelete = $('.ea-list-delete');
         listDelete.on('click', function() {
             swal({
@@ -65,6 +66,9 @@ $(document).ready(function() {
                 }
             });
         });
+        
+ 
+        
         $('.html-editor').summernote({
           height: 300,
           tabsize: 2

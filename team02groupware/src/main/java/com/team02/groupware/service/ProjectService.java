@@ -1,5 +1,6 @@
 package com.team02.groupware.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,21 +19,45 @@ public class ProjectService {
 	private ProjectMapper projectMapper;
 
 	
-	public int taskInsert(Project project) {
-		return projectMapper.taskInsert(project);
+	//업무리스트별 업무상세정보 조회
+	public List<Project> getTaskdetail(String projectCode){
+		List<Project> taskDetail = new ArrayList<Project>();
+		taskDetail = projectMapper.getTaskdetail(projectCode);
+		return taskDetail;
 	}
 	
-	public List<Project> getTasklist(){
-		List<Project> tasklist = projectMapper.getTasklist();
-		return tasklist;
+	//업무리스트 추가
+	public int tasklistInsert(Project project) {
+		return projectMapper.tasklistInsert(project);
+	}
+	
+	//업무리스트조회
+	public List<Project> selectTasklist(String projectCode){
+		
+		List<Project> projectList = new ArrayList<Project>();
+		projectList = projectMapper.selectTasklist(projectCode);
+		
+		return projectList;
 		
 	}
 	
+	//프로젝트 수정
+	public int projectUpdate(Project project) {
+		return projectMapper.projectUpdate(project);
+	}
+	
+	//프로젝트 한개 조회
+	public Project selectForProUpdate(String projectCode) {
+		return projectMapper.selectForProUpdate(projectCode);
+	}
+	
+	
+	//프로젝트 추가
 	public int projectInsert(Project project) {
 		return projectMapper.projectInsert(project);
 	}
 	
-	
+	//프로젝트 리스트 조회
 	public Map<String, Object> getProjectlist(int currentPage) {
 		// 몇개의 행을 보여줄지
 		final int ROW_PER_PAGE = 10;

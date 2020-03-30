@@ -84,13 +84,15 @@
 }
 
 .pr-ikon {
-	display:none;
 	position: absolute;
 	bottom:70px;
 	right:12px;
 	top:10px;
 	font-size:inherit !important;
 	list-style:none;
+	z-index:1;
+}
+.pr-setting-btn {
 }
 .pr-status{
 	margin-bottom:10px;
@@ -99,7 +101,7 @@
 .btn-icon{
 	line-height:0 !important;
 }
-.pr-setting-btn{
+.pr-setting-li{
 	margin-bottom:8px;
 }
 

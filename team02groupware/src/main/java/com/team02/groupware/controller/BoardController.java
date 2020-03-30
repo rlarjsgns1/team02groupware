@@ -163,32 +163,60 @@ public class BoardController {
 	// 게시글 수정
 	@PostMapping("/boardUpdate")
 	public String boardUpdate(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto, 
-			@RequestParam("file") MultipartFile file, @RequestParam(value="fileDeleteNum", required=false) String fileDeleteNum,RedirectAttributes redirectA) throws IOException {
+			@RequestParam("file") MultipartFile[] file, 
+			@RequestParam(value="fileDeleteNum", required=false) String[] fileDeleteNum,
+			@RequestParam(value="boardFileNum", required=false) String[] boardFileNum,
+			RedirectAttributes redirectA) throws IOException {
 		
-		System.out.println("보드업데이트" + bDto.toString());
-		System.out.println("보드업데이트" + pDto.toString());
-		System.out.println("보드업데이트" + sDto.toString());
-		System.out.println("파일딜리트넘" + fileDeleteNum);
+		System.out.println("보드업데이트 :" + bDto.toString());
+		System.out.println("보드업데이트 :" + pDto.toString());
+		System.out.println("보드업데이트 :" + sDto.toString());
+		
 		//System.out.println("파일딜리트넘 이즈엠티" + fileDeleteNum.isEmpty());
 		
 		boardService.updateBoard(bDto);
 		
+		Map<String, Object> boardMap = new HashMap<String, Object>();
+		boardMap.put("boardNum", bDto.getBoardNum());
+		
+		
+		System.out.println("보드업데이트 파일 렝쓰 : " + file.length);
+		
 		// 파일 업로드시
-		if(file.isEmpty() == false) {
-			boardService.boardFileUpdate(bDto, file);
-			System.out.println("****보드업데이트 파일체크 이프문**** ");
+		int fileLength = file.length;
+		int fileEmptyCount = 0;
+		
+		for(int i=0; i < file.length; i++) {
+			System.out.println("보드업데이트 위치 테스트1");
+			if(file[i].isEmpty() == true) fileEmptyCount++;
+		}
+		if(fileLength != fileEmptyCount) {
+			System.out.println("보드업데이트 위치 테스트2");
+			boardService.boardFileInsert(boardMap, file);
 		}
 		
+		System.out.println("보드업데이트 위치 테스트3");
+		
+		if(fileDeleteNum == null) System.out.println("널널");
 		// 파일 제거시
 		if(fileDeleteNum != null) {
-			if(fileDeleteNum.isEmpty() == false) {
-				int integerFileDeleteNum = Integer.parseInt(fileDeleteNum);
+			System.out.println("보드업데이트 위치 테스트4");
+			
+			int integerFileDeleteNum = 0;
+			
+			for(int i=0; i < fileDeleteNum.length; i++) {
+				
+				integerFileDeleteNum = Integer.parseInt(fileDeleteNum[i]);
 				
 				boardService.boardFileDelete(integerFileDeleteNum);	// 파일 삭제
-				boardService.boardFileCheck(bDto);	// 파일 삭제 후 게시글 파일 유무  업데이트
 			}
 			
+			boardService.boardFileCheck(bDto);	// 파일 삭제 후 게시글 파일 유무  업데이트
+			
+			
 		}
+		
+		System.out.println("보드업데이트 위치 테스트5");
 		
 		
 		redirectA.addAttribute("boardNum", bDto.getBoardNum());
@@ -205,7 +233,7 @@ public class BoardController {
 	
 	// 게시글 삭제
 	@GetMapping("/boardDelete")
-	public String boardDelete(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto, RedirectAttributes redirectA) {
+	public String boardDelete(Model model, BoardDto bDto, PagingDto pDto, SearchDto sDto, RedirectAttributes redirectA) throws IOException {
 		
 		System.out.println("boardDelete bDto :  " + bDto);
 		System.out.println("boardDelete pDto :  " + pDto);
