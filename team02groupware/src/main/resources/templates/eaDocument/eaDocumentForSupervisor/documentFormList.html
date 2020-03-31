@@ -59,7 +59,7 @@
 	                                        <a class="nav-link text-primary" th:href="@{/insertDocumentForm}">양식생성</a>
 	                                    </li>
 	                                    <li class="nav-item">
-	                                        <a class="nav-link text-primary" href="#" data-toggle="modal" data-target="#formTypeSetting">분류설정</a>
+	                                        <a class="nav-link text-primary" href="#" data-toggle="modal" data-target="#formTypeSetting" data-backdrop="static" data-keyboard="false">분류설정</a>
 	                                    </li>
 	                                    <li class="nav-item">
 	                                        <div class="nav-link"><span><a class="text-primary" href="#" data-toggle="modal" data-target="#eaRule" data-backdrop="static" data-keyboard="false">사내전자결재규정</a></span><i class="ik ik-help-circle"></i></div>
@@ -198,22 +198,23 @@
 					        </div>
 	                      <!-- 양식 리스트 테이블의 단일행 클릭시 Modal View End -->
 	                      
-	                      <!-- 사내전자결재규정 물음표 아이콘 Modal View Start --> 
+	                      <!-- 사내전자결재규정, 문서양식분류설정 물음표 아이콘 Modal View Start --> 
 	                        <div class="modal-dialog modal-sm mt-0 mb-0 ruletip" role="document">
 					        	<div class="modal-content">
                                		 <div class="modal-body">
-                                   		 <p>사내에서 전자결재 문서를 작성할 때 안내할 사항들을 기재할 수 있습니다.</p>
+                                   		 <p id="modal-content-type"></p>
                                 	 </div>
                            		 </div>
                            	</div>
-                           <!-- 사내전자결재규정 물음표 아이콘 Modal View End -->
+                           <!-- 사내전자결재규정, 문서양식분류설정 물음표 아이콘 Modal View End -->
+                          
                            
                            <!-- 양식함 페이지 분류설정 Modal View Start -->
 	                        <div class="modal fade show" id="formTypeSetting" tabindex="-1" role="dialog" aria-hidden="true">
 	                          <div class="modal-dialog modal-sm mt-0 mb-0 modal-dialog-centered" role="document">
 	                           <div class="modal-content">
 	                              <div class="modal-header">
-	                                  <h5 class="modal-title">분류 설정</h5>
+	                                  <h5 class="modal-title"><span>분류 설정</span><i class="ik ik-help-circle"></i></h5>
 	                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	                                      <span aria-hidden="true">&times;</span>
 	                                  </button>

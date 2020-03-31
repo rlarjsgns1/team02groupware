@@ -12,7 +12,15 @@ $(function(){
 	  * @author 김건훈
 	  */	
 	$('.ik-help-circle').on('mouseover',function(e){
- 
+			
+		var ruleTipType = $(this).siblings().text()
+		//console.log(ruleTipType)
+		if(ruleTipType=='사내전자결재규정'){
+			$('#modal-content-type').text('사내에서 전자결재 문서를 작성할 때 안내할 사항들을 기재할 수 있습니다.');	
+		}else if(ruleTipType=='분류 설정'){
+			$('#modal-content-type').text('문서 양식 분류 저장 시 띄어쓰기 와 공백은 저장되지 않습니다.');
+		}
+		
 			var divLeft = e.pageX - 150
 			var divTop = e.pageY - 50
 			
@@ -292,10 +300,10 @@ $(function(){
 
 			$('.document-form-type-update-done-btn').off('click').on('click',function(){
 				//console.log('문서양식 수정완료 버튼클릭')
-				var updateDocumentFormInputVal = $('.update-document-form-input').val();
+				var updateDocumentFormInputVal = $('.update-document-form-input').val().replace(/ /g, '');
 				//console.log(updateDocumentFormInputVal+'<----수정하기 위해 input에 입력한 문서양식분류 수정값 ')
 				
-				if(updateDocumentFormInputVal!=updateDocumentFormName){
+				if(updateDocumentFormInputVal!=updateDocumentFormName&&updateDocumentFormInputVal!=''&&updateDocumentFormInputVal.length<=10){
 					//console.log('입력한 값이 기존의 값과 달라야만 update 가능')
 					var request = $.ajax({
 						url: "/ajaxUpdateDocumentFormType",
@@ -320,6 +328,24 @@ $(function(){
 					}); 
 				}
 				
+				if(updateDocumentFormInputVal==''){
+					updateDocumentFormInputVal=updateDocumentFormName;
+					swal({
+	  					title: "분류명을 입력해주세요.",
+	  					text: "분류명을 수정하기 위하여 입력해주세요.",
+	  					icon: "error"
+	  				});
+				}
+				
+				if(updateDocumentFormInputVal.length>10){
+					updateDocumentFormInputVal=updateDocumentFormName;
+					swal({
+	 					title: "분류명은 10 글자 이내로 작성해야합니다.",
+	 					text: "분류명을 10글자 이내로 다시 작성해주세요.",
+	 					icon: "error"
+	 				});
+				}
+				
 				$('.update-document-form-input').replaceWith('<span value="'+updateDocumentFormCode+'" class="document-form-type-name">'+updateDocumentFormInputVal+'</span>');
 				$('.document-form-type-update-done-btn').css('display','none');
 				$('.document-form-type-update-delete-btn').css('display','block');
@@ -335,68 +361,107 @@ $(function(){
 		 */
 	   	var insertDocumentFormTypeFn=function(){
 	   	   
-		   	var inputDocumentFormTypeVal=$('#add-document-form-type-input').val();
-		   
-			   var request = $.ajax({
-			    url: "/ajaxInsertDocumentFormType",
-			    method: "POST",
-			    data: {inputDocumentFormTypeVal : inputDocumentFormTypeVal},
-			    dataType: "json"
-			  	});
-			   
-			   request.done(function(data) {
-			   //console.log(data.result);
-			   if(data.result==0){
-				   //console.log(inputDocumentFormTypeVal);
-				   swal({
-					   title: "중복된 분류명입니다.",
-					   text: "["+inputDocumentFormTypeVal+"]"+" 은(는) 중복된 분류명입니다.",
-					   icon: "error"
-				   });
-				   
-			   }else{
-				   //console.log(data.formTypeCode);
-				   var documentFormTypeLi = $('.document-form-type-clone:last').clone();
-				   //console.log(documentFormTypeLi)
-				   
-				   documentFormTypeLi.find('.document-form-type-name').text(inputDocumentFormTypeVal);
-				   documentFormTypeLi.find('.document-form-type-name').attr('value',data.formTypeCode);
-				   documentFormTypeLi.css('display','block');
-				   documentFormTypeLi.appendTo('.document-form-type-ul');
-				   
-				   documentFormTypeLi.find('.ik-edit').click(updateDocumentFormTypeFn);				   
-				   documentFormTypeLi.find('.ik-trash-2').click(deleteDocumentFormTypeFn);
-				   
-				   swal({
-					   title: "추가되었습니다.",
-					   text: "문서 분류가 추가되었습니다.",
-					   icon: "success"
-				   });
-				   
-				   $('#add-document-form-type-input').val('');
-			   }
-			   
-			   });
-			   
-			  
-			   request.fail(function( jqXHR, textStatus ) {
-			    alert( "Request failed: " + textStatus );
-			   });   
+		   	var inputDocumentFormTypeVal=$('#add-document-form-type-input').val().replace(/ /g, '');
+		   	
+		   		var request = $.ajax({
+		   			url: "/ajaxInsertDocumentFormType",
+		   			method: "POST",
+		   			data: {inputDocumentFormTypeVal : inputDocumentFormTypeVal},
+		   			dataType: "json"
+		   		});
+		   		
+		   		request.done(function(data) {
+		   				//console.log(data.result);
+		   			if(data.result==0){
+		   				//console.log(inputDocumentFormTypeVal);
+		   				swal({
+		   					title: "중복된 분류명입니다.",
+		   					text: "["+inputDocumentFormTypeVal+"]"+" 은(는) 중복된 분류명입니다.",
+		   					icon: "error"
+		   				});
+		   				
+		   			}else{
+		   				//console.log(data.formTypeCode);
+		   				var documentFormTypeLi = $('.document-form-type-clone:last').clone();
+		   				//console.log(documentFormTypeLi)
+		   				
+		   				documentFormTypeLi.find('.document-form-type-name').text(inputDocumentFormTypeVal);
+		   				documentFormTypeLi.find('.document-form-type-name').attr('value',data.formTypeCode);
+		   				documentFormTypeLi.css('display','block');
+		   				documentFormTypeLi.appendTo('.document-form-type-ul');
+		   				
+		   				documentFormTypeLi.find('.ik-edit').click(updateDocumentFormTypeFn);				   
+		   				documentFormTypeLi.find('.ik-trash-2').click(deleteDocumentFormTypeFn);
+		   				
+		   				swal({
+		   					title: "추가되었습니다.",
+		   					text: "문서 분류가 추가되었습니다.",
+		   					icon: "success"
+		   				});
+		   				
+		   				$('#add-document-form-type-input').val('');
+		   			}
+		   			
+		   		});
+		   		
+		   		
+		   		request.fail(function( jqXHR, textStatus ) {
+		   			alert( "Request failed: " + textStatus );
+		   		});   
+		   		
+		   	
+		   		
 	   } 
 
 	   
 	    $('#add-document-form-type-btn').on('click',function(){
 	    	//console.log('분류 추가버튼')
-	    	var inputDocumentFormTypeVal=$('#add-document-form-type-input').val();
-		   	if(inputDocumentFormTypeVal!=''){
+	    	var inputDocumentFormTypeVal=$('#add-document-form-type-input').val().replace(/ /g, '');
+	  
+	    	//console.log(inputDocumentFormTypeVal);
+	    	//console.log(inputDocumentFormTypeVal.length+'<------- 문서양식분류 추가하기 위해 입력한 값 글자 수');
+	    	//console.log(inputDocumentFormTypeVal.indexOf('')+'<------- 문서양식분류 추가하기 위해 입력한 값 공백 포함여부');
+	    	
+		   	if(inputDocumentFormTypeVal!=''&&inputDocumentFormTypeVal.length<=10){
 		   		insertDocumentFormTypeFn();
+		   }else if(inputDocumentFormTypeVal==''){
+			   //console.log('문서양식분류 입력값이 공백일 경우')
+			   swal({
+  					title: "분류명을 입력해주세요.",
+  					text: "분류명을 추가하기 위하여 입력해주세요.",
+  					icon: "error"
+  				});
+		   }else if(inputDocumentFormTypeVal>10){
+			   //console.log('문서양식분류 입력값 글자 수 초과 경우')
+			   swal({
+ 					title: "분류명은 10 글자 이내로 작성해야합니다.",
+ 					text: "분류명을 10글자 이내로 다시 작성해주세요.",
+ 					icon: "error"
+ 				});
 		   }
 	    });
 	 
 	   
 	    $('#add-document-form-type-input').keyup(function(key) {
-	    	if (key.keyCode == 13 && $(this).val()!='') {
-	    		insertDocumentFormTypeFn();
+	    	if (key.keyCode == 13){
+	    		
+	    		if($(this).val().replace(/ /g, '')!='' && $(this).val().trim().length<=10){
+	    			insertDocumentFormTypeFn();
+	    		}else if($(this).val().replace(/ /g, '')==''){
+	    			//console.log('문서양식분류 입력값이 공백일 경우')
+	    			swal({
+	  					title: "분류명을 입력해주세요.",
+	  					text: "분류명을 추가하기 위하여 입력해주세요.",
+	  					icon: "error"
+	  				});
+	    		}else if($(this).val().replace(/ /g, '').length>10){
+	    			//console.log('문서양식분류 입력값 글자 수 초과 경우')
+	    			swal({
+	 					title: "분류명은 10 글자 이내로 작성해야합니다.",
+	 					text: "분류명을 10글자 이내로 다시 작성해주세요.",
+	 					icon: "error"
+	 				});
+	    		}
 	    	}
 	    });
 
