@@ -108,17 +108,19 @@ public class ProjectController {
 	//프로젝트 수정을 위한 1개정보 불러오는 ajax 메서드 겟 맵핑
 		@GetMapping("/ajaxProjectSelectForUpdate")
 		@ResponseBody
-		public Map<String, Object> projectSelectForUpdate(@RequestParam(value="projectCode") String projectCode) {
+		public Map<String, Object> projectSelectForUpdate(@RequestParam(value="projectCode") String projectCode, Model model) {
 			System.out.println("binding test=" + projectCode);
 			Project resultProject=projectService.selectForProUpdate(projectCode);
 			
 			System.out.println("binding test2=" + resultProject.toString());
 			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("code", resultProject.getProjectCode());
 			resultMap.put("title", resultProject.getProjectTitle());
 			resultMap.put("desc", resultProject.getProjectDesc());
 			resultMap.put("start", resultProject.getProjectStart());
 			resultMap.put("dead", resultProject.getProjectDeadline());
 			resultMap.put("end", resultProject.getProjectEnd());
+			model.addAttribute("resultMap", resultMap);
 			return resultMap;
 		}
 	
@@ -154,4 +156,28 @@ public class ProjectController {
 		//System.out.println(boardService.getBoardlist().toString());
 		return "project/projectList";
 	}
+	
+	
+	@GetMapping("/projectUpdateModal")
+	public String modalHtml(Model model
+			, @RequestParam(value="projectCode") String projectCode
+	) {
+		
+		
+		System.out.println("binding test=" + projectCode);
+		Project resultProject=projectService.selectForProUpdate(projectCode);
+		
+		System.out.println("binding test2=" + resultProject.toString());
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("code", resultProject.getProjectCode());
+		resultMap.put("title", resultProject.getProjectTitle());
+		resultMap.put("desc", resultProject.getProjectDesc());
+		resultMap.put("start", resultProject.getProjectStart());
+		resultMap.put("dead", resultProject.getProjectDeadline());
+		resultMap.put("end", resultProject.getProjectEnd());
+		model.addAttribute("resultMap", resultMap);
+		System.out.println("위치테스트");
+		return "project/modal/projectUpdateModal";
+	}
+	
 }

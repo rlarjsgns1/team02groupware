@@ -40,30 +40,50 @@ $(
 
 				//프로젝트 수정 모달
 					$(".pr-setting-btn").on('click', function() {
+						//console.log('프로젝트 수정 버튼 클릭')
 					//프로젝트 모달 바깥 영역 클릭X
 						event.stopPropagation();
-						$('#editLayoutItem').modal({
+						/*$('#editLayoutItem').modal({
 							backdrop : 'static'
-						});
+						});*/
 						
 						var projectCode = $(this).parents(".pr-header").find('.project-code-input').val();
 						console.log(projectCode);
 						
 						var request = $.ajax({
-							url: "/ajaxProjectSelectForUpdate",
+							url: "/projectUpdateModal",
 							method:"GET",
 							data: {
 								'projectCode' : projectCode
 							},
-							dataType: "json"
+							dataType: "html"
 						})
 								request.done(function(data) {
+									//console.log('성공');
+									console.log(data);
+									if($('#editLayoutItem').length > 0){				
+										$('#editLayoutItem').remove();
+									}
+									$('body').append(data);
 									
-									$('#updateTitle').val(data.title);
+									$('.select2').select2();
+										
+									$(".member-update-btn").click(function() {
+										$('#update-select2').select2('open');
+									})
+									
+									$('#editLayoutItem').modal({
+										backdrop : 'static'
+									})
+									
+									
+									
+									
+									/*$('#updateTitle').val(data.title);
 									$('#updateDesc').val(data.desc);
 									$('#datepicker1').val(data.start);
 									$('#datepicker2').val(data.dead);
-									$('#datepicker3').val(data.end);
+									$('#datepicker3').val(data.end);*/
 									
 								});
 								request.fail(function( jqXHR, textStatus ) {
@@ -74,9 +94,7 @@ $(
 					
 					
 					//멤버수정버튼 클릭시 셀렉트 활성화
-					$(".member-update-btn").click(function() {
-						$('#update-select2').select2('open');
-					})
+					
 					
 				
 
