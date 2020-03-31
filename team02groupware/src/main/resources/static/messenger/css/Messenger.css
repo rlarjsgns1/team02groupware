@@ -7,6 +7,23 @@
 		}
 		
 	/* 대화방 리스트 Start*/
+	.chat-list-room{
+		border-radius: 5px / 5px;
+		cursor: pointer;
+	}
+	.chat-list-title{
+		font-weight: bold;
+	}
+	.chat-list-body{
+		max-height: 500px;
+		overflow-y: scroll;
+		overflow-x: hidden;
+		-ms-overflow-style: none;
+	}
+	.chat-list-time{
+		color: #979797;
+		font-size: 12px;
+	}
 	.chat-list-room-info{
 		width: 190px;
 	}
@@ -22,7 +39,7 @@
 	/* 대화방 리스트 End */
 	
 	/*** 대화방 상세보기 Start***/
-	.card .card-header{
+	/* .card .card-header{
 		padding: 1.2rem 1.3rem 1.3rem 0.8rem;
 	    border: 0;
 	    background: none;
@@ -30,7 +47,7 @@
 	
 	.card .card-block{
 		padding: 15px 10px 10px 10px;
-	}
+	} */
 	
 	.chat-room{
 		border:1px solid #f1f1f1; 
@@ -136,13 +153,14 @@
 	
 	/* 대화방 생성 Modal 네임태그 Start */
 	.name-tag-area{
+		
 		max-height:101px; 
 		overflow-y: auto; 
 		margin-bottom: 10px;
 	}
 	.name-tag{
-		display:inline-block;
-		margin-bottom: 10px;
+		display: inline-block;
+		margin: 0 2px 10px 0;
 	}
 	.name-tag i{
 		position: relative;
@@ -176,9 +194,15 @@
 	}
 	.chat-radio-user{
 		margin-bottom: 10px;
+		
 	}
 	.chat-radio-user-name{
 		font-weight: 500;
+		cursor: pointer;
+	}
+	.chat-radio-user-group{
+		font-weight: 500;
+		cursor: pointer;
 	}
 	.chat-radio-user i.helper{
 		left: 400px;
