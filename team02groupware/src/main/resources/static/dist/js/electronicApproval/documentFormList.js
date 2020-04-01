@@ -351,6 +351,62 @@ $(function(){
 				$('.document-form-type-update-delete-btn').css('display','block');
 				
 			  });
+			
+			$('.update-document-form-input').keyup(function(key) {
+				 if (key.keyCode == 13){
+					//console.log('문서양식분류 수정을위한 엔터키 입력')
+					var updateDocumentFormInputVal = $('.update-document-form-input').val().replace(/ /g, '');
+					//console.log(updateDocumentFormInputVal+'<----수정하기 위해 input에 입력한 문서양식분류 수정값 ')
+					
+					if(updateDocumentFormInputVal!=updateDocumentFormName&&updateDocumentFormInputVal!=''&&updateDocumentFormInputVal.length<=10){
+						//console.log('입력한 값이 기존의 값과 달라야만 update 가능')
+						var request = $.ajax({
+							url: "/ajaxUpdateDocumentFormType",
+							method: "POST",
+							data: {	updateDocumentFormCode : updateDocumentFormCode,
+									updateDocumentFormInputVal : updateDocumentFormInputVal
+								  },
+							dataType: "json"
+						});
+						
+						request.done(function(data) {
+							//console.log(data.result);
+							  swal({
+								   title: "수정되었습니다.",
+								   text: "문서 분류가 수정 되었습니다.",
+								   icon: "success"
+							   });
+						});
+						
+						request.fail(function( jqXHR, textStatus ) {
+							alert( "Request failed: " + textStatus );
+						}); 
+					}
+					
+					if(updateDocumentFormInputVal==''){
+						updateDocumentFormInputVal=updateDocumentFormName;
+						swal({
+		  					title: "분류명을 입력해주세요.",
+		  					text: "분류명을 수정하기 위하여 입력해주세요.",
+		  					icon: "error"
+		  				});
+					}
+					
+					if(updateDocumentFormInputVal.length>10){
+						updateDocumentFormInputVal=updateDocumentFormName;
+						swal({
+		 					title: "분류명은 10 글자 이내로 작성해야합니다.",
+		 					text: "분류명을 10글자 이내로 다시 작성해주세요.",
+		 					icon: "error"
+		 				});
+					}
+					
+					$('.update-document-form-input').replaceWith('<span value="'+updateDocumentFormCode+'" class="document-form-type-name">'+updateDocumentFormInputVal+'</span>');
+					$('.document-form-type-update-done-btn').css('display','none');
+					$('.document-form-type-update-delete-btn').css('display','block');
+				 }
+			 });
+			    	
 			}
 		$('.document-form-type-li').find('.ik-edit').on('click', updateDocumentFormTypeFn);
 		

@@ -68,27 +68,28 @@
                                                     <tr>
                                                         <td class="table-active document-form-table-td">분류</td>
                                                         <td>          
-                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-9" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-9" id="document-form-type-drop-down" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     		분류 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                				</button>
 			                                                <div class="dropdown-menu">
-			                                                	<a class="dropdown-item">공통</a>
-			                                                    <a class="dropdown-item">프로젝트</a>
+			                                                	<th:block th:each="dftl:${eaDocumentFormTypeList}">
+			                                                		<a class="dropdown-item" th:text="${dftl.dFormType}" th:value="${dftl.dFormTypeCode}"></a>
+			                                                	</th:block>
 			                                                </div>
                                               		  </td>
                                                         <td class="table-active document-form-table-td">양식명</td>
-                                                        <td><input type="text" class="form-control col-sm-9"></td>
+                                                        <td><input type="text" class="form-control col-sm-9" id="document-form-name-input"></td>
                                                     </tr>
                                                      <tr>
                                                         <td class="table-active document-form-table-td"><span>약칭</span><i class="ik ik-help-circle"></i></td>
-                                                        <td><input type="text" class="form-control col-sm-9"></td>
+                                                        <td><input type="text" class="form-control col-sm-9" id="document-form-abbre-input"></td>
                                                         <td class="table-active document-form-table-td">설명</td>
-                                                        <td><input type="text" class="form-control col-sm-9"></td>
+                                                        <td><input type="text" class="form-control col-sm-9" id="document-form-detail-input"></td>
                                                     </tr>
                                                      <tr>
                                                         <td class="table-active document-form-table-td"><span>보존 연한</span><i class="ik ik-help-circle"></i></td>
                                                         <td>
-                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-9" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-9" id="document-form-expiry-drop-down" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     		보존연한 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                				</button>
 			                                                <div class="dropdown-menu">
@@ -99,25 +100,25 @@
 			                                                </div>
 			                                                <div class="document-form-checkbox">
 			                                                	<label>
-	                                                    			<input type="checkbox" class="ea-icheck ea-checkbox">
+	                                                    			<input type="checkbox" class="ea-icheck ea-checkbox" id="document-form-expiry-check-box">
 	                                                    			<span>변경 금지</span>
 	                                                    		</label>
 	                                                    	</div>
 			                                                </td>
                                                         <td class="table-active document-form-table-td"><span>보안 등급</span><i class="ik ik-help-circle"></i></td>
                                                         <td>
-                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-9" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-9" id="document-form-security-drop-down" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     		보안등급 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                				</button>
 			                                                <div class="dropdown-menu">
-			                                                	<a class="dropdown-item">S등급</a>
-			                                                    <a class="dropdown-item">A등급</a>
-			                                                    <a class="dropdown-item">B등급</a>
-			                                                    <a class="dropdown-item">C등급</a>
+			                                                	<a class="dropdown-item" value="S">S등급</a>
+			                                                    <a class="dropdown-item" value="A">A등급</a>
+			                                                    <a class="dropdown-item" value="B">B등급</a>
+			                                                    <a class="dropdown-item" value="C">C등급</a>
 			                                                </div>
 			                                                <div class="document-form-checkbox">
 	                                                    		<label>
-		                                                    		<input type="checkbox" class="ea-icheck ea-checkbox">
+		                                                    		<input type="checkbox" class="ea-icheck ea-checkbox" id="document-form-security-check-box">
 		                                                    		<span>변경 금지</span>
 	                                                    		</label>
 	                                                    	</div>
@@ -147,7 +148,7 @@
                                  <!-- 문서 양식 상세내용 summer note editor Start -->    
                                     <div class="card-body  table-border-style">
                                     	<h6>상세 입력 </h6>                                   
-                                    <textarea id="ea-summernote" rows="10" ></textarea>                              
+                                    <textarea id="document-form-detail-content-summer-note" rows="10" ></textarea>                              
                                     </div>                      		
                                 <!-- 문서 양식 상세내용 summer note editor End -->
                                 <!-- 양식 생성 버튼 Start -->  
@@ -185,7 +186,7 @@
 		                                		 <div class="form-radio">
 		                                		  <div class="radio">
 			                                		<label>
-	                                                    <input type="radio" name="radio" value="approval-format-1" checked="checked">
+	                                                    <input type="radio" name="radio" value="EAAPF001" checked="checked">
 	                                                    <i class="helper"></i>결재
 	                                                </label>
                                                   </div>
@@ -196,7 +197,7 @@
 		                                		<div class="form-radio">
 		                                		  <div class="radio">
 			                                		<label>
-	                                                    <input type="radio" name="radio" value="approval-format-2"> 
+	                                                    <input type="radio" name="radio" value="EAAPF002"> 
 	                                                    <i class="helper"></i>신청
 	                                                </label>
                                                   </div>
@@ -209,7 +210,7 @@
 		                                		<div class="form-radio">
 		                                		  <div class="radio">
 			                                		<label>
-	                                                    <input type="radio" name="radio" value="approval-format-3">
+	                                                    <input type="radio" name="radio" value="EAAPF003">
 	                                                    <i class="helper"></i>결재 후 송신
 	                                                </label>
                                                   </div>
@@ -222,7 +223,7 @@
 		                                		<div class="form-radio">
 		                                		  <div class="radio">
 			                                		<label>
-	                                                    <input type="radio" name="radio" value="approval-format-4">
+	                                                    <input type="radio" name="radio" value="EAAPF004">
 	                                                    <i class="helper"></i>회람
 	                                                </label>
                                                   </div>

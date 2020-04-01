@@ -13,9 +13,12 @@
 					$('.dropdown-item').on('click',function(){
 						//console.log('드롭다운버튼클릭');
 						var searchType = $(this).text();
+						var searchTypeVal=$(this).attr('value');
 						var tag = "<i class=\"ik ik-chevron-down mr-0 align-middle\"></i>";
 						//console.log(searchType);
+						//console.log(searchTypeVal);
 						$(this).parent().siblings('.dropdown-toggle').text(searchType);
+						$(this).parent().siblings('.dropdown-toggle').attr('value',searchTypeVal);
 						$(this).parent().siblings('.dropdown-toggle').append(tag);
 					});
 					
@@ -67,7 +70,7 @@
 					});
 					
 					/* summernote plug-in */
-					   $('#ea-summernote').summernote({
+					   $('#document-form-detail-content-summer-note').summernote({
 				             height: 300,                 
 				             minHeight: null,             
 				             maxHeight: null,             
@@ -101,16 +104,16 @@
 						* @author 김건훈
 						*/	
 					   $('.approval-format-set-btn').on('click',function(){
-						   console.log('결재포맷선택버튼')
+						   //console.log('결재포맷선택버튼')
 						   var approvalFormatRadioVal = $('.approval-format-radio').find('input:checked').val();
 						   //console.log(approvalFormatRadioVal);
-						   if(approvalFormatRadioVal=='approval-format-1'){
+						   if(approvalFormatRadioVal=='EAAPF001'){
 							   $('#selected-approval-format-1').css('display','block');
 							   $('#approval-format-set-btn').text('변경');
 							   
 						   }else{
 							   $('#selected-approval-format-1').css('display','none');
-							   $('#approval-format-set-btn').text('수정');
+							   $('#approval-format-set-btn').text('설정');
 							   swal({
 				 					title: "해당 결재 양식은 준비 중 입니다.",
 				 					text: "다른 결재 양식을 선택해주세요.",
@@ -124,7 +127,122 @@
 						* @author 김건훈
 						*/	
 					   $('#insert-document-form-submit-btn').on('click',function(){
-						   console.log('문서 양식 생성 버튼 클릭')
+						   //console.log('문서 양식 생성 버튼 클릭')
+						  
+						   if($('#document-form-type-drop-down').attr('value')!=null){  
+							   var dFormTypeCode=$('#document-form-type-drop-down').attr('value').trim(); //문서양식분류 드롭다운
+						   }
+						   var dFormName=$('#document-form-name-input').val().trim(); //문서 양식 명 입력값
+						   var dFormAbbreviation=$('#document-form-abbre-input').val().trim(); // 문서 양식 약칭 입력값
+						   var dFormDetailExplanation=$('#document-form-detail-input').val().trim(); // 문서 양식 설명 입력값
+						   var dExpiryDate=$('#document-form-expiry-drop-down').text().trim(); // 문서 기안시 초기 보존연한 값
+						   var dSecurityLevel=$('#document-form-security-drop-down').text().trim(); // 문서 기안시 초기 보안등급 값
+						   var dExpiryDateChangeable=$('#document-form-expiry-check-box').is(":checked") // 문서 보존연한 변경 여부 체크
+						   var dSecurityLevelChangeable=$('#document-form-security-check-box').is(":checked") // 문서 보안등급 변경 여부 체크
+						   var dApprovalFormatCode=$('.approval-format-radio').find('input:checked').val(); // 결재 양식 선택 값
+						   var dFormDetailContent=$('#document-form-detail-content-summer-note').val(); //문서 양식 상세 입력 값
+						  
+						   console.log(dFormTypeCode);
+						   console.log(dFormName);
+						   console.log(dFormAbbreviation);
+						   console.log(dFormDetailExplanation);
+						   console.log(dExpiryDate);
+						   console.log(dSecurityLevel);
+						   console.log(dExpiryDateChangeable);
+						   console.log(dSecurityLevelChangeable);
+						   console.log(dApprovalFormatCode);
+						   console.log(dFormDetailContent);
+						   
+						   if(dFormTypeCode==null || dFormTypeCode==''){
+							   //console.log('분류를 선택해주세요.');
+							   swal({
+				 					title: "선택된 분류가 없습니다.",
+				 					text: "문서 양식 분류를 선택해주세요.",
+				 					icon: "error"
+				 				});
+							   return;
+						   }else if(dFormName==''||dFormName==null){
+							   
+							   swal({
+				 					title: "입력된 문서 양식명이 없습니다.",
+				 					text: "문서 양식명을 입력해주세요.",
+				 					icon: "error"
+				 				});
+							   return;
+						   }else if(dFormAbbreviation==''||dFormAbbreviation==null){
+							   
+							   swal({
+				 					title: "입력된 문서 양식 약칭이 없습니다.",
+				 					text: "문서 양식 약칭을 입력해주세요.",
+				 					icon: "error"
+				 				});
+							   return;
+						   }else if(dExpiryDate=='보존연한 선택'){
+							   
+							   swal({
+				 					title: "선택된 보존연한이 없습니다.",
+				 					text: "보존연한을 선택해주세요.",
+				 					icon: "error"
+				 				});
+							   return;
+						   }else if(dSecurityLevel=='보안등급 선택'){
+							  
+							   swal({
+				 					title: "선택된 보안등급이 없습니다.",
+				 					text: "보안등급을 선택해주세요.",
+				 					icon: "error"
+				 				});
+							   return;
+						   }else if($('#approval-format-set-btn').text()=='설정'){
+
+							   swal({
+				 					title: "선택된 결재양식이 없습니다.",
+				 					text: "결재양식을 선택해주세요.",
+				 					icon: "error"
+				 				});
+							   return;
+						   }
+						   
+						   /*console.log(dFormTypeCode);
+						   console.log(dFormName);
+						   console.log(dFormAbbreviation);
+						   console.log(dFormDetailExplanation);
+						   console.log(dExpiryDate);
+						   console.log(dSecurityLevel);
+						   console.log(dExpiryDateChangeable);
+						   console.log(dSecurityLevelChangeable);
+						   console.log(dApprovalFormatCode);
+						   console.log(dFormDetailContent);*/
+						   
+						   insertDocumentFormMap = {};
+							  
+						   insertDocumentFormMap.dFormTypeCode = dFormTypeCode;
+						   insertDocumentFormMap.dFormName = dFormName;
+						   insertDocumentFormMap.dFormAbbreviation = dFormAbbreviation;
+						   insertDocumentFormMap.dFormDetailExplanation = dFormDetailExplanation;
+						   insertDocumentFormMap.dExpiryDate = dExpiryDate;
+						   insertDocumentFormMap.dSecurityLevel = dSecurityLevel;
+						   insertDocumentFormMap.dExpiryDateChangeable = dExpiryDateChangeable;
+						   insertDocumentFormMap.dSecurityLevelChangeable = dSecurityLevelChangeable;
+						   insertDocumentFormMap.dApprovalFormatCode = dApprovalFormatCode;
+						   insertDocumentFormMap.dFormDetailContent = dFormDetailContent;
+							
+						   console.log(insertDocumentFormMap);
+						   
+						   var request = $.ajax({
+							    url: "/insertDocumentFormPro",
+							    method: "POST",
+							    data: insertDocumentFormMap,
+							    dataType: "json"
+							  });
+							   
+							  request.done(function(data) {
+								  console.log(data.result);
+							  });
+							   
+							  request.fail(function( jqXHR, textStatus ) {
+							    alert( "Request failed: " + textStatus );
+							  }); 
 						   
 					   });
 					   
