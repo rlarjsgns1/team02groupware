@@ -75,15 +75,26 @@ $(
 									$('#editLayoutItem').modal({
 										backdrop : 'static'
 									})
-									
-									
-									
-									
-									/*$('#updateTitle').val(data.title);
-									$('#updateDesc').val(data.desc);
-									$('#datepicker1').val(data.start);
-									$('#datepicker2').val(data.dead);
-									$('#datepicker3').val(data.end);*/
+								
+									var listDelete = $('.project-delete-btn');
+						            listDelete.on('click', function() {
+						                swal({
+						                    title: "해당 프로젝트를 삭제하시겠습니까?",
+						                    icon: "warning",
+						                    buttons: ["취소", "삭제"],
+						                    dangerMode: true,
+						                })
+						                .then((willDelete) => {
+						                    if (willDelete) {
+						                        swal({
+						                            title: "프로젝트가 삭제되었습니다.",
+						                            icon: "success",
+						                        });
+						                    } else {
+						                        swal("삭제가 취소되었습니다.");
+						                    }
+						                });
+						            });
 									
 								});
 								request.fail(function( jqXHR, textStatus ) {
@@ -93,7 +104,6 @@ $(
 					})
 					
 					
-					//멤버수정버튼 클릭시 셀렉트 활성화
 					
 					
 				
