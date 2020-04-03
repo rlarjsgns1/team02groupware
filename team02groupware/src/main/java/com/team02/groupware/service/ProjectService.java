@@ -41,6 +41,11 @@ public class ProjectService {
 		
 	}
 	
+	//프로젝트 삭제
+	public int projectDelete(String projectCode) {
+		return projectMapper.projectDelete(projectCode);
+	}
+	
 	//프로젝트 수정
 	public int projectUpdate(Project project) {
 		return projectMapper.projectUpdate(project);

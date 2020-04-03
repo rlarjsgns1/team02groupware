@@ -6,6 +6,10 @@
 
 $(
 				function() {
+					
+					
+							
+					
 				//프로젝트 추가 모달
 					//submit 버튼 클릭시 프로젝트제목 유효성검사
 					$(".pr-submit-btn").click(function(checkInput) {
@@ -86,6 +90,22 @@ $(
 						                })
 						                .then((willDelete) => {
 						                    if (willDelete) {
+						                    	console.log('삭제버튼클릭');
+						                    	var request = $.ajax({
+						                    	  url: "/projectDelete",
+						                    	  method: "POST",
+						                    	  data: { 'projectCode' : projectCode },
+						                    	  dataType: "html"
+						                    	});
+						                    	 
+						                    	request.done(function( data ) {
+						                    		console.log('삭제');
+						                    	});
+						                    	 
+						                    	request.fail(function( jqXHR, textStatus ) {
+						                    	  alert( "Request failed: " + textStatus );
+						                    	});
+						                    	
 						                        swal({
 						                            title: "프로젝트가 삭제되었습니다.",
 						                            icon: "success",

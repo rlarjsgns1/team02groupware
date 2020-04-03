@@ -19,6 +19,9 @@ public interface ProjectMapper {
 	//업무리스트 조회
 	public List<Project> selectTasklist(String projectCode);	
 
+	//프로젝트 삭제
+	public int projectDelete(String projectCode);
+	
 	//프로젝트 한개 조회
 	public Project selectForProUpdate(String projectCode);
 	

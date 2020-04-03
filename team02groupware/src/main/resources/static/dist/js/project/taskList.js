@@ -5,6 +5,9 @@
 
 $(function() {
 
+	
+	
+	
 	// 업무 추가 - 엔터 키 복제 이벤트
 	$(document).on('keydown','.tasklistTitle',function(key) {
 				if (key.keyCode == 13) {
@@ -41,6 +44,23 @@ $(function() {
 					taskClone.find(".tasktitleClone").text(taskTitle.val());
 					taskTitle.val('');
 				}
+				
+				var request = $.ajax({
+					  url: "/taskInsert",
+					  method: "POST",
+					  data: { 'projectCode' : projectCode 
+						  	,'tasklistName'	: tasklistName
+					  },
+					  dataType: "html"
+					});
+					 
+					request.done(function( msg ) {
+					  $( "#log" ).html( msg );
+					});
+					 
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+					});
 			})
 
 	// 업무 추가 - 추가 버튼 클릭시 복제 이벤트
@@ -88,6 +108,23 @@ $(function() {
 					$('.scroller-layout').animate({
 						scrollLeft : $('.tasklistName').offset().left
 					}, 1);
+					
+					
+					
+					var request = $.ajax({
+						  url: "/tasklistInsert",
+						  method: "POST",
+						  data: { projectCode : menuId },
+						  dataType: "html"
+						});
+						 
+						request.done(function( msg ) {
+						  $( "#log" ).html( msg );
+						});
+						 
+						request.fail(function( jqXHR, textStatus ) {
+						  alert( "Request failed: " + textStatus );
+						});
 				}
 			})
 	// 업무리스트이름 취소버튼 클릭시 input value 공백 처리

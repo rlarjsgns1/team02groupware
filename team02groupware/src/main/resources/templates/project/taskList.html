@@ -107,6 +107,7 @@
 							<ol class="task-dd-list dd-list">
 								<th:block th:each="td:${taskDetail}" th:if="${td.tasklistCode}==${tl.tasklistCode}">
 									<li class="task-dd-item dd-item" data-id="1">
+										<input type="hidden" th:value="${td.taskCode}">
 										<div class="task-dd-handle dd-handle">
 											<p class="tasktitleClone" th:text="${td.taskTitle}"></p>
 										</div>

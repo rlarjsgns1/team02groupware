@@ -53,19 +53,23 @@ public class ProjectController {
 	public String taskCalendar() {
 		return "project/taskCalendar";
 	}
-	//업무상세정보 조회 메서드
-	
-	/*
-	@GetMapping("/taskList")
-	public String getTaskdetail(Model model, @RequestParam(value="tasklistCode",required=false) String tasklistCode) {
-		System.out.println("binding test: "+ tasklistCode);
-		return "project/taskList";
+	//업무리스트 추가 ajax 메서드
+ 
+	@PostMapping("/tasklistInsert")
+	@ResponseBody
+	public String tasklistInsert(@RequestParam(value="projectCode")Project project, String tasklistName, RedirectAttributes model){
+		System.out.println("------------tasklistInsert");
+		int result = projectService.tasklistInsert(project);
+		String projectCode = project.getProjectCode();
+		System.out.println(result);
+		
+		if(result > 0 ) {
+			model.addAttribute("projectCode", projectCode);
+			model.addAttribute("tasklistName", tasklistName);
+			return "redirect:/taskList";
+		}
+		return "redirect:/taskList";
 	}
-	
-	*/
-	
-	
-	
 	//업무리스트 조회 메서드
 	@GetMapping("/taskList")
 	public String taskList(	Model model, @RequestParam(value="projectCode",required = false) String projectCode,
@@ -84,6 +88,18 @@ public class ProjectController {
 		model.addAttribute("projectTitle", projectTitle);
 		model.addAttribute("taskDetail", taskDetail);
 		return "project/taskList";
+	}
+	
+	//프로젝트 삭제 메서드
+	@PostMapping("/projectDelete")
+	@ResponseBody
+	public String projectDelete(@RequestParam(value="projectCode")String projectCode) {
+		System.out.println(projectCode+"projectCode-------------------");
+		int result = projectService.projectDelete(projectCode);
+		if(result>0) {
+			return "redirect:/projectList";
+		}
+		return "redirect:/projectList";
 	}
 	
 	
