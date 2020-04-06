@@ -45,22 +45,7 @@ $(function() {
 					taskTitle.val('');
 				}
 				
-				var request = $.ajax({
-					  url: "/taskInsert",
-					  method: "POST",
-					  data: { 'projectCode' : projectCode 
-						  	,'tasklistName'	: tasklistName
-					  },
-					  dataType: "html"
-					});
-					 
-					request.done(function( msg ) {
-					  $( "#log" ).html( msg );
-					});
-					 
-					request.fail(function( jqXHR, textStatus ) {
-					  alert( "Request failed: " + textStatus );
-					});
+				
 			})
 
 	// 업무 추가 - 추가 버튼 클릭시 복제 이벤트
@@ -95,7 +80,7 @@ $(function() {
 	$(document).on('keydown','.tasklistName',function(key) {
 				if (key.keyCode == 13) {
 					var tasklistClone = $(".tasklist-clone:first").clone(true);
-					var tasklistInput = $('input[name="tasklistName"]');
+					var tasklistInput = $(this);
 
 					if (tasklistInput.val() != null
 							&& tasklistInput.val() != '') {
@@ -106,15 +91,17 @@ $(function() {
 						tasklistInput.val('');
 					}
 					$('.scroller-layout').animate({
-						scrollLeft : $('.tasklistName').offset().left
+						scrollLeft : $(this).offset().left
 					}, 1);
 					
-					
-					
+					var projectCode = $(this).siblings('input[name="projectCode"]').val();
+					var tasklistName = $(this).val();
 					var request = $.ajax({
 						  url: "/tasklistInsert",
 						  method: "POST",
-						  data: { projectCode : menuId },
+						  data: { projectCode : 'projectCode'
+							  	, tasklistName: 'tasklistName'
+						  },
 						  dataType: "html"
 						});
 						 

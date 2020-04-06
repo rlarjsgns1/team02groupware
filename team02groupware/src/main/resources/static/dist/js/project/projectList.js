@@ -50,7 +50,7 @@ $(
 						/*$('#editLayoutItem').modal({
 							backdrop : 'static'
 						});*/
-						
+						var delProject = $(this).parents('.project-list-wrap');
 						var projectCode = $(this).parents(".pr-header").find('.project-code-input').val();
 						console.log(projectCode);
 						
@@ -78,6 +78,7 @@ $(
 									
 									$('#editLayoutItem').modal({
 										backdrop : 'static'
+						
 									})
 								
 									var listDelete = $('.project-delete-btn');
@@ -100,7 +101,8 @@ $(
 						                    	 
 						                    	request.done(function( data ) {
 						                    		console.log('삭제');
-						                    		$(this).parents('.project-list-wrap').remove();
+						                    		$('.close').click();
+						                    		delProject.remove();
 						                    		
 						                    	});
 						                    	 
