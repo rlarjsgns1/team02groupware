@@ -99,6 +99,7 @@ public class ProjectController {
 		if(result>0) {
 			return "redirect:/projectList";
 		}
+		System.out.println(result);
 		return "redirect:/projectList";
 	}
 	

@@ -100,6 +100,8 @@ $(
 						                    	 
 						                    	request.done(function( data ) {
 						                    		console.log('삭제');
+						                    		$(this).parents('.project-list-wrap').remove();
+						                    		
 						                    	});
 						                    	 
 						                    	request.fail(function( jqXHR, textStatus ) {
