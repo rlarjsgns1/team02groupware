@@ -136,13 +136,23 @@
 						   var dFormAbbreviation=$('#document-form-abbre-input').val().trim(); // 문서 양식 약칭 입력값
 						   var dFormDetailExplanation=$('#document-form-detail-input').val().trim(); // 문서 양식 설명 입력값
 						   var dExpiryDate=$('#document-form-expiry-drop-down').text().trim(); // 문서 기안시 초기 보존연한 값
-						   var dSecurityLevel=$('#document-form-security-drop-down').text().trim(); // 문서 기안시 초기 보안등급 값
+						   var dSecurityLevel=$('#document-form-security-drop-down').text().trim().substring(0,1); // 문서 기안시 초기 보안등급 값
 						   var dExpiryDateChangeable=$('#document-form-expiry-check-box').is(":checked") // 문서 보존연한 변경 여부 체크
+						   if(dExpiryDateChangeable==true){
+							   dExpiryDateChangeable='Y';
+						   }else{
+							   dExpiryDateChangeable='N';
+						   }
 						   var dSecurityLevelChangeable=$('#document-form-security-check-box').is(":checked") // 문서 보안등급 변경 여부 체크
+						   if(dSecurityLevelChangeable==true){
+							   dSecurityLevelChangeable='Y';
+						   }else{
+							   dSecurityLevelChangeable='N';
+						   }
 						   var dApprovalFormatCode=$('.approval-format-radio').find('input:checked').val(); // 결재 양식 선택 값
 						   var dFormDetailContent=$('#document-form-detail-content-summer-note').val(); //문서 양식 상세 입력 값
 						  
-						   console.log(dFormTypeCode);
+						   /*console.log(dFormTypeCode);
 						   console.log(dFormName);
 						   console.log(dFormAbbreviation);
 						   console.log(dFormDetailExplanation);
@@ -151,7 +161,7 @@
 						   console.log(dExpiryDateChangeable);
 						   console.log(dSecurityLevelChangeable);
 						   console.log(dApprovalFormatCode);
-						   console.log(dFormDetailContent);
+						   console.log(dFormDetailContent);*/
 						   
 						   if(dFormTypeCode==null || dFormTypeCode==''){
 							   //console.log('분류를 선택해주세요.');
@@ -237,7 +247,9 @@
 							  });
 							   
 							  request.done(function(data) {
-								  console.log(data.result);
+								  //console.log(data.result);
+								  location.href="/selectDocumentFormList";
+								  $(window).off("beforeunload");
 							  });
 							   
 							  request.fail(function( jqXHR, textStatus ) {
