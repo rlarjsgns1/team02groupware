@@ -81,37 +81,36 @@ $(function() {
 				if (key.keyCode == 13) {
 					var tasklistClone = $(".tasklist-clone:first").clone(true);
 					var tasklistInput = $(this);
-
-					if (tasklistInput.val() != null
-							&& tasklistInput.val() != '') {
+					var tasklistName = $(this).val();
+					if (tasklistName != null
+							&& tasklistName != '') {
 						tasklistClone.appendTo(".task-row");
 						tasklistClone.css("display", "block");
 						tasklistClone.find(".tasklistnameClone").text(
-								tasklistInput.val());
+								tasklistName);
 						tasklistInput.val('');
+						var projectCode = $(this).siblings('input[name="projectCode"]').val();
+						console.log(projectCode);
+						console.log(tasklistName);
+						var request = $.ajax({
+							url: "/tasklistInsert",
+							method: "POST",
+							data: { 'projectCode' : projectCode
+								, 'tasklistName': tasklistName
+							},
+							dataType: "html"
+						});
+						
+						request.done(function( data ) {
+						});
+						
+						request.fail(function( jqXHR, textStatus ) {
+							alert( "Request failed: " + textStatus );
+						});
 					}
 					$('.scroller-layout').animate({
-						scrollLeft : $(this).offset().left
-					}, 1);
+						scrollLeft : $(this).offset().left}, 1);
 					
-					var projectCode = $(this).siblings('input[name="projectCode"]').val();
-					var tasklistName = $(this).val();
-					var request = $.ajax({
-						  url: "/tasklistInsert",
-						  method: "POST",
-						  data: { projectCode : 'projectCode'
-							  	, tasklistName: 'tasklistName'
-						  },
-						  dataType: "html"
-						});
-						 
-						request.done(function( msg ) {
-						  $( "#log" ).html( msg );
-						});
-						 
-						request.fail(function( jqXHR, textStatus ) {
-						  alert( "Request failed: " + textStatus );
-						});
 				}
 			})
 	// 업무리스트이름 취소버튼 클릭시 input value 공백 처리

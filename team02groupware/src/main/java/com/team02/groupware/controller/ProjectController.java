@@ -59,15 +59,14 @@ public class ProjectController {
  
 	@PostMapping("/tasklistInsert")
 	@ResponseBody
-	public String tasklistInsert(@RequestParam(value="projectCode",required=false)String projectCode,
-								@RequestParam(value="tasklistName", required = false)String tasklistName, Project project, RedirectAttributes model){
+	public String tasklistInsert(Project project, RedirectAttributes model){
 		System.out.println("------------tasklistInsert");
+		System.out.println(project.toString());
 		int result = projectService.tasklistInsert(project);
 		System.out.println(result);
-		
 		if(result > 0 ) {
-			model.addAttribute("tasklistName", tasklistName);
-			model.addAttribute("projectCode", projectCode);
+			model.addAttribute("tasklistName", project.getTasklistName());
+			model.addAttribute("projectCode", project.getProjectCode());
 			return "redirect:/taskList";
 		}
 		return "redirect:/taskList";
@@ -153,9 +152,11 @@ public class ProjectController {
 		System.out.println(project.getProjectTitle()+"<------------프로젝트 추가시 넘길때 필요한 프로젝트 제목");
 		int result = projectService.projectInsert(project);
 		String projectTitle = project.getProjectTitle();
+		String projectCode = project.getProjectCode();
 		System.out.println(result);
 		
 		if(result > 0 ) {
+			model.addAttribute("projectCode", projectCode);
 			model.addAttribute("projectTitle", projectTitle);
 			return "redirect:/taskList";
 		}

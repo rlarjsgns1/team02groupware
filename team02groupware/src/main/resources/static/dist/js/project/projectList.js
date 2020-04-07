@@ -19,6 +19,7 @@ $(
 									$('[name="projectTitle"]').focus();
 									return false;
 								}
+								
 								projectAddForm.action = "/projectInsert";
 								projectAddForm.submit();
 
