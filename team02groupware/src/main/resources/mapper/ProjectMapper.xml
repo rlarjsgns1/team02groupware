@@ -29,7 +29,48 @@
 		<result property="tasklistName" column="tasklist_name" />
 	</resultMap>
 
-
+	<!-- 업무 추가 -->
+	<insert id="taskInsert" parameterType="Project">
+	<selectKey keyProperty="taskCode" resultType="String" order="BEFORE">
+		SELECT
+				CASE
+					WHEN
+						COUNT(1) > 1
+				THEN
+					CONCAT('PRT',
+							LPAD(CAST(REPLACE(MAX(task_code), 'PRT', '') AS SIGNED ) + 1,3,'0')
+			)
+				ELSE
+					ifnull (task_code, 'PRT001')
+				END AS taskCode
+			FROM
+				project_task_detail
+		</selectKey>
+		INSERT INTO
+			project_task_detail(
+			task_code
+			, project_code
+			, tasklist_code
+			, task_title
+			, task_desc
+			, task_date
+			, task_deadline
+			, task_start
+			, task_end
+			, task_status)
+		VALUES(
+			#{taskCode}
+			, #{projectCode}
+			, #{tasklistCode}
+			, #{taskTitle}
+			, #{taskDesc}
+			, NOW()
+			, #{taskDeadline}
+			, #{taskStart}
+			, #{taskEnd}
+			, #{taskStatus})
+	</insert>
+	
 	<!-- 업무 상세정보 조회 -->
 	<select id="getTaskdetail" parameterType="String" resultMap="projectResultMap">
 			SELECT

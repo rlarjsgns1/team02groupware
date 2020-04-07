@@ -18,6 +18,11 @@ public class ProjectService {
 	@Autowired
 	private ProjectMapper projectMapper;
 
+	//업무 추가
+	public int taskInsert(Project project) {
+		return projectMapper.taskInsert(project);
+	}
+	
 	
 	//업무리스트별 업무상세정보 조회
 	public List<Project> getTaskdetail(String projectCode){

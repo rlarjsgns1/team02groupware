@@ -54,9 +54,25 @@ public class ProjectController {
 		return "project/taskCalendar";
 	}
 	
+	//업무 추가 ajax 메서드
+	@PostMapping("/taskInsert")
+	@ResponseBody
+	public String taskInsert(Project project, RedirectAttributes model) {
+		System.out.println("---------taskInsert");
+		System.out.println(project.toString());
+		int result = projectService.taskInsert(project);
+		System.out.println(result);
+		if(result>0) {
+			model.addAttribute("projectCode", project.getProjectCode());
+			model.addAttribute("tasklistCode", project.getTasklistCode());
+			model.addAttribute("taskTitle", project.getTaskTitle());
+			return "redirect:/taskList";
+		}
+		return "redirect:/taskList";
+	}
+	
 	
 	//업무리스트 추가 ajax 메서드
- 
 	@PostMapping("/tasklistInsert")
 	@ResponseBody
 	public String tasklistInsert(Project project, RedirectAttributes model){
