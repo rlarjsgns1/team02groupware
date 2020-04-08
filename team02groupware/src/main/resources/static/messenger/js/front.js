@@ -117,10 +117,6 @@
 	})
 	
 	
-	
-	
-	
-	
 	// 채팅방 close
 	function fn_chatRoomClose(){
 		
@@ -128,7 +124,6 @@
 		chatRoom.css('display', 'none')
 		
 	}
-	
 	
 	
 	// 모달창 생성 클릭 이벤트
@@ -185,4 +180,18 @@
 		}); 
 	
 	}
+	
+	$('.chat-room-input-btn').click(function(){
+		
+		var chatText = $('.chat-room-inut').val();
+		fn_sendMessage(chatText);
+		
+	})
+	
+	function fn_sendMessage(obj){
+		
+		var sendChatClone = $('.send-chat-clone').clone();
+		
+	}
+	
 	
