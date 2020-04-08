@@ -53,19 +53,38 @@ public class ProjectController {
 	public String taskCalendar() {
 		return "project/taskCalendar";
 	}
-	//업무상세정보 조회 메서드
 	
-	/*
-	@GetMapping("/taskList")
-	public String getTaskdetail(Model model, @RequestParam(value="tasklistCode",required=false) String tasklistCode) {
-		System.out.println("binding test: "+ tasklistCode);
-		return "project/taskList";
+	//업무 추가 ajax 메서드
+	@PostMapping("/taskInsert")
+	@ResponseBody
+	public Map<String,Object> taskInsert(Project project) {
+		System.out.println("---------taskInsert");
+		System.out.println(project.toString());
+		int result = projectService.taskInsert(project);
+		String tasklistCode = projectService.selectTasklistcode();
+		System.out.println(result);
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("tasklistCode", tasklistCode);
+		System.out.println(tasklistCode + "<---------tasklistCode확인");
+		return resultMap;
 	}
 	
-	*/
 	
-	
-	
+	//업무리스트 추가 ajax 메서드
+	@PostMapping("/tasklistInsert")
+	@ResponseBody
+	public Map<String,Object> tasklistInsert(Project project){
+		System.out.println("------------tasklistInsert");
+		System.out.println(project.toString());
+		int result = projectService.tasklistInsert(project);
+		String tasklistCode = projectService.selectTasklistcode();
+		System.out.println(tasklistCode);
+		System.out.println(result);
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("tasklistCode", tasklistCode);
+		return resultMap;
+	}
+		
 	//업무리스트 조회 메서드
 	@GetMapping("/taskList")
 	public String taskList(	Model model, @RequestParam(value="projectCode",required = false) String projectCode,
@@ -83,7 +102,21 @@ public class ProjectController {
 		model.addAttribute("taskList", taskList);
 		model.addAttribute("projectTitle", projectTitle);
 		model.addAttribute("taskDetail", taskDetail);
+		model.addAttribute("projectCode", projectCode);
 		return "project/taskList";
+	}
+	
+	//프로젝트 삭제 메서드
+	@PostMapping("/projectDelete")
+	@ResponseBody
+	public String projectDelete(@RequestParam(value="projectCode")String projectCode) {
+		System.out.println(projectCode+"projectCode-------------------");
+		int result = projectService.projectDelete(projectCode);
+		if(result>0) {
+			return "redirect:/projectList";
+		}
+		System.out.println(result);
+		return "redirect:/projectList";
 	}
 	
 	
@@ -108,17 +141,19 @@ public class ProjectController {
 	//프로젝트 수정을 위한 1개정보 불러오는 ajax 메서드 겟 맵핑
 		@GetMapping("/ajaxProjectSelectForUpdate")
 		@ResponseBody
-		public Map<String, Object> projectSelectForUpdate(@RequestParam(value="projectCode") String projectCode) {
+		public Map<String, Object> projectSelectForUpdate(@RequestParam(value="projectCode") String projectCode, Model model) {
 			System.out.println("binding test=" + projectCode);
 			Project resultProject=projectService.selectForProUpdate(projectCode);
 			
 			System.out.println("binding test2=" + resultProject.toString());
 			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("code", resultProject.getProjectCode());
 			resultMap.put("title", resultProject.getProjectTitle());
 			resultMap.put("desc", resultProject.getProjectDesc());
 			resultMap.put("start", resultProject.getProjectStart());
 			resultMap.put("dead", resultProject.getProjectDeadline());
 			resultMap.put("end", resultProject.getProjectEnd());
+			model.addAttribute("resultMap", resultMap);
 			return resultMap;
 		}
 	
@@ -131,9 +166,11 @@ public class ProjectController {
 		System.out.println(project.getProjectTitle()+"<------------프로젝트 추가시 넘길때 필요한 프로젝트 제목");
 		int result = projectService.projectInsert(project);
 		String projectTitle = project.getProjectTitle();
+		String projectCode = project.getProjectCode();
 		System.out.println(result);
 		
 		if(result > 0 ) {
+			model.addAttribute("projectCode", projectCode);
 			model.addAttribute("projectTitle", projectTitle);
 			return "redirect:/taskList";
 		}
@@ -154,4 +191,28 @@ public class ProjectController {
 		//System.out.println(boardService.getBoardlist().toString());
 		return "project/projectList";
 	}
+	
+	
+	@GetMapping("/projectUpdateModal")
+	public String modalHtml(Model model
+			, @RequestParam(value="projectCode") String projectCode
+	) {
+		
+		
+		System.out.println("binding test=" + projectCode);
+		Project resultProject=projectService.selectForProUpdate(projectCode);
+		
+		System.out.println("binding test2=" + resultProject.toString());
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("code", resultProject.getProjectCode());
+		resultMap.put("title", resultProject.getProjectTitle());
+		resultMap.put("desc", resultProject.getProjectDesc());
+		resultMap.put("start", resultProject.getProjectStart());
+		resultMap.put("dead", resultProject.getProjectDeadline());
+		resultMap.put("end", resultProject.getProjectEnd());
+		model.addAttribute("resultMap", resultMap);
+		System.out.println("위치테스트");
+		return "project/modal/projectUpdateModal";
+	}
+	
 }
