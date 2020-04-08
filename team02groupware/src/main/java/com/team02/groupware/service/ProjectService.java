@@ -18,6 +18,11 @@ public class ProjectService {
 	@Autowired
 	private ProjectMapper projectMapper;
 
+	//업무 추가
+	public int taskInsert(Project project) {
+		return projectMapper.taskInsert(project);
+	}
+	
 	
 	//업무리스트별 업무상세정보 조회
 	public List<Project> getTaskdetail(String projectCode){
@@ -31,6 +36,12 @@ public class ProjectService {
 		return projectMapper.tasklistInsert(project);
 	}
 	
+	//업무리스트 최근 코드 조회
+	public String selectTasklistcode() {
+		return projectMapper.selectTasklistcode();
+		
+	}
+	
 	//업무리스트조회
 	public List<Project> selectTasklist(String projectCode){
 		
@@ -39,6 +50,11 @@ public class ProjectService {
 		
 		return projectList;
 		
+	}
+	
+	//프로젝트 삭제
+	public int projectDelete(String projectCode) {
+		return projectMapper.projectDelete(projectCode);
 	}
 	
 	//프로젝트 수정

@@ -13,7 +13,7 @@
 	.ruletip{		/* 사내전자결재규정 Modal css */
 		position: absolute;
 		display : none; 
-		z-index: 1;	
+		z-index: 1051;	
 	}
 	
 	.dropdown-item{		/* 검색키워드 드롭다운 선택항목 css */
@@ -264,4 +264,16 @@
 		display: none;
 		width:20%;
 		color: white;
+	}
+	#selected-approval-format-1{ /* 선택된 결재양식 1 (결재) 관련css */
+		display: none;
+	}
+	#selected-approval-format-2{ /* 선택된 결재양식 2 (신청) 관련css */
+		display: none;
+	}
+	#selected-approval-format-3{ /* 선택된 결재양식 3 (결재 후 송신) 관련css */
+		display: none;
+	}
+	#selected-approval-format-4{ /* 선택된 결재양식 4 (회람) 관련css */
+		display: none;
 	}

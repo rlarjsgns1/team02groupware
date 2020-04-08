@@ -9,14 +9,10 @@
 <th:block layout:fragment="customTitle">
 	<title>업무리스트</title>
 </th:block>
-
-
 <th:block layout:fragment="customScript">
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="dist/js/project/taskList.js"></script>
 </th:block>
-
 <th:block layout:fragment="customContents">
 	<div class="task-page-header page-header">
 		<div class="row align-items-end">
@@ -47,6 +43,8 @@
 			<div class="task-card card tasklist-clone" style="display: none;">
 				<div class="task-card-header card-header">
 					<h6 class="tasklistnameClone"></h6>
+					<input type="hidden" name="tasklistCodehidden"
+							class="tasklist-code-input" value="">
 					<div class="card-header-right">
 						<ul class="list-unstyled card-option">
 							<li><i class="ik ik-chevron-left action-toggle"></i></li>
@@ -57,6 +55,7 @@
 						</ul>
 					</div>
 				</div>
+				
 				<div class="task-card-body card-body completed-task">
 					<div class="dd" data-plugin="nestable">
 						<div class="task-form-group form-group">
@@ -64,8 +63,8 @@
 								name="taskTitle" placeholder="새 업무 만들기">
 						</div>
 						<div class="task-btn">
-							<button type="button" class="task-add-btn btn btn-primary mr-2">만들기</button>
 							<button class="task-cancel-btn btn btn-light">취소</button>
+							<button type="button" class="task-add-btn btn btn-primary mr-2">만들기</button>
 						</div>
 						<ol class="task-dd-list dd-list">
 							<li class="task-clone dd-item" data-id="1" style="display: none;">
@@ -76,6 +75,7 @@
 						</ol>
 					</div>
 				</div>
+				
 			</div>
 
 
@@ -111,6 +111,7 @@
 							<ol class="task-dd-list dd-list">
 								<th:block th:each="td:${taskDetail}" th:if="${td.tasklistCode}==${tl.tasklistCode}">
 									<li class="task-dd-item dd-item" data-id="1">
+										<input type="hidden" th:value="${td.taskCode}">
 										<div class="task-dd-handle dd-handle">
 											<p class="tasktitleClone" th:text="${td.taskTitle}"></p>
 										</div>
@@ -132,6 +133,7 @@
 						style="margin: 0 auto;">
 						<input type="text" class="tasklistName form-control"
 							name="tasklistName" placeholder="업무리스트 이름">
+						<input type="hidden" name="projectCode" th:value="${projectCode}">
 						<div class="input-group-append">
 							<button class="btn btn-default" id="tasklist-cancel-btn"
 								type="button">취소</button>
