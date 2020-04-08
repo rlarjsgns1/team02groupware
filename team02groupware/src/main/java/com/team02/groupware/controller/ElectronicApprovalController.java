@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -190,7 +191,7 @@ public class ElectronicApprovalController {
 		 List<ElectronicApprovalDocument> eaDocumentFormTypeList = eaService.selectEaDocumentFormType();
 		 List<ElectronicApprovalDocument> eaDocumentSetting = eaService.selectEaDocumentSetting();
 		 //logger.info("문서 양식 테이블 조회 결과값 :: {}", eaDocumentFormList);
-		 logger.info("문서 양식 분류 테이블 조회 결과값 :: {}", eaDocumentFormTypeList);
+		 //logger.info("문서 양식 분류 테이블 조회 결과값 :: {}", eaDocumentFormTypeList);
 		 //logger.info("전자결재 기본설정 테이블 조회 결과값 :: {}", eaDocumentSetting.toString());
 		 model.addAttribute("eaDocumentFormList", eaDocumentFormList);
 		 model.addAttribute("eaDocumentFormTypeList", eaDocumentFormTypeList);
@@ -200,13 +201,35 @@ public class ElectronicApprovalController {
 	 
 	 /*
 	  * @method insertDocumentForm()
-	  * @brief 관리자용 양식 생성 method
+	  * @brief 관리자용 문서 양식 생성 폼
 	  * @author 김건훈
 	  */
 	 @GetMapping("/insertDocumentForm")
-	 public String insertDocumentForm() {
+	 public String insertDocumentForm(Model model) {
+		 List<ElectronicApprovalDocument> eaDocumentFormTypeList = eaService.selectEaDocumentFormType();
+		 logger.info("문서 양식 분류 테이블 조회 결과값 :: {}", eaDocumentFormTypeList);
+		 model.addAttribute("eaDocumentFormTypeList", eaDocumentFormTypeList);
+		 
 		 return "eaDocument/eaDocumentForSupervisor/documentForm.html";
 	 }
+	 
+	 /*
+	  * @method insertDocumentFormPro()
+	  * @brief 관리자용 문서 양식 생성 method
+	  * @author 김건훈
+	  */	
+	 	@PostMapping(value="/insertDocumentFormPro",produces = "application/json")
+	 	@ResponseBody
+		public Map<String,Object> insertDocumentFormPro(@ModelAttribute ElectronicApprovalDocument eadto){
+	
+	 		//logger.info("ajax로 보내진 문서양식생성 입력값  :: {}", eadto.toString());
+
+	 		int result=eaService.insertDocumentForm(eadto);
+	 		
+	 		Map<String,Object> resultMap = new HashMap<String,Object>();
+	 		resultMap.put("result", result);
+	 		return resultMap;
+		}
 	 
 	 
 	 /*

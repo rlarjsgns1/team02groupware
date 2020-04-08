@@ -26,7 +26,23 @@ public class ElectronicApprovalService {
 	 @Autowired //ElectronicApprovalMapper 의존성 주입
 	 private ElectronicApprovalMapper eaMapper;
 	 
+	 /*
+	  * @method insertDocumentForm()
+	  * @brief 관리자용 문서 양식 생성 method(문서 양식 코드 최대값으로 insert)
+	  * @author 김건훈
+	  */
+	 public int insertDocumentForm(ElectronicApprovalDocument eaDto) {
 		
+		 //문서 양식 코드 최대값으로 insert
+		 int maxCode = eaMapper.selectEaDocumentFormMaxCode();
+		 String maxCodeFormat = "EAF"+String.format("%03d", maxCode+1);
+		 eaDto.setdFormCode(maxCodeFormat);
+		 
+		 //문서양식 insert
+		 int result = eaMapper.insertDocumentForm(eaDto);
+		 return result;
+	 }
+	 
 	 /*
 	  * @method selectEaDocumentForm()
 	  * @brief 양식함관리 페이지 내 문서양식 테이블 조회 method

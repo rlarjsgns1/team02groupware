@@ -141,4 +141,26 @@
 	d_form_type_code=#{dFormTypeCode}
 
   </update>
+  
+    <!-- 문서 양식 생성 insert 쿼리문  -->
+  <insert id="insertDocumentForm" parameterType="ElectronicApprovalDocument">
+  /* 문서 양식 생성 insert method */  
+  	INSERT INTO ea_document_form
+		(d_form_code, d_security_level, d_form_type_code, d_approval_format_code, d_form_name, d_form_abbreviation,
+		 d_form_detail_explanation, d_security_level_changeable, d_expiry_date, d_expiry_date_changeable, 
+		 d_form_detail_content)
+	VALUES 
+		(#{dFormCode}, #{dSecurityLevel}, #{dFormTypeCode}, #{dApprovalFormatCode}, #{dFormName},
+		 #{dFormAbbreviation}, #{dFormDetailExplanation}, #{dSecurityLevelChangeable}, #{dExpiryDate},
+		 #{dExpiryDateChangeable}, #{dFormDetailContent})
+  </insert>
+  
+    <!-- 문서 양식 코드 최대값 구하는 쿼리문  -->
+  <select id="selectEaDocumentFormMaxCode" resultType="int">
+  /*문서 양식 코드 최대값 구하는 method */  
+	SELECT 
+		MAX(RIGHT(d_form_code,3)) 
+	FROM 
+		ea_document_form
+  </select>
   </mapper>
