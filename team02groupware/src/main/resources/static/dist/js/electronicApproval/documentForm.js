@@ -248,8 +248,8 @@
 							   
 							  request.done(function(data) {
 								  //console.log(data.result);
+								  $(window).unbind();
 								  location.href="/selectDocumentFormList";
-								  $(window).off("beforeunload");
 							  });
 							   
 							  request.fail(function( jqXHR, textStatus ) {
