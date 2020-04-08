@@ -124,10 +124,13 @@
 	
 	
 }
+.list-card{
+	margin-top:5px !important;
+}
 
 .pr-table-list{
 	display:none;
-	padding:50px;
+	padding:30px;
 }
 
 /*---------------------------------------------- 프로젝트 리스트 end ---------------------------------------------- */

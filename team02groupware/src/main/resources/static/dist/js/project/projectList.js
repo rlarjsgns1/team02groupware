@@ -6,8 +6,23 @@
 
 $(
 				function() {
+				//http://localhost/projectList?currentPage=2
+				//주소값에?짤라서 currentPage (insteadof)>-1
+				//display = 1:none, 2:block
 					
-					
+				//프로젝트 리스트 뷰 전환
+					$('.view-list').click(function(){
+						$('.project-card').css('display','none');
+						$('.pr-table-list').css('display','block');
+						var url = $(location).attr('href');
+						console.log(url);
+						console.log(url.split('?'));
+						
+					});
+					$('.view-grid').click(function(){
+						$('.project-card').css('display','flex');
+						$('.pr-table-list').css('display','none');
+					})
 							
 					
 				//프로젝트 추가 모달

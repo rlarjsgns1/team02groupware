@@ -224,13 +224,15 @@
 
 
 	<!--------------------------프로젝트 리스트 테이블형 --------------------------->
-
+	<div class="card list-card">
 	<div class="pr-table-list">
 		<table class="table table-hover">
 			<thead>
 				<tr>
+					<!--
 					<th>프로젝트코드</th>
 					<th>사원코드</th>
+					-->
 					<th>작성일</th>
 					<th>제목</th>
 					<th>설명</th>
@@ -243,8 +245,10 @@
 			</thead>
 			<tbody>
 				<tr th:each="l : ${projectList}">
+					<!--
 					<td th:text="${#strings.abbreviate(l.projectCode,10)}"></td>
 					<td th:text="${#strings.abbreviate(l.employeeCode,10)}"></td>
+					-->
 					<td th:text="${#strings.abbreviate(l.projectDate,10)}"></td>
 					<td th:text="${#strings.abbreviate(l.projectTitle,10)}"></td>
 					<td th:text="${#strings.abbreviate(l.projectDesc,15)}"></td>
@@ -257,34 +261,42 @@
 			</tbody>
 		</table>
 
-		<div class="card">
-			<div class="card-header">
-				<h3>Pagination Basic</h3>
-			</div>
+			
 			<div class="card-body">
 				<nav aria-label="Page navigation example">
 					<ul class="pagination mb-0">
-						<li class="page-item"><a class="page-link first" href="#">
+						<li class="page-item">
+							<a class="page-link first" href="#">
 								<i class="ik ik-chevrons-left"></i>
-						</a></li>
-						<li class="page-item"><a class="page-link prev" href="#">
-								<i class="ik ik-chevron-left"></i>
-						</a></li>
-						<li class="page-item"><a class="page-link" href="#">1</a></li>
-						<li class="page-item active"><a class="page-link" href="#">2</a>
+							</a>
 						</li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item"><a class="page-link next" href="#"
-							aria-label="Next"> <i class="ik ik-chevron-right"></i>
-						</a></li>
-						<li class="page-item"><a class="page-link last" href="#">
+						<li class="page-item">
+							<a class="page-link prev" href="#">
+								<i class="ik ik-chevron-left"></i>
+							</a>
+						</li>
+						<th:block th:each="num:${#numbers.sequence(startPageNum,endPageNum)}" th:unless="${num>lastPage}">
+							<li class="page-item">
+								<a class="page-link" href="#" th:if="${currentPage == num}" th:text="${num}"></a>
+								<a class="page-link" th:unless="${currentPage == num}" th:text="${num}" th:href="@{/projectList(currentPage=${num})}"></a>
+							</li>
+						</th:block>
+						
+						<li class="page-item">
+							<a class="page-link next" href="#" aria-label="Next"> <i class="ik ik-chevron-right"></i>
+							</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link last" href="#">
 								<i class="ik ik-chevrons-right"></i>
-						</a></li>
+							</a>
+						</li>
 					</ul>
 				</nav>
 			</div>
 		</div>
-		맨처음 <a th:href="@{/projectList}">[맨처음]</a> 이전 <a
+		<!-- 
+		<a th:href="@{/projectList}">[맨처음]</a> <a
 			th:if="${currentPage > 1}"
 			th:href="@{/projectList(currentPage=${currentPage - 1})}"> [이전] </a>
 		<th:block th:each="num:${#numbers.sequence(startPageNum,endPageNum)}"
@@ -293,10 +305,10 @@
 			<a th:unless="${currentPage == num}" th:text="${'['+ num +']'}"
 				th:href="@{/projectList(currentPage=${num})}"></a>
 		</th:block>
-		다음 <a th:if="${currentPage < lastPage}"
+		 <a th:if="${currentPage < lastPage}"
 			th:href="@{/projectList(currentPage=${currentPage + 1})}"> [다음] </a>
-		마지막 <a th:href="@{/projectList(currentPage=${lastPage})}"> [마지막] </a>
-
+		<a th:href="@{/projectList(currentPage=${lastPage})}"> [마지막] </a>
+ 		-->
 	</div>
 </th:block>
 <th:block layout:fragment="customJs">
