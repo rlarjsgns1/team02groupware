@@ -57,36 +57,34 @@ public class ProjectController {
 	//업무 추가 ajax 메서드
 	@PostMapping("/taskInsert")
 	@ResponseBody
-	public String taskInsert(Project project, RedirectAttributes model) {
+	public Map<String,Object> taskInsert(Project project) {
 		System.out.println("---------taskInsert");
 		System.out.println(project.toString());
 		int result = projectService.taskInsert(project);
+		String tasklistCode = projectService.selectTasklistcode();
 		System.out.println(result);
-		if(result>0) {
-			model.addAttribute("projectCode", project.getProjectCode());
-			model.addAttribute("tasklistCode", project.getTasklistCode());
-			model.addAttribute("taskTitle", project.getTaskTitle());
-			return "redirect:/taskList";
-		}
-		return "redirect:/taskList";
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("tasklistCode", tasklistCode);
+		System.out.println(tasklistCode + "<---------tasklistCode확인");
+		return resultMap;
 	}
 	
 	
 	//업무리스트 추가 ajax 메서드
 	@PostMapping("/tasklistInsert")
 	@ResponseBody
-	public String tasklistInsert(Project project, RedirectAttributes model){
+	public Map<String,Object> tasklistInsert(Project project){
 		System.out.println("------------tasklistInsert");
 		System.out.println(project.toString());
 		int result = projectService.tasklistInsert(project);
+		String tasklistCode = projectService.selectTasklistcode();
+		System.out.println(tasklistCode);
 		System.out.println(result);
-		if(result > 0 ) {
-			model.addAttribute("tasklistName", project.getTasklistName());
-			model.addAttribute("projectCode", project.getProjectCode());
-			return "redirect:/taskList";
-		}
-		return "redirect:/taskList";
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("tasklistCode", tasklistCode);
+		return resultMap;
 	}
+		
 	//업무리스트 조회 메서드
 	@GetMapping("/taskList")
 	public String taskList(	Model model, @RequestParam(value="projectCode",required = false) String projectCode,

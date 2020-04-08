@@ -18,29 +18,29 @@ $(function() {
 					var taskTitleInput = $(this);
 					var nearDdlist = $(this).parent().siblings('.task-dd-list');
 					var taskTitle = $(this).val();
-					var tasklistCode = $(this).parents('.task-card-body').siblings('.task-card-header').find('.tasklist-code-input').val();
-					console.log(taskTitle);
-					console.log(projectCode);
-					console.log(tasklistCode);
+					var tasklistCode = $(this).closest('.task-card-body').siblings('.task-card-header').find('.tasklist-code-input').val();
+						console.log(taskTitle);
+						console.log(projectCode);
+						console.log(tasklistCode);
 					if (taskTitleInput.val() != null
 							&& taskTitleInput.val() != '') {
-						taskClone.appendTo(nearDdlist);
-						taskClone.css("display", "block");
-						taskClone.find(".tasktitleClone").text(
-								taskTitleInput.val());
-						taskTitleInput.val('');
 						
 						var request = $.ajax({
 							url: "/taskInsert",
 							method: "POST",
 							data: { 'projectCode' : projectCode
-								, 'tasklistCode': tasklistCode
-								, 'taskTitle' : taskTitle
+								,'tasklistCode': tasklistCode
+								,'taskTitle' : taskTitle
 							},
-							dataType: "html"
+							dataType: "json"
 						});
 						
 						request.done(function( data ) {
+							taskClone.appendTo(nearDdlist);
+							taskClone.css("display", "block");
+							taskClone.find(".tasktitleClone").text(
+									taskTitleInput.val());
+							taskTitleInput.val('');
 						});
 						
 						request.fail(function( jqXHR, textStatus ) {
@@ -83,38 +83,45 @@ $(function() {
 	// 업무리스트추가 버튼 클릭이벤트
 	$(document).on('keydown','.tasklistName',function(key) {
 				if (key.keyCode == 13) {
-					var tasklistClone = $(".tasklist-clone:first").clone(true);
 					var tasklistInput = $(this);
 					var tasklistName = $(this).val();
 					if (tasklistName != null
 							&& tasklistName != '') {
-						tasklistClone.appendTo(".task-row");
-						tasklistClone.css("display", "block");
-						tasklistClone.find(".tasklistnameClone").text(
-								tasklistName);
-						tasklistInput.val('');
 						
-						console.log(projectCode);
-						console.log(tasklistName);
 						var request = $.ajax({
 							url: "/tasklistInsert",
 							method: "POST",
 							data: { 'projectCode' : projectCode
 								, 'tasklistName': tasklistName
 							},
-							dataType: "html"
+							dataType: "json"
 						});
 						
 						request.done(function( data ) {
+							var tasklistClone = $(".tasklist-clone:first").clone(true);
+							
+							tasklistClone.find('.tasklist-code-input').val(data.tasklistCode);
+
+							
+							tasklistClone.appendTo(".task-row");
+							tasklistClone.css("display", "block");
+							tasklistClone.find(".tasklistnameClone").text(
+									tasklistName);
+							tasklistInput.val('');
+							$('.scroller-layout').animate({
+								scrollLeft : $('.tasklistName').offset().left}, 1);
+							
+							
+							console.log(projectCode);
+							console.log(tasklistName);
+							console.log(data);
+							console.log(data.tasklistCode);
 						});
 						
 						request.fail(function( jqXHR, textStatus ) {
 							alert( "Request failed: " + textStatus );
 						});
 					}
-					$('.scroller-layout').animate({
-						scrollLeft : $(this).offset().left}, 1);
-					
 				}
 			})
 	// 업무리스트이름 취소버튼 클릭시 input value 공백 처리

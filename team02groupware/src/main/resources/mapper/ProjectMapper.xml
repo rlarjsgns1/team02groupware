@@ -29,6 +29,15 @@
 		<result property="tasklistName" column="tasklist_name" />
 	</resultMap>
 
+	<!-- 클론된 업무리스트코드 조회  -->
+	<select id="selectTasklistcode" resultType="String">
+	SELECT
+		MAX(PTL.tasklist_code)
+	FROM
+		project_task_list AS PTL
+	
+	</select>
+
 	<!-- 업무 추가 -->
 	<insert id="taskInsert" parameterType="Project">
 	<selectKey keyProperty="taskCode" resultType="String" order="BEFORE">
@@ -124,7 +133,7 @@
 			PL.project_title
 			,PL.project_code
 			,TL.tasklist_name
-			,TL.tasklist_code		
+			,TL.tasklist_code
 		FROM
 			project_task_list AS TL
 			INNER JOIN

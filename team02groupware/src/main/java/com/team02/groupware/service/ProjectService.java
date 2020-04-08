@@ -36,6 +36,12 @@ public class ProjectService {
 		return projectMapper.tasklistInsert(project);
 	}
 	
+	//업무리스트 최근 코드 조회
+	public String selectTasklistcode() {
+		return projectMapper.selectTasklistcode();
+		
+	}
+	
 	//업무리스트조회
 	public List<Project> selectTasklist(String projectCode){
 		

@@ -15,6 +15,9 @@ public interface ProjectMapper {
 	//업무리스트별 업무상세정보 조회
 	public List<Project> getTaskdetail(String projectCode);
 	
+	//업무리스트 최근 코드 조회
+	public String selectTasklistcode();
+	
 	//업무리스트추가
 	public int tasklistInsert(Project project);
 	
