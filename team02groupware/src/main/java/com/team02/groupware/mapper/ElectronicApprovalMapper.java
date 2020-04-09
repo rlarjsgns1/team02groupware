@@ -82,4 +82,19 @@ public interface ElectronicApprovalMapper {
 	  * @author 김건훈
 	  */
 	 public int updateDocumentFormType(ElectronicApprovalDocument eaDto);
+	 
+	 /*
+	  * @method insertDocumentForm()
+	  * @brief 관리자용 문서 양식 생성 method
+	  * @author 김건훈
+	  */
+	 public int insertDocumentForm(ElectronicApprovalDocument eaDto);
+	 
+	 /*
+	  * @method selectEaDocumentFormMaxCode()
+	  * @brief 문서 양식 코드 최대값 구하는 method 
+	  * @author 김건훈
+	  */
+	 public int selectEaDocumentFormMaxCode();
+	 
 }

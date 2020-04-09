@@ -12,7 +12,7 @@ public class ElectronicApprovalDocument {
 	 * @author 김건훈
 	 */
 	private String dFormCode; //문서 양식 코드
-	private char dSecurityLevel; //보안등급 레벨
+	private String dSecurityLevel; //보안등급 레벨
 	private String dFormTypeCode; //문서 양식 분류 코드
 	private String dApprovalFormatCode; //결재양식 포맷 코드
 	private String dFormName; //문서 양식 명
@@ -57,10 +57,10 @@ public class ElectronicApprovalDocument {
 	public void setdFormCode(String dFormCode) {
 		this.dFormCode = dFormCode;
 	}
-	public char getdSecurityLevel() {
+	public String getdSecurityLevel() {
 		return dSecurityLevel;
 	}
-	public void setdSecurityLevel(char dSecurityLevel) {
+	public void setdSecurityLevel(String dSecurityLevel) {
 		this.dSecurityLevel = dSecurityLevel;
 	}
 	public String getdFormTypeCode() {
