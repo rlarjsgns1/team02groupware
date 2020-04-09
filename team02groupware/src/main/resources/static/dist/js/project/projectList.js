@@ -7,16 +7,24 @@
 $(
 				function() {
 				//http://localhost/projectList?currentPage=2
-				//주소값에?짤라서 currentPage (insteadof)>-1
+				//주소값에?짤라서 currentPage (indexOf)>-1
 				//display = 1:none, 2:block
-					
+					         
 				//프로젝트 리스트 뷰 전환
 					$('.view-list').click(function(){
-						$('.project-card').css('display','none');
-						$('.pr-table-list').css('display','block');
 						var url = $(location).attr('href');
+						var sub = url.substring(29);
+						
+						var spl = sub.split('=');
 						console.log(url);
-						console.log(url.split('?'));
+						console.log(spl);
+						console.log(sub)
+						
+						var str = spl.indexOf('currentPage');
+						if(str>-1){
+							$('.project-card').css('display','none');
+							$('.pr-table-list').css('display','block');
+						}
 						
 					});
 					$('.view-grid').click(function(){

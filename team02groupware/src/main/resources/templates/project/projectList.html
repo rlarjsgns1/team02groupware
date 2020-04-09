@@ -295,7 +295,7 @@
 				</nav>
 			</div>
 		</div>
-		<!-- 
+	
 		<a th:href="@{/projectList}">[맨처음]</a> <a
 			th:if="${currentPage > 1}"
 			th:href="@{/projectList(currentPage=${currentPage - 1})}"> [이전] </a>
@@ -308,7 +308,7 @@
 		 <a th:if="${currentPage < lastPage}"
 			th:href="@{/projectList(currentPage=${currentPage + 1})}"> [다음] </a>
 		<a th:href="@{/projectList(currentPage=${lastPage})}"> [마지막] </a>
- 		-->
+ 		
 	</div>
 </th:block>
 <th:block layout:fragment="customJs">
