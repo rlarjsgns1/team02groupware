@@ -3,26 +3,76 @@
  * 김연지
  * */
 
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  var expires = "expires="+d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+  for(var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
 
 $(
 				function() {
 				//http://localhost/projectList?currentPage=2
-				//주소값에?짤라서 currentPage (insteadof)>-1
+				//주소값에?짤라서 currentPage (indexOf)>-1
 				//display = 1:none, 2:block
-					
+					         
 				//프로젝트 리스트 뷰 전환
-					$('.view-list').click(function(){
+				var gridViewType = getCookie('gridViewType');
+				if(gridViewType == 'list'){
+					$('.project-card').css('display','none');
+					$('.pr-table-list').css('display','block');
+					$('.view-list').addClass('active');
+					$('.view-grid').removeClass('active');
+				}else{
+					$('.project-card').css('display','flex');
+					$('.pr-table-list').css('display','none');
+					$('.view-list').removeClass('active')
+					$('.view-grid').addClass('active');
+				}
+					
+				$('.view-list').click(function(){
+					var list = $('input[name="pr-table-list"]').val();
+					console.log(list);
+					var request = $.ajax({
+					  url: "/projectList",
+					  method: "GET",
+					  data: { 'list' : list },
+					  dataType: "html"
+					});
+					 
+					request.done(function( data ) {
 						$('.project-card').css('display','none');
 						$('.pr-table-list').css('display','block');
-						var url = $(location).attr('href');
-						console.log(url);
-						console.log(url.split('?'));
+						setCookie('gridViewType', 'list', 1);
 						
 					});
-					$('.view-grid').click(function(){
-						$('.project-card').css('display','flex');
-						$('.pr-table-list').css('display','none');
-					})
+					 
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+					});
+					
+					
+				})
+				$('.view-grid').click(function(){
+					$('.project-card').css('display','flex');
+					$('.pr-table-list').css('display','none');
+					setCookie('gridViewType', 'grid', 1);
+				})
 							
 					
 				//프로젝트 추가 모달

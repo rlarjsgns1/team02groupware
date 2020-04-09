@@ -236,6 +236,9 @@
 		FROM
 			project_list
 		ORDER BY
-			projectDate DESC;
+			projectDate DESC
+		<if test="list eq 'list'">
+			LIMIT #{startRow}, #{rowPerPage}
+		</if>
 	</select>
 </mapper>
