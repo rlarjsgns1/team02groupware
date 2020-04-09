@@ -179,6 +179,7 @@ public class ProjectController {
 	
 	//프로젝트  리스트 조회 메서드
 	@GetMapping("/projectList")
+	@ResponseBody
 	public String getProjectList(@RequestParam(value="currentPage", required=false, defaultValue="1") int currentPage
 			,Model model) {
 		logger.info("currentPage :: {}", currentPage);
