@@ -44,7 +44,10 @@
 				<div class="task-card-header card-header">
 					<h6 class="tasklistnameClone"></h6>
 					<input type="hidden" name="tasklistCodehidden"
-							class="tasklist-code-input" value="">
+							class="tasklist-code-input" th:value="${tasklistCode}">
+					<th:block th:unless="${projectCode} eq 'PR001' or ${projectCode} eq 'PR002' or ${projectCode} eq 'PR003' or ${projectCode} eq 'PR004' or ${projectCode} eq 'PR005' or ${projectCode} eq 'PR006' or ${projectCode} eq 'PR007'">
+					<li class="tasklist-delete-btn"><i class="ik ik-x"></i></li>
+					</th:block>
 					<div class="card-header-right">
 						<ul class="list-unstyled card-option">
 							<li><i class="ik ik-chevron-left action-toggle"></i></li>
@@ -55,7 +58,6 @@
 						</ul>
 					</div>
 				</div>
-				
 				<div class="task-card-body card-body completed-task">
 					<div class="dd" data-plugin="nestable">
 						<div class="task-form-group form-group">
@@ -84,11 +86,13 @@
 
 			<th:block th:each="tl:${taskList}">
 				<div class="task-card card tasklist">
-
 					<div class="task-card-header card-header">
 						<h6 class="tasklistname" th:text="${tl.tasklistName}"></h6>
 						<input type="hidden" name="tasklistCodehidden"
 							class="tasklist-code-input" th:value="${tl.tasklistCode}">
+						<th:block th:unless="${projectCode} eq 'PR001' or ${projectCode} eq 'PR002' or ${projectCode} eq 'PR003' or ${projectCode} eq 'PR004' or ${projectCode} eq 'PR005' or ${projectCode} eq 'PR006' or ${projectCode} eq 'PR007'">
+						<li class="tasklist-delete-btn"><i class="ik ik-x"></i></li>
+						</th:block>
 						<div class="card-header-right">
 							<ul class="list-unstyled card-option">
 								<li><i class="ik ik-chevron-left action-toggle"></i></li>
@@ -159,6 +163,7 @@
 	<script src="plugins/screenfull/dist/screenfull.js"></script>
 	<script src="plugins/nestable/jquery.nestable.js"></script>
 	<script src="dist/js/theme.min.js"></script>
+	<script src="plugins/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="js/taskboard.js"></script>
 	<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 	<script>

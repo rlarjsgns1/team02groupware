@@ -29,6 +29,16 @@
 		<result property="tasklistName" column="tasklist_name" />
 	</resultMap>
 
+
+	<delete id="tasklistDelete" parameterType = "String">
+	DELETE
+	FROM
+		project_task_list
+	WHERE
+		tasklist_code=#{tasklistCode};
+	</delete>
+	
+	
 	<!-- 클론된 업무리스트코드 조회  -->
 	<select id="selectTasklistcode" resultType="String">
 	SELECT

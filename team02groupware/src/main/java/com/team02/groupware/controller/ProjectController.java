@@ -69,6 +69,19 @@ public class ProjectController {
 		return resultMap;
 	}
 	
+	//업무리스트 삭제 ajax 메서드
+	@PostMapping("/tasklistDelete")
+	@ResponseBody
+	public Map<String,Object> tasklistDelete(@RequestParam(value="tasklistCode") String tasklistCode) {
+		System.out.println("--------tasklistDelete");
+		System.out.println(tasklistCode);
+		Map<String,Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("result", projectService.tasklistDelete(tasklistCode));
+		System.out.println(resultMap);
+		return resultMap;
+		
+	}
+	
 	
 	//업무리스트 추가 ajax 메서드
 	@PostMapping("/tasklistInsert")
@@ -109,14 +122,11 @@ public class ProjectController {
 	//프로젝트 삭제 메서드
 	@PostMapping("/projectDelete")
 	@ResponseBody
-	public String projectDelete(@RequestParam(value="projectCode")String projectCode) {
+	public Map<String, Object> projectDelete(@RequestParam(value="projectCode")String projectCode) {
 		System.out.println(projectCode+"projectCode-------------------");
-		int result = projectService.projectDelete(projectCode);
-		if(result>0) {
-			return "redirect:/projectList";
-		}
-		System.out.println(result);
-		return "redirect:/projectList";
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("result", projectService.projectDelete(projectCode)); 
+		return resultMap;
 	}
 	
 	

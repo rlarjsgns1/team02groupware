@@ -51,7 +51,7 @@
 			<div class="pr-btn-wrap">
 				<button type="button" class="btn btn-success btn-rounded"
 					data-toggle="modal" data-target="#exampleModalCenter">새 프로젝트 추가</button>
-				<span class="info">기존 데이터는 수정 또는 삭제하실 수 없습니다.</span>	
+				<span class="info">'C의료기관 관리 시스템'~'C의료기관 관리 시스템' 수정 및 삭제 불가</span>	
 				<div class="collapse d-md-block display-options" id="displayOptions">
 					<span
 						class="mr-3 d-inline-block float-md-left dispaly-option-buttons">
@@ -69,14 +69,10 @@
 					<div class="project-list card">
 						<div class="card-body">
 							<div class="pr-header justify-content-between align-items-center">
-
 								<div class="state">
-									<input type="hidden" class="project-code-input"
-										th:value="${pl.projectCode}">
-									<h3 class="pr-title text-success"
-										th:text="${#strings.abbreviate(pl.projectTitle,30)}"></h3>
-									<p class="pr-card-subtitle card-subtitle text-muted fw-500"
-										th:text="${#strings.abbreviate(pl.projectDesc,28)}"></p>
+									<input type="hidden" class="project-code-input" th:value="${pl.projectCode}">
+									<h3 class="pr-title text-success" th:text="${#strings.abbreviate(pl.projectTitle,30)}"></h3>
+									<p class="pr-card-subtitle card-subtitle text-muted fw-500" th:text="${#strings.abbreviate(pl.projectDesc,28)}"></p>
 								</div>
 
 								<div class="pr-ikon icon">
@@ -88,7 +84,6 @@
 									</label>
 								</div>
 							</div>
-
 							<div class="pr-progress">
 								<div class="pr-status">
 									<a href="#" class="badge badge-primary mb-1">진행중</a>
@@ -103,7 +98,6 @@
 										class="float-right">0/0개 업무</span>
 								</div>
 							</div>
-
 						</div>
 					</div>
 				</div>
@@ -114,10 +108,6 @@
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<!--
-					<th>프로젝트코드</th>
-					<th>사원코드</th>
-					-->
 					<th>작성일</th>
 					<th>제목</th>
 					<th>설명</th>
@@ -130,10 +120,6 @@
 			</thead>
 			<tbody>
 				<tr th:each="l : ${projectList}">
-					<!--
-					<td th:text="${#strings.abbreviate(l.projectCode,10)}"></td>
-					<td th:text="${#strings.abbreviate(l.employeeCode,10)}"></td>
-					-->
 					<td th:text="${#strings.abbreviate(l.projectDate,10)}"></td>
 					<td th:text="${#strings.abbreviate(l.projectTitle,10)}"></td>
 					<td th:text="${#strings.abbreviate(l.projectDesc,15)}"></td>
@@ -145,8 +131,6 @@
 				</tr>
 			</tbody>
 		</table>
-
-			
 			<div class="card-body">
 				<nav aria-label="Page navigation example">
 					<ul class="pagination mb-0">
@@ -182,17 +166,6 @@
 		</div>
 		</div>
 	</div>
-	
-		<!-- <a th:href="@{/projectList}">[맨처음]</a> <a
-			th:if="${currentPage > 1}"
-			th:href="@{/projectList(currentPage=${currentPage - 1})}"> [이전] </a>
-		<th:block th:each="num:${#numbers.sequence(startPageNum,endPageNum)}" th:unless="${num>lastPage}">
-			<span class="number" th:if="${currentPage == num}" th:text="${'['+ num +']'}"></span>
-			<a class="number" th:unless="${currentPage == num}" th:text="${'['+ num +']'}" th:href="@{/projectList(currentPage=${num})}"></a>
-		</th:block>
-		<a th:if="${currentPage < lastPage}" th:href="@{/projectList(currentPage=${currentPage + 1})}"> [다음] </a>
-		<a th:href="@{/projectList(currentPage=${lastPage})}"> [마지막] </a>
- 		 -->
 	</div>
 	<!--------------------------프로젝트 리스트 end --------------------------->
 

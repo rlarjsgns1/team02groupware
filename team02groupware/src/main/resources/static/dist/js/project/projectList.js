@@ -146,13 +146,17 @@ $(
 						                    	  url: "/projectDelete",
 						                    	  method: "POST",
 						                    	  data: { 'projectCode' : projectCode },
-						                    	  dataType: "html"
+						                    	  dataType: "json"
 						                    	});
 						                    	 
 						                    	request.done(function( data ) {
 						                    		console.log('삭제');
+						                    		console.log(data.result);
+						                    		if(data.result==1){
+						                    			delProject.remove();
+						                    		}
 						                    		$('.close').click();
-						                    		delProject.remove();
+						                    		
 						                    		
 						                    	});
 						                    	 
