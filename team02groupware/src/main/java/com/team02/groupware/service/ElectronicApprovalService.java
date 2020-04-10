@@ -44,14 +44,28 @@ public class ElectronicApprovalService {
 	 }
 	 
 	 /*
+	  * @method deleteDocumentForm()
+	  * @brief 관리자용 문서 양식 삭제 method
+	  * @author 김건훈
+	  */ 
+	 public int deleteDocumentForm(List<String> eaDocumentFormListCodeArr) {
+		 int result = eaMapper.deleteDocumentForm(eaDocumentFormListCodeArr);
+		 return result;		 
+	 }
+	 
+	 /*
 	  * @method selectEaDocumentForm()
 	  * @brief 양식함관리 페이지 내 문서양식 테이블 조회 method
 	  * @author 김건훈
 	  */
-	 public List<ElectronicApprovalDocument> selectEaDocumentForm(){
+	 public Map<String, Object> selectEaDocumentForm(){
 		
-		 List<ElectronicApprovalDocument> eaDocumentFormList = eaMapper.selectEaDocumentForm();
-		 return eaDocumentFormList;
+		 Map<String, Object> eaDocumentFormListMap = new HashMap<String,Object>();
+		
+		 eaDocumentFormListMap.put("eaDocumentFormList", eaMapper.selectEaDocumentForm());
+		 eaDocumentFormListMap.put("eaDocumentFormListCount", eaMapper.selectEaDocumentFormCount());
+		 
+		 return eaDocumentFormListMap;
 	 };
 	 
 	 /*

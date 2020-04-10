@@ -72,7 +72,7 @@
                                    <div class="table-nav">
                                    	<ul class="nav table-row-delete-nav" >
 	                                    <li class="nav-item">
-	                                      <button type="button" class="btn btn-outline-danger ea-list-delete">삭제</button> 
+	                                      <button type="button" class="btn btn-outline-danger ea-document-form-delete">삭제</button> 
 	                                    </li>
 	                                </ul>
                                     <div class="collapse d-md-block display-options float-md-right" id="displayOptions">
@@ -115,17 +115,17 @@
                                                 <tbody>
                                                     <tr th:each="dfl:${eaDocumentFormList}">
                                                     	<td> 
-                                                    		<input type="checkbox" class="ea-icheck ea-checkbox">
+                                                    		<input type="checkbox" class="ea-icheck ea-checkbox" th:value="${dfl.dFormCode}">
                                                     	</td>
-                                                        <td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormType}">프로젝트</td>
-                                                        <td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormName}">프로젝트사업기획서</td>
-                                                        <td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormAbbreviation}">프로젝트사업기획</td>
-                                                     	<td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormDetailExplanation}">프로젝트사업기획서다.</td>
+                                                        <td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormType}"></td>
+                                                        <td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormName}"></td>
+                                                        <td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormAbbreviation}"></td>
+                                                     	<td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormDetailExplanation}">.</td>
                                                     </tr>                                                                                                        
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <span class="contents-quantity">양식 수 : 3</span>
+                                        <span class="contents-quantity" th:text="|양식 수 : ${eaDocumentFormListCount}|"></span>
 	                                 	<nav aria-label="Page navigation example">
                                             <ul class="pagination mb-0 pagination-btn-group">
                                                 <li class="page-item">
@@ -191,7 +191,6 @@
 					                    <div class="modal-footer">
 					                        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 					                        <a th:href="@{/selectDocumentFormDetail}" class="btn btn-primary">상세보기</a>
-					                        <button type="button" class="btn btn-danger ea-list-delete">삭제</button>
 					                    </div>
 					                </div>
 					            </div>

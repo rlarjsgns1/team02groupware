@@ -60,9 +60,12 @@ $(function(){
 
 	});
 	 
-	 //페이지 로딩 시 체크박스 체크 초기화
+	//페이지 로딩 시 체크박스 체크 초기화
 	$('#all-ea-checkbox,.ea-checkbox').iCheck('uncheck');
 	
+	//양식수 : 갯수 부분에서 갯수부분만 추출하기 (체크박스 로직 용도)
+	var eaDocumentFormListCount = $('.contents-quantity').text().replace(/ /g, '').split(':');
+	 
 	 /*
 	  * @brief 각각 체크박스 체크 이벤트
 	  * @author 김건훈
@@ -70,9 +73,12 @@ $(function(){
 
 	  $('.ea-checkbox').on('ifChecked', function(event){
 		  //console.log('체크박스클릭');
+		  
+		  //console.log(eaDocumentFormListCount[1]);
+		  
 		  var checkCount  = $('.ea-checkbox:checked').length;
-		  //console.log(checkCount);
-			  if(checkCount == 3){							
+		  //console.log(checkCount);	
+			  if(checkCount == eaDocumentFormListCount[1]){							
 				 	 $('#all-ea-checkbox').iCheck('check');
 			  }else{
 				  	 $('#all-ea-checkbox').iCheck('uncheck');
@@ -89,7 +95,7 @@ $(function(){
 		  //console.log('체크박스클릭');
 		  var checkCount  = $('.ea-checkbox:checked').length;
 		  //console.log(checkCount);
-			  if(checkCount == 3){							
+			  if(checkCount == eaDocumentFormListCount[1]){							
 				 	 $('#all-ea-checkbox').iCheck('check');
 			  }else{
 				  	 $('#all-ea-checkbox').iCheck('uncheck');
@@ -123,7 +129,7 @@ $(function(){
 		 
 		  var checkCount  = $('.ea-checkbox:checked').length;
 		  
-		  if(checkCount == 3){
+		  if(checkCount == eaDocumentFormListCount[1]){
 		 		
 			  $('.ea-checkbox').iCheck('uncheck');
 		  }
@@ -160,6 +166,59 @@ $(function(){
 	   });
 	   
 	   
+	   /*
+	    * @brief 문서양식 삭제 Event
+	    * @author 김건훈
+	    */
+	   $('.ea-document-form-delete').on('click',function(){
+		   swal({
+	           title: "선택한 항목을 삭제하시겠습니까?",
+	           text: "선택한 양식을 삭제하시겠습니까?",
+	           icon: "warning",
+	           buttons: ["취소", "삭제"],
+	           dangerMode: true,
+	       })
+	       .then((willDelete) => {
+	           if (willDelete) {
+	        	   var eaDocumentFormListCodeArr = [];
+	        	   
+	        	   $('.ea-checkbox:checked').each(function(){
+	        		   eaDocumentFormListCodeArr.push($(this).val());
+	        		 });
+	        	   //console.log(eaDocumentFormListCodeArr);
+	        	   
+	        	   var request = $.ajax({
+					    url: "/deleteDocumentFormPro",
+					    method: "POST",
+					    data: JSON.stringify(eaDocumentFormListCodeArr),
+					    dataType: "json",
+					    contentType : 'application/json'
+					  });
+					   
+					  request.done(function(data) {
+					  	//console.log(data.result);
+						  
+						 swal({
+			                   title: "삭제되었습니다.",
+			                   text: "선택한 양식이	 삭제되었습니다.",
+			                   icon: "success",
+			                 });
+						 
+						 location.href="/selectDocumentFormList";
+			           
+					  });
+					   
+		           }else{
+		               swal("삭제가 취소되었습니다.");
+		            }
+					  request.fail(function( jqXHR, textStatus ) {
+					    alert( "Request failed: " + textStatus );
+					  }); 
+	        	   
+	       });
+		   
+	   });
+	  
 	   /*
 	    * @brief 사내 전자결재 수정 완료 Event
 	    * @author 김건훈

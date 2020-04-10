@@ -54,6 +54,15 @@
 		ON edf.d_form_type_code = edft.d_form_type_code
   </select>
   
+  <!-- 양식함관리 페이지 내 문서양식 전체 개수 조회  -->
+  <select id="selectEaDocumentFormCount" resultType="int">
+  /* 문서양식 전체 개수 조회 */ 
+ 		SELECT 
+ 			COUNT(1) 
+ 		FROM
+ 			ea_document_form 
+  </select>
+ 	
   <!-- 양식함관리 페이지 내 분류설정 테이블 조회  -->
   <select id="selectEaDocumentFormType" resultMap="eaDocumentFormTypeResultMap">
   /* 문서양식 분류설정 테이블 조회 쿼리문 실행 */  
@@ -155,7 +164,7 @@
 		 #{dExpiryDateChangeable}, #{dFormDetailContent})
   </insert>
   
-    <!-- 문서 양식 코드 최대값 구하는 쿼리문  -->
+  <!-- 문서 양식 코드 최대값 구하는 쿼리문  -->
   <select id="selectEaDocumentFormMaxCode" resultType="int">
   /*문서 양식 코드 최대값 구하는 method */  
 	SELECT 
@@ -163,4 +172,13 @@
 	FROM 
 		ea_document_form
   </select>
+  
+ <!-- 문서 양식 삭제 delete 쿼리문  -->
+  <delete id="deleteDocumentForm" parameterType="List">
+  /* 문서 양식 삭제 delete method */  
+	DELETE FROM ea_document_form WHERE d_form_code 
+	<foreach collection="list" item="ea" open="IN (" close=")" separator=",">
+		#{ea}
+	</foreach>
+  </delete> 
   </mapper>

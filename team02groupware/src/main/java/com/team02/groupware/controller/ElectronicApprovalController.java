@@ -187,13 +187,15 @@ public class ElectronicApprovalController {
 	  */
 	 @GetMapping("/selectDocumentFormList")
 	 public String selectDocumentFormList(Model model) {
-		 List<ElectronicApprovalDocument> eaDocumentFormList = eaService.selectEaDocumentForm();
+		 Map<String, Object> eaDocumentFormListMap = eaService.selectEaDocumentForm();
 		 List<ElectronicApprovalDocument> eaDocumentFormTypeList = eaService.selectEaDocumentFormType();
 		 List<ElectronicApprovalDocument> eaDocumentSetting = eaService.selectEaDocumentSetting();
-		 //logger.info("문서 양식 테이블 조회 결과값 :: {}", eaDocumentFormList);
+		 //logger.info("문서 양식 테이블 조회 결과값 :: {}", eaDocumentFormListMap.get("eaDocumentFormList"));
+		 //logger.info("문서 양식 전체개수 결과값 :: {}", eaDocumentFormListMap.get("eaDocumentFormListCount"));
 		 //logger.info("문서 양식 분류 테이블 조회 결과값 :: {}", eaDocumentFormTypeList);
 		 //logger.info("전자결재 기본설정 테이블 조회 결과값 :: {}", eaDocumentSetting.toString());
-		 model.addAttribute("eaDocumentFormList", eaDocumentFormList);
+		 model.addAttribute("eaDocumentFormList", eaDocumentFormListMap.get("eaDocumentFormList"));
+		 model.addAttribute("eaDocumentFormListCount", eaDocumentFormListMap.get("eaDocumentFormListCount"));
 		 model.addAttribute("eaDocumentFormTypeList", eaDocumentFormTypeList);
 		 model.addAttribute("eaDocumentSetting", eaDocumentSetting);
 		 return "eaDocument/eaDocumentForSupervisor/documentFormList.html";
@@ -207,11 +209,12 @@ public class ElectronicApprovalController {
 	 @GetMapping("/insertDocumentForm")
 	 public String insertDocumentForm(Model model) {
 		 List<ElectronicApprovalDocument> eaDocumentFormTypeList = eaService.selectEaDocumentFormType();
-		 logger.info("문서 양식 분류 테이블 조회 결과값 :: {}", eaDocumentFormTypeList);
+		 //logger.info("문서 양식 분류 테이블 조회 결과값 :: {}", eaDocumentFormTypeList);
 		 model.addAttribute("eaDocumentFormTypeList", eaDocumentFormTypeList);
 		 
 		 return "eaDocument/eaDocumentForSupervisor/documentForm.html";
 	 }
+	 
 	 
 	 /*
 	  * @method insertDocumentFormPro()
@@ -230,6 +233,24 @@ public class ElectronicApprovalController {
 	 		resultMap.put("result", result);
 	 		return resultMap;
 		}
+	 	
+	 	
+	 	 /*
+		  * @method deleteDocumentFormPro()
+		  * @brief 관리자용 문서 양식 삭제 method
+		  * @author 김건훈
+		  */	
+		 	@PostMapping(value="/deleteDocumentFormPro",produces = "application/json")
+		 	@ResponseBody
+			public Map<String,Object> deleteDocumentFormPro(@RequestBody List<String> eaDocumentFormListCodeArr ){
+		 		logger.info("문서 양식 삭제하기위한 문서양식코드 리스트 :: {}", eaDocumentFormListCodeArr);
+		 		
+		 		int result = eaService.deleteDocumentForm(eaDocumentFormListCodeArr);
+		 		
+		 		Map<String,Object> resultMap = new HashMap<String,Object>();
+		 		resultMap.put("result", result);
+		 		return resultMap;
+			}
 	 
 	 
 	 /*

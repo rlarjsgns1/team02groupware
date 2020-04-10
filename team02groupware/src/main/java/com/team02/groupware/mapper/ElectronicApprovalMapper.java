@@ -19,6 +19,13 @@ public interface ElectronicApprovalMapper {
 	  * @author 김건훈
 	  */
 	 public List<ElectronicApprovalDocument> selectEaDocumentForm();
+	 
+	 /*
+	  * @method selectEaDocumentFormCount()
+	  * @brief 양식함관리 페이지 내 문서양식 전체 개수 조회 method
+	  * @author 김건훈
+	  */
+	 public int selectEaDocumentFormCount();
 		
 	 /*
 	  * @method selectEaDocumentFormType()
@@ -97,4 +104,10 @@ public interface ElectronicApprovalMapper {
 	  */
 	 public int selectEaDocumentFormMaxCode();
 	 
+	 /*
+	  * @method deleteDocumentForm()
+	  * @brief 관리자용 문서 양식 삭제 method
+	  * @author 김건훈
+	  */
+	 public int deleteDocumentForm(List<String> eaDocumentFormListCodeArr);
 }
