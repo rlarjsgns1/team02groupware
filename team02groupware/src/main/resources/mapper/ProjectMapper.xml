@@ -237,8 +237,8 @@
 			project_list
 		ORDER BY
 			projectDate DESC
-		<if test="list eq 'list'">
-			LIMIT #{startRow}, #{rowPerPage}
+		<if test="list == 'list'">
+			LIMIT #{startRow}, #{rowPerPage};
 		</if>
 	</select>
 </mapper>

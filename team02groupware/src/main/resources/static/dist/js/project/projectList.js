@@ -27,11 +27,11 @@ function getCookie(cname) {
 
 $(
 				function() {
-				//http://localhost/projectList?currentPage=2
-				//주소값에?짤라서 currentPage (indexOf)>-1
-				//display = 1:none, 2:block
+				// http://localhost/projectList?currentPage=2
+				// 주소값에?짤라서 currentPage (indexOf)>-1
+				// display = 1:none, 2:block
 					         
-				//프로젝트 리스트 뷰 전환
+				// 프로젝트 리스트 뷰 전환
 				var gridViewType = getCookie('gridViewType');
 				if(gridViewType == 'list'){
 					$('.project-card').css('display','none');
@@ -46,28 +46,12 @@ $(
 				}
 					
 				$('.view-list').click(function(){
-					var list = $('input[name="pr-table-list"]').val();
-					console.log(list);
-					var request = $.ajax({
-					  url: "/projectList",
-					  method: "GET",
-					  data: { 'list' : list },
-					  dataType: "html"
-					});
-					 
-					request.done(function( data ) {
 						$('.project-card').css('display','none');
 						$('.pr-table-list').css('display','block');
 						setCookie('gridViewType', 'list', 1);
-						
 					});
 					 
-					request.fail(function( jqXHR, textStatus ) {
-					  alert( "Request failed: " + textStatus );
-					});
 					
-					
-				})
 				$('.view-grid').click(function(){
 					$('.project-card').css('display','flex');
 					$('.pr-table-list').css('display','none');
@@ -75,8 +59,8 @@ $(
 				})
 							
 					
-				//프로젝트 추가 모달
-					//submit 버튼 클릭시 프로젝트제목 유효성검사
+				// 프로젝트 추가 모달
+					// submit 버튼 클릭시 프로젝트제목 유효성검사
 					$(".pr-submit-btn").click(function(checkInput) {
 								if ($('[name="projectTitle"]').val() == '') {
 									$('[name="projectTitle"]').css("border",
@@ -89,12 +73,12 @@ $(
 								projectAddForm.submit();
 
 							})
-					//멤버추가버튼 클릭시 셀렉트 활성화
+					// 멤버추가버튼 클릭시 셀렉트 활성화
 					$(".member-add-btn").click(function() {
 						$('#add-select2').select2('open');
 					})
 
-				//프로젝트 클릭시 /taskList로 이동
+				// 프로젝트 클릭시 /taskList로 이동
 					$(".project-list").on('click',function(projectListClick) {
 								var projectCode = $(this).find(
 										'.project-code-input').val();
@@ -108,14 +92,14 @@ $(
 
 							})
 
-				//프로젝트 수정 모달
+				// 프로젝트 수정 모달
 					$(".pr-setting-btn").on('click', function() {
-						//console.log('프로젝트 수정 버튼 클릭')
-					//프로젝트 모달 바깥 영역 클릭X
+						// console.log('프로젝트 수정 버튼 클릭')
+					// 프로젝트 모달 바깥 영역 클릭X
 						event.stopPropagation();
-						/*$('#editLayoutItem').modal({
-							backdrop : 'static'
-						});*/
+						/*
+						 * $('#editLayoutItem').modal({ backdrop : 'static' });
+						 */
 						var delProject = $(this).parents('.project-list-wrap');
 						var projectCode = $(this).parents(".pr-header").find('.project-code-input').val();
 						console.log(projectCode);
@@ -129,7 +113,7 @@ $(
 							dataType: "html"
 						})
 								request.done(function(data) {
-									//console.log('성공');
+									// console.log('성공');
 									console.log(data);
 									if($('#editLayoutItem').length > 0){				
 										$('#editLayoutItem').remove();
@@ -185,17 +169,9 @@ $(
 						                    }
 						                });
 						            });
-									
 								});
 								request.fail(function( jqXHR, textStatus ) {
 									alert( "Request failed: " + textStatus );
 								}); 
-					
 					})
-					
-					
-					
-					
-				
-
 				})
