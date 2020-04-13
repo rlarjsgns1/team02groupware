@@ -29,7 +29,7 @@ $(function(){
 		$(this).css("color","black");
 	});
 	
-	$('.ik').on('mouseleave',function(){
+	$('.ik-help-circle').on('mouseleave',function(){
 		
 		$('.ruletip').css("display","none");
 		$(this).css("color","#bcc8d8");
@@ -63,8 +63,9 @@ $(function(){
 	//페이지 로딩 시 체크박스 체크 초기화
 	$('#all-ea-checkbox,.ea-checkbox').iCheck('uncheck');
 	
-	//양식수 : 갯수 부분에서 갯수부분만 추출하기 (체크박스 로직 용도)
-	var eaDocumentFormListCount = $('.contents-quantity').text().replace(/ /g, '').split(':');
+	//문서양식리스트 행 개수
+	var eaDocumentFormListCount = $('.documentFormListTr').length;
+
 	 
 	 /*
 	  * @brief 각각 체크박스 체크 이벤트
@@ -74,11 +75,11 @@ $(function(){
 	  $('.ea-checkbox').on('ifChecked', function(event){
 		  //console.log('체크박스클릭');
 		  
-		  //console.log(eaDocumentFormListCount[1]);
+		  //console.log(eaDocumentFormListCount);
 		  
 		  var checkCount  = $('.ea-checkbox:checked').length;
 		  //console.log(checkCount);	
-			  if(checkCount == eaDocumentFormListCount[1]){							
+			  if(checkCount == eaDocumentFormListCount){							
 				 	 $('#all-ea-checkbox').iCheck('check');
 			  }else{
 				  	 $('#all-ea-checkbox').iCheck('uncheck');
@@ -95,7 +96,7 @@ $(function(){
 		  //console.log('체크박스클릭');
 		  var checkCount  = $('.ea-checkbox:checked').length;
 		  //console.log(checkCount);
-			  if(checkCount == eaDocumentFormListCount[1]){							
+			  if(checkCount == eaDocumentFormListCount){							
 				 	 $('#all-ea-checkbox').iCheck('check');
 			  }else{
 				  	 $('#all-ea-checkbox').iCheck('uncheck');
@@ -129,7 +130,7 @@ $(function(){
 		 
 		  var checkCount  = $('.ea-checkbox:checked').length;
 		  
-		  if(checkCount == eaDocumentFormListCount[1]){
+		  if(checkCount == eaDocumentFormListCount){
 		 		
 			  $('.ea-checkbox').iCheck('uncheck');
 		  }
@@ -202,10 +203,10 @@ $(function(){
 			                   title: "삭제되었습니다.",
 			                   text: "선택한 양식이	 삭제되었습니다.",
 			                   icon: "success",
-			                 });
-						 
-						 location.href="/selectDocumentFormList";
-			           
+			                 })
+			                 .then((value) => {
+			                	 location.href="/selectDocumentFormList";
+								  });
 					  });
 					   
 		           }else{

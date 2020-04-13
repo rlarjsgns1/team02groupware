@@ -113,7 +113,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr th:each="dfl:${eaDocumentFormList}">
+                                                    <tr th:each="dfl:${eaDocumentFormList}" class="documentFormListTr">
                                                     	<td> 
                                                     		<input type="checkbox" class="ea-icheck ea-checkbox" th:value="${dfl.dFormCode}">
                                                     	</td>
@@ -128,38 +128,28 @@
                                         <span class="contents-quantity" th:text="|양식 수 : ${eaDocumentFormListCount}|"></span>
 	                                 	<nav aria-label="Page navigation example">
                                             <ul class="pagination mb-0 pagination-btn-group">
-                                                <li class="page-item">
-                                                    <a class="page-link first" href="#">
+                                                <li class="page-item" th:if="${currentPageNum > 1}">
+                                                    <a class="page-link first" th:href="@{/selectDocumentFormList}">
                                                         <i class="ik ik-chevrons-left"></i>
                                                     </a>
                                                 </li>
-                                                <li class="page-item">
-                                                    <a class="page-link prev" href="#">
+                                                <li class="page-item" th:if="${currentPageNum > 1}">
+                                                    <a class="page-link prev" th:href="@{/selectDocumentFormList(currentPage=${currentPageNum-1},startPageNum=${startPageNum},endPageNum=${endPageNum})}">
                                                         <i class="ik ik-chevron-left"></i>
                                                     </a>
                                                 </li>
-                                                <li class="page-item active">
-                                                    <a class="page-link" href="#">1</a>
+                                                <th:block th:each="pageNum:${#numbers.sequence(startPageNum,endPageNum)}">
+                                                <li class="page-item" th:classappend="${currentPageNum}==${pageNum}? active">
+                                                    <a class="page-link" th:href="@{/selectDocumentFormList(currentPage=${pageNum},startPageNum=${startPageNum},endPageNum=${endPageNum})}" th:text="${pageNum}" ></a>
                                                 </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">2</a>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">3</a>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">4</a>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">5</a>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link next" href="#" aria-label="Next">
+                                                </th:block>
+                                                <li class="page-item" th:if="${currentPageNum < lastPage}">
+                                                    <a class="page-link next" th:href="@{/selectDocumentFormList(currentPage=${currentPageNum+1},startPageNum=${startPageNum},endPageNum=${endPageNum})}" aria-label="Next">
                                                         <i class="ik ik-chevron-right"></i>
                                                     </a>
                                                 </li>
-                                                <li class="page-item">
-                                                    <a class="page-link last" href="#">
+                                                <li class="page-item" th:if="${currentPageNum < lastPage}">
+                                                    <a class="page-link last" th:href="@{/selectDocumentFormList(currentPage=${lastPage})}">
                                                         <i class="ik ik-chevrons-right"></i>
                                                     </a>
                                                 </li>

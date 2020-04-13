@@ -44,14 +44,14 @@
   
 
   <!-- 양식함관리 페이지 내 문서양식 테이블 조회  -->
-  <select id="selectEaDocumentForm" resultMap="eaDocumentFormResultMap">
+  <select id="selectEaDocumentForm" resultMap="eaDocumentFormResultMap" parameterType="map">
   /* 문서양식 테이블 조회 쿼리문 실행 */  
 	SELECT 
 		*
 	FROM 
 		ea_document_form AS edf INNER JOIN ea_document_form_type AS edft 
 		
-		ON edf.d_form_type_code = edft.d_form_type_code
+		ON edf.d_form_type_code = edft.d_form_type_code ORDER BY d_form_code ASC LIMIT #{startRowPerPage},#{rowPerPage};
   </select>
   
   <!-- 양식함관리 페이지 내 문서양식 전체 개수 조회  -->

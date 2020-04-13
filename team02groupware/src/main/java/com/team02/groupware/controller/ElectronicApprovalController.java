@@ -186,8 +186,20 @@ public class ElectronicApprovalController {
 	  * @author 김건훈
 	  */
 	 @GetMapping("/selectDocumentFormList")
-	 public String selectDocumentFormList(Model model) {
-		 Map<String, Object> eaDocumentFormListMap = eaService.selectEaDocumentForm();
+	 public String selectDocumentFormList(
+			 @RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
+			 @RequestParam(value = "startPageNum", required = false, defaultValue = "1") int startPageNum,
+			 @RequestParam(value = "endPageNum", required = false, defaultValue = "5") int endPageNum,
+			 Model model) {
+		 logger.info("현재페이지 :: {}", currentPage);
+		 logger.info("시작페이지 :: {}", startPageNum);
+		 logger.info("끝페이지 :: {}", endPageNum);
+		 
+		 Map<String, Object> pageMap = new HashMap<String,Object>();
+		 pageMap.put("currentPage", currentPage);
+		 pageMap.put("startPageNum", startPageNum);
+		 pageMap.put("endPageNum", endPageNum);
+		 Map<String, Object> eaDocumentFormListMap = eaService.selectEaDocumentForm(pageMap);
 		 List<ElectronicApprovalDocument> eaDocumentFormTypeList = eaService.selectEaDocumentFormType();
 		 List<ElectronicApprovalDocument> eaDocumentSetting = eaService.selectEaDocumentSetting();
 		 //logger.info("문서 양식 테이블 조회 결과값 :: {}", eaDocumentFormListMap.get("eaDocumentFormList"));
@@ -196,6 +208,12 @@ public class ElectronicApprovalController {
 		 //logger.info("전자결재 기본설정 테이블 조회 결과값 :: {}", eaDocumentSetting.toString());
 		 model.addAttribute("eaDocumentFormList", eaDocumentFormListMap.get("eaDocumentFormList"));
 		 model.addAttribute("eaDocumentFormListCount", eaDocumentFormListMap.get("eaDocumentFormListCount"));
+		 
+		 model.addAttribute("lastPage", eaDocumentFormListMap.get("lastPage"));
+		 model.addAttribute("startPageNum", eaDocumentFormListMap.get("startPageNum"));
+		 model.addAttribute("endPageNum", eaDocumentFormListMap.get("endPageNum"));
+		 model.addAttribute("currentPageNum", eaDocumentFormListMap.get("currentPageNum"));
+		 
 		 model.addAttribute("eaDocumentFormTypeList", eaDocumentFormTypeList);
 		 model.addAttribute("eaDocumentSetting", eaDocumentSetting);
 		 return "eaDocument/eaDocumentForSupervisor/documentFormList.html";
