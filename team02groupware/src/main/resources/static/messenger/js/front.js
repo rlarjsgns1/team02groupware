@@ -4,7 +4,7 @@
 
 			
 	// 채팅방 클릭
-	$('.chat-list-room').click(function(){
+	$(document).on('click','.chat-list-room',function(){
 		
 		$('.chat-list-room').css('background-color','#fff');
 		$(this).css('background-color','#cfe8fc');
@@ -43,7 +43,7 @@
 	}
 	
 	// 채팅방 메뉴바 클릭
-	$('.menu-btn').click(function(e){
+	$(document).on('click','.menu-btn',function(e){
 		var menuItem = $(this).next('.menu-item');
 		if(menuItem.is(':hidden')){
 			menuItem.css('display', 'block')
@@ -127,7 +127,7 @@
 	
 	
 	// 모달창 생성 클릭 이벤트
-	$('.modal-request').click(function(){
+	$(document).on('click','.modal-request', function(){
 		
 		if($(this).hasClass('chat-list-create-room')){
 			
@@ -181,7 +181,7 @@
 	
 	}
 	
-	$('.chat-room-input-btn').click(function(){
+	$(document).on('click','.chat-room-input-btn', function(){
 		
 		var chatText = $('.chat-room-inut').val();
 		fn_sendMessage(chatText);

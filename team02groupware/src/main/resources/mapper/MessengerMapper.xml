@@ -6,7 +6,32 @@
   		
 	
 <mapper namespace="com.team02.groupware.mapper.MessengerMapper">
-
+	
+	<resultMap id="selectChatRoomList" type="map">
+	
+    	<result property="chatRoomTitle" column="chat_room_title"/>
+    	<result property="chatRoomCode" column="chat_room_code"/>
+    	<result property="chatLastMessage" column="chat_message_content"/>
+    	
+  	</resultMap>
+	
+	<select id="selectChatRoomList" resultMap="selectChatRoomList" parameterType="String">
+		SELECT 
+			rpu.chat_room_code AS chat_room_code
+			,chat_room_title
+		FROM
+			chat_room_per_user AS rpu
+			INNER join
+			chat_room_list AS rl
+			on
+			rl.chat_room_code
+			=
+			rpu.chat_room_code
+		WHERE
+			rpu.chat_user_id = #{userId}
+	
+	
+	</select>	
 
 
 
