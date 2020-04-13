@@ -199,37 +199,48 @@ public class BoardService {
 		return boardMap;
 	}
 	// 게시글 파일 업로드
-	public void boardFileInsert(Map<String, Object> boardMap, MultipartFile file) throws IOException {
+	public void boardFileInsert(Map<String, Object> boardMap, MultipartFile[] file) throws IOException {
 		
-		String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());	// 오리지날 파일명
-		String storedFileName = UUID.randomUUID().toString().replaceAll("-", "");		// DB에 저장될 파일명 랜덤생성
-		storedFileName += originalFileName.substring(originalFileName.lastIndexOf("."));	// 확장자 추가
-		int fileSize = (int) file.getSize();	// 파일 사이즈
+		String originalFileName = null;
+		String storedFileName = null;
+		int fileSize = 0;
 		
-		System.out.println("*** 파일 업로드 테스트 ***");
-		System.out.println("fileName : " + originalFileName);
-		System.out.println("fileOriginalName : " + file.getOriginalFilename());
-		System.out.println("fileStoredName : " + storedFileName);
-		System.out.println("fileSize : " + fileSize);
-		System.out.println("filegetContentType : " + file.getContentType());
-		System.out.println("filegetName : " + file.getName());
-		System.out.println("filegetBytes : " + file.getBytes());
-		System.out.println("filegetResource : " + file.getResource());
-		System.out.println("filegetInputStream : " + file.getInputStream());
-		System.out.println("*** 파일 업로드 테스트 ***");
+		List<Map<String,Object>> boardMapList = new ArrayList<Map<String,Object>>();
+		int boardNum = (int) boardMap.get("boardNum");
+		int listCountNum = -1;
 		
-		InputStream inputStream = file.getInputStream();		// 파일 읽을 준비
-		Files.copy(inputStream, Paths.get(fileUploadPath).resolve(storedFileName),	// copy(inputStream 객체, 파일 경로, 카피옵션) : 파일 복사해서 쓰기
-				StandardCopyOption.REPLACE_EXISTING);			// REPLACE_EXISTING?
+		for(int i=0; i < file.length ; i++) {
+			
+			if(file[i].isEmpty() == true) {
+				
+				continue;
+			}
+			
+			originalFileName = StringUtils.cleanPath(file[i].getOriginalFilename());	// 원래 파일명
+			storedFileName = UUID.randomUUID().toString().replaceAll("-", "");			// 저장용 랜덤스트링 파일명 생성
+			storedFileName += originalFileName.substring(originalFileName.lastIndexOf(".")); // 확장자 추가
+			fileSize = (int) file[i].getSize();	// 파일 사이즈
+			
+			InputStream inputStream = file[i].getInputStream();		// 파일 읽을 준비
+			Files.copy(inputStream, Paths.get(fileUploadPath).resolve(storedFileName),	// copy(inputStream 객체, 파일 경로, 카피옵션) : 파일 복사해서 쓰기
+					StandardCopyOption.REPLACE_EXISTING);			// REPLACE_EXISTING?
+			
+			boardMap.put("boardNum", boardNum);
+			boardMap.put("originalFileName", originalFileName);
+			boardMap.put("storedFileName", storedFileName);
+			boardMap.put("fileSize", fileSize);
+			
+			boardMapList.add(boardMap);
+			
+			listCountNum++;
+			
+			boardMapper.boardFileInsert(boardMapList.get(listCountNum));
+			boardMapper.boardFileCheckUpdate(boardMapList.get(listCountNum));
+			
+		}
 		
 		
-		boardMap.put("originalFileName", originalFileName);
-		boardMap.put("storedFileName", storedFileName);
-		boardMap.put("fileSize", fileSize);
 		
-		boardMapper.boardFileInsert(boardMap);
-		boardMapper.boardFileCheckUpdate(boardMap);
-
 	}
 	
 	
@@ -268,21 +279,51 @@ public class BoardService {
 		boardList = boardMapper.selectBoardDetailView(bDto);
 		System.out.println("게시글 수정폼 파일 체크 : " + boardList.get(0).getBoardFileCheck());
 		String boardFileCheck = boardList.get(0).getBoardFileCheck();
+		
 		// 파일이 있을 시
 		if("Y".equals(boardFileCheck)) {
 			
 			List<Map<String,Object>> boardFileList = new ArrayList<Map<String,Object>>();
 			boardFileList = boardMapper.selectBoardAttachFile(bDto);
 			System.out.println("게시글 수정폼 파일 사이즈 체크 : " + boardFileList);
-			/*
-			 * long fileSize = 0; for(int i=0; i<boardFileList.size(); i++) { fileSize =
-			 * (long) boardFileList.get(i).get("boardFileSize");
-			 * System.out.println("파일사이즈 추출 : " + fileSize);
-			 * 
-			 * if(fileSize < 1024){ fileSize = fileSize+"바이트"; }else if(fileSize < 1048576){
-			 * fileSize = Math.floor((fileSize / 1024)*100)/100+"KB"; }else if(fileSize <
-			 * 1.0737e+9){ fileSize = Math.floor((fileSize / 1048576)*100)/100+"MB"; } }
-			 */
+			
+			Number fileSize = 0; 
+			String fileUnit = null;
+			double doubleFileSize = 0.0;
+			int intFileSize = 0;
+			
+			// 파일 크기 단위 부여
+			for(int i=0; i<boardFileList.size(); i++) {
+				
+				fileSize =  (Number) boardFileList.get(i).get("boardFileSize");
+				System.out.println("파일사이즈 추출 : " + fileSize);
+				doubleFileSize = fileSize.doubleValue();
+			  
+				if(doubleFileSize < 1024){ 
+					
+					intFileSize = (int) doubleFileSize;
+					fileUnit = "바이트";
+					
+					boardFileList.get(i).put("fileSize", intFileSize);
+					boardFileList.get(i).put("fileUnit", fileUnit);
+					
+					continue;
+					
+				}else if(doubleFileSize < 1048576){
+					
+					doubleFileSize =  Math.floor((doubleFileSize / 1024)*100)/100;
+					fileUnit = "KB";
+					
+				}else if(doubleFileSize <1.0737e+9){
+					
+					doubleFileSize =  Math.floor((doubleFileSize / 1048576)*100)/100;
+					fileUnit = "MB";
+				}
+				
+				boardFileList.get(i).put("fileUnit", fileUnit);
+				boardFileList.get(i).put("fileSize", doubleFileSize);
+			
+			}
 
 			boardMap.put("boardFileList", boardFileList);
 		}
@@ -301,10 +342,21 @@ public class BoardService {
 		
 	}
 	// 게시글 Delete
-	public void deleteBoard(BoardDto bDto) {
+	public void deleteBoard(BoardDto bDto) throws IOException {
+		
+		List<Map<String, Object>> boardMapList = new ArrayList<Map<String,Object>>();
+		
+		boardMapList = boardMapper.selectBoardAttachFile(bDto);
+		if(boardMapList.size() > 0) {
+			
+			for(int i = 0; i < boardMapList.size(); i++) {
+				
+				boardFileDelete((int) boardMapList.get(i).get("boardFileNum"));
+			}
+		}
 		
 		boardMapper.deleteBoard(bDto);
-		
+
 	}
 	// 댓글 Insert
 	public Map<String, Object> commentInsert(BoardDto bDto, CommentDto cDto){
@@ -385,7 +437,6 @@ public class BoardService {
 		boardMapper.boardFileInsert(boardMap);
 		boardMapper.boardFileCheckUpdate(boardMap);
 		
-		
 	}
 	
 	// 게시글 파일 삭제
@@ -398,6 +449,7 @@ public class BoardService {
 		System.out.println("보드파일딜리트 딜리트보드파일리스트 : " + deleteBoardFileList.toString());
 		
 		String boardFileStoredName = null;
+		
 		for(int i=0; i<deleteBoardFileList.size(); i++) {
 			boardFileStoredName = (String) deleteBoardFileList.get(i).get("boardFileStoredName");
 			Files.delete(Paths.get(fileUploadPath).resolve(boardFileStoredName));
@@ -407,10 +459,13 @@ public class BoardService {
 		
 	}
 
+	// 게시글 파일 유무 체크
 	public void boardFileCheck(BoardDto bDto) {
 		boardMapper.boardFileCheck(bDto);
 		
 	}
+	
+	
 	
 	
 	

@@ -9,172 +9,86 @@
 <th:block layout:fragment="customTitle">
 	<title>업무리스트</title>
 </th:block>
-
-
-</th:block>
 <th:block layout:fragment="customScript">
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-	<script type="text/javascript">
-		$(function() {
-			 $(".tasklist-add-btn").click(function(){
-				$(".newTaskList").css('display','none');
-				$(".taskListInput").css('display','block');
-				
-			
-			}) 
-			
-			
-			
-			/*function clickAndDragScroll(elementToScroll) {
-				var clicked = false, curXPos = 0, curYPos = 0;
-
-				elementToScroll
-						.mousemove(function(c) {
-							if (clicked === true) {
-								var NcurXPos = c.pageX
-										- (elementToScroll.offset().left), NcurYPos = c.pageY
-										- (elementToScroll.offset().top);
-								elementToScroll.scrollLeft(elementToScroll
-										.scrollLeft()
-										+ (curXPos - NcurXPos));
-								elementToScroll.scrollTop(elementToScroll
-										.scrollTop()
-										+ (curYPos - NcurYPos));
-								curXPos = NcurXPos;
-								curYPos = NcurYPos;
-							}
-						});
-
-				elementToScroll.mousedown(function(c) {
-					clicked = true;
-					curXPos = c.pageX - (elementToScroll.offset().left);
-					curYPos = c.pageY - (elementToScroll.offset().top);
-				});
-
-				elementToScroll.mouseup(function() {
-					clicked = false;
-				});
-			}
-
-			// implementation
-			var elementToScroll = $('.scrollable-layout');
-			clickAndDragScroll(elementToScroll); */
-
-		});
-	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="dist/js/project/taskList.js"></script>
 </th:block>
-
-
 <th:block layout:fragment="customContents">
-	<div class="container-fluid">
-		<div class="page-header">
-			<div class="row align-items-end">
-				<div class="col-lg-8">
-					<div class="page-header-title">
-						<i class="ik ik-server bg-blue"></i>
-						<div class="d-inline">
-							<h5>업무리스트</h5>
-						</div>
+	<div class="task-page-header page-header">
+		<div class="row align-items-end">
+			<div class="col-lg-8">
+				<div class="page-header-title">
+					<i class="back-btn ik ik-chevron-left bg-blue"></i>
+					<div class="d-inline">
+						<h5 th:text="${projectTitle}"></h5>
+						<span>칸반보드에서 업무를 생성하고 이동할 수 있습니다.</span>
 					</div>
 				</div>
+			</div>
+			<div class="col-lg-4">
 				<nav class="breadcrumb-container" aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="../index.html"><i
+						<li class="breadcrumb-item"><a href="/index"><i
 								class="ik ik-home"></i></a></li>
-						<li class="breadcrumb-item"><a href="#">Apps</a></li>
-						<li class="breadcrumb-item active" aria-current="page">Taskboard</li>
+						<li class="breadcrumb-item"><a href="/projectList">프로젝트</a></li>
+						<li class="breadcrumb-item active" aria-current="page">업무리스트</li>
 					</ol>
 				</nav>
 			</div>
 		</div>
-		<div class="scrollable-layout">
-			<div class="row task-row">
-				<div class="card task-board">
-					<div class="card-header">
-						<h6>월요일</h6>
-						<div class="card-header-right">
-							<ul class="list-unstyled card-option">
-								<li><i class="ik ik-chevron-left action-toggle"></i></li>
-								<li><i class="ik ik-rotate-cw reload-card"
-									data-loading-effect="pulse"></i></li>
-								<li><i class="ik ik-minus minimize-card"></i></li>
-								<li><i class="ik ik-x close-card"></i></li>
-							</ul>
-						</div>
+	</div>
+	<div class="scroller-layout">
+		<div class="row task-row">
+			<!-- 업무 클론 div -->
+			<div class="task-card card tasklist-clone" style="display: none;">
+				<div class="task-card-header card-header">
+					<h6 class="tasklistnameClone"></h6>
+					<input type="hidden" name="tasklistCodehidden"
+							class="tasklist-code-input" value="">
+					<div class="card-header-right">
+						<ul class="list-unstyled card-option">
+							<li><i class="ik ik-chevron-left action-toggle"></i></li>
+							<li><i class="ik ik-rotate-cw reload-card"
+								data-loading-effect="pulse"></i></li>
+							<li><i class="ik ik-minus minimize-card"></i></li>
+							<li><i class="ik ik-x close-card"></i></li>
+						</ul>
 					</div>
-					<div class="card-body todo-task">
-						<div class="dd" data-plugin="nestable">
-							<ol class="dd-list">
-								<li class="dd-item" data-id="1">
-									<div class="dd-handle">
-										<h6>아침회의</h6>
-										<p>회의 준비</p>
-									</div>
-								</li>
-								<li class="dd-item" data-id="2">
-									<div class="dd-handle">
-										<h6>A사 클라이언트 미팅 준비</h6>
-										<p>프로젝트 견적서 지참</p>
-									</div>
-								</li>
-								<li class="dd-item" data-id="3">
-									<div class="dd-handle">
-										<h6>완료 프로젝트 프레젠테이션</h6>
-										<p>here are many variations of passages of Lorem Ipsum
-											available, but the majority have suffered.</p>
-									</div>
-								</li>
-								<li class="dd-item" data-id="3">
-									<div class="dd-handle">
-										<h6>DB설계</h6>
-										<p>here are many variations of passages of Lorem Ipsum
-											available, but the majority have suffered.</p>
-									</div>
-								</li>
-							</ol>
+				</div>
+				
+				<div class="task-card-body card-body completed-task">
+					<div class="dd" data-plugin="nestable">
+						<div class="task-form-group form-group">
+							<input type="text" class="tasklistTitle form-control"
+								name="taskTitle" placeholder="새 업무 만들기">
 						</div>
+						<div class="task-btn">
+							<button class="task-cancel-btn btn btn-light">취소</button>
+							<button type="button" class="task-add-btn btn btn-primary mr-2">만들기</button>
+						</div>
+						<ol class="task-dd-list dd-list">
+							<li class="task-clone dd-item" data-id="1" style="display: none;">
+								<div class="task-dd-handle dd-handle">
+									<p class="tasktitleClone"></p>
+								</div>
+							</li>
+						</ol>
+					</div>
+				</div>
+				
+			</div>
 
-					</div>
-				</div>
-				<div class="card">
-					<div class="card-header">
-						<h6>화요일</h6>
-						<div class="card-header-right">
-							<ul class="list-unstyled card-option">
-								<li><i class="ik ik-chevron-left action-toggle"></i></li>
-								<li><i class="ik ik-rotate-cw reload-card"
-									data-loading-effect="pulse"></i></li>
-								<li><i class="ik ik-minus minimize-card"></i></li>
-								<li><i class="ik ik-x close-card"></i></li>
-							</ul>
-						</div>
-					</div>
-					<div class="card-body progress-task">
-						<div class="dd" data-plugin="nestable">
-							<ol class="dd-list">
-								<li class="dd-item" data-id="1">
-									<div class="dd-handle">
-										<h6>New Code Update</h6>
-										<p>Lorem Ipsum is simply dummy text of the printing and
-											typesetting industry.</p>
-									</div>
-								</li>
-								<li class="dd-item" data-id="2">
-									<div class="dd-handle">
-										<h6>Meeting</h6>
-										<p>The standard chunk of Lorem Ipsum used since the 1500s
-											is reproduced below for those interested. Sections 1.10.32
-											and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero</p>
-									</div>
-								</li>
-							</ol>
-						</div>
 
-					</div>
-				</div>
-				<div class="card">
-					<div class="card-header">
-						<h6>수요일</h6>
+
+
+
+			<th:block th:each="tl:${taskList}">
+				<div class="task-card card tasklist">
+
+					<div class="task-card-header card-header">
+						<h6 class="tasklistname" th:text="${tl.tasklistName}"></h6>
+						<input type="hidden" name="tasklistCodehidden"
+							class="tasklist-code-input" th:value="${tl.tasklistCode}">
 						<div class="card-header-right">
 							<ul class="list-unstyled card-option">
 								<li><i class="ik ik-chevron-left action-toggle"></i></li>
@@ -185,173 +99,67 @@
 							</ul>
 						</div>
 					</div>
-					<div class="card-body completed-task">
+					<div class="task-card-body card-body completed-task">
 						<div class="dd" data-plugin="nestable">
-							<ol class="dd-list">
-								<li class="dd-item" data-id="1">
-									<div class="dd-handle">
-										<h6>진행보고서</h6>
-										<p>If you are going to use a passage of Lorem Ipsum, you
-											need to be sure there isn't anything embarrassing hidden in
-											the middle of text.</p>
-									</div>
-								</li>
-								<li class="dd-item" data-id="2">
-									<div class="dd-handle">
-										<h6>Event Done</h6>
-										<p>Contrary to popular belief, Lorem Ipsum is not simply
-											random text. It has roots in a piece of classical</p>
-									</div>
-								</li>
-								<li class="dd-item" data-id="2">
-									<div class="dd-handle">
-										<h6>Event Done</h6>
-										<p>Contrary to popular belief, Lorem Ipsum is not simply
-											random text. It has roots in a piece of classical</p>
-									</div>
-								</li>
-							</ol>
-						</div>
-					</div>
-				</div>
-				<div class="card">
-					<div class="card-header">
-						<h6>목요일</h6>
-						<div class="card-header-right">
-							<ul class="list-unstyled card-option">
-								<li><i class="ik ik-chevron-left action-toggle"></i></li>
-								<li><i class="ik ik-rotate-cw reload-card"
-									data-loading-effect="pulse"></i></li>
-								<li><i class="ik ik-minus minimize-card"></i></li>
-								<li><i class="ik ik-x close-card"></i></li>
-							</ul>
-						</div>
-					</div>
-					<div class="card-body completed-task">
-						<div class="dd" data-plugin="nestable">
-							<ol class="dd-list">
-								<li class="dd-item" data-id="1">
-									<div class="dd-handle">
-										<h6>Job title</h6>
-										<p>If you are going to use a passage of Lorem Ipsum, you
-											need to be sure there isn't anything embarrassing hidden in
-											the middle of text.</p>
-									</div>
-								</li>
-								<li class="dd-item" data-id="2">
-									<div class="dd-handle">
-										<h6>Event Done</h6>
-										<p>Contrary to popular belief, Lorem Ipsum is not simply
-											random text. It has roots in a piece of classical</p>
-									</div>
-								</li>
-							</ol>
-						</div>
-					</div>
-				</div>
-				<div class="card">
-					<div class="card-header">
-						<h6>금요일</h6>
-						<div class="card-header-right">
-							<ul class="list-unstyled card-option">
-								<li><i class="ik ik-chevron-left action-toggle"></i></li>
-								<li><i class="ik ik-rotate-cw reload-card"
-									data-loading-effect="pulse"></i></li>
-								<li><i class="ik ik-minus minimize-card"></i></li>
-								<li><i class="ik ik-x close-card"></i></li>
-							</ul>
-						</div>
-					</div>
-					<div class="card-body completed-task">
-						<div class="dd" data-plugin="nestable">
-							<ol class="dd-list">
-								<li class="dd-item" data-id="1">
-									<div class="dd-handle">
-										<h6>Job title</h6>
-										<p>If you are going to use a passage of Lorem Ipsum, you
-											need to be sure there isn't anything embarrassing hidden in
-											the middle of text.</p>
-									</div>
-								</li>
-								<li class="dd-item" data-id="2">
-									<div class="dd-handle">
-										<h6>Event Done</h6>
-										<p>Contrary to popular belief, Lorem Ipsum is not simply
-											random text. It has roots in a piece of classical</p>
-									</div>
-								</li>
-							</ol>
-						</div>
-					</div>
-				</div>
-				<div class="card">
-					<div class="card-header">
-						<h6>토요일</h6>
-						<div class="card-header-right">
-							<ul class="list-unstyled card-option">
-								<li><i class="ik ik-chevron-left action-toggle"></i></li>
-								<li><i class="ik ik-rotate-cw reload-card"
-									data-loading-effect="pulse"></i></li>
-								<li><i class="ik ik-minus minimize-card"></i></li>
-								<li><i class="ik ik-x close-card"></i></li>
-							</ul>
-						</div>
-					</div>
-					<div class="card-body completed-task">
-						<div class="dd" data-plugin="nestable">
-							<ol class="dd-list">
-								<li class="dd-item" data-id="1">
-									<div class="dd-handle">
-										<h6>Job title</h6>
-										<p>If you are going to use a passage of Lorem Ipsum, you
-											need to be sure there isn't anything embarrassing hidden in
-											the middle of text.</p>
-									</div>
-								</li>
-								<li class="dd-item" data-id="2">
-									<div class="dd-handle">
-										<h6>Event Done</h6>
-										<p>Contrary to popular belief, Lorem Ipsum is not simply
-											random text. It has roots in a piece of classical</p>
-									</div>
-								</li>
-							</ol>
-						</div>
-					</div>
-				</div>
-				<div class="card tasklist-add-card">
-					<div class="card-header tasklist-add-btn">
-						<h6 class="newTaskList" style="display:block;">+ 새 업무리스트 만들기</h6>
-						<input class="taskListInput" type="text"  name="taskListName" style="display:none; border-radius:4px; width:90%; border:1px solid white;">
-					</div>
+							<div class="task-form-group form-group">
+								<input type="text" class="tasklistTitle form-control"
+									name="taskTitle" placeholder="새 업무 만들기">
+							</div>
+							<button class="task-cancel-btn btn btn-light">취소</button>
+							<button type="button" class="task-add-btn2 btn btn-primary mr-2">만들기</button>
 					
+							<ol class="task-dd-list dd-list">
+								<th:block th:each="td:${taskDetail}" th:if="${td.tasklistCode}==${tl.tasklistCode}">
+									<li class="task-dd-item dd-item" data-id="1">
+										<input type="hidden" th:value="${td.taskCode}">
+										<div class="task-dd-handle dd-handle">
+											<p class="tasktitleClone" th:text="${td.taskTitle}"></p>
+										</div>
+									</li>
+								</th:block>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</th:block>
+
+
+		</div>
+		<div>
+			<!-- 업무리스트 입력 div -->
+			<div class="task-card card">
+				<div class="task-card-header card-header" style="padding-top: 20px;">
+					<div class="tasklistName input-group input-group-button"
+						style="margin: 0 auto;">
+						<input type="text" class="tasklistName form-control"
+							name="tasklistName" placeholder="업무리스트 이름">
+						<input type="hidden" name="projectCode" th:value="${projectCode}">
+						<div class="input-group-append">
+							<button class="btn btn-default" id="tasklist-cancel-btn"
+								type="button">취소</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
 </th:block>
 <th:block layout:fragment="customJs">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script>
 		window.jQuery
 				|| document
-						.write('<script src="src/js/vendor/jquery-3.3.1.min.js"><\/script>')
-	</script>
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-	<script>
-		window.jQuery
-				|| document
 						.write(
-								'<script src="../src/js/vendor/jquery-3.3.1.min.js"><\/script>')
+								'<script src="src/js/vendor/jquery-3.3.1.min.js"><\/script>')
 	</script>
-	<script src="../plugins/popper.js/dist/umd/popper.min.js"></script>
-	<script src="../plugins/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script
-		src="../plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
-	<script src="../plugins/screenfull/dist/screenfull.js"></script>
-	<script src="../plugins/nestable/jquery.nestable.js"></script>
-	<script src="../dist/js/theme.min.js"></script>
-	<script src="../js/taskboard.js"></script>
+	<script src="plugins/popper.js/dist/umd/popper.min.js"></script>
+	<script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
+	<script src="plugins/screenfull/dist/screenfull.js"></script>
+	<script src="plugins/nestable/jquery.nestable.js"></script>
+	<script src="dist/js/theme.js"></script>
+	<script src="js/taskboard.js"></script>
 	<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 	<script>
 		(

@@ -15,7 +15,8 @@
 			<div class="logo-img">
 				<img src="src/img/brand-white.svg" class="header-brand-img"
 					alt="lavalite">
-			</div> <span class="text">그룹웨어</span>
+			</div> 
+			<span class="text">그룹웨어</span>
 		</a>
 		<button type="button" class="nav-toggle">
 			<i data-toggle="expanded" class="ik ik-toggle-right toggle-icon"></i>
@@ -28,17 +29,17 @@
 	<div class="sidebar-content">
 		<div class="nav-container">
 			<nav id="main-menu-navigation" class="navigation-main">
-				<div class="nav-lavel"># 1.인사관리 jung</div>
+				<div class="nav-lavel"># 1.인사관리 </div>
 				<div class="nav-item active">
 					<a href="#"><i class="ik ik-bar-chart-2"></i><span>Dashboard</span></a>
 				</div>
 				<div class="nav-item">
 					<a href="#"><i class="ik ik-menu"></i><span>Navigation</span>
-						<span class="badge badge-success">New</span></a>
+						</a>
 				</div>
 				<div class="nav-item has-sub">
 					<a href="#"><i class="ik ik-layers"></i><span>Widgets</span>
-						<span class="badge badge-danger">150+</span></a>
+						</a>
 					<div class="submenu-content">
 						<a href="#" class="menu-item">Basic</a> <a
 							href="#" class="menu-item">Statistic</a>
@@ -51,26 +52,25 @@
 						<a th:href="@{/insertDocumentDraft}"><i class="ik ik-edit"></i><span>! 2.1기안하기 geon</span> </a>
 					</div>
 				<div class="nav-item has-sub">
-					<a href="#"><i class="ik ik-file-text"></i><span># 2.2진행 중인 문서 geon</span></a>
+					<a href="#"><i class="ik ik-file-text"></i><span>! 2.2진행 중인 문서 geon</span></a>
 					<div class="submenu-content">
-						<a th:href="@{/selectAllOngoingDocumentList}" class="menu-item">전체</a> <a
-							href="#" class="menu-item">대기</a> <a
-							href="#" class="menu-item">확인</a> <a
-							href="#" class="menu-item">예정</a> <a
-							href="#" class="menu-item">진행</a>
+						<a th:href="@{/selectAllOngoingDocumentList}" class="menu-item">! 2.2.1전체 geon</a> 
+						<a th:href="@{/selectWaitOngoingDocumentList}" class="menu-item">! 2.2.2대기geon</a>
+						<a th:href="@{/selectCheckOngoingDocumentList}" class="menu-item">! 2.2.3확인geon</a>
+						<a th:href="@{/selectWillOngoingDocumentList}" class="menu-item">! 2.2.4예정geon</a>
+						<a th:href="@{/selectAfterOngoingDocumentList}" class="menu-item">! 2.2.5진행geon</a>
 					</div>
 				</div>
 				<div class="nav-item has-sub">
-					<a href="#"><i class="ik ik-inbox"></i><span># 2.3문서함 geon</span> <span
-						class="badge badge-success">New</span></a>
+					<a href="#"><i class="ik ik-inbox"></i><span>! 2.3문서함 geon</span></a>
 					<div class="submenu-content">
-						<a href="#" class="menu-item">전체</a> 
-						<a href="#" class="menu-item">기안</a>
-						<a href="#" class="menu-item">결재</a> 
-						<a href="#" class="menu-item">수신</a> 
-						<a href="#" class="menu-item">회람/참조</a>
-						<a href="#" class="menu-item">반려</a>
-						<a href="#" class="menu-item">임시저장</a>		
+						<a th:href="@{/selectAllDoneDocumentList}" class="menu-item">! 2.3.1전체 geon</a> 
+						<a th:href="@{/selectDraftDoneDocumentList}" class="menu-item">! 2.3.2기안 geon</a>
+						<a th:href="@{/selectApprovalDoneDocumentList}" class="menu-item">! 2.3.3결재 geon</a> 
+						<a th:href="@{/selectReceiveDoneDocumentList}" class="menu-item">! 2.3.4수신 geon</a> 
+						<a th:href="@{/selectPassAndReferDoneDocumentList}" class="menu-item">! 2.3.5회람/참조 geon</a>
+						<a th:href="@{/selectReturnDoneDocumentList}" class="menu-item">! 2.3.6반려 geon</a>
+						<a th:href="@{/selectTemporarySaveDocumentList}" class="menu-item">! 2.3.7임시 저장 geon</a>		
 					</div>
 				
 				</div>
@@ -89,25 +89,25 @@
 				<div class="nav-item has-sub">
 					<a href="#"><i class="ik ik-folder"></i><span>! 3.1프로젝트 yeon</span></a>
 					<div class="submenu-content">
-						<a href="projectList" class="menu-item">! 3.1.1내 프로젝트 yeon</a>
+						<a href="/projectList" class="menu-item">! 3.1.1프로젝트 yeon</a>
 						<a href="#" class="menu-item"># 3.1.2타임라인 yeon</a> 
-						<a href="#" class="menu-item"># 3.1.3내 업무 yeon</a>
+						<a href="/myTasks" class="menu-item">! 3.1.3내 업무 yeon</a>
 					</div>
 				</div>
 				<div class="nav-item">
-					<a href="#"><i class="ik ik-activity"></i><span># 3.2캘린더 yeon</span> <span class="badge badge-success">New</span></a>
+					<a href="/taskCalendar"><i class="ik ik-calendar"></i><span>! 3.2캘린더 yeon</span></a>
 				</div>
 				<div class="nav-lavel">! 4.게시판 won</div>
 				<div class="nav-item">
 					<a href="/boardList"><i
-						class="ik ik-edit"></i><span>! 4.1게시판 won</span><span class="badge badge-success">New</span></a>
+						class="ik ik-edit"></i><span>! 4.1게시판 won</span></a>
 				</div>
 				
 
-				<div class="nav-lavel"># 5.메신저 won</div>
+				<div class="nav-lavel">! 5.메신저 won</div>
 				<div class="nav-item">
-					<a href="#"><i class="ik ik-message-square"></i><span># 5.1메신저 won</span>
-						<span class="badge badge-success">New</span></a>
+					<a href="#"><i class="ik ik-message-square"></i><span>! 5.1메신저 won</span>
+						</a>
 					
 				</div>
 

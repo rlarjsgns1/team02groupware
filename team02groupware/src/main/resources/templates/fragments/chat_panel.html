@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- 
+	hidden 속성제거
+	스타일 right: calc( 240px + 250px); 추가
+ -->
+ 
 <div class="chat-panel" hidden th:fragment="chat_panelFragment">
 	<div class="card">
+	
 		<div class="card-header d-flex justify-content-between">
 			<a href="javascript:void(0);"><i
 				class="ik ik-message-square text-success"></i></a> <span
@@ -10,6 +17,7 @@
 				<span aria-hidden="true">×</span>
 			</button>
 		</div>
+		
 		<div class="card-body">
 			<div class="widget-chat-activity flex-1">
 				<div class="messages">
@@ -79,9 +87,11 @@
 			</div>
 		</div>
 		<form action="javascript:void(0)" class="card-footer" method="post">
+		
 			<div class="d-flex justify-content-end">
 				<textarea class="border-0 flex-1" rows="1"
-					placeholder="Type your message here"></textarea>
+					placeholder=""></textarea>
+					
 				<button class="btn btn-icon" type="submit">
 					<i class="ik ik-arrow-right text-success"></i>
 				</button>

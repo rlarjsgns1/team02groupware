@@ -144,6 +144,33 @@
             minScrollbarLength: 5
         });
         $(".right-sidebar-toggle").on("click",function(e) {
+        	
+        	if(this.classList.contains('active')){
+        		$('.right-sidebar').html('');
+        	
+        	}else{
+        		
+        		var userId = 'id001';
+            	var request = $.ajax({
+          		  url: '/selectChatRoomList',
+          		  method: "GET",
+          		  data: {userId : userId},
+          		  dataType: "html"
+          		});
+          		
+          		request.done(function( data ) {
+          			console.log(data)
+          			$('.right-sidebar').append(data)
+          			
+          			
+          		});
+          		 
+          		request.fail(function( jqXHR, textStatus ) {
+          		  alert( "Request failed: " + textStatus );
+          		}); 
+        		
+        	}
+        	
             this.classList.toggle('active');
             $('.wrapper').toggleClass('right-sidebar-expand');
             return false;
