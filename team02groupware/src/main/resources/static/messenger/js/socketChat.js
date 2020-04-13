@@ -2,7 +2,7 @@
  * 채팅
  */
 	
-	$('.chat-room-input-btn').click(function(){
+	$(document).on('click','.chat-room-input-btn', function(){
 		var msgInput = $(this).closest('.chat-room-input').find('.chat-room-msg');
 		var msg = msgInput.val();
 		var chatRoom = $(this).closest('.chat-room');
@@ -19,6 +19,7 @@
 		
 		sendChatClone.find('.msg p').text(msg);
 		sendChatClone.removeClass('send-chat-clone');
+		sendChatClone.css('display', 'block');
 		chatRoomBody.append(sendChatClone);
 	}
 	

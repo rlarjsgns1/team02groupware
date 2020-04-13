@@ -45,6 +45,19 @@ public class MessengerController {
 		
 		return "messenger/chatRoomList";
 	}
+	// 채팅방 상세보기
+	@GetMapping("/chatRoomView")
+	public String chatRoomView(Model model,
+			@RequestParam(value="userId") String userId,
+			@RequestParam(value="roomCode") String roomCode){
+		
+		List<Map<String,Object>> chatRoomLog = new ArrayList<Map<String,Object>>();
+		chatRoomLog = messengerService.chatRoomView(roomCode);
+		System.out.println(chatRoomLog.toString());
+		model.addAttribute("chatRoomLog", chatRoomLog);
+		model.addAttribute("userId", userId);
+		return "messenger/chatRoomView";
+	}
 	
 
 }

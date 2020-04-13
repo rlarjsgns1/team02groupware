@@ -26,5 +26,13 @@ public class MessengerService {
 		return chatRoomListMap;
 	}
 	
+	public List<Map<String,Object>> chatRoomView(String roomCode) {
+			
+		List<Map<String,Object>> chatRoomLog = new ArrayList<Map<String,Object>>();
+		chatRoomLog = messengerMapper.selectChatRoomView(roomCode);
+		
+		return chatRoomLog;
+	}
+	
 
 }

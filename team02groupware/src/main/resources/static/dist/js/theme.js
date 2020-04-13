@@ -173,10 +173,11 @@
         	
             this.classList.toggle('active');
             $('.wrapper').toggleClass('right-sidebar-expand');
+            
             return false;
         });
 
-        document.addEventListener('click', function(event) {
+        /*document.addEventListener('click', function(event) {
             var $rightSidebar = document.getElementsByClassName('right-sidebar')[0],
                 $chatPanel = document.getElementsByClassName('chat-panel')[0];
             var isInsideContainer = $rightSidebar.contains( event.target ) || $chatPanel.contains(event.target);
@@ -188,7 +189,7 @@
               }
               $chatPanel.hidden = 'hidden';
             }
-        });
+        });*/
 
         var el = $('[data-plugin="chat-sidebar"]');
         if( !el.length ) return;

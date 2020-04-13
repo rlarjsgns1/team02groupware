@@ -12,5 +12,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface MessengerMapper {
 	
 	public List<Map<String, Object>> selectChatRoomList(String userId);
+
+	public List<Map<String, Object>> selectChatRoomView(String roomCode);
 	
 }

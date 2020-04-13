@@ -21,24 +21,49 @@
 			$('.chat-list-room').removeClass('active')
 			$(this).addClass('active')
 			
+			var roomCode = $(this).find('.chat-room-code').val();
+			var userId = 'id001';
 			var roomInfo = {};
+			
 			roomInfo.title = $(this).find('.chat-list-title').text();
 			roomInfo.user = $(this).find('.chat-list-room-user').text();
 			
-			fn_chatRoomView(roomInfo);
+			fn_chatRoomView(roomCode, userId, roomInfo);
 		}
 
 	});
 	
 	// 채팅방 상세보기
-	function fn_chatRoomView(obj){
+	function fn_chatRoomView(roomCode, userId, roomInfo){
 		
-		var chatRoom = $('.chat-room');
-		chatRoom.find('.chat-room-title').text(obj.title);
-		chatRoom.find('.chat-room-user').text(obj.user);
-		chatRoom.find('.chat-room-menu .menu-item').css('display', 'none');
-		chatRoom.css('display', 'block');
-		$('.chat-room-body').scrollTop($('.chat-room-body')[0].scrollHeight);
+		console.log(roomCode, userId)
+		var request = $.ajax({
+			  url: '/chatRoomView',
+			  method: "GET",
+			  data: {roomCode : roomCode,
+				  	userId : userId},
+			  dataType: "html"
+			});
+			
+			request.done(function( data ) {
+				console.log(data)
+				$('body').append(data)
+				var chatRoom = $('.chat-room');
+				chatRoom.find('.chat-room-title').text(roomInfo.title);
+				chatRoom.find('.chat-room-user').text(roomInfo.user);
+				chatRoom.find('.chat-room-menu .menu-item').css('display', 'none');
+				chatRoom.css('display', 'block');
+				
+			});
+			 
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			}); 
+		
+		
+		
+		
+		/*$('.chat-room-body').scrollTop($('.chat-room-body')[0].scrollHeight);*/
 		
 	}
 	
