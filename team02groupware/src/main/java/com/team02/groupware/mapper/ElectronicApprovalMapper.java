@@ -112,4 +112,19 @@ public interface ElectronicApprovalMapper {
 	  * @author 김건훈
 	  */
 	 public int deleteDocumentForm(List<String> eaDocumentFormListCodeArr);
-}
+	 
+	 /*
+	  * @method selectDocumentFormForDetail()
+	  * @brief 관리자용 문서양식 미리보기 위한 1개 정보조회 method
+	  * @author 김건훈
+	  */
+	 public ElectronicApprovalDocument selectDocumentFormForDetail(String dFormCode);
+
+
+	 /*
+	  * @method selectApprovalFormatInDocumentFormForDetail()
+	  * @brief 양식함관리 페이지 내 문서양식 미리보기 위한 1개 정보중 포맷양식 조회 method
+	  * @author 김건훈
+	  */
+	 public String selectApprovalFormatInDocumentFormForDetail(String dApprovalFormatCode);
+	 }

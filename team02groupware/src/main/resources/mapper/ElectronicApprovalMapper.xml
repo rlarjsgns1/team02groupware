@@ -180,5 +180,37 @@
 	<foreach collection="list" item="ea" open="IN (" close=")" separator=",">
 		#{ea}
 	</foreach>
-  </delete> 
+  </delete>
+  
+ <!-- 양식함관리 페이지 내 문서양식 미리보기 위한 1개 정보조회 -->
+  <select id="selectDocumentFormForDetail" resultType="ElectronicApprovalDocument" parameterType="string">
+  /* 문서양식 미리보기 위한 1개 정보조회 쿼리문 실행 */  
+	SELECT 
+		d_form_code AS dFormCode,
+		d_security_level AS dSecurityLevel,
+		d_form_type_code AS dFormTypeCode,
+		d_approval_format_code AS dApprovalFormatCode,
+		d_form_name AS dFormName,
+		d_form_abbreviation AS dFormAbbreviation,
+		d_form_detail_explanation AS dFormDetailExplanation,
+		d_security_level_changeable AS dSecurityLevelChangeable,
+		d_expiry_date AS dExpiryDate,
+		d_expiry_date_changeable AS dExpiryDateChangeable,
+		d_form_detail_content AS dFormDetailContent
+	FROM
+		ea_document_form
+	WHERE
+		d_form_code=#{dFormCode}
+  </select>
+  
+  <!-- 양식함관리 페이지 내 문서양식 미리보기 위한 1개 정보중 포맷양식 조회-->
+  <select id="selectApprovalFormatInDocumentFormForDetail" resultType="string" parameterType="string">
+  /* 문서양식 미리보기 위한 1개 정보중 포맷양식 조회 */  
+	SELECT 
+		d_approval_format_detail_content
+	FROM
+		ea_approval_format
+	WHERE
+		d_approval_format_code=#{dApprovalFormatCode}
+  </select>  
   </mapper>

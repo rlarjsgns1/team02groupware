@@ -580,5 +580,42 @@ $(function(){
 	    		}
 	    	}
 	    });
-
+	    
+	    
+	    /*
+		 * @brief 문서 양식 미리보기
+		 * @author 김건훈
+		 */
+	    
+	    $('.documentFormListTr').on('click', function(){
+	    	//console.log('문서양식 미리보기');
+	    	var dFormCode = $(this).find('.ea-checkbox').val();
+	    	//console.log(dFormCode);
+	    	
+	    	var request = $.ajax({
+				url: "/ajaxSelectDocumentFormForDetail",
+				method: "POST",
+				data: {	
+						dFormCode : dFormCode
+					  },
+				dataType: "json"
+			});
+			
+			request.done(function(data) {
+				//console.log(data.dFormDetailContent);
+				//console.log(data.dApprovalFormatDetailContent);
+				$('#document-form-modal-view-title').text(data.dFormName);
+				$('.modal-body-document-form-approval-format').html(data.dApprovalFormatDetailContent);
+				if(data.dFormDetailContent=='' || data.dFormDetailContent==null){
+					data.dFormDetailContent='작성된 문서양식 상세내용이 없습니다.'
+				};
+				$('.modal-body-document-form-detail-content').html(data.dFormDetailContent);
+				
+			});
+			
+			request.fail(function( jqXHR, textStatus ) {
+				alert( "Request failed: " + textStatus );
+			}); 
+	    	
+	    });
 });

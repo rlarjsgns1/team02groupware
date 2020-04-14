@@ -277,3 +277,10 @@
 	#selected-approval-format-4{ /* 선택된 결재양식 4 (회람) 관련css */
 		display: none;
 	}
+	.modal-body-document-form-approval-format{ /* 문서양식 미리보기 모달 body - 결재양식포맷관련 CSS */
+		margin-bottom: 16px;
+	}
+	#document-form-modal-view-title{
+		text-align: center;
+		margin-bottom: 16px;
+	}

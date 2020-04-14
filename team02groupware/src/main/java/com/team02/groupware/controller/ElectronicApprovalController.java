@@ -191,9 +191,9 @@ public class ElectronicApprovalController {
 			 @RequestParam(value = "startPageNum", required = false, defaultValue = "1") int startPageNum,
 			 @RequestParam(value = "endPageNum", required = false, defaultValue = "5") int endPageNum,
 			 Model model) {
-		 logger.info("현재페이지 :: {}", currentPage);
-		 logger.info("시작페이지 :: {}", startPageNum);
-		 logger.info("끝페이지 :: {}", endPageNum);
+		 //logger.info("현재페이지 :: {}", currentPage);
+		 //logger.info("시작페이지 :: {}", startPageNum);
+		 //logger.info("끝페이지 :: {}", endPageNum);
 		 
 		 Map<String, Object> pageMap = new HashMap<String,Object>();
 		 pageMap.put("currentPage", currentPage);
@@ -253,23 +253,44 @@ public class ElectronicApprovalController {
 		}
 	 	
 	 	
-	 	 /*
-		  * @method deleteDocumentFormPro()
-		  * @brief 관리자용 문서 양식 삭제 method
+ 	 /*
+	  * @method deleteDocumentFormPro()
+	  * @brief 관리자용 문서 양식 삭제 method
+	  * @author 김건훈
+	  */	
+	 	@PostMapping(value="/deleteDocumentFormPro",produces = "application/json")
+	 	@ResponseBody
+		public Map<String,Object> deleteDocumentFormPro(@RequestBody List<String> eaDocumentFormListCodeArr ){
+	 		//logger.info("문서 양식 삭제하기위한 문서양식코드 리스트 :: {}", eaDocumentFormListCodeArr);
+	 		
+	 		int result = eaService.deleteDocumentForm(eaDocumentFormListCodeArr);
+	 		
+	 		Map<String,Object> resultMap = new HashMap<String,Object>();
+	 		resultMap.put("result", result);
+	 		return resultMap;
+		}
+	 
+	 	
+	 	/*
+		  * @method ajaxSelectDocumentFormForDetail()
+		  * @brief 관리자용 문서 양식 미리보기 method
 		  * @author 김건훈
 		  */	
-		 	@PostMapping(value="/deleteDocumentFormPro",produces = "application/json")
+		 	@PostMapping(value="/ajaxSelectDocumentFormForDetail",produces = "application/json")
 		 	@ResponseBody
-			public Map<String,Object> deleteDocumentFormPro(@RequestBody List<String> eaDocumentFormListCodeArr ){
-		 		logger.info("문서 양식 삭제하기위한 문서양식코드 리스트 :: {}", eaDocumentFormListCodeArr);
-		 		
-		 		int result = eaService.deleteDocumentForm(eaDocumentFormListCodeArr);
+			public Map<String,Object> ajaxSelectDocumentFormForDetail(@RequestParam(value = "dFormCode") String dFormCode){
+		 		//logger.info("문서 양식 미리보기 위한 ajax로 넘겨진 문서양식코드 :: {}", dFormCode);
+		 		ElectronicApprovalDocument eaDto = eaService.selectDocumentFormForDetail(dFormCode);
+		 		//logger.info("문서 양식 미리보기 위한 문서양식 1개 정보조회 결과값 :: {}", eaDto);
+		 		//logger.info("문서 양식 미리보기 위한 문서양식 1개 정보중 포맷양식 결과값:: {}", eaDto.getdApprovalFormatDetailContent());
 		 		
 		 		Map<String,Object> resultMap = new HashMap<String,Object>();
-		 		resultMap.put("result", result);
+		 		resultMap.put("dFormName", eaDto.getdFormName());
+		 		resultMap.put("dFormDetailContent", eaDto.getdFormDetailContent());
+		 		resultMap.put("dApprovalFormatDetailContent", eaDto.getdApprovalFormatDetailContent());
+		 		
 		 		return resultMap;
 			}
-	 
 	 
 	 /*
 	  * @method selectDocumentFormDetail()

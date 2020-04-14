@@ -48,6 +48,13 @@ public class ElectronicApprovalDocument {
 	private String dEaRule; //사내 전자결재 규정
 	
 	/**
+	 * @brief 전자결재 결재양식 포맷 테이블 컬럼별 전역변수
+	 * @author 김건훈
+	 */
+	private String dApprovalFormatDetailContent; //결재양식 포맷 내용
+	
+	
+	/**
 	 * @brief 문서양식 테이블 컬럼별 전역변수 getters&setters
 	 * @author 김건훈
 	 */
@@ -208,61 +215,16 @@ public class ElectronicApprovalDocument {
 	}
 	
 	
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("ElectronicApprovalDocument [dFormCode=");
-		builder.append(dFormCode);
-		builder.append(", dSecurityLevel=");
-		builder.append(dSecurityLevel);
-		builder.append(", dFormTypeCode=");
-		builder.append(dFormTypeCode);
-		builder.append(", dApprovalFormatCode=");
-		builder.append(dApprovalFormatCode);
-		builder.append(", dFormName=");
-		builder.append(dFormName);
-		builder.append(", dFormAbbreviation=");
-		builder.append(dFormAbbreviation);
-		builder.append(", dFormDetailExplanation=");
-		builder.append(dFormDetailExplanation);
-		builder.append(", dSecurityLevelChangeable=");
-		builder.append(dSecurityLevelChangeable);
-		builder.append(", dExpiryDate=");
-		builder.append(dExpiryDate);
-		builder.append(", dExpiryDateChangeable=");
-		builder.append(dExpiryDateChangeable);
-		builder.append(", dFormDetailContent=");
-		builder.append(dFormDetailContent);
-		builder.append(", dFormType=");
-		builder.append(dFormType);
-		builder.append(", dCompanyCodeUsage=");
-		builder.append(dCompanyCodeUsage);
-		builder.append(", dAbbreviationUsage=");
-		builder.append(dAbbreviationUsage);
-		builder.append(", dUnitNameUsage=");
-		builder.append(dUnitNameUsage);
-		builder.append(", dRegisterTimeFormat=");
-		builder.append(dRegisterTimeFormat);
-		builder.append(", dSerialNumberFormat=");
-		builder.append(dSerialNumberFormat);
-		builder.append(", dExpiredDateDelete=");
-		builder.append(dExpiredDateDelete);
-		builder.append(", dDecideFirstUsage=");
-		builder.append(dDecideFirstUsage);
-		builder.append(", dDecideInsteadUsage=");
-		builder.append(dDecideInsteadUsage);
-		builder.append(", dDecideAfterUsage=");
-		builder.append(dDecideAfterUsage);
-		builder.append(", dReferTime=");
-		builder.append(dReferTime);
-		builder.append(", dDraftCancelUsage=");
-		builder.append(dDraftCancelUsage);
-		builder.append(", dEaRule=");
-		builder.append(dEaRule);
-		builder.append("]");
-		return builder.toString();
+	/**
+	 * @brief 전자결재 결재양식 포맷 테이블 컬럼별 전역변수 getters&setters
+	 * @author 김건훈
+	 */
+	public String getdApprovalFormatDetailContent() {
+		return dApprovalFormatDetailContent;
 	}
-	
+	public void setdApprovalFormatDetailContent(String dApprovalFormatDetailContent) {
+		this.dApprovalFormatDetailContent = dApprovalFormatDetailContent;
+	}
 
 	
 	

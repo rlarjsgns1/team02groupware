@@ -138,6 +138,19 @@ public class ElectronicApprovalService {
 	 };
 	 
 	 /*
+	  * @method selectDocumentFormForDetail()
+	  * @brief 관리자용 문서양식 미리보기 위한 1개 정보조회 method
+	  * @author 김건훈
+	  */ 
+	 public ElectronicApprovalDocument selectDocumentFormForDetail(String dFormCode){
+		 ElectronicApprovalDocument eaDto = eaMapper.selectDocumentFormForDetail(dFormCode);
+		 String dApprovalFormatDetailContent = eaMapper.selectApprovalFormatInDocumentFormForDetail(eaDto.getdApprovalFormatCode());
+		 eaDto.setdApprovalFormatDetailContent(dApprovalFormatDetailContent);
+		 
+		 return eaDto;		 
+	 }
+	 
+	 /*
 	  * @method selectEaDocumentFormType()
 	  * @brief 양식함관리 페이지 내 분류설정 테이블 조회 method
 	  * @author 김건훈
