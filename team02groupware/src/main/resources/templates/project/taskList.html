@@ -43,11 +43,11 @@
 			<div class="task-card card tasklist-clone" style="display: none;">
 				<div class="task-card-header card-header">
 					<h6 class="tasklistnameClone"></h6>
-					<input type="hidden" name="tasklistCodehidden"
-							class="tasklist-code-input" th:value="${tasklistCode}">
 					<th:block th:unless="${projectCode} eq 'PR001' or ${projectCode} eq 'PR002' or ${projectCode} eq 'PR003' or ${projectCode} eq 'PR004' or ${projectCode} eq 'PR005' or ${projectCode} eq 'PR006' or ${projectCode} eq 'PR007'">
 					<li class="tasklist-delete-btn"><i class="ik ik-x"></i></li>
 					</th:block>
+					<input type="hidden" name="tasklistCodehidden"
+							class="tasklist-code-input" th:value="${tasklistCode}">
 					<div class="card-header-right">
 						<ul class="list-unstyled card-option">
 							<li><i class="ik ik-chevron-left action-toggle"></i></li>

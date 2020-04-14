@@ -119,15 +119,16 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="l : ${projectList}">
-					<td th:text="${#strings.abbreviate(l.projectDate,10)}"></td>
-					<td th:text="${#strings.abbreviate(l.projectTitle,10)}"></td>
+			
+				<tr th:each="l : ${projectList}" >
+					<td th:text="${l.projectDate}"></td>
+					<td><a th:href="@{/taskList(projectCode=${l.projectCode},projectTitle=${l.projectTitle})}" th:text="${l.projectTitle}"></a></td>
 					<td th:text="${#strings.abbreviate(l.projectDesc,15)}"></td>
 					<td th:text="${#strings.abbreviate(l.projectAccess,15)}"></td>
 					<td th:text="${#strings.abbreviate(l.projectStatus,15)}"></td>
-					<td th:text="${	#strings.abbreviate(l.projectStart,15)}"></td>
-					<td th:text="${#strings.abbreviate(l.projectDeadline,15)}"></td>
-					<td th:text="${#strings.abbreviate(l.projectEnd,15)}"></td>
+					<td th:text="${#strings.abbreviate(l.projectStart,15)}"></td>
+					<td th:text="${l.projectDeadline}"></td>
+					<td th:text="${l.projectEnd}"></td>
 				</tr>
 			</tbody>
 		</table>

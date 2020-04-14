@@ -65,9 +65,7 @@
 	cursor:pointer;
 	list-style:none;
 	margin-left:10px;
-	position:absolute;
-	right:15px;
-}
+	}
 .tasklist-delete-btn .ik-x{
 	color:#8c8c8c;
 }
