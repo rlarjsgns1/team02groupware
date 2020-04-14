@@ -71,16 +71,22 @@ public class MessengerController {
 		return "messenger/chatTest";
 	}
 	
-	
 	@MessageMapping("/chat.sendMessage")
-    @SendTo("/topic/public")
+    @SendTo("/topic/public2")
     public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
+		System.out.println(chatMessage.getContent());
+		System.out.println(chatMessage.getType());
+		System.out.println(chatMessage.getContent());
         return chatMessage;
     }
 
     @MessageMapping("/chat.addUser")
-    @SendTo("/topic/public")
+    @SendTo("/topic/public2")
     public ChatMessage addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor){
+    	
+    	System.out.println(chatMessage.getSender());
+		System.out.println(chatMessage.getType());
+		System.out.println(chatMessage.getContent());
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
         return chatMessage;
     }

@@ -3,69 +3,7 @@
  */
 
 			
-	// 채팅방 클릭
-	$(document).on('click','.chat-list-room',function(){
-		
-		$('.chat-list-room').css('background-color','#fff');
-		$(this).css('background-color','#cfe8fc');
-		
-		if($(this).hasClass('active')){
-			
-			$(this).removeClass('active')
-			$(this).css('background-color','#fff');
-			
-			fn_chatRoomClose();
-			
-		}else{
-			
-			$('.chat-list-room').removeClass('active')
-			$(this).addClass('active')
-			
-			var roomCode = $(this).find('.chat-room-code').val();
-			var userId = 'id001';
-			var roomInfo = {};
-			
-			roomInfo.title = $(this).find('.chat-list-title').text();
-			roomInfo.user = $(this).find('.chat-list-room-user').text();
-			
-			fn_chatRoomView(roomCode, userId, roomInfo);
-		}
-
-	});
 	
-	// 채팅방 상세보기
-	function fn_chatRoomView(roomCode, userId, roomInfo){
-		
-		console.log(roomCode, userId)
-		var request = $.ajax({
-			  url: '/chatRoomView',
-			  method: "GET",
-			  data: {roomCode : roomCode,
-				  	userId : userId},
-			  dataType: "html"
-			});
-			
-			request.done(function( data ) {
-				console.log(data)
-				$('body').append(data)
-				var chatRoom = $('.chat-room');
-				chatRoom.find('.chat-room-title').text(roomInfo.title);
-				chatRoom.find('.chat-room-user').text(roomInfo.user);
-				chatRoom.find('.chat-room-menu .menu-item').css('display', 'none');
-				chatRoom.css('display', 'block');
-				
-			});
-			 
-			request.fail(function( jqXHR, textStatus ) {
-			  alert( "Request failed: " + textStatus );
-			}); 
-		
-		
-		
-		
-		/*$('.chat-room-body').scrollTop($('.chat-room-body')[0].scrollHeight);*/
-		
-	}
 	
 	// 채팅방 메뉴바 클릭
 	$(document).on('click','.menu-btn',function(e){
@@ -206,17 +144,6 @@
 	
 	}
 	
-	$(document).on('click','.chat-room-input-btn', function(){
-		
-		var chatText = $('.chat-room-inut').val();
-		fn_sendMessage(chatText);
-		
-	})
 	
-	function fn_sendMessage(obj){
-		
-		var sendChatClone = $('.send-chat-clone').clone();
-		
-	}
 	
 	

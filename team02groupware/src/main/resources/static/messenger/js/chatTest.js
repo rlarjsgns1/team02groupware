@@ -30,7 +30,7 @@ function connect(event) {
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, onConnected, onError);
-        console.log('위치테스트')
+       
     }
     event.preventDefault();
 }
@@ -72,6 +72,7 @@ function sendMessage(event) {
 
 
 function onMessageReceived(payload) {
+	console.log('위치 확인')
     var message = JSON.parse(payload.body);
 
     var messageElement = document.createElement('li');
