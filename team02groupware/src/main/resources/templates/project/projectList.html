@@ -119,14 +119,13 @@
 				</tr>
 			</thead>
 			<tbody>
-			
-				<tr th:each="l : ${projectList}" >
+				<tr th:each="l : ${projectList}" style="cursor: pointer" class="project-list-tr">
 					<td th:text="${l.projectDate}"></td>
-					<td><a th:href="@{/taskList(projectCode=${l.projectCode},projectTitle=${l.projectTitle})}" th:text="${l.projectTitle}"></a></td>
+					<td><a th:href="@{/taskList(projectCode=${l.projectCode},projectTitle=${l.projectTitle})}" href="/taskList" th:text="${l.projectTitle}"></a></td>
 					<td th:text="${#strings.abbreviate(l.projectDesc,15)}"></td>
 					<td th:text="${#strings.abbreviate(l.projectAccess,15)}"></td>
 					<td th:text="${#strings.abbreviate(l.projectStatus,15)}"></td>
-					<td th:text="${#strings.abbreviate(l.projectStart,15)}"></td>
+					<td th:text="${l.projectStart}"></td>
 					<td th:text="${l.projectDeadline}"></td>
 					<td th:text="${l.projectEnd}"></td>
 				</tr>

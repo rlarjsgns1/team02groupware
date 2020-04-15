@@ -80,8 +80,7 @@ $(
 
 				// 프로젝트 클릭시 /taskList로 이동
 					$(".project-list").on('click',function(projectListClick) {
-								var projectCode = $(this).find(
-										'.project-code-input').val();
+								var projectCode = $(this).find('.project-code-input').val();
 								var projectTitle = $(this).find('h3').text();
 								
 								console.log(projectCode);
@@ -91,7 +90,14 @@ $(
 										+ projectTitle + '';
 
 							})
+					$(".project-list-tr").on('click', function() {
+								location.href = $(this).find('td:eq(1)').attr("href");
+								//console.log($(this).find().attr("th:href").text());
+								//console.log($(this).find('td:eq(1)').text());
+								
+					});
 
+		
 				// 프로젝트 수정 모달
 					$(".pr-setting-btn").on('click', function() {
 						// console.log('프로젝트 수정 버튼 클릭')
