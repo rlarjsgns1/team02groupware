@@ -1,6 +1,9 @@
 package com.team02.groupware.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,7 +72,23 @@ public class ProjectService {
 	
 	//프로젝트 한개 조회
 	public Project selectForProUpdate(String projectCode) {
-		return projectMapper.selectForProUpdate(projectCode);
+		Project resultProject=projectMapper.selectForProUpdate(projectCode);
+		String projectDate=resultProject.getProjectDate();
+		System.out.println(projectDate+"<------ yyyy-MM-dd 형태로 포맷변환 전 프로젝트 생성일");
+		
+		SimpleDateFormat  formatter04 = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date projectDateFormat =  formatter04.parse(projectDate);
+			System.out.println(projectDateFormat+"<------Date 타입 프로젝트 생성일");
+			
+			projectDate=formatter04.format(projectDateFormat);
+			System.out.println(projectDate+"<------yyyy-MM-dd 형태로 포맷변환 한 프로젝트 생성일");
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+		}
+		resultProject.setProjectDate(projectDate);
+		return resultProject;
 	}
 	
 	

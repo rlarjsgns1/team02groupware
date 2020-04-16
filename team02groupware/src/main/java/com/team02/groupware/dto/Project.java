@@ -1,5 +1,7 @@
 package com.team02.groupware.dto;
 
+import java.util.Date;
+
 public class Project {
 
 	//프로젝트
@@ -10,9 +12,9 @@ public class Project {
 	private String projectDesc;	// 프로젝트설명
 	private String projectAccess;	// 프로젝트공개범위
 	private String projectStatus;	// 프로젝트상태
-	private String projectStart;	// 프로젝트시작일
-	private String projectEnd;	// 프로젝트실제완료일
-	private String projectDeadline;	// 프로젝트마감일
+	private Date projectStart;	// 프로젝트시작일
+	private Date projectEnd;	// 프로젝트실제완료일
+	private Date projectDeadline;	// 프로젝트마감일
 	
 	public String getProjectCode() {
 		return projectCode;
@@ -50,22 +52,22 @@ public class Project {
 	public void setProjectStatus(String projectStatus) {
 		this.projectStatus = projectStatus;
 	}
-	public String getProjectStart() {
+	public Date getProjectStart() {
 		return projectStart;
 	}
-	public void setProjectStart(String projectStart) {
+	public void setProjectStart(Date projectStart) {
 		this.projectStart = projectStart;
 	}
-	public String getProjectEnd() {
+	public Date getProjectEnd() {
 		return projectEnd;
 	}
-	public void setProjectEnd(String projectEnd) {
+	public void setProjectEnd(Date projectEnd) {
 		this.projectEnd = projectEnd;
 	}
-	public String getProjectDeadline() {
+	public Date getProjectDeadline() {
 		return projectDeadline;
 	}
-	public void setProjectDeadline(String projectDeadline) {
+	public void setProjectDeadline(Date projectDeadline) {
 		this.projectDeadline = projectDeadline;
 	}
 	public String getProjectDate() {

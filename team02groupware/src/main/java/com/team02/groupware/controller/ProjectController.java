@@ -148,6 +148,8 @@ public class ProjectController {
 		
 	}
 	
+	
+	/*
 	//프로젝트 수정을 위한 1개정보 불러오는 ajax 메서드 겟 맵핑
 		@GetMapping("/ajaxProjectSelectForUpdate")
 		@ResponseBody
@@ -156,6 +158,7 @@ public class ProjectController {
 			Project resultProject=projectService.selectForProUpdate(projectCode);
 			
 			System.out.println("binding test2=" + resultProject.toString());
+			
 			Map<String, Object> resultMap = new HashMap<String, Object>();
 			resultMap.put("code", resultProject.getProjectCode());
 			resultMap.put("date", resultProject.getProjectDate());
@@ -167,7 +170,7 @@ public class ProjectController {
 			model.addAttribute("resultMap", resultMap);
 			return resultMap;
 		}
-	
+	*/
 	
 	
 	//프로젝트 추가 메서드
@@ -217,6 +220,7 @@ public class ProjectController {
 		System.out.println("binding test2=" + resultProject.toString());
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("code", resultProject.getProjectCode());
+		resultMap.put("date", resultProject.getProjectDate());
 		resultMap.put("title", resultProject.getProjectTitle());
 		resultMap.put("desc", resultProject.getProjectDesc());
 		resultMap.put("start", resultProject.getProjectStart());

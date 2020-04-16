@@ -124,9 +124,9 @@
 					<td th:text="${#strings.abbreviate(l.projectDesc,15)}"></td>
 					<td th:text="${#strings.abbreviate(l.projectAccess,15)}"></td>
 					<td th:text="${#strings.abbreviate(l.projectStatus,15)}"></td>
-					<td th:text="${l.projectStart}"></td>
-					<td th:text="${l.projectDeadline}"></td>
-					<td th:text="${l.projectEnd}"></td>
+					<td th:text="${#dates.format(l.projectStart, 'yyyy-MM-dd hh:mm')}"></td>
+					<td th:text="${#dates.format(l.projectDeadline, 'yyyy-MM-dd hh:mm')}"></td>
+					<td th:text="${#dates.format(l.projectEnd, 'yyyy-MM-dd hh:mm')}"></td>
 				</tr>
 			</tbody>
 		</table>
