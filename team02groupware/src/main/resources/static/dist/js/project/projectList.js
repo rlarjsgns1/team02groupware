@@ -91,10 +91,9 @@ $(
 
 							})
 					$(".project-list-tr").on('click', function() {
-								location.href = $(this).find('td:eq(1)').attr("href");
-								//console.log($(this).find().attr("th:href").text());
-								//console.log($(this).find('td:eq(1)').text());
-								
+							var projectCode = $(this).attr('data-projectCode');
+							var projectTitle = $(this).attr('data-projectTitle');							
+							location.href='/taskList?projectCode='+projectCode+'&projectTitle='+projectTitle;								
 					});
 
 		

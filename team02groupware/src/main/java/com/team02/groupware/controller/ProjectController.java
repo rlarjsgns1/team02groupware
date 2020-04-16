@@ -158,6 +158,7 @@ public class ProjectController {
 			System.out.println("binding test2=" + resultProject.toString());
 			Map<String, Object> resultMap = new HashMap<String, Object>();
 			resultMap.put("code", resultProject.getProjectCode());
+			resultMap.put("date", resultProject.getProjectDate());
 			resultMap.put("title", resultProject.getProjectTitle());
 			resultMap.put("desc", resultProject.getProjectDesc());
 			resultMap.put("start", resultProject.getProjectStart());
