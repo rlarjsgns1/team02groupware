@@ -4,7 +4,12 @@
 .pr-add-modal{
 	font-size:16px;
 }
-
+.project-date{
+	position:relative;
+	top:10px;
+	margin-left:10px;
+	color:#818182;
+}
 .form-group label{
 	font-weight:500;
 	font-size:14px;

@@ -6,16 +6,21 @@
 <th:block layout:fragment="customCss">
 	<link rel="stylesheet" href="dist/css/project/project.css">
 	<link rel="stylesheet" href="dist/css/project/modal.css">
-	<link rel="stylesheet" href="/plugins/select2/dist/css/select2.min.css">
-	<link rel="stylesheet" href="/plugins/datedropper/datedropper.min.css">
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+	<link rel="stylesheet" href="plugins/select2/dist/css/select2.min.css">
+	<link rel="stylesheet" href="plugins/datedropper/datedropper.min.css">
+	<link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css" />
+	
+	  <link rel="stylesheet" href="plugins/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css">
+        <link rel="stylesheet" href="plugins/jquery-minicolors/jquery.minicolors.css">
+        <link rel="stylesheet" href="dist/css/theme.min.css">
 </th:block>
 <th:block layout:fragment="customTitle">
 	<title>프로젝트 리스트</title>
 </th:block>
 <th:block layout:fragment="customScript">
 
+    <script src="src/js/vendor/modernizr-2.8.3.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="dist/js/project/projectList.js"></script>
 
@@ -298,8 +303,7 @@
 		src="plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
 	<script
 		src="plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-	<script
-		src="plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+	
 	<script src="plugins/summernote/dist/summernote-bs4.min.js"></script>
 	<script src="plugins/moment/moment.js"></script>
 	<script src="plugins/d3/dist/d3.min.js"></script>
@@ -310,6 +314,10 @@
 	<script src="js/form-picker.js"></script>
 	<script src="plugins/datedropper/datedropper.min.js"></script>
 
+	<script src="plugins/select2/dist/js/select2.min.js"></script>
+	<script src="plugins/sweetalert/dist/sweetalert.min.js"></script>
+	 <script src="plugins/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js"></script>
+	
 	<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 	<script>
 		(
@@ -327,10 +335,6 @@
 		ga('create', 'UA-XXXXX-X', 'auto');
 		ga('send', 'pageview');
 	</script>
-	<script src="plugins/select2/dist/js/select2.min.js"></script>
-	<script src="plugins/sweetalert/dist/sweetalert.min.js"></script>
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 	<script>
 		$(function() {
 
