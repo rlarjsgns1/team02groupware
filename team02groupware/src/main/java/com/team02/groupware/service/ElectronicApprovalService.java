@@ -63,7 +63,7 @@ public class ElectronicApprovalService {
 		 Map<String, Object> eaDocumentFormListMap = new HashMap<String,Object>();
 		
 		 //전체카운트 
-		double eaDocumentFormListCount = eaMapper.selectEaDocumentFormCount();
+		double eaDocumentFormListCount = eaMapper.selectEaDocumentFormCount(map);
 	
 		//보여줄 행의 갯수
 		final int rowPerPage = 10;
@@ -77,6 +77,9 @@ public class ElectronicApprovalService {
 		//현재페이지번호
 		int currentPageNum = (int)map.get("currentPage");
 		
+		//System.out.println(startPageNum+"<------- 컨트롤러에서 넘어온 start page");
+		//System.out.println(endPageNum+"<------- 컨트롤러에서 넘어온 end page");
+		//System.out.println(currentPageNum+"<------- 컨트롤러에서 넘어온 current page");
 
 		//페이지 알고리즘
 		int startRowPerPage = (currentPageNum-1)*rowPerPage;
@@ -85,11 +88,14 @@ public class ElectronicApprovalService {
 		
 		pageMap.put("startRowPerPage", startRowPerPage);
 		pageMap.put("rowPerPage", rowPerPage);
+		pageMap.put("sk", map.get("sk"));
+		pageMap.put("sv", map.get("sv"));
 			
 			
 			
 		//라스트페이지
 		int lastPage = (int)Math.ceil(eaDocumentFormListCount/rowPerPage);
+		//System.out.println(lastPage+"<-------last page");
 
 		//1-5, 6-10 패턴으로 페이징 작업
 		
@@ -112,17 +118,24 @@ public class ElectronicApprovalService {
 			endPageNum-=5;
 		}
 		
-		//맨 뒤로가기
-		if(currentPageNum==lastPage) {
-			startPageNum=(lastPage-(lastPage%5))+1;
-			endPageNum=lastPage;
-		}
-		
 		//맨 앞으로가기
 		if(currentPageNum==1) {
 			startPageNum=1;
-			endPageNum=5;
+			//endPageNum=5;
 		}
+		
+		//맨 뒤로가기
+		if(currentPageNum>=lastPage) {
+			startPageNum=(lastPage-(lastPage%5))+1;
+			endPageNum=lastPage;
+			if(endPageNum==0) {
+				endPageNum=1;
+			}
+		}
+		
+		//System.out.println(startPageNum+"<------- 페이징 가공 후 start page");
+		//System.out.println(endPageNum+"<------- 페이징 가공 후  end page");
+		//System.out.println(lastPage+"<------- 페이징 가공 후  last page");
 		
 		//양식 수 int로 형변환
 		int intEaDocumentFormListCount = (int) eaDocumentFormListCount;

@@ -27,7 +27,7 @@ public interface ElectronicApprovalMapper {
 	  * @brief 양식함관리 페이지 내 문서양식 전체 개수 조회 method
 	  * @author 김건훈
 	  */
-	 public int selectEaDocumentFormCount();
+	 public int selectEaDocumentFormCount(Map<String, Object> map);
 		
 	 /*
 	  * @method selectEaDocumentFormType()

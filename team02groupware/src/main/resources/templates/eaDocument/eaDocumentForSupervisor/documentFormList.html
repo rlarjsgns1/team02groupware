@@ -82,17 +82,16 @@
                                                     		항목선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                	<a class="dropdown-item">통합</a>
-                                                    <a class="dropdown-item">분류별</a>
+                                                    <a class="dropdown-item">분류</a>
                                                     <a class="dropdown-item">양식명</a>
                                                     <a class="dropdown-item">약칭</a>
                                                 </div>
                                             </div>
                                             <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                                                <form action="">
-                                                    <input type="text" class="form-control" placeholder="검색" required>
-                                                    <button type="submit" class="btn btn-icon"><i class="ik ik-search"></i></button>
-                                                </form>
+                                               
+                                                    <input type="text" id="document-form-search-input" class="form-control" placeholder="검색">
+                                                    <button class="btn btn-icon" id="document-form-search-btn"><i class="ik ik-search"></i></button>
+
                                             </div>
                                         </div>
                                     </div>      
@@ -121,6 +120,9 @@
                                                         <td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormName}"></td>
                                                         <td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormAbbreviation}"></td>
                                                      	<td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormDetailExplanation}">.</td>
+                                                    </tr>
+                                                    <tr th:if="${eaDocumentFormList.size()} eq 0">
+                                                    	<td colspan="5">검색된 문서 양식이 없습니다.</td>
                                                     </tr>                                                                                                        
                                                 </tbody>
                                             </table>
@@ -172,8 +174,7 @@
 					                      <h1 id=document-form-modal-view-title></h1>
 					                       
 			                              <div class="modal-body-document-form-approval-format">      
-			                                <pre>
-			                                </pre>
+			                             
 										 </div>
 										 
 										 <div class="modal-body-document-form-detail-content">
@@ -183,7 +184,7 @@
 					                    </div>
 					                    <div class="modal-footer">
 					                        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-					                        <a th:href="@{/selectDocumentFormDetail}" class="btn btn-primary">상세보기</a>
+					                        <a id="select-document-form-detail" class="btn btn-primary">상세보기</a>
 					                    </div>
 					                </div>
 					            </div>

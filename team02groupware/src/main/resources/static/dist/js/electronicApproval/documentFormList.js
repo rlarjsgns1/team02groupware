@@ -36,18 +36,62 @@ $(function(){
 	});
 	
 	
-	/*
+	 /*
 	  * @brief 검색창 드롭다운 검색키워드 변경 이벤트
 	  * @author 김건훈
 	  */	
 	$('.dropdown-item').on('click',function(){
 		//console.log('드롭다운버튼클릭');
-		var searchType = $(this).text();
+		var searchType = $(this).text().trim();
 		var tag = "<i class=\"ik ik-chevron-down mr-0 align-middle\"></i>";
 		//console.log(searchType);
 		$(this).parent().siblings('.dropdown-toggle').text(searchType);
 		$(this).parent().siblings('.dropdown-toggle').append(tag);
 	});
+	
+	
+	/*
+	  * @brief 문서양식 검색 Event
+	  * @author 김건훈
+	  */
+	var documentFormSearchFn=  function(){
+		 var sk = $('.search-keyword-btn').text().trim();
+		 if(sk=='분류'){
+			 sk='d_form_type';
+		 }else if(sk=='양식명'){
+			 sk='d_form_name';
+		 }else if(sk=='약칭'){
+			 sk='d_form_abbreviation';
+		 }
+		 var sv = $('#document-form-search-input').val().trim();
+		 console.log(sk);
+		 console.log(sv);
+		 
+		 location.href="/selectDocumentFormList?sk="+sk+"&sv="+sv+"";
+	 };
+	 
+	 /*
+	  * @brief 문서양식 검색 Event (Enter키 입력 시)
+	  * @author 김건훈
+	  */
+	$('#document-form-search-input').keyup(function(key) {
+		 if (key.keyCode == 13){
+			 //console.log('검색이벤트')
+			 documentFormSearchFn();
+		 }	
+	});
+	
+	 /*
+	  * @brief 문서양식 검색 Event (검색버튼 클릭 시)
+	  * @author 김건훈
+	  */
+	$('#document-form-search-btn').click(function() {			
+			 documentFormSearchFn();
+	});
+		
+		
+		
+	
 	
 	 /*
 	  * @brief icheck plug-in 사용
@@ -611,6 +655,7 @@ $(function(){
 				};
 				$('.modal-body-document-form-detail-content').html(data.dFormDetailContent);
 				
+				$('#select-document-form-detail').attr('href','/selectDocumentFormDetail?dFormCode='+data.dFormCode+'')
 			});
 			
 			request.fail(function( jqXHR, textStatus ) {

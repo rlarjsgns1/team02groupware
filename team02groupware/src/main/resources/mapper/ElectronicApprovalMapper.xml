@@ -51,16 +51,25 @@
 	FROM 
 		ea_document_form AS edf INNER JOIN ea_document_form_type AS edft 
 		
-		ON edf.d_form_type_code = edft.d_form_type_code ORDER BY d_form_code ASC LIMIT #{startRowPerPage},#{rowPerPage};
+		ON edf.d_form_type_code = edft.d_form_type_code
+		<if test="sk neq '항목선택' and sv neq null and sv neq ''.toString() ">
+		WHERE ${sk} LIKE CONCAT('%', #{sv} ,'%')
+		</if>
+		ORDER BY d_form_code ASC LIMIT #{startRowPerPage},#{rowPerPage};
   </select>
   
   <!-- 양식함관리 페이지 내 문서양식 전체 개수 조회  -->
-  <select id="selectEaDocumentFormCount" resultType="int">
+  <select id="selectEaDocumentFormCount" resultType="int" parameterType="map">
   /* 문서양식 전체 개수 조회 */ 
- 		SELECT 
- 			COUNT(1) 
- 		FROM
- 			ea_document_form 
+ 	SELECT 
+		COUNT(1)
+	FROM 
+		ea_document_form AS edf INNER JOIN ea_document_form_type AS edft 
+	ON 
+		edf.d_form_type_code = edft.d_form_type_code
+		<if test="sk neq '항목선택' and sv neq null and sv neq ''.toString() ">
+		WHERE ${sk} LIKE CONCAT('%', #{sv} ,'%')
+		</if>
   </select>
  	
   <!-- 양식함관리 페이지 내 분류설정 테이블 조회  -->
@@ -188,7 +197,7 @@
 	SELECT 
 		d_form_code AS dFormCode,
 		d_security_level AS dSecurityLevel,
-		d_form_type_code AS dFormTypeCode,
+		EDF.d_form_type_code AS dFormTypeCode,
 		d_approval_format_code AS dApprovalFormatCode,
 		d_form_name AS dFormName,
 		d_form_abbreviation AS dFormAbbreviation,
@@ -196,9 +205,14 @@
 		d_security_level_changeable AS dSecurityLevelChangeable,
 		d_expiry_date AS dExpiryDate,
 		d_expiry_date_changeable AS dExpiryDateChangeable,
+		d_form_type AS dFormType,
 		d_form_detail_content AS dFormDetailContent
 	FROM
-		ea_document_form
+		ea_document_form AS EDF 
+	INNER JOIN 
+		ea_document_form_type AS EDFT
+	ON 
+		EDF.d_form_type_code = EDFT.d_form_type_code
 	WHERE
 		d_form_code=#{dFormCode}
   </select>

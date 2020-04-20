@@ -190,15 +190,21 @@ public class ElectronicApprovalController {
 			 @RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
 			 @RequestParam(value = "startPageNum", required = false, defaultValue = "1") int startPageNum,
 			 @RequestParam(value = "endPageNum", required = false, defaultValue = "5") int endPageNum,
+			 @RequestParam(value = "sk", required = false) String sk,
+			 @RequestParam(value = "sv", required = false) String sv,
 			 Model model) {
 		 //logger.info("현재페이지 :: {}", currentPage);
 		 //logger.info("시작페이지 :: {}", startPageNum);
 		 //logger.info("끝페이지 :: {}", endPageNum);
+		 logger.info("검색키워드 :: {}", sk);
+		 logger.info("검색요청값 :: {}", sv);
 		 
 		 Map<String, Object> pageMap = new HashMap<String,Object>();
 		 pageMap.put("currentPage", currentPage);
 		 pageMap.put("startPageNum", startPageNum);
 		 pageMap.put("endPageNum", endPageNum);
+		 pageMap.put("sk", sk);
+		 pageMap.put("sv", sv);
 		 Map<String, Object> eaDocumentFormListMap = eaService.selectEaDocumentForm(pageMap);
 		 List<ElectronicApprovalDocument> eaDocumentFormTypeList = eaService.selectEaDocumentFormType();
 		 List<ElectronicApprovalDocument> eaDocumentSetting = eaService.selectEaDocumentSetting();
@@ -285,6 +291,7 @@ public class ElectronicApprovalController {
 		 		//logger.info("문서 양식 미리보기 위한 문서양식 1개 정보중 포맷양식 결과값:: {}", eaDto.getdApprovalFormatDetailContent());
 		 		
 		 		Map<String,Object> resultMap = new HashMap<String,Object>();
+		 		resultMap.put("dFormCode", eaDto.getdFormCode());
 		 		resultMap.put("dFormName", eaDto.getdFormName());
 		 		resultMap.put("dFormDetailContent", eaDto.getdFormDetailContent());
 		 		resultMap.put("dApprovalFormatDetailContent", eaDto.getdApprovalFormatDetailContent());
@@ -298,7 +305,16 @@ public class ElectronicApprovalController {
 	  * @author 김건훈
 	  */
 	 @GetMapping("/selectDocumentFormDetail")
-	 public String selectDocumentFormDetail() {
+	 public String selectDocumentFormDetail( @RequestParam(value = "dFormCode", required = false) String dFormCode,
+			 								 Model model) {
+		 //logger.info("문서 양식 상세보기 문서양식코드 리스트 :: {}", dFormCode);
+		 
+		 ElectronicApprovalDocument eaDto = eaService.selectDocumentFormForDetail(dFormCode);	 
+		 //logger.info("문서 양식 상세보기 위한 문서양식 1개 정보조회 결과값 :: {}", eaDto);
+		 //logger.info("문서 양식 상세보기 위한 문서양식 1개 정보 중 분류 결과값 :: {}", eaDto.getdFormType());
+		 //logger.info("문서 양식 미리보기 위한 문서양식 1개 정보중 포맷양식 결과값:: {}", eaDto.getdApprovalFormatDetailContent());
+		 
+		 model.addAttribute("eaDto", eaDto);
 		 return "eaDocument/eaDocumentForSupervisor/documentFormDetail.html";
 	 }
 	 
@@ -308,7 +324,14 @@ public class ElectronicApprovalController {
 	  * @author 김건훈
 	  */
 	 @GetMapping("/updateDocumentForm")
-	 public String updateDocumentForm() {
+	 public String updateDocumentForm(	@RequestParam(value = "dFormCode", required = false) String dFormCode,
+			 							Model model) {
+		 //logger.info("문서 양식 수정을 위한 문서양식코드 :: {}", dFormCode);
+		 ElectronicApprovalDocument eaDto = eaService.selectDocumentFormForDetail(dFormCode);
+		 List<ElectronicApprovalDocument> eaDocumentFormTypeList = eaService.selectEaDocumentFormType();
+		 
+		 model.addAttribute("eaDto", eaDto);
+		 model.addAttribute("eaDocumentFormTypeList", eaDocumentFormTypeList);
 		 return "eaDocument/eaDocumentForSupervisor/updateDocumentForm.html";
 	 }
 	 
