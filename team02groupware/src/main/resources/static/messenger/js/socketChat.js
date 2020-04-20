@@ -30,7 +30,7 @@ console.log(userName, userId);
 			$(this).addClass('active')
 			
 			var roomCode = $(this).find('.chat-room-code').val();
-			var userId = 'id001';
+			
 			var roomInfo = {};
 			
 			roomInfo.title = $(this).find('.chat-list-title').text();
@@ -115,7 +115,7 @@ console.log(userName, userId);
 	    // Tell your username to the server
 	    stompClient.send("/app/chat.addUser",
 	        {},
-	        JSON.stringify({sender: userName, type: 'JOIN', content: '새로운 유저가 참가 하였습니다.'})
+	        JSON.stringify({sender: userId, type: 'JOIN', content: '새로운 유저가 참가 하였습니다.'})
 	    )
 
 	}
@@ -138,7 +138,8 @@ console.log(userName, userId);
 			break;
 			
 		case 'CHAT' :
-			if(msgSender != userName){
+			
+			if(userId != msgSender){
 				
 				var chatRoom = $('body').find('.chat-room');
 				console.log('CHAT');
@@ -146,6 +147,7 @@ console.log(userName, userId);
 				console.log(chatRoom);
 				fn_drawReceiveMsg(chatRoom, message)
 			}
+		
 			break;
 			
 		default : break;
@@ -205,7 +207,7 @@ console.log(userName, userId);
 		chatRoomBody.append(sendChatClone);
 		
         var chatMessage = {
-            sender: userName,
+            sender: userId,
             content: msg,
             type: 'CHAT',
             chatRoomCode: chatRoomCode

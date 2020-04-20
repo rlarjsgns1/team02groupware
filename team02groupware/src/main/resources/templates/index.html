@@ -69,5 +69,22 @@
 	    r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
 	    ga('create','UA-XXXXX-X','auto');ga('send','pageview');
 		</script>
+		
+	<script>
+	
+		/*<![CDATA[*/ 		
+		var userId = '[[${userId}]]';
+		var userName = '[[${userName}]]';
+		var userNickName = '[[${userNickName}]]';
+		
+		/*]]>*/
+		console.log(userId, userName, userNickName)
+		sessionStorage.setItem("userId", userId);
+		sessionStorage.setItem("userName", userName);
+		sessionStorage.setItem("userNickName", userNickName);
+		
+		
+	
+	</script>
 </th:block>
 </html>

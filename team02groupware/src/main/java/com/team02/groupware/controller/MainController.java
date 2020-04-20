@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team02.groupware.dto.EmployeeDto;
 import com.team02.groupware.service.LoginService;
@@ -62,19 +63,22 @@ public class MainController {
 	}
 	
 	@PostMapping("/loginCheck")
-	public String loginCheck(Model model, HttpSession session, EmployeeDto eDto) {
+	public String loginCheck(Model model, HttpSession session, EmployeeDto eDto, RedirectAttributes redirectA) {
 		
 		EmployeeDto empDto = new EmployeeDto();
 		System.out.println("로그인체크"+eDto.toString());
 		
 		empDto = loginService.selectEmployee(eDto);
-		System.out.println("로그인 체크 후후" + empDto.toString());
+		System.out.println("로그인 체크 후" + empDto.toString());
 		session.setAttribute("userId", empDto.getUserId());
 		session.setAttribute("userName", empDto.getUserName());
 		session.setAttribute("userNickName", empDto.getUserNickName());
-	
+		model.addAttribute("userId", empDto.getUserId());
+		model.addAttribute("userName", empDto.getUserName());
+		model.addAttribute("userNickName", empDto.getUserNickName());
 		
-		return "redirect:/index";
+		
+		return "index";
 	}
 	
 	@GetMapping("/test")
