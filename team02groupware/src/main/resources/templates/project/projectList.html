@@ -6,21 +6,16 @@
 <th:block layout:fragment="customCss">
 	<link rel="stylesheet" href="dist/css/project/project.css">
 	<link rel="stylesheet" href="dist/css/project/modal.css">
-	<link rel="stylesheet" href="plugins/select2/dist/css/select2.min.css">
-	<link rel="stylesheet" href="plugins/datedropper/datedropper.min.css">
-	<link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css" />
-	
-	  <link rel="stylesheet" href="plugins/bootstrap/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css">
-        <link rel="stylesheet" href="plugins/jquery-minicolors/jquery.minicolors.css">
-        <link rel="stylesheet" href="dist/css/theme.min.css">
+	<link rel="stylesheet" href="/plugins/select2/dist/css/select2.min.css">
+	<link rel="stylesheet" href="/plugins/datedropper/datedropper.min.css">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 </th:block>
 <th:block layout:fragment="customTitle">
 	<title>프로젝트 리스트</title>
 </th:block>
 <th:block layout:fragment="customScript">
 
-    <script src="src/js/vendor/modernizr-2.8.3.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="dist/js/project/projectList.js"></script>
 
@@ -56,7 +51,7 @@
 			<div class="pr-btn-wrap">
 				<button type="button" class="btn btn-success btn-rounded"
 					data-toggle="modal" data-target="#exampleModalCenter">새 프로젝트 추가</button>
-				<span class="info">'C의료기관 관리 시스템'~'C의료기관 관리 시스템' 수정 및 삭제 불가</span>	
+				<span class="info">기존 데이터는 수정 또는 삭제하실 수 없습니다.</span>	
 				<div class="collapse d-md-block display-options" id="displayOptions">
 					<span
 						class="mr-3 d-inline-block float-md-left dispaly-option-buttons">
@@ -68,7 +63,7 @@
 					</span>
 				</div>
 			</div>
-			<!--------------------------프로젝트 리스트 start --------------------------->
+						<!--------------------------프로젝트 리스트 start --------------------------->
 			<div class="project-card card-group mb-4">
 				<div class="project-list-wrap" th:each="pl : ${projectList}">
 					<div class="project-list card">
@@ -172,6 +167,7 @@
 	</div>
 	</div>
 	<!--------------------------프로젝트 리스트 end --------------------------->
+
 
 
 
@@ -280,11 +276,6 @@
 
 	<!--------------------------새 프로젝트 추가 버튼 클릭시 모달창 end --------------------------->
 
-
-
-
-	<!--------------------------프로젝트 리스트 테이블형 --------------------------->
-	
 </th:block>
 <th:block layout:fragment="customJs">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -303,7 +294,8 @@
 		src="plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
 	<script
 		src="plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-	
+	<script
+		src="plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 	<script src="plugins/summernote/dist/summernote-bs4.min.js"></script>
 	<script src="plugins/moment/moment.js"></script>
 	<script src="plugins/d3/dist/d3.min.js"></script>
@@ -314,10 +306,6 @@
 	<script src="js/form-picker.js"></script>
 	<script src="plugins/datedropper/datedropper.min.js"></script>
 
-	<script src="plugins/select2/dist/js/select2.min.js"></script>
-	<script src="plugins/sweetalert/dist/sweetalert.min.js"></script>
-	 <script src="plugins/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js"></script>
-	
 	<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 	<script>
 		(
@@ -335,6 +323,10 @@
 		ga('create', 'UA-XXXXX-X', 'auto');
 		ga('send', 'pageview');
 	</script>
+	<script src="plugins/select2/dist/js/select2.min.js"></script>
+	<script src="plugins/sweetalert/dist/sweetalert.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 	<script>
 		$(function() {
 

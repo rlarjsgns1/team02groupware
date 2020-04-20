@@ -21,15 +21,15 @@ public class ProjectService {
 	@Autowired
 	private ProjectMapper projectMapper;
 
-	//업무 추가
-	public int taskInsert(Project project) {
-		return projectMapper.taskInsert(project);
+	//업무 삭제
+	public int taskDelete(String taskCode) {
+		return projectMapper.taskDelete(taskCode);
 	}
 	
 	
-	//업무리스트 삭제
-	public int tasklistDelete(String tasklistCode) {
-		return projectMapper.tasklistDelete(tasklistCode);
+	//업무 추가
+	public int taskInsert(Project project) {
+		return projectMapper.taskInsert(project);
 	}
 	
 	//업무리스트별 업무상세정보 조회
@@ -38,6 +38,12 @@ public class ProjectService {
 		taskDetail = projectMapper.getTaskdetail(projectCode);
 		return taskDetail;
 	}
+	
+	//업무리스트 삭제
+	public int tasklistDelete(String tasklistCode) {
+		return projectMapper.tasklistDelete(tasklistCode);
+	}
+	
 	
 	//업무리스트 추가
 	public int tasklistInsert(Project project) {

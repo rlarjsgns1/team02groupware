@@ -27,11 +27,7 @@ function getCookie(cname) {
 
 $(
 				function() {
-				// http://localhost/projectList?currentPage=2
-				// 주소값에?짤라서 currentPage (indexOf)>-1
-				// display = 1:none, 2:block
-					         
-				// 프로젝트 리스트 뷰 전환
+	
 				var gridViewType = getCookie('gridViewType');
 				if(gridViewType == 'list'){
 					$('.project-card').css('display','none');

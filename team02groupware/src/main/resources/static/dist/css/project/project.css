@@ -52,7 +52,6 @@
 	height:200px;
 	border:0.5px solid #fff;
 	box-sizing:border-box;
-	
 }
 
 .project-list:hover { 
@@ -130,7 +129,7 @@
 
 .pr-table-list{
 	display:none;
-	padding:30px;
+	padding:50px;
 }
 
 /*---------------------------------------------- 프로젝트 리스트 end ---------------------------------------------- */

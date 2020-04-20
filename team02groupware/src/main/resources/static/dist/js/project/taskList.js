@@ -162,7 +162,7 @@ $(function() {
             		});
                 	
                     swal({
-                        title: "프로젝트가 삭제되었습니다.",
+                        title: "업무리스트가 삭제되었습니다.",
                         icon: "success",
                     });
                 } else {

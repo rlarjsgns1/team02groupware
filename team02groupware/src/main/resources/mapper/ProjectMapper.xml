@@ -28,25 +28,32 @@
 		<result property="tasklistCode" column="tasklist_code" />
 		<result property="tasklistName" column="tasklist_name" />
 	</resultMap>
+	
+	
+	
+	<!-- 내 업무 조회 -->
+	<select id="selectMyTask">
+		SELECT
+			*
+		FROM
+			project_task_detail AS TD
+		INNER JOIN
+			project_employee_per_task EPT
+		ON
+			EPT.task_code = TD.task_code
+		WHERE
+			EPT.employee_code=#{employeeCode};
+		
+	</select>
 
-
-	<delete id="tasklistDelete" parameterType = "String">
-	DELETE
-	FROM
-		project_task_list
-	WHERE
-		tasklist_code=#{tasklistCode};
+	<delete id="taskDelete" parameterType = "String">
+		DELETE
+		FROM
+			project_task_detail;
+		WHERE
+			task_code=#{taskCode};
 	</delete>
 	
-	
-	<!-- 클론된 업무리스트코드 조회  -->
-	<select id="selectTasklistcode" resultType="String">
-	SELECT
-		MAX(PTL.tasklist_code)
-	FROM
-		project_task_list AS PTL
-	
-	</select>
 
 	<!-- 업무 추가 -->
 	<insert id="taskInsert" parameterType="Project">
@@ -100,9 +107,30 @@
 				project_task_detail AS TD
 			WHERE
 				TD.project_code=#{projectCode};
-	
 	</select>
 
+	
+
+
+	<!-- 업무리스트 삭제 -->
+	<delete id="tasklistDelete" parameterType = "String">
+		DELETE
+		FROM
+			project_task_list
+		WHERE
+			tasklist_code=#{tasklistCode};
+	</delete>
+	
+	
+	<!-- 클론된 업무리스트코드 조회  -->
+	<select id="selectTasklistcode" resultType="String">
+		SELECT
+			MAX(PTL.tasklist_code)
+		FROM
+			project_task_list AS PTL;
+	</select>
+
+	
 	
 
 	<!-- 업무리스트추가 -->
@@ -138,7 +166,6 @@
 
 	<!-- 업무리스트 조회 -->
 	<select id="selectTasklist" parameterType="String" resultMap="projectResultMap">
-		
 		SELECT
 			PL.project_title
 			,PL.project_code
@@ -155,23 +182,26 @@
 	</select>
 
 	<delete id="projectDelete" parameterType = "String">
-	DELETE
-	FROM
-		project_list
-	WHERE
-		project_code=#{projectCode};
-	
+		DELETE
+		FROM
+			project_list
+		WHERE
+			project_code=#{projectCode};
+		
 	</delete>
 	
 
+
+
+
 	<!-- 프로젝트 한개 상세정보 조회-->
 	<select id="selectForProUpdate" parameterType="String" resultMap="projectResultMap">
-	SELECT
-		PL.*
-	FROM
-		project_list AS PL
-	WHERE
-		project_code = #{projectCode};
+		SELECT
+			PL.*
+		FROM
+			project_list AS PL
+		WHERE
+			project_code = #{projectCode};
 		
 	</select>
 
@@ -221,7 +251,7 @@
 			)
 	</insert>
 
-	<!-- 게시판 리스트 조회 -->
+	<!-- 프로젝트 개수 조회 -->
 	<select id="getProjectRowCount" resultType="int">
 		SELECT
 			COUNT(1)
@@ -230,7 +260,7 @@
 
 	</select>
 	
-	<!--parametertype= "java.util.Map" -->
+	
 	<select id="getProjectlist" parameterType="map" resultType="Project">
 		SELECT
 			project_code AS projectCode

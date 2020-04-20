@@ -9,13 +9,17 @@ import com.team02.groupware.dto.Project;
 
 @Mapper
 public interface ProjectMapper {
+	
+	//업무 삭제
+	public int taskDelete(String taskCode);
+	
 	// 업무 추가
 	public int taskInsert(Project project);
 	
 	// 업무리스트 삭제
 	public int tasklistDelete(String tasklistCode);
 	
-	// 업무리스트별 업무상세정보 조회
+	// 업무상세정보 조회
 	public List<Project> getTaskdetail(String projectCode);
 	
 	// 업무리스트 최근 코드 조회

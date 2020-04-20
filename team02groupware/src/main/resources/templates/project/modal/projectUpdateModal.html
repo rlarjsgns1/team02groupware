@@ -7,7 +7,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="editLayoutItemLabel" th:text="${resultMap.get('title')}"></h5>
+					<h5 class="modal-title" id="editLayoutItemLabel">프로젝트 수정</h5>
 					<div class="project-date" style="font-weight:700; margin-left:20px;" >작성일</div>
 					<div class="project-date" th:text="${resultMap.get('date')}"></div>
 					<button type="button" class="close" data-dismiss="modal"
@@ -27,21 +27,11 @@
 									<label for="projectDesc">설명(선택사항)</label> <input type="text"
 										class="form-control" id="updateDesc" name="projectDesc" th:value="${resultMap.get('desc')}">
 								</div>
-								<div class="form-group">
-									<label for="datepicker1">시작일</label> <input type="text" name="projectStart" class="form-control datetimepicker-input"
-										id="datepicker1" data-toggle="datetimepicker" data-target="#datepicker1"
-										th:value="${resultMap.get('start')}">
-								</div>
-								<div class="form-group">
-									<label for="datetimepicker2">마감일</label> <input type="text" name="projectDeadline" class="form-control datetimepicker-input"
-										id="datepicker2" data-toggle="datetimepicker" data-target="#datepicker2"
-										th:value="${resultMap.get('dead')}">
-								</div>
-								<div class="form-group">
-									<label for="datepicker3">실제 완료일</label> <input type="text" name="projectEnd" class="form-control datetimepicker-input"
-										id="datepicker3" data-toggle="datetimepicker" data-target="#datepicker3"
-										th:value="${resultMap.get('end')}">
-								</div>
+								
+								
+								
+								
+								
 								<div class="form-group">
 									<label>프로젝트 멤버(선택사항)</label>
 									<div>
