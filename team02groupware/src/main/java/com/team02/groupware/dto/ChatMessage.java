@@ -5,8 +5,19 @@ public class ChatMessage {
 	 	private MessageType type;
 	    private String content;
 	    private String sender;
+	    private String chatRoomCode;
 
-	    public MessageType getType() {
+	    
+
+		public String getChatRoomCode() {
+			return chatRoomCode;
+		}
+
+		public void setChatRoomCode(String chatRoomCode) {
+			this.chatRoomCode = chatRoomCode;
+		}
+
+		public MessageType getType() {
 	        return type;
 	    }
 

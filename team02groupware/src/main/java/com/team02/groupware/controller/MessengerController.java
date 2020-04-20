@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -40,14 +42,14 @@ public class MessengerController {
 	// 채팅방 리스트
 	@GetMapping("/selectChatRoomList")
 	public String selectChatRoomList(Model model, 
-			@RequestParam(value="userId") String userId){
+			@RequestParam(value="userId") String userId, HttpSession session){
 		
 		System.out.println("채팅방 리스트 유저아이디 : " + userId);
 		List<Map<String,Object>> chatRoomListMap = new ArrayList<Map<String,Object>>();
 		chatRoomListMap = messengerService.selectChatRoomList(userId);
 		
 		model.addAttribute("chatRoomListMap", chatRoomListMap);
-		
+		System.out.println(session.getAttribute("userId")+" : 채팅방리스트 세션 아이디 확인 ");
 		return "messenger/chatRoomList";
 	}
 	// 채팅방 상세보기
@@ -61,6 +63,9 @@ public class MessengerController {
 		System.out.println(chatRoomLog.toString());
 		model.addAttribute("chatRoomLog", chatRoomLog);
 		model.addAttribute("userId", userId);
+		model.addAttribute("roomCode", roomCode);
+		
+		
 		return "messenger/chatRoomView";
 	}
 	
@@ -76,7 +81,11 @@ public class MessengerController {
     public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
 		System.out.println(chatMessage.getContent());
 		System.out.println(chatMessage.getType());
-		System.out.println(chatMessage.getContent());
+		System.out.println(chatMessage.getSender());
+		System.out.println(chatMessage.getChatRoomCode());
+		
+		messengerService.insertChatMessage(chatMessage);
+		
         return chatMessage;
     }
 

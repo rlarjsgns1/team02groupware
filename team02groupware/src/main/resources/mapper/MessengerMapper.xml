@@ -58,7 +58,31 @@
 		WHERE
 			chat_room_code = ${roomCode}
 	
-	</select>		
+	</select>
+	
+	<!-- 채팅 메시지 insert -->
+	<insert id="insertChatMessage" parameterType="ChatMessage">
+		
+		INSERT 
+			INTO chat_message_log
+			
+			(chat_message_code, 
+			chat_message_date, 
+			chat_message_user, 
+			chat_message_content, 
+			chat_room_code)
+			
+		VALUES 
+			(NULL, 
+			NOW(), 
+			#{sender}, 
+			#{content}, 
+			${chatRoomCode})
+		
+		
+		
+
+	</insert>		
 
 
 

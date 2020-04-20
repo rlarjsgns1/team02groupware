@@ -85,6 +85,7 @@
 		
 		var chatRoom = $('.chat-room');
 		chatRoom.css('display', 'none')
+		chatRoom.remove();
 		
 	}
 	

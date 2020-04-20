@@ -14,6 +14,8 @@
 					<span class="chat-room-user"></span>
 				</a>		<!-- 인원 수 -->
 			</div>
+			
+			<input type="hidden" class="chat-room-view-code" th:value="${roomCode}">
 		
 			<!-- 취소 버튼 -->
 			<div class="col-md-4" style="padding: 0;">
@@ -31,7 +33,7 @@
 		<div class="row">
 		
 			<!-- 채팅방 body Start-->
-			<div class="chat-room-body card-block col-md-11" style="-ms-overflow-style: none;">
+			<div class="chat-room-body card-block col-md-11">
 		    	<th:block th:each="room : ${chatRoomLog}">
 		    		<th:block th:if="${userId} == ${room.chatMsgUser}">   
 					
@@ -141,7 +143,7 @@
 		</div>
 		<!-- 채팅 입력창 End -->
 		
-		<!-- 보낸 메시지 Start -->
+		<!-- 보낸 메시지 Clone Start -->
 		<div class="mb-20 send-chat send-chat-clone" style="display:none">
 	
 		   	<div class="msg-user">
@@ -165,7 +167,40 @@
 	   		</div>
 	
 		</div>
-		<!-- 보낸 메시지 End -->
+		<!-- 보낸 메시지 Clone End -->
+		
+		<!-- 받은 메시지 Clone Start -->
+		<div class="mb-20 received-chat received-chat-clone" style="display:none">
+			<div class="col-sm-12">
+	
+		      	<div class="msg-user">
+		          	<img src="../img/users/2.jpg" alt="user image" class="rounded-circle img-40">	<!-- 이미지 표시 -->
+				</div>
+	
+				<div class="msg-content">
+		
+					<div class="msg-text-wrap">
+			
+		     			<h6 class="chat-room-name f-14"></h6>		<!-- 아이디 표시 -->
+		   
+					   	<div class="msg chat-room-message">				<!--  메시지-->
+					       	<p class="mb-0"></p>
+					   	</div>
+					   	
+					   		
+					   	<div class="text-muted mb-0 msg-time">
+					  		<i class="fa fa-clock-o mr-10"></i>
+					   	</div>	<!-- 시간 표시 -->
+		           	
+		      		</div>
+		    
+		     	</div>
+	    
+			</div>		                    
+		</div>
+		<!-- 받은 메시지 Clone End -->
+		
+		
 		
 	</div>
 	<!-- 대화방 상세보기 End-->

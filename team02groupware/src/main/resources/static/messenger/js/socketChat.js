@@ -4,7 +4,10 @@
 'use strict'
 
 var stompClient = null;
-var userName = null;
+var userName = sessionStorage.getItem("userNickName");
+var userId = sessionStorage.getItem("userId");
+
+console.log(userName, userId);
 
 	// 채팅방 클릭
 	$(document).on('click','.chat-list-room',function(){
@@ -21,6 +24,8 @@ var userName = null;
 			
 		}else{
 			
+			$('.chat-room').remove();
+			fn_disconnect();
 			$('.chat-list-room').removeClass('active')
 			$(this).addClass('active')
 			
@@ -31,6 +36,7 @@ var userName = null;
 			roomInfo.title = $(this).find('.chat-list-title').text();
 			roomInfo.user = $(this).find('.chat-list-room-user').text();
 			
+			fn_connect(event);
 			fn_chatRoomView(roomCode, userId, roomInfo);
 		}
 
@@ -55,10 +61,15 @@ var userName = null;
 				chatRoom.find('.chat-room-title').text(roomInfo.title);
 				chatRoom.find('.chat-room-user').text(roomInfo.user);
 				chatRoom.find('.chat-room-menu .menu-item').css('display', 'none');
+
 				chatRoom.css('display', 'block');
 				
-				fn_connect(event);
 				
+				setTimeout(function(){
+					
+					$('.chat-room-body').scrollTop($('.chat-room-body').height());
+					
+				}, 200);
 				
 				
 			});
@@ -73,7 +84,7 @@ var userName = null;
 	// 소켓 접속
 	function fn_connect(event) {
 		console.log('소켓테스트 위치 확인1')
-		userName = 'id001';
+		
         var socket = new SockJS('/ws');
         console.log('소켓테스트 위치 확인2')
         
@@ -81,6 +92,14 @@ var userName = null;
         stompClient.connect({}, fn_onConnected, fn_onError);
 	       
 	    event.preventDefault();
+	}
+	
+	// 소켓 연결 끊기
+	function fn_disconnect() {
+		
+		if (stompClient !== null) {
+		    stompClient.disconnect();
+		}
 	}
 	
 	// 에러 체크
@@ -104,8 +123,11 @@ var userName = null;
 	function fn_onMessageReceived(payload) {
 		console.log('위치 확인')
 	    var message = JSON.parse(payload.body);
+		var msgType = message.type;
+		var msgContent = message.content;
+		var msgSender = message.sender;
 		
-		switch(message.type){
+		switch(msgType){
 		
 		case 'JOIN' :
 			console.log('JOIN')
@@ -116,37 +138,39 @@ var userName = null;
 			break;
 			
 		case 'CHAT' :
-			console.log('CHAT')
-			console.log(message)
-			alert(message.content)
-			
+			if(msgSender != userName){
+				
+				var chatRoom = $('body').find('.chat-room');
+				console.log('CHAT');
+				console.log(message);
+				console.log(chatRoom);
+				fn_drawReceiveMsg(chatRoom, message)
+			}
 			break;
 			
 		default : break;
 			
 		}
-		
-	   
 
-	    
 	}
 	
-	// 메시지 발신
-	function fn_sendMessage(event) {
+	// 수신 메시지 채팅방에 그리기
+	function fn_drawReceiveMsg(chatRoom, message){
 		
-	    var messageContent = messageInput.value.trim();
-	    if(messageContent && stompClient) {
-	        var chatMessage = {
-	            sender: userName,
-	            content: messageInput.value,
-	            type: 'CHAT'
-	        };
-	        stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
-	        messageInput.value = '';
-	    }
-	    event.preventDefault();
+		var chatRoomBody = chatRoom.find('.chat-room-body');
+		var receivedChatClone = chatRoom.find('.received-chat-clone').clone();
+		
+		var msgContent = message.content;
+		var msgSender = message.sender;
+		
+		receivedChatClone.find('.msg p').text(msgContent);
+		receivedChatClone.find('.chat-room-name').text(msgSender);
+		receivedChatClone.removeClass('received-chat-clone');
+		receivedChatClone.css('display', 'block');
+		chatRoomBody.append(receivedChatClone);
+		
 	}
-
+	
 	
 	// 채팅방 input 버튼 클릭시
 	$(document).on('click','.chat-room-input-btn', function(){
@@ -171,6 +195,7 @@ var userName = null;
 	// 메시지 전송 함수
 	function fn_doSend(msg, chatRoom){
 		
+		var chatRoomCode = chatRoom.find('.chat-room-view-code').val();
 		var chatRoomBody = chatRoom.find('.chat-room-body');
 		var sendChatClone = chatRoom.find('.send-chat-clone').clone();
 		
@@ -182,13 +207,10 @@ var userName = null;
         var chatMessage = {
             sender: userName,
             content: msg,
-            type: 'CHAT'
+            type: 'CHAT',
+            chatRoomCode: chatRoomCode
         };
         stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
-        
-    
-		
-		
 	}
 	
 	

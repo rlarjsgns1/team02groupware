@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  		
+	
+<mapper namespace="com.team02.groupware.mapper.EmployeeMapper">
+	
+	<select id="selectEmployee" resultMap="selectEmployee" parameterType="EmployeeDto">
+	
+		SELECT 
+			employee_name, 
+			employee_id, 
+			employee_pw, 
+			employee_nickname
+		FROM 
+			employee AS e
+		WHERE
+			e.employee_id = #{userId}
+			and
+			e.employee_pw = #{userPw}
+	
+	
+	</select>
+	
+	<resultMap id="selectEmployee" type="EmployeeDto">
+	
+    	<result property="userId" column="employee_id"/>
+    	<result property="userPw" column="employee_pw"/>
+    	<result property="userName" column="employee_name"/>
+    	<result property="userNickName" column="employee_nickname"/>
+    	
+  	</resultMap>	
+
+
+
+
+
+</mapper>

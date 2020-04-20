@@ -1,12 +1,17 @@
 package com.team02.groupware.controller;
 
 
+import javax.servlet.http.HttpSession;
 
-
-
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.team02.groupware.dto.EmployeeDto;
+import com.team02.groupware.service.LoginService;
+import com.team02.groupware.service.MessengerService;
 
 
 /*
@@ -17,6 +22,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MainController {
+	
+	@Autowired
+	private LoginService loginService;
 	
 	 /*
 	  * @method portfolio()
@@ -39,6 +47,36 @@ public class MainController {
 		
 		return "index";
 	}
+	
+	@GetMapping("/loginPage")
+	public String loginPage() {
+		
+		return "loginPage";
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		
+		session.invalidate();
+		return "redirect:/loginPage";
+	}
+	
+	@PostMapping("/loginCheck")
+	public String loginCheck(Model model, HttpSession session, EmployeeDto eDto) {
+		
+		EmployeeDto empDto = new EmployeeDto();
+		System.out.println("로그인체크"+eDto.toString());
+		
+		empDto = loginService.selectEmployee(eDto);
+		System.out.println("로그인 체크 후후" + empDto.toString());
+		session.setAttribute("userId", empDto.getUserId());
+		session.setAttribute("userName", empDto.getUserName());
+		session.setAttribute("userNickName", empDto.getUserNickName());
+	
+		
+		return "redirect:/index";
+	}
+	
 	@GetMapping("/test")
 	public String test() {
 		
