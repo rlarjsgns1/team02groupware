@@ -32,7 +32,7 @@
 	
 	
 	<!-- 내 업무 조회 -->
-	<select id="selectMyTask">
+	<select id="selectMyTask" parameterType="String" resultMap="projectResultMap">
 		SELECT
 			*
 		FROM
@@ -41,8 +41,16 @@
 			project_employee_per_task EPT
 		ON
 			EPT.task_code = TD.task_code
+		INNER JOIN
+			project_list AS PL
+		ON
+			PL.project_code = TD.project_code
+		INNER JOIN
+			project_task_list AS PTL
+		ON 
+			PL.project_code = PTL.project_code
 		WHERE
-			EPT.employee_code=#{employeeCode};
+		EPT.employee_code='EE001';
 		
 	</select>
 

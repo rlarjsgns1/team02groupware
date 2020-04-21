@@ -1,1 +1,32 @@
 @charset "UTF-8";
+
+@media (min-width: 763px){
+	.task-row>.col-md-8 {
+		padding-right: 0px;
+	}
+	body{
+		overflow-y:hidden;
+	}
+	.mytasklist{
+		height:60vmin;
+		overflow-y:scroll;
+		margin-bottom:0px;
+	  	padding-bottom:10px;
+	}
+ 
+	.mytasklist{
+		height:60vmin;
+	}
+}
+
+.mytask-item{
+	
+}
+
+.task-charts-card{
+	height:100%;
+}
+.task-charts .c3-chart-arcs-title{
+	font-family:"Noto Sans KR", sans-serif;
+	font-size:1.5em;
+}

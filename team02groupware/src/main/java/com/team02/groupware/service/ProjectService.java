@@ -21,6 +21,12 @@ public class ProjectService {
 	@Autowired
 	private ProjectMapper projectMapper;
 
+	
+	//내 업무 조회
+	public List<Project> selectMyTask(String employeeCode) {
+		return projectMapper.selectMyTask(employeeCode);
+	}
+	
 	//업무 삭제
 	public int taskDelete(String taskCode) {
 		return projectMapper.taskDelete(taskCode);

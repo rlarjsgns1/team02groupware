@@ -49,32 +49,16 @@ public class ProjectController {
 	
 	//내 업무 조회 메서드
 	@GetMapping("/myTasks")
-	public String myTasks() {
+	public String selectMyTask(Model model, String employeeCode) {
+		System.out.println("-------selectMyTask");
+		List<Project> myTasklist = new ArrayList<Project>();
+		myTasklist = projectService.selectMyTask(employeeCode);
+		System.out.println(myTasklist);
+		model.addAttribute("myTasklist", myTasklist);
 		return "project/myTasks";
 	}
 	
-	//업무 수정 모달 
-			@GetMapping("/taskUpdateModal")
-			public String taskModalHtml1(Model model
-					, @RequestParam(value="taskCode") String taskCode
-			) {
-				
-				System.out.println("binding test=" + projectCode);
-				Project resultProject=projectService.selectForProUpdate(projectCode);
-				
-				System.out.println("binding test2=" + resultProject.toString());
-				Map<String, Object> resultMap = new HashMap<String, Object>();
-				resultMap.put("code", resultProject.getProjectCode());
-				resultMap.put("date", resultProject.getProjectDate());
-				resultMap.put("title", resultProject.getProjectTitle());
-				resultMap.put("desc", resultProject.getProjectDesc());
-				resultMap.put("start", resultProject.getProjectStart());
-				resultMap.put("dead", resultProject.getProjectDeadline());
-				resultMap.put("end", resultProject.getProjectEnd());
-				model.addAttribute("resultMap", resultMap);
-				System.out.println("위치테스트");
-				return "project/modal/projectUpdateModal";
-			}
+	
 	
 	
 	//업무 추가 ajax 메서드
@@ -84,6 +68,7 @@ public class ProjectController {
 		System.out.println("---------taskInsert");
 		System.out.println(project.toString());
 		int result = projectService.taskInsert(project);
+		System.out.println(result + "<-- 업무 추가 성공");
 		String tasklistCode = projectService.selectTasklistcode();
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		resultMap.put("tasklistCode", tasklistCode);
@@ -101,7 +86,6 @@ public class ProjectController {
 		resultMap.put("result", projectService.tasklistDelete(tasklistCode));
 		System.out.println(resultMap);
 		return resultMap;
-		
 	}
 	
 	
@@ -150,9 +134,7 @@ public class ProjectController {
 		resultMap.put("result", projectService.projectDelete(projectCode)); 
 		return resultMap;
 	}
-	
-	//프로젝트 수정 메서드
-	
+
 	
 	
 	//프로젝트 수정 모달 

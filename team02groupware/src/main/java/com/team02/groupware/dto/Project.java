@@ -88,7 +88,7 @@ public class Project {
 	private String taskTitle;
 	private String taskDesc;
 	private String taskDate;
-	private String taskDeadline;
+	private Date taskDeadline;
 	private String taskStart;
 	private String taskEnd;
 	private String taskStatus;
@@ -129,10 +129,10 @@ public class Project {
 	public void setTaskDate(String taskDate) {
 		this.taskDate = taskDate;
 	}
-	public String getTaskDeadline() {
+	public Date getTaskDeadline() {
 		return taskDeadline;
 	}
-	public void setTaskDeadline(String taskDeadline) {
+	public void setTaskDeadline(Date taskDeadline) {
 		this.taskDeadline = taskDeadline;
 	}
 	public String getTaskStart() {
