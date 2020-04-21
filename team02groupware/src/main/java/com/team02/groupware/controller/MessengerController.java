@@ -41,15 +41,13 @@ public class MessengerController {
 	}
 	// 채팅방 리스트
 	@GetMapping("/selectChatRoomList")
-	public String selectChatRoomList(Model model, 
-			@RequestParam(value="userId") String userId, HttpSession session){
+	public String selectChatRoomList(Model model, HttpSession session){
 		
-		System.out.println("채팅방 리스트 유저아이디 : " + userId);
+		String userId = (String) session.getAttribute("userId");
 		List<Map<String,Object>> chatRoomListMap = new ArrayList<Map<String,Object>>();
 		chatRoomListMap = messengerService.selectChatRoomList(userId);
-		
+		System.out.println("시간 테스트 : " + chatRoomListMap.get(0).get("chatMsgDate"));
 		model.addAttribute("chatRoomListMap", chatRoomListMap);
-		System.out.println(session.getAttribute("userId")+" : 채팅방리스트 세션 아이디 확인 ");
 		return "messenger/chatRoomList";
 	}
 	// 채팅방 상세보기
@@ -81,7 +79,8 @@ public class MessengerController {
     public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
 		System.out.println(chatMessage.getContent());
 		System.out.println(chatMessage.getType());
-		System.out.println(chatMessage.getSender());
+		System.out.println(chatMessage.getUserId());
+		System.out.println(chatMessage.getUserNickName());
 		System.out.println(chatMessage.getChatRoomCode());
 		
 		messengerService.insertChatMessage(chatMessage);
@@ -93,10 +92,11 @@ public class MessengerController {
     @SendTo("/topic/public2")
     public ChatMessage addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor){
     	
-    	System.out.println(chatMessage.getSender());
+    	System.out.println(chatMessage.getUserId());
+		System.out.println(chatMessage.getUserNickName());
 		System.out.println(chatMessage.getType());
 		System.out.println(chatMessage.getContent());
-        headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
+        headerAccessor.getSessionAttributes().put("userid", chatMessage.getUserId());
         return chatMessage;
     }
 	

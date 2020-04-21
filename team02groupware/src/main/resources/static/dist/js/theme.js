@@ -150,11 +150,10 @@
         	
         	}else{
         		
-        		var userId = 'id001';
+        		
             	var request = $.ajax({
           		  url: '/selectChatRoomList',
           		  method: "GET",
-          		  data: {userId : userId},
           		  dataType: "html"
           		});
           		

@@ -35,13 +35,13 @@
 			<!-- 채팅방 body Start-->
 			<div class="chat-room-body card-block col-md-11">
 		    	<th:block th:each="room : ${chatRoomLog}">
-		    		<th:block th:if="${userId} == ${room.chatMsgUser}">   
+		    		<th:block th:if="${userId} == ${room.chatMsgUserId}">   
 					
 						<!-- 보낸 메시지 Start -->
 						<div class="mb-20 send-chat">
 					
 						   	<div class="msg-user">
-						       	<img src="../img/users/3.jpg" alt="user image" class="rounded-circle img-40">	<!-- 이미지 표시 -->
+						       	<img th:src="@{../img/users/}+${userId}+@{.jpg}" alt="user image" class="rounded-circle img-40">	<!-- 이미지 표시 -->
 							</div>
 					
 							<div class="msg-content">
@@ -64,20 +64,20 @@
 						<!-- 보낸 메시지 End -->
 					</th:block>
 					
-					<th:block th:if="${userId} != ${room.chatMsgUser}">
+					<th:block th:if="${userId} != ${room.chatMsgUserId}">
 						<!-- 받은 메시지 Start -->
 						<div class="mb-20 received-chat">
 							<div class="col-sm-12">
 					
 						      	<div class="msg-user">
-						          	<img src="../img/users/2.jpg" alt="user image" class="rounded-circle img-40">	<!-- 이미지 표시 -->
+						          	<img th:src="@{../img/users/}+${room.chatMsgUserId}+@{.jpg}" alt="user image" class="rounded-circle img-40">	<!-- 이미지 표시 -->
 								</div>
 				
 								<div class="msg-content">
 						
 									<div class="msg-text-wrap">
 							
-						     			<h6 class="chat-room-name f-14" th:text="${room.chatMsgUser}"></h6>		<!-- 아이디 표시 -->
+						     			<h6 class="chat-room-name f-14" th:text="${room.chatMsgUserNickName}"></h6>		<!-- 아이디 표시 -->
 						   
 									   	<div class="msg chat-room-message">				<!--  메시지-->
 									       	<p class="mb-0" th:text="${room.chatMsgContent}"></p>
@@ -147,7 +147,7 @@
 		<div class="mb-20 send-chat send-chat-clone" style="display:none">
 	
 		   	<div class="msg-user">
-		       	<img src="../img/users/3.jpg" alt="user image" class="rounded-circle img-40">	<!-- 이미지 표시 -->
+		       	<img th:src="@{../img/users/}+${userId}+@{.jpg}" alt="user image" class="rounded-circle img-40">	<!-- 이미지 표시 -->
 			</div>
 	
 			<div class="msg-content">

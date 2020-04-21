@@ -4,10 +4,10 @@
 'use strict'
 
 var stompClient = null;
-var userName = sessionStorage.getItem("userNickName");
+var userNickName = sessionStorage.getItem("userNickName");
 var userId = sessionStorage.getItem("userId");
 
-console.log(userName, userId);
+console.log(userNickName, userId);
 
 	// 채팅방 클릭
 	$(document).on('click','.chat-list-room',function(){
@@ -115,7 +115,7 @@ console.log(userName, userId);
 	    // Tell your username to the server
 	    stompClient.send("/app/chat.addUser",
 	        {},
-	        JSON.stringify({sender: userId, type: 'JOIN', content: '새로운 유저가 참가 하였습니다.'})
+	        JSON.stringify({userId: userId, type: 'JOIN', content: '새로운 유저가 참가 하였습니다.'})
 	    )
 
 	}
@@ -125,7 +125,8 @@ console.log(userName, userId);
 	    var message = JSON.parse(payload.body);
 		var msgType = message.type;
 		var msgContent = message.content;
-		var msgSender = message.sender;
+		var msgUserId = message.userId;
+		var msgUserNickName = message.userNickName;
 		
 		switch(msgType){
 		
@@ -139,7 +140,7 @@ console.log(userName, userId);
 			
 		case 'CHAT' :
 			
-			if(userId != msgSender){
+			if(userId != msgUserId){
 				
 				var chatRoom = $('body').find('.chat-room');
 				console.log('CHAT');
@@ -163,10 +164,12 @@ console.log(userName, userId);
 		var receivedChatClone = chatRoom.find('.received-chat-clone').clone();
 		
 		var msgContent = message.content;
-		var msgSender = message.sender;
+		var msgUserNickName = message.userNickName;
+		var msgUserId = message.userId;
 		
 		receivedChatClone.find('.msg p').text(msgContent);
-		receivedChatClone.find('.chat-room-name').text(msgSender);
+		receivedChatClone.find('.chat-room-name').text(msgUserNickName);
+		receivedChatClone.find('.msg-user img').attr('src','../img/users/'+msgUserId+'.jpg')
 		receivedChatClone.removeClass('received-chat-clone');
 		receivedChatClone.css('display', 'block');
 		chatRoomBody.append(receivedChatClone);
@@ -207,7 +210,8 @@ console.log(userName, userId);
 		chatRoomBody.append(sendChatClone);
 		
         var chatMessage = {
-            sender: userId,
+            userId: userId,
+            userNickName: userNickName,
             content: msg,
             type: 'CHAT',
             chatRoomCode: chatRoomCode

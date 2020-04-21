@@ -10,27 +10,66 @@
 	<!-- 채팅방 리스트 resultMap  -->
 	<resultMap id="selectChatRoomList" type="map">
 	
-    	<result property="chatRoomTitle" column="chat_room_title"/>
     	<result property="chatRoomCode" column="chat_room_code"/>
-    	<result property="chatLastMessage" column="chat_message_content"/>
+    	<result property="chatRoomTitle" column="chat_room_title"/>
+    	<result property="chatRoomUserCount" column="chat_room_user_count"/>
+    	<result property="chatMsgDate" column="chat_message_date"/>
+    	<result property="chatMsgContent" column="chat_message_content"/>
+    	<result property="chatMsgCode" column="chat_message_code"/>
     	
   	</resultMap>
 	
 	<!-- 채팅방 리스트 select -->
 	<select id="selectChatRoomList" resultMap="selectChatRoomList" parameterType="String">
-		SELECT 
-			rpu.chat_room_code AS chat_room_code
-			,chat_room_title
+		SELECT
+			crl.chat_room_code,
+			crl.chat_room_title,
+			crl.chat_room_user_count,
+			msg.chat_message_date,
+			msg.chat_message_content,
+			msg.chat_message_code
 		FROM
-			chat_room_per_user AS rpu
+			(SELECT
+				*
+			FROM
+				chat_room_per_user AS cru
+			WHERE
+				cru.chat_user_id = #{userId}) AS tb1
+				
 			INNER join
-			chat_room_list AS rl
+			
+			(SELECT
+				cc.chat_message_code,
+				cc.chat_message_date,
+				cc.chat_message_user_id,
+				cc.chat_message_content,
+				cc.chat_room_code,
+				cc.chat_message_user_nickname
+			FROM
+				chat_message_log AS cc
+				
+				INNER JOIN
+				
+				(SELECT 
+					MAX(chat_message_code) AS msc,
+					chat_room_code
+					FROM chat_message_log
+					GROUP by
+						chat_room_code) AS ccc
+					on
+					cc.chat_message_code
+					=
+					ccc.msc) AS msg
 			on
-			rl.chat_room_code
+			tb1.chat_room_code
 			=
-			rpu.chat_room_code
-		WHERE
-			rpu.chat_user_id = #{userId}
+			msg.chat_room_code
+			INNER join
+			chat_room_list AS crl
+			on
+			tb1.chat_room_code
+			=
+			crl.chat_room_code
 	
 	</select>
 	
@@ -40,7 +79,8 @@
 	
     	<result property="chatMsgCode" column="chat_message_code"/>
     	<result property="chatMsgDate" column="chat_message_date"/>
-    	<result property="chatMsgUser" column="chat_message_user"/>
+    	<result property="chatMsgUserId" column="chat_message_user_id"/>
+    	<result property="chatMsgUserNickName" column="chat_message_user_nickname"/>
     	<result property="chatMsgContent" column="chat_message_content"/>
     	
   	</resultMap>
@@ -50,8 +90,9 @@
 		SELECT 
 			chat_message_code
 			,chat_message_date
-			,chat_message_user
+			,chat_message_user_id
 			,chat_message_content
+			,chat_message_user_nickname
 			
 		FROM 
 			chat_message_log
@@ -68,16 +109,18 @@
 			
 			(chat_message_code, 
 			chat_message_date, 
-			chat_message_user, 
+			chat_message_user_id, 
 			chat_message_content, 
-			chat_room_code)
+			chat_room_code,
+			chat_message_user_nickname)
 			
 		VALUES 
 			(NULL, 
 			NOW(), 
-			#{sender}, 
+			#{userId}, 
 			#{content}, 
-			${chatRoomCode})
+			${chatRoomCode},
+			#{userNickName})
 		
 		
 		

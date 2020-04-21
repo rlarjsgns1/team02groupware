@@ -7,13 +7,21 @@ public class EmployeeDto {
 	private String userLevel;
 	private String userName;
 	private String userNickName;
+	private String userCode;
+	
 	
 	
 	
 	@Override
 	public String toString() {
 		return "EmployeeDto [userId=" + userId + ", userPw=" + userPw + ", userLevel=" + userLevel + ", userName="
-				+ userName + ", userNickName=" + userNickName + "]";
+				+ userName + ", userNickName=" + userNickName + ", userCode=" + userCode + "]";
+	}
+	public String getUserCode() {
+		return userCode;
+	}
+	public void setUserCode(String userCode) {
+		this.userCode = userCode;
 	}
 	public String getUserId() {
 		return userId;

@@ -73,9 +73,11 @@ public class MainController {
 		session.setAttribute("userId", empDto.getUserId());
 		session.setAttribute("userName", empDto.getUserName());
 		session.setAttribute("userNickName", empDto.getUserNickName());
+		session.setAttribute("userCode", empDto.getUserCode());
 		model.addAttribute("userId", empDto.getUserId());
 		model.addAttribute("userName", empDto.getUserName());
 		model.addAttribute("userNickName", empDto.getUserNickName());
+		model.addAttribute("userCode", empDto.getUserCode());
 		
 		
 		return "index";

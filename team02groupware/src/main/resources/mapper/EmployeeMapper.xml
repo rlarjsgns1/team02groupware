@@ -13,7 +13,8 @@
 			employee_name, 
 			employee_id, 
 			employee_pw, 
-			employee_nickname
+			employee_nickname,
+			employee_code
 		FROM 
 			employee AS e
 		WHERE
@@ -30,6 +31,7 @@
     	<result property="userPw" column="employee_pw"/>
     	<result property="userName" column="employee_name"/>
     	<result property="userNickName" column="employee_nickname"/>
+    	<result property="userCode" column="employee_code"/>
     	
   	</resultMap>	
 

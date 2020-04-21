@@ -4,10 +4,27 @@ public class ChatMessage {
 	
 	 	private MessageType type;
 	    private String content;
-	    private String sender;
+	    private String userId;
 	    private String chatRoomCode;
+	    private String userNickName;
 
 	    
+
+		public String getUserId() {
+			return userId;
+		}
+
+		public void setUserId(String userId) {
+			this.userId = userId;
+		}
+
+		public String getUserNickName() {
+			return userNickName;
+		}
+
+		public void setUserNickName(String userNickName) {
+			this.userNickName = userNickName;
+		}
 
 		public String getChatRoomCode() {
 			return chatRoomCode;
@@ -33,12 +50,6 @@ public class ChatMessage {
 	        this.content = content;
 	    }
 
-	    public String getSender() {
-	        return sender;
-	    }
-
-	    public void setSender(String sender) {
-	        this.sender = sender;
-	    }
+	  
 
 }

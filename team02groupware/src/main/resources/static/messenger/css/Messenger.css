@@ -97,6 +97,11 @@
 	    text-align: right;
 	    float: right;
 	}
+	.chat-card .received-chat {
+		clear: both;
+	    text-align: left;
+	    float: left;
+	}  
 	
 	.chat-room-menu{
 		padding: 15px 15px;
