@@ -5,9 +5,16 @@
 
 $(function() {
 
-	var projectCode = $('input[name="projectCode"]').val();
+	
+	// 업무 체크박스 클릭시 사라짐
+	$(document).on('click','.task-checkbox',function(){
+		console.log('체크박스 클릭');
+		var taskDelete = $(this).parents('.mytask-item');
+		taskDelete.slideUp();
+	})
 	
 	
+	/*
 	// 업무 추가 - 엔터 키 복제 이벤트
 	$(document).on('keydown','.tasklistTitle',function(key) {
 				if (key.keyCode == 13) {
@@ -180,5 +187,5 @@ $(function() {
 
 	$(".back-btn").click(function() {
 		location.href = "/projectList";
-	})
+	})*/
 });

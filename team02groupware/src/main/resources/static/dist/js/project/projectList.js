@@ -25,8 +25,7 @@ function getCookie(cname) {
   return "";
 }
 
-$(
-				function() {
+$(function() {
 	
 				var gridViewType = getCookie('gridViewType');
 				if(gridViewType == 'list'){

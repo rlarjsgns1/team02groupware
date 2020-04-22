@@ -53,6 +53,8 @@
 		PL.project_code = TL.project_code
 	WHERE
 		EPT.employee_code='EE001'
+		AND
+		TD.task_status != '완료';
 	
 	</select>
 
@@ -104,7 +106,7 @@
 			, #{taskDeadline}
 			, #{taskStart}
 			, #{taskEnd}
-			, #{taskStatus})
+			, '진행중')
 	</insert>
 	
 	<!-- 업무 상세정보 조회 -->
