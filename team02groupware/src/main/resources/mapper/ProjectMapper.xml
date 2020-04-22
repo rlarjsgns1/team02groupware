@@ -28,7 +28,25 @@
 		<result property="tasklistCode" column="tasklist_code" />
 		<result property="tasklistName" column="tasklist_name" />
 	</resultMap>
+	<!-- 내 업무 상태 완료 업데이트 -->
+	<update id="taskStatusUpdate" parameterType="String">
+	UPDATE project_task_detail
+	SET
+		task_status='완료'
+	WHERE 
+		task_code=#{taskcode};
 	
+	</update>
+	
+	<!-- 내 업무 한 개 조회 -->
+	<select id="selectForTaskUpdate" parameterType="String" resultMap="projectResultMap">
+	SELECT
+		TD.*
+	FROM
+		project_task_detail AS TD
+	WHERE
+		TD.task_code=#{taskCode};
+	</select>
 	
 	
 	<!-- 내 업무 조회 -->

@@ -4,16 +4,31 @@
  * */
 
 $(function() {
-
-	
 	// 업무 체크박스 클릭시 사라짐
 	$(document).on('click','.task-checkbox',function(){
+		var taskCode = $(this).siblings('input[name="taskCode"]').val();
+		var delTask = $(this).parents('.mytask-item');
 		console.log('체크박스 클릭');
-		var taskDelete = $(this).parents('.mytask-item');
-		taskDelete.slideUp();
+		console.log(taskCode);
+		var request = $.ajax({
+			url: "/taskSuccess",
+			method: "GET",
+			data: { 'taskCode' : taskCode
+			},
+			dataType: "json"
+		});
+		
+		request.done(function( data ) {
+			console.log("done");
+			if(data.result==1){
+				delTask.slideUp();
+			}
+		});
+		
+		request.fail(function( jqXHR, textStatus ) {
+			alert( "Request failed: " + textStatus );
+		});
 	})
-	
-	
 	/*
 	// 업무 추가 - 엔터 키 복제 이벤트
 	$(document).on('keydown','.tasklistTitle',function(key) {

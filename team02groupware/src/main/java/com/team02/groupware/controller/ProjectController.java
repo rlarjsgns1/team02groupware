@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team02.groupware.dto.Project;
+
 import com.team02.groupware.service.ProjectService;
 
 
@@ -45,6 +46,18 @@ public class ProjectController {
 	@GetMapping("/taskCalendar")
 	public String taskCalendar() {
 		return "project/taskCalendar";
+	}
+	
+	
+	
+	//내 업무 상태 '완료'처리 메서드
+	@GetMapping("/taskSuccess")
+	@ResponseBody
+	public Map<String, Object> taskSuccess(@RequestParam(value="taskCode")String taskCode) {
+		System.out.println("------taskSuccess");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("result", projectService.taskStatusUpdate(taskCode));
+		return resultMap;
 	}
 	
 	//내 업무 조회 메서드

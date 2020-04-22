@@ -21,6 +21,16 @@ public class ProjectService {
 	@Autowired
 	private ProjectMapper projectMapper;
 
+	//내 업무 상태 완료 수정
+	public int taskStatusUpdate(String taskCode) {
+		return projectMapper.taskStatusUpdate(taskCode);
+	}
+	
+	//내 업무 1개 조회
+	public Project selectForTaskUpdate(String taskCode) {
+		return projectMapper.selectForTaskUpdate(taskCode);
+	}
+	
 	
 	//내 업무 조회
 	public List<Project> selectMyTask(String employeeCode) {
