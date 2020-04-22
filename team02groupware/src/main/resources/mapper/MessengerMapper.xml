@@ -25,7 +25,7 @@
 			crl.chat_room_code,
 			crl.chat_room_title,
 			crl.chat_room_user_count,
-			msg.chat_message_date,
+			date_format(msg.chat_message_date,'%Y-%m-%d %H:%i') as chat_message_date,
 			msg.chat_message_content,
 			msg.chat_message_code
 		FROM
@@ -89,7 +89,7 @@
 	<select id="selectChatRoomView" resultMap="selectChatRoomView" parameterType="String">
 		SELECT 
 			chat_message_code
-			,chat_message_date
+			,date_format(chat_message_date,'%Y-%m-%d %H:%i') as chat_message_date
 			,chat_message_user_id
 			,chat_message_content
 			,chat_message_user_nickname

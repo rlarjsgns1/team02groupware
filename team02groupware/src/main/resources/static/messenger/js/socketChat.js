@@ -62,14 +62,13 @@ console.log(userNickName, userId);
 				chatRoom.find('.chat-room-user').text(roomInfo.user);
 				chatRoom.find('.chat-room-menu .menu-item').css('display', 'none');
 
+				
 				chatRoom.css('display', 'block');
 				
 				
-				setTimeout(function(){
 					
-					$('.chat-room-body').scrollTop($('.chat-room-body').height());
-					
-				}, 200);
+				$('.chat-room-body').scrollTop(1000000);
+				
 				
 				
 			});
@@ -167,12 +166,16 @@ console.log(userNickName, userId);
 		var msgUserNickName = message.userNickName;
 		var msgUserId = message.userId;
 		
+		var currentTime = fn_getTimeStamp();
+		
 		receivedChatClone.find('.msg p').text(msgContent);
 		receivedChatClone.find('.chat-room-name').text(msgUserNickName);
-		receivedChatClone.find('.msg-user img').attr('src','../img/users/'+msgUserId+'.jpg')
+		receivedChatClone.find('.msg-user img').attr('src','/img/users/'+msgUserId+'.jpg');
+		receivedChatClone.find('.msg-time').text(currentTime);
 		receivedChatClone.removeClass('received-chat-clone');
 		receivedChatClone.css('display', 'block');
 		chatRoomBody.append(receivedChatClone);
+		$('.chat-room-body').scrollTop(1000000);
 		
 	}
 	
@@ -185,7 +188,7 @@ console.log(userNickName, userId);
 			
 		fn_doSend(msg, chatRoom);
 		msgInput.val('');
-		
+		$('.chat-room-body').scrollTop(1000000);
 	})
 	
 	// 채팅방 input 엔터 클릭시
@@ -203,8 +206,11 @@ console.log(userNickName, userId);
 		var chatRoomCode = chatRoom.find('.chat-room-view-code').val();
 		var chatRoomBody = chatRoom.find('.chat-room-body');
 		var sendChatClone = chatRoom.find('.send-chat-clone').clone();
+		var currentTime = fn_getTimeStamp();
+		
 		
 		sendChatClone.find('.msg p').text(msg);
+		sendChatClone.find('.msg-time').text(currentTime);
 		sendChatClone.removeClass('send-chat-clone');
 		sendChatClone.css('display', 'block');
 		chatRoomBody.append(sendChatClone);
@@ -218,6 +224,34 @@ console.log(userNickName, userId);
         };
         stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
 	}
+	
+	
+	// 현재시간
+	function fn_getTimeStamp() {
+		  var d = new Date();
+		  var s =
+			  fn_leadingZeros(d.getFullYear(), 4) + '-' +
+			  fn_leadingZeros(d.getMonth() + 1, 2) + '-' +
+			  fn_leadingZeros(d.getDate(), 2) + ' ' +
+	
+			  fn_leadingZeros(d.getHours(), 2) + ':' +
+			  fn_leadingZeros(d.getMinutes(), 2)
+
+		  return s;
+		}
+
+	function fn_leadingZeros(n, digits) {
+	  var zero = '';
+	  n = n.toString();
+
+	  if (n.length < digits) {
+	    for (var i = 0; i < digits - n.length; i++)
+	      zero += '0';
+	  }
+	  return zero + n;
+	}
+
+
 	
 	
 	

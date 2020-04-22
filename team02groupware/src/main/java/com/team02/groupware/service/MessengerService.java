@@ -23,7 +23,8 @@ public class MessengerService {
 		
 		List<Map<String,Object>> chatRoomListMap = new ArrayList<Map<String,Object>>();
 		chatRoomListMap = messengerMapper.selectChatRoomList(userId);
-		System.out.println("시간 테스트 서비스단 : " + chatRoomListMap.get(0).get("chatMsgDate"));
+		
+		System.out.println("시간 테스트 서비스단 : " + (String)chatRoomListMap.get(0).get("chatMsgDate"));
 		return chatRoomListMap;
 	}
 	
