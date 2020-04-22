@@ -127,4 +127,14 @@ public interface ElectronicApprovalMapper {
 	  * @author 김건훈
 	  */
 	 public String selectApprovalFormatInDocumentFormForDetail(String dApprovalFormatCode);
+	 
+	 /*
+	  * @method updateDocumentForm()
+	  * @brief 관리자용 문서 양식 수정 method
+	  * @author 김건훈
+	  */
+	 public int updateDocumentForm(ElectronicApprovalDocument eaDto);
+	 
 	 }
+
+	

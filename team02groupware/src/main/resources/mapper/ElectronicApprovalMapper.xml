@@ -226,5 +226,25 @@
 		ea_approval_format
 	WHERE
 		d_approval_format_code=#{dApprovalFormatCode}
-  </select>  
+  </select>
+  
+  <!-- 문서 양식 수정 update 쿼리문  -->
+  <insert id="updateDocumentForm" parameterType="ElectronicApprovalDocument">
+  /* 문서 양식 수정 update method */  
+	UPDATE 
+		ea_document_form
+	SET
+		d_security_level=#{dSecurityLevel},
+		d_form_type_code=#{dFormTypeCode},
+		d_approval_format_code=#{dApprovalFormatCode},
+		d_form_name=#{dFormName},
+		d_form_abbreviation=#{dFormAbbreviation},
+		d_form_detail_explanation=#{dFormDetailExplanation},
+		d_security_level_changeable=#{dSecurityLevelChangeable},
+		d_expiry_date=#{dExpiryDate},
+		d_expiry_date_changeable=#{dExpiryDateChangeable},
+		d_form_detail_content=#{dFormDetailContent}
+	WHERE 
+		d_form_code=#{dFormCode}
+  </insert>  
   </mapper>

@@ -28,13 +28,13 @@
 				       <div class="page-header">
 					       <div class="row align-items-end">
 					           <div class="col-lg-8">
-					               <div class="page-header-title">
-					                   <i class="ik ik-credit-card bg-blue"></i>
-					                   <div class="d-inline">
-					                       <h5>그룹웨어</h5>
-					                       <span>(주)TEAM02</span>
-					                   </div>
-					               </div>
+					              <div class="page-header-title">
+								   <i class="ik ik-file-text bg-blue"></i>
+								   <div class="d-inline">
+										<h5>문서 양식 수정</h5>
+										<span>문서 양식을 수정할 수 있는 곳입니다.</span>
+								   </div>
+								</div>
 					           </div>
 					           <div class="col-lg-4">
 					               <nav class="breadcrumb-container" aria-label="breadcrumb">
@@ -68,29 +68,29 @@
                                                     <tr>
                                                         <td class="table-active document-form-table-td">분류</td>
                                                         <td>          
-                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-9" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        	<button id="document-form-type-drop-down" class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-9" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:value="${eaDto.dFormTypeCode}">
                                                         	<span th:text="${eaDto.dFormType}"></span>
                                                     		<i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                				</button>
 			                                                <div class="dropdown-menu">
 			                                                	<th:block th:each="dftl:${eaDocumentFormTypeList}">
-			                                                	<a class="dropdown-item" th:text="${dftl.dFormType}"></a>
+			                                                	<a class="dropdown-item" th:text="${dftl.dFormType}" th:value="${dftl.dFormTypeCode}"></a>
 			                                                	</th:block> 
 			                                                </div>
                                               		  </td>
                                                         <td class="table-active document-form-table-td">양식명</td>
-                                                        <td><input type="text" class="form-control col-sm-9" th:value="${eaDto.dFormName}"></td>
+                                                        <td><input type="text" class="form-control col-sm-9" th:value="${eaDto.dFormName}" id="document-form-name-input"></td>
                                                     </tr>
                                                      <tr>
                                                         <td class="table-active document-form-table-td"><span>약칭</span><i class="ik ik-help-circle"></i></td>
-                                                        <td><input type="text" class="form-control col-sm-9" th:value="${eaDto.dFormAbbreviation}"></td>
+                                                        <td><input type="text" class="form-control col-sm-9" th:value="${eaDto.dFormAbbreviation}" id="document-form-abbre-input"></td>
                                                         <td class="table-active document-form-table-td">설명</td>
-                                                        <td><input type="text" class="form-control col-sm-9" th:value="${eaDto.dFormDetailExplanation}"></td>
+                                                        <td><input type="text" class="form-control col-sm-9" th:value="${eaDto.dFormDetailExplanation}" id="document-form-detail-input"></td>
                                                     </tr>
                                                      <tr>
                                                         <td class="table-active document-form-table-td"><span>보존 연한</span><i class="ik ik-help-circle"></i></td>
                                                         <td>
-                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-9" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        	<button id="document-form-expiry-drop-down" class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-9" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     		 <span th:text="${eaDto.dExpiryDate}"></span>
                                                     		 <i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                				</button>
@@ -110,7 +110,7 @@
 			                                                </td>
                                                         <td class="table-active document-form-table-td"><span>보안 등급</span><i class="ik ik-help-circle"></i></td>
                                                         <td>
-                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-9" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        	<button id="document-form-security-drop-down" class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-9" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     		 <span th:text="|${eaDto.dSecurityLevel}등급|"></span>
                                                     		 <i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                				</button>
@@ -141,65 +141,12 @@
                                     <div class="card-header d-block">                                   
                                        
                                         <h6>결재 양식
-                                       		<a id="approval-format-set-btn" data-toggle="modal" data-target="#approval-format">변경</a>
+                                       		<a id="approval-format-set-btn" data-toggle="modal" data-target="#approval-format" data-backdrop="static" data-keyboard="false">변경</a>
                                     	</h6>
                                    		
                                    		<!-- 결재라인 포맷 상세보기 Start -->
                                        <div class="table-responsive">
-											<table style="height: 300px; width: 100%; table-layout: fixed; text-align: center; border: 1px solid #cdcdcd;">
-												<tbody>
-													<tr style="height: 50px;">
-														<td style="width: 96px; height: 140px; background: #f9f9f9; border: 1px solid #cdcdcd; "
-															rowspan="3">
-															<div class="col-md-12">결재</div>
-														</td>
-														<td style="background: #f9f9f9; border-: 1px solid #cdcdcd;"></td>
-														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;"></td>
-														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;"></td>
-														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;"></td>
-														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;"></td>
-														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;"></td>
-														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;"></td>
-													</tr>
-													<tr style="height: 100px; border: 1px solid #cdcdcd;">
-														<td style="border: 1px solid #cdcdcd;"></td>
-														<td style="border: 1px solid #cdcdcd;"></td>
-														<td style="border: 1px solid #cdcdcd;"></td>
-														<td style="border: 1px solid #cdcdcd;"></td>
-														<td style="border: 1px solid #cdcdcd;"></td>
-														<td style="border: 1px solid #cdcdcd;"></td>
-														<td style="border: 1px solid #cdcdcd;"></td>
-													</tr>
-													<tr style="height: 50px; border: 1px solid #cdcdcd;">
-														<td style="border: 1px solid #cdcdcd;"></td>
-														<td style="border: 1px solid #cdcdcd;"></td>
-														<td style="border: 1px solid #cdcdcd;"></td>
-														<td style="border: 1px solid #cdcdcd;"></td>
-														<td style="border: 1px solid #cdcdcd;"></td>
-														<td style="border: 1px solid #cdcdcd;"></td>
-														<td style="border: 1px solid #cdcdcd;"></td>
-													</tr>
-													<tr style="height: 50px; border: 1px solid #cdcdcd;">
-														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;">
-															<div class="col-md-12">합의</div>
-														</td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-													</tr>
-													<tr style="height: 45px;">
-														<td style="background: #f9f9f9; border: 1px solid #cdcdcd;">
-														<div class="col-md-12">참조</div>
-														</td>
-														<td colspan="7"> 
-								 						 </td>
-													</tr>
-												</tbody>
-											</table>
+											<div th:utext="${eaDto.dApprovalFormatDetailContent}"></div>
 										</div>
                                        <!-- 결재라인 포맷 상세보기 End -->
                                     </div>
@@ -208,12 +155,14 @@
                                  <!-- 문서 양식 수정 상세내용 summer note editor Start -->    
                                     <div class="card-body  table-border-style">
                                     	<h6>상세 입력 </h6>                                   
-                                    <textarea id="ea-summernote" rows="10" ></textarea>                              
+                                    <textarea id="document-form-update-summernote" rows="10" th:utext="${eaDto.dFormDetailContent}"></textarea>
+                                                              
                                     </div>                      		
                                 <!-- 문서 양식 수정 상세내용 summer note editor End -->
                                 <!--양식 수정 버튼 Start -->  
                                     <div class="card-header d-block ea-submit-btn">                                   
-                                        <button type="button" class="btn btn-primary">수정 완료</button>
+                                        <button type="button" class="btn btn-primary" id="update-document-form-submit-btn">수정 완료</button>
+                                        <input type="hidden" id="document-form-code" th:value="${eaDto.dFormCode}"/>
                                     </div>
                                  	<!-- 양식 수정 버튼  End -->  	    
                         		</div>                         		                                	 
@@ -241,11 +190,13 @@
 		                              </div>
 		                              <div class="modal-body">
 		                                	<div class="card">
+		                                	<form class="approval-format-radio">
 		                                	  <div class="approval-format-type-title">
 		                                		 <div class="form-radio">
 		                                		  <div class="radio">
 			                                		<label>
-	                                                    <input type="radio" name="radio" id='approval-format-1'>
+	                                                    <input type="radio" name="radio" id='approval-format-1' value="EAAPF001">
+	                                                    <input type="hidden" id="approval-format-value" th:value="${eaDto.dApprovalFormatCode}"/>
 	                                                    <i class="helper"></i>결재
 	                                                </label>
                                                   </div>
@@ -288,14 +239,14 @@
                                                   </div>
                                                 </div>		                                		
 		                                		</div>
+		                                		</form>
 		                                		<div class="card-body">
 		                                		해당 결재 양식은 준비 중 입니다.
 		                                		</div>
 		                                	</div>
 		                              </div>
 		                              <div class="modal-footer">
-		                                  <button type="button" class="btn btn-primary">확인</button>
-		                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+		                                  <button type="button" class="btn btn-primary approval-format-set-btn">확인</button>
 		                              </div>
 		                          	</div>
 		                         </div>

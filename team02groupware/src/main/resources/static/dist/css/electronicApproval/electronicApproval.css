@@ -284,3 +284,6 @@
 		text-align: center;
 		margin-bottom: 16px;
 	}
+	#delete-document-form-btn{
+		cursor: pointer;
+	}

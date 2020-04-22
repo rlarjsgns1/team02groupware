@@ -19,18 +19,71 @@
 		<!--  Script custom -->
 		<th:block layout:fragment="customScript">
 			<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+			<script type="text/javascript">
+			$(function(){
+				 $('#delete-document-form-btn').on('click',function(){
+					   swal({
+				           title: "선택한 항목을 삭제하시겠습니까?",
+				           text: "선택한 양식을 삭제하시겠습니까?",
+				           icon: "warning",
+				           buttons: ["취소", "삭제"],
+				           dangerMode: true,
+				       })
+				       .then((willDelete) => {
+				           if (willDelete) {
+				        	   var eaDocumentFormListCodeArr = [];
+				        	   var dFormCode = '[[${eaDto.dFormCode}]]';
+				        	   
+				        	   
+				        	   eaDocumentFormListCodeArr.push(dFormCode);
+				        		
+				        	   console.log(eaDocumentFormListCodeArr);
+				        	   
+				        	   var request = $.ajax({
+								    url: "/deleteDocumentFormPro",
+								    method: "POST",
+								    data: JSON.stringify(eaDocumentFormListCodeArr),
+								    dataType: "json",
+								    contentType : 'application/json'
+								  });
+								   
+								  request.done(function(data) {
+								  	//console.log(data.result);
+									  
+									 swal({
+						                   title: "삭제되었습니다.",
+						                   text: "선택한 양식이	 삭제되었습니다.",
+						                   icon: "success",
+						                 })
+						                 .then((value) => {
+						                	 location.href="/selectDocumentFormList";
+											  });
+								  });
+								   
+					           }else{
+					               swal("삭제가 취소되었습니다.");
+					            }
+								  request.fail(function( jqXHR, textStatus ) {
+								    alert( "Request failed: " + textStatus );
+								  }); 
+				        	   
+				       });
+					   
+				   });
+			});
+			</script>
 		</th:block>
 		<th:block layout:fragment="customContents">
 				       <div class="page-header">
 					       <div class="row align-items-end">
 					           <div class="col-lg-8">
-					               <div class="page-header-title">
-					                   <i class="ik ik-credit-card bg-blue"></i>
-					                   <div class="d-inline">
-					                       <h5>그룹웨어</h5>
-					                       <span>(주)TEAM02</span>
-					                   </div>
-					               </div>
+					             <div class="page-header-title">
+								  <i class="ik ik-file-text bg-blue"></i>
+								   <div class="d-inline">
+										<h5>문서 양식 상세보기</h5>
+										<span>생성한 문서 양식을 상세하게 볼 수 있는 곳입니다.</span>
+								   </div>
+								</div>
 					           </div>
 					           <div class="col-lg-4">
 					               <nav class="breadcrumb-container" aria-label="breadcrumb">
@@ -56,7 +109,7 @@
 	                                        <a class="nav-link text-primary" th:href="@{/updateDocumentForm(dFormCode=${eaDto.dFormCode})}">양식 수정</a>
 	                                    </li>
 	                                    <li class="nav-item">
-	                                        <a class="nav-link text-primary" th:href="@{#}">양식 삭제</a>
+	                                        <a class="nav-link text-primary" id="delete-document-form-btn">양식 삭제</a>
 	                                    </li> 
 	                                </ul>
 	                      	<!-- 양식 상세보기 테이블 상단 메뉴탭 End-->

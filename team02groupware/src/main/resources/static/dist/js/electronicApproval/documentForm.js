@@ -104,10 +104,11 @@
 						   if(approvalFormatRadioVal=='EAAPF001'){
 							   $('#selected-approval-format-1').css('display','block');
 							   $('#approval-format-set-btn').text('변경');
+							   $(this).attr('data-dismiss','modal');
 							   
 						   }else{
-							   $('#selected-approval-format-1').css('display','none');
-							   $('#approval-format-set-btn').text('설정');
+							  
+							   $(this).removeAttr('data-dismiss');
 							   swal({
 				 					title: "해당 결재 양식은 준비 중 입니다.",
 				 					text: "다른 결재 양식을 선택해주세요.",

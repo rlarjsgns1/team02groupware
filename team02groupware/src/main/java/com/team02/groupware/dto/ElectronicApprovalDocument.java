@@ -225,7 +225,66 @@ public class ElectronicApprovalDocument {
 	public void setdApprovalFormatDetailContent(String dApprovalFormatDetailContent) {
 		this.dApprovalFormatDetailContent = dApprovalFormatDetailContent;
 	}
+	
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ElectronicApprovalDocument [dFormCode=");
+		builder.append(dFormCode);
+		builder.append(", dSecurityLevel=");
+		builder.append(dSecurityLevel);
+		builder.append(", dFormTypeCode=");
+		builder.append(dFormTypeCode);
+		builder.append(", dApprovalFormatCode=");
+		builder.append(dApprovalFormatCode);
+		builder.append(", dFormName=");
+		builder.append(dFormName);
+		builder.append(", dFormAbbreviation=");
+		builder.append(dFormAbbreviation);
+		builder.append(", dFormDetailExplanation=");
+		builder.append(dFormDetailExplanation);
+		builder.append(", dSecurityLevelChangeable=");
+		builder.append(dSecurityLevelChangeable);
+		builder.append(", dExpiryDate=");
+		builder.append(dExpiryDate);
+		builder.append(", dExpiryDateChangeable=");
+		builder.append(dExpiryDateChangeable);
+		builder.append(", dFormDetailContent=");
+		builder.append(dFormDetailContent);
+		builder.append(", dFormType=");
+		builder.append(dFormType);
+		builder.append(", dCompanyCodeUsage=");
+		builder.append(dCompanyCodeUsage);
+		builder.append(", dAbbreviationUsage=");
+		builder.append(dAbbreviationUsage);
+		builder.append(", dUnitNameUsage=");
+		builder.append(dUnitNameUsage);
+		builder.append(", dRegisterTimeFormat=");
+		builder.append(dRegisterTimeFormat);
+		builder.append(", dSerialNumberFormat=");
+		builder.append(dSerialNumberFormat);
+		builder.append(", dExpiredDateDelete=");
+		builder.append(dExpiredDateDelete);
+		builder.append(", dDecideFirstUsage=");
+		builder.append(dDecideFirstUsage);
+		builder.append(", dDecideInsteadUsage=");
+		builder.append(dDecideInsteadUsage);
+		builder.append(", dDecideAfterUsage=");
+		builder.append(dDecideAfterUsage);
+		builder.append(", dReferTime=");
+		builder.append(dReferTime);
+		builder.append(", dDraftCancelUsage=");
+		builder.append(dDraftCancelUsage);
+		builder.append(", dEaRule=");
+		builder.append(dEaRule);
+		builder.append(", dApprovalFormatDetailContent=");
+		builder.append(dApprovalFormatDetailContent);
+		builder.append("]");
+		return builder.toString();
+	}
 
+	
 	
 	
 }

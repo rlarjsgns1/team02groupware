@@ -3,6 +3,7 @@ package com.team02.groupware.controller;
 
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -275,6 +276,8 @@ public class ElectronicApprovalController {
 	 		resultMap.put("result", result);
 	 		return resultMap;
 		}
+	 	
+	 	
 	 
 	 	
 	 	/*
@@ -334,6 +337,24 @@ public class ElectronicApprovalController {
 		 model.addAttribute("eaDocumentFormTypeList", eaDocumentFormTypeList);
 		 return "eaDocument/eaDocumentForSupervisor/updateDocumentForm.html";
 	 }
+	 
+	 /*
+	  * @method updateDocumentFormPro()
+	  * @brief 관리자용 문서 양식 수정 method
+	  * @author 김건훈
+	  */	
+	 	@PostMapping(value="/updateDocumentFormPro",produces = "application/json")
+	 	@ResponseBody
+		public Map<String,Object> updateDocumentFormPro(@ModelAttribute ElectronicApprovalDocument eadto){
+	
+	 		logger.info("ajax로 보내진 문서양식수정 입력값  :: {}", eadto.toString());
+
+	 		int result=eaService.updateDocumentForm(eadto);
+	 		
+	 		Map<String,Object> resultMap = new HashMap<String,Object>();
+	 		resultMap.put("result", result);
+	 		return resultMap;
+		}
 	 
 	 
 	 /*

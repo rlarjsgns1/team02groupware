@@ -54,6 +54,16 @@ public class ElectronicApprovalService {
 	 }
 	 
 	 /*
+	  * @method updateDocumentForm()
+	  * @brief 관리자용 문서 양식 수정 method
+	  * @author 김건훈
+	  */
+	 public int updateDocumentForm(ElectronicApprovalDocument eaDto) {
+		 int result = eaMapper.updateDocumentForm(eaDto);
+		 return result;		 
+	 }
+	 
+	 /*
 	  * @method selectEaDocumentForm()
 	  * @brief 양식함관리 페이지 내 문서양식 테이블 조회 method
 	  * @author 김건훈
