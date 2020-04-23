@@ -55,7 +55,18 @@
 						//console.log(searchType);
 						$(this).parent().siblings('.dropdown-toggle').text(searchType);
 						$(this).parent().siblings('.dropdown-toggle').append(tag);
-					});												
+					});
+					
+					/*
+					 * @brief 상세보기 화면으로 이동 Event
+					 * @author 김건훈
+					 */
+					 $('.ongoing-document-content').click(function(){
+					    //console.log('tr 클릭 이벤트'); 
+				        var docType = $(this).find('.ongoing-document-type').text();
+						//console.log(docType);
+						$(location).attr('href','/selectOngoingDocumentDetail?docType='+docType);
+					   });
 				});
 			</script>
 		</th:block>
@@ -63,13 +74,13 @@
 						<div class="page-header">
 					       <div class="row align-items-end">
 					           <div class="col-lg-8">
-					               <div class="page-header-title">
-					                   <i class="ik ik-credit-card bg-blue"></i>
-					                   <div class="d-inline">
-					                       <h5>그룹웨어</h5>
-					                       <span>(주)TEAM02</span>
-					                   </div>
-					               </div>
+					           <div class="page-header-title">
+							   	<i class="ik ik-inbox bg-blue"></i>
+								   <div class="d-inline">
+									 <h5>결재 후 문서 회람/참조</h5>
+									 <span>결재 후 문서 중 회람/참조된 문서가 쌓이는 곳입니다.</span>
+								   </div>
+								</div>
 					           </div>
 					           <div class="col-lg-4">
 					               <nav class="breadcrumb-container" aria-label="breadcrumb">
@@ -132,21 +143,21 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
+                                                    <tr class="ongoing-document-content">
                                                         <td>프로젝트사업기획-20190901-009</td>
                                                         <td>쇼핑몰개발 프로젝트 사업기획서</td>
                                                         <td>김연지</td>
                                                         <td>2019-09-01</td>
                                                      	<td>프로젝트사업기획서</td>
-                                                     	<td>참조</td>                                                                                
+                                                     	<td class="ongoing-document-type">참조</td>                                                                                
                                                     </tr> 
-                                                    <tr>
+                                                    <tr class="ongoing-document-content">
                                                         <td>프로젝트완료보고-20191001-010</td>
                                                         <td>쇼핑몰개발 프로젝트 완료보고서</td>
                                                         <td>김연지</td>
                                                         <td>2019-10-01</td>
                                                      	<td>프로젝트완료보고서</td>
-                                                     	<td>참조</td> 
+                                                     	<td class="ongoing-document-type">참조</td> 
                                                     </tr>                                                                                                         
                                                 </tbody>
                                             </table>

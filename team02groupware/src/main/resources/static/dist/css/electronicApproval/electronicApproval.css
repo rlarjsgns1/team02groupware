@@ -284,6 +284,21 @@
 		text-align: center;
 		margin-bottom: 16px;
 	}
-	#delete-document-form-btn{
+	#delete-document-form-btn{ /* 문서양식 상세보기 페이지 내 문서양식 삭제 버튼 관련 CSS */
 		cursor: pointer;
+	}
+	#draft-document-form-type-drop-down{ /* 문서 기안하기 페이지 내 문서양식 분류선택 드롭다운 관련 CSS*/
+		visibility: hidden;
+	}
+	.draft-document-form-name-drop-down{ /* 문서 기안하기 페이지 내 문서양식 종류선택 드롭다운 관련 CSS */
+		display: none;
+	}
+	#project-document-section{ /* 문서양식종류가 프로젝트 일때 프로젝트 선택영역 관련 CSS */
+		visibility: hidden;
+	}
+	#draft-approval-format-table-after{
+		visibility: hidden;
+	}
+	#draft-documnet-contents{
+		display: none;
 	}

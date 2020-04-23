@@ -3,6 +3,7 @@ package com.team02.groupware.controller;
 
 
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -373,9 +374,51 @@ public class ElectronicApprovalController {
 	  * @author 김건훈
 	  */
 	 @GetMapping("/insertDocumentDraft")
-	 public String insertDocumentDraft() {
+	 public String insertDocumentDraft(Model model) {
+		
+		 List<ElectronicApprovalDocument> eaDocumentFormTypeList = eaService.selectEaDocumentFormType();
+		 //logger.info("문서 양식 분류 테이블 조회 결과값 :: {}", eaDocumentFormTypeList);
+		 model.addAttribute("eaDocumentFormTypeList", eaDocumentFormTypeList);
+		 
 		 return "eaDocument/draftDocument/documentDraft.html";
 	 }
+	 
+	 /*
+	  * @method selectDocumentFormTypeForInsertDocumentDraft()
+	  * @brief 문서 기안하기 페이지에서 문서 양식 종류 선택시 해당하는 분류들 가져오는 method
+	  * @author 김건훈
+	  */	
+	 	@PostMapping(value="/selectDocumentFormTypeForInsertDocumentDraft",produces = "application/json")
+	 	@ResponseBody
+		public Map<String,Object> selectDocumentFormTypeForInsertDocumentDraft(
+				@RequestParam(value = "dFormTypeCode", required = false) String dFormTypeCode,
+				@RequestParam(value = "dFormCode", required = false) String dFormCode
+				){
+	 		
+	 		
+	 		List<ElectronicApprovalDocument> documentFormList = new ArrayList<ElectronicApprovalDocument>();
+	 		
+	 		if(dFormTypeCode!=null&&dFormTypeCode!="") {
+	 			//logger.info("ajax로 보내진 문서양식 분류코드 :: {}", dFormTypeCode);
+	 			documentFormList = eaService.selectDocumentFormTypeForInsertDocumentDraft(dFormTypeCode);
+	 			//logger.info("문서양식 분류코드에 맞는 DB에서 꺼내온 문서양식 조회 결과값 :: {}", documentFormList.toString());
+	 		}
+	 		
+	 		if(dFormCode!=null&&dFormCode!="") {
+	 			//logger.info("ajax로 보내진 문서양식 코드 :: {}", dFormCode);
+	 			ElectronicApprovalDocument eaDto = eaService.selectDocumentFormForDetail(dFormCode);	 
+	 			//logger.info("문서양식코드에 맞는 문서양식 조회 결과값 :: {}", eaDto.toString());
+	 			documentFormList.add(eaDto);
+	 		}
+	 		
+	 		//logger.info("문서 번호 가공 후 결과값 :: {}", result);
+	 		
+	 		Map<String,Object> resultMap = new HashMap<String,Object>();
+	 		resultMap.put("result", documentFormList);
+	 		return resultMap;
+		}
+	 
+	 
 	 
 	
 	 /*

@@ -246,5 +246,18 @@
 		d_form_detail_content=#{dFormDetailContent}
 	WHERE 
 		d_form_code=#{dFormCode}
-  </insert>  
+  </insert>
+  
+  <!--문서 기안하기 페이지에서 문서 양식 종류 선택시 해당하는 분류들 가져오는 쿼리문-->
+  <select id="selectDocumentFormTypeForInsertDocumentDraft" resultMap="eaDocumentFormResultMap" parameterType="string">
+  /*문서 기안하기 페이지에서 문서 양식 종류 선택시 해당하는 분류들 가져오는 쿼리문 */  
+	SELECT 
+		*
+	FROM
+		ea_document_form
+	WHERE
+		d_form_type_code=#{dFormTypeCode}
+	LIMIT 
+		0,10;
+  </select>  
   </mapper>

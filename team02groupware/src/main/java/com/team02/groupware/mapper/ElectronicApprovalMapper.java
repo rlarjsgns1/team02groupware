@@ -135,6 +135,13 @@ public interface ElectronicApprovalMapper {
 	  */
 	 public int updateDocumentForm(ElectronicApprovalDocument eaDto);
 	 
+	 /*
+	  * @method selectDocumentFormTypeForInsertDocumentDraft()
+	  * @brief 문서 기안하기 페이지에서 문서 양식 종류 선택시 해당하는 분류들 가져오는 method
+	  * @author 김건훈
+	  */
+	 public List<ElectronicApprovalDocument> selectDocumentFormTypeForInsertDocumentDraft(String dFormTypeCode);
+	 
 	 }
 
 	

@@ -138,6 +138,17 @@
 							  $('.ea-checkbox').iCheck('uncheck');
 						  }
 					  });
+					  
+					  /*
+						 * @brief 상세보기 화면으로 이동 Event
+						 * @author 김건훈
+						 */
+						 $('.ongoing-document-content').click(function(){
+						    //console.log('tr 클릭 이벤트'); 
+					        var docType = '삭제';
+							//console.log(docType);
+							$(location).attr('href','/selectOngoingDocumentDetail?docType='+docType);
+						   });
 				});
 			</script>
 		</th:block>
@@ -145,13 +156,13 @@
 						<div class="page-header">
 					       <div class="row align-items-end">
 					           <div class="col-lg-8">
-					               <div class="page-header-title">
-					                   <i class="ik ik-credit-card bg-blue"></i>
-					                   <div class="d-inline">
-					                       <h5>그룹웨어</h5>
-					                       <span>(주)TEAM02</span>
-					                   </div>
-					               </div>
+					           <div class="page-header-title">
+							   	<i class="ik ik-inbox bg-blue"></i>
+								   <div class="d-inline">
+									 <h5>관리자용 삭제 문서 목록</h5>
+									 <span>관리자가 삭제된 문서를 확인할 수 있는 곳입니다.</span>
+								   </div>
+								</div>
 					           </div>
 					           <div class="col-lg-4">
 					               <nav class="breadcrumb-container" aria-label="breadcrumb">
@@ -222,7 +233,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
+                                                    <tr class="ongoing-document-content">
                                                     	<td> 
                                                     		<input type="checkbox" class="ea-icheck ea-checkbox">
                                                     	</td>
@@ -232,7 +243,7 @@
                                                         <td>2020-02-16</td>
                                                      	<td>보존 연한 경과</td>                                                        
                                                     </tr> 
-                                                    <tr>
+                                                    <tr class="ongoing-document-content">
                                                     	<td> 
                                                     		<input type="checkbox" class="ea-icheck ea-checkbox">
                                                     	</td>

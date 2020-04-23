@@ -352,4 +352,14 @@ public class ElectronicApprovalService {
 		//System.out.println("문서 번호 가공 후 결과값------>"+result);
 		 return result;
 	 };
+	 
+	 /*
+	  * @method selectDocumentFormTypeForInsertDocumentDraft()
+	  * @brief 문서 기안하기 페이지에서 문서 양식 종류 선택시 해당하는 분류들 가져오는 method
+	  * @author 김건훈
+	  */
+	 public List<ElectronicApprovalDocument> selectDocumentFormTypeForInsertDocumentDraft(String dFormTypeCode){
+		 List<ElectronicApprovalDocument> documentFormList = eaMapper.selectDocumentFormTypeForInsertDocumentDraft(dFormTypeCode);
+		 return documentFormList;
+	 }
 }
