@@ -17,8 +17,7 @@
 			      		<div class="col-md-12" style="margin-bottom: 0px">
 			      			<form class="mr-t-10">
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="제목을 입력해주세요"> 
-									
+									<input type="text" class="form-control create-chat-room-name" placeholder="제목을 입력해주세요"> 
 								</div>
 							</form>
 			      		</div>
@@ -40,69 +39,43 @@
 		                         	<i class="ik ik-x"></i>
 		                         	<span class="tag-user-name"></span>
 		                         	<input type="hidden" class="tag-index">
+		                         	
 		                         </a>
 	                         </div>
 	                  
                          </div>
                          
-                     </form>
+                    </form>
 		      		<!-- 사용자 선택시 네임태그 생성 End -->
 		      		
 		      		<!-- 사용자 선택 라디오박스  Start-->
 	  		  		<div class="form-radio row chat-radio-user-choice">
-		                <form>
-		                	<div class="chat-radio-group row">
-		                	
-			                	<div class="chat-radio-group-header col-md-12"> 
-			                		<span class="f-14 chat-radio-group-name">경영지원부</span> 
-			                	</div>
+		                <form class="create-chat-room-form">
+		                
+			                <div class="chat-radio-group row">
 			                	
-			                	<div class="radio radio-inline radio chat-radio-user col-md-12">
-			                        <label>
-			                            <input type="checkbox" name="radio-check" class="chat-check-btn">
-			                        	<img src="../messenger/img/pengsu2.jpg" alt="user image" class="chat-radio-user-image rounded-circle img-40 align-top mr-15">
-			                        	<span class="chat-radio-user-group">경영지원부 개발1팀 </span>
-			                            <span class="chat-radio-user-name">이원준</span>
-			                            <i class="helper"></i>
-			                            
-			                        </label>
-			                  	</div>
-			                  	<div class="radio radio-inline radio chat-radio-user col-md-12">
-			                        <label>
-			                            <input type="checkbox" name="radio-check" class="chat-check-btn">
-			                        	<img src="../messenger/img/pengsu2.jpg" alt="user image" class="chat-radio-user-image rounded-circle img-40 align-top mr-15">
-			                        	<span class="chat-radio-user-group">경영지원부 개발1팀 </span>
-			                            <span class="chat-radio-user-name">김건훈</span>
-			                            <i class="helper"></i>
-			                            
-			                        </label>
-			                  	</div>
-			                  	
-			                  	
-			                  	
-		                	</div>
-		                	
-		                	<div class="chat-radio-group row">
-		                	
-			                	<div class="chat-radio-group-header col-md-12"> 
-			                		<span class="f-14 chat-radio-group-name">마케팅부</span> 
-			                	</div>
+		                		<th:block th:each="u:${userList}">
+			                		
+			                		<th:block th:if="${u.check} != 'true'">
+					                	<div class="chat-radio-group-header col-md-12"> 
+					                		<span class="f-14 chat-radio-group-name" th:text="${u.groupName}"></span> 
+					                	</div>
+				                	</th:block>
+				                	
+				                	<div class="radio radio-inline radio chat-radio-user col-md-12">
+				                        <label>
+				                            <input type="checkbox" name="radio-check" class="chat-check-btn" th:value="${u.userId}">
+				                        	<img th:src="@{/img/users/}+${u.userId}+@{.jpg}" alt="user image" class="chat-radio-user-image rounded-circle img-40 align-top mr-15">
+				                            <span class="chat-radio-user-name" th:text="${u.userName}"></span>
+				                            <i class="helper"></i>
+				                           
+				                        </label>
+				                  	</div>
+				                  	
+		                		</th:block>
+		                		
+			                </div>
 			                	
-			                	<div class="radio radio-inline radio chat-radio-user col-md-12">
-			                        <label>
-			                            <input type="checkbox" name="radio-check" class="chat-check-btn">
-			                        	<img src="../messenger/img/pengsu2.jpg" alt="user image" class="chat-radio-user-image rounded-circle img-40 align-top mr-15">
-			                        	<span class="chat-radio-user-group">마케팅부 개발1팀 </span>
-			                            <span class="chat-radio-user-name">김연지</span>
-			                            <i class="helper"></i>
-			                           
-			                        </label>
-			                  	</div>
-			                	
-			                  	
-		                	</div>
-		               
-		                  	
 		                </form>
 		            </div>
 		            <!-- 사용자 선택 라디오박스  End-->
@@ -110,8 +83,8 @@
 		       </div>
 	       
 		       <div class="modal-footer">
-		           <button type="button" class="btn btn-primary" data-dismiss="modal" id=approverAddBtn>확인</button>
-		           <button type="button" class="btn btn-secondary" data-dismiss="modal" id=approverCancelBtn>취소</button>
+		           <button type="button" class="btn btn-primary create-chat-room-btn" data-dismiss="modal">확인</button>
+		           <button type="button" class="btn btn-secondary" data-dismiss="modal" >취소</button>
 		       </div>
 		       
 	   		</div>

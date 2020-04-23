@@ -2,8 +2,6 @@
  * 메신저 화면단 스크립트 작업
  */
 
-			
-	
 	
 	// 채팅방 메뉴바 클릭
 	$(document).on('click','.menu-btn',function(e){
@@ -89,11 +87,51 @@
 		
 	}
 	
+	// 대화방 생성 ajax
+	$(document).on('click','.create-chat-room-btn', function(){
+		console.log('대화방생성버튼')
+		
+		var modal = $(this).closest('#create-chat-room-modal');
+		var room = {};
+		room.roomName = modal.find('.create-chat-room-name').val();
+		room['roomMember[]'] = [];
+		var memberTag = modal.find('.chat-check-btn:checked')
+		console.log(memberTag)
+		
+		memberTag.each(function(){
+			
+			var memberId = $(this).val();
+			room['roomMember[]'].push(memberId);
+			
+		})
+		console.log(room)
+		
+		var request = $.ajax({
+			  url: '/createChatRoom',
+			  method: "GET",
+			  data: room,
+			  //contentType: 'application/json',
+			  dataType: "html"
+			});
+			
+			request.done(function( data ) {
+				
+				console.log(data)
+				
+			});
+			 
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			}); 
+		
+		
+	});
 	
 	// 모달창 생성 클릭 이벤트
 	$(document).on('click','.modal-request', function(){
 		
 		if($(this).hasClass('chat-list-create-room')){
+			
 			
 			fn_modalRequest('/createChatRoomModal', '#create-chat-room-modal');
 			

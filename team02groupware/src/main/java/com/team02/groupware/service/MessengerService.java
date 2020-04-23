@@ -44,6 +44,42 @@ public class MessengerService {
 		
 	}
 	
+	// 유저 리스트 Select
+	public List<Map<String, String>> selectUserList(String userId) {
+		
+		List<Map<String, String>> userList = messengerMapper.selectUserList(userId);
+		String prevGroupName = "";
+		
+		for(int i = 0; i< userList.size(); i++) {
+			
+			String currentGroupName = userList.get(i).get("groupName");
+			System.out.println(currentGroupName);
+			if(prevGroupName.equals(currentGroupName)) {
+				userList.get(i).put("check", "true");
+			}else {
+				userList.get(i).put("check", "false");
+			}
+			
+			
+			prevGroupName = currentGroupName;
+			System.out.println(userList.get(i).get("check")+"리스트 셀렉트 테스트 ");
+		}
+		
+		
+		
+		return userList;
+	}
+
+	public Map<String, Object> createChatRoom(Map<String, Object> roomInfo) {
+		
+		
+		messengerMapper.createChatRoom(roomInfo);
+		
+		
+		return roomInfo;
+		
+	}
+	
 	
 
 }

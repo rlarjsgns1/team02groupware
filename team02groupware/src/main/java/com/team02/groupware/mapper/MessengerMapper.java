@@ -18,5 +18,9 @@ public interface MessengerMapper {
 	public List<Map<String, Object>> selectChatRoomList(String userId);
 
 	public List<Map<String, Object>> selectChatRoomView(String roomCode);
+
+	public List<Map<String, String>> selectUserList(String userId);
+
+	public void createChatRoom(Map<String, Object> roomInfo);
 	
 }

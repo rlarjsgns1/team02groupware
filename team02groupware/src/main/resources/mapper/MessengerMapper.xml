@@ -73,7 +73,6 @@
 	
 	</select>
 	
-	
 	<!-- 채팅방 상세보기 resultMap  -->
 	<resultMap id="selectChatRoomView" type="map">
 	
@@ -122,14 +121,73 @@
 			${chatRoomCode},
 			#{userNickName})
 		
-		
-		
-
 	</insert>		
 
-
-
-
+	<!-- 유저 리스트 resultMap  -->
+	<resultMap id="selectUserList" type="map">
+	
+    	<result property="groupCode" column="group_code"/>
+    	<result property="groupName" column="group_name"/>
+    	<result property="userId" column="employee_id"/>
+    	<result property="userNickName" column="employee_nickname"/>
+    	<result property="userName" column="employee_name"/>
+    	
+  	</resultMap>
+  	
+	<!-- 유저 리스트 select -->
+	<select id="selectUserList" resultMap="selectUserList" parameterType="String">
+		SELECT
+			eg.group_code,
+			eg.group_name,
+			sub1.employee_id,
+			sub1.employee_nickname,
+			sub1.employee_name
+			
+		FROM
+			employee_group AS eg
+			INNER join
+			(SELECT
+				e.employee_id,
+				e.employee_code,
+				e.employee_nickname,
+				e.employee_name,
+				ebg.group_code
+			FROM
+				employee AS e
+				INNER join
+				employee_by_group AS ebg
+				on
+				e.employee_code
+				=
+				ebg.employee_code) AS sub1
+			on
+			eg.group_code
+			=
+			sub1.group_code
+			
+		WHERE
+			sub1.employee_id != #{userId}
+			
+		ORDER BY 
+			sub1.group_code, 
+			sub1.employee_nickname asc
+	
+	</select>
+	
+	
+	<insert id="createChatRoom" useGeneratedKeys="true" keyProperty="roomCode" parameterType="map">
+		
+		INSERT INTO 
+			chat_room_list
+			(chat_room_title, chat_room_user_count)
+			
+		VALUES (#{roomName}, ${roomCount});
+		
+		
+		
+		
+		
+	</insert>	
 
 
 </mapper>

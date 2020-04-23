@@ -38,9 +38,12 @@ console.log(userNickName, userId);
 			
 			fn_connect(event);
 			fn_chatRoomView(roomCode, userId, roomInfo);
+			
 		}
 
 	});
+	
+	
 	
 	// 채팅방 상세보기
 	function fn_chatRoomView(roomCode, userId, roomInfo){
@@ -65,10 +68,7 @@ console.log(userNickName, userId);
 				
 				chatRoom.css('display', 'block');
 				
-				
-					
 				$('.chat-room-body').scrollTop(1000000);
-				
 				
 				
 			});
