@@ -175,16 +175,35 @@
 	</select>
 	
 	
-	<insert id="createChatRoom" useGeneratedKeys="true" keyProperty="roomCode" parameterType="map">
+	<insert id="createChatRoom" parameterType="map">
 		
 		INSERT INTO 
 			chat_room_list
 			(chat_room_title, chat_room_user_count)
-			
-		VALUES (#{roomName}, ${roomCount});
+		VALUES 
+			(#{roomName}, ${roomCount});
+		<selectKey resultType="int" keyProperty="roomCode" order="AFTER">
+			SELECT 
+				max(chat_room_code) as roomCode
+			FROM 
+				chat_room_list
+		</selectKey>
 		
 		
+	</insert>
+	
+	<insert id="insertUserChatRoom" parameterType="map">
 		
+		INSERT INTO 
+			chat_room_per_user
+			(chat_user_id, chat_room_code)
+		VALUES 
+			<foreach collection="roomMember" item="item" separator=",">
+			(
+				#{item},
+				${roomCode}
+			)
+			</foreach>
 		
 		
 	</insert>	

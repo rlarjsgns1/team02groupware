@@ -21,6 +21,8 @@ public interface MessengerMapper {
 
 	public List<Map<String, String>> selectUserList(String userId);
 
-	public void createChatRoom(Map<String, Object> roomInfo);
+	public int createChatRoom(Map<String, Object> roomInfo);
+
+	public void insertUserChatRoom(Map<String, Object> roomInfo);
 	
 }

@@ -117,6 +117,7 @@
 			request.done(function( data ) {
 				
 				console.log(data)
+				$('.chat-list-div').append(data)
 				
 			});
 			 

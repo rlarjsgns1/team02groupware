@@ -69,13 +69,13 @@ public class MessengerService {
 		
 		return userList;
 	}
-
+	
+	// 대화방 생성
 	public Map<String, Object> createChatRoom(Map<String, Object> roomInfo) {
 		
-		
-		messengerMapper.createChatRoom(roomInfo);
-		
-		
+		int a = messengerMapper.createChatRoom(roomInfo);
+		System.out.println(roomInfo.get("roomCode") +" 셀렉트키 테스트");
+		messengerMapper.insertUserChatRoom(roomInfo);
 		return roomInfo;
 		
 	}

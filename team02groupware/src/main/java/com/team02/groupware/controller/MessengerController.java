@@ -60,7 +60,7 @@ public class MessengerController {
 		roomInfo.put("roomCode", 0);
 		System.out.println(roomInfo.get("roomMember").toString());
 		roomInfo = messengerService.createChatRoom(roomInfo);
-		//model.addAttribute("roomInfo", roomInfo);
+		model.addAttribute("roomInfo", roomInfo);
 		return "messenger/newChatRoom";
 	}
 	
