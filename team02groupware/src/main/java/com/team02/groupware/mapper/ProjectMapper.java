@@ -10,18 +10,17 @@ import com.team02.groupware.dto.Project;
 @Mapper
 public interface ProjectMapper {
 	
+	// 업무 삭제
+	public int taskDelete(String taskCode);
+	
 	//내 업무 상태 완료 수정
 	public int taskStatusUpdate(String taskCode);
-	
 	
 	//내 업무 1개 조회
 	public Project selectForTaskUpdate(String taskCode);
 	
-	//내업무 조회
+	// 내업무 조회
 	public List<Project> selectMyTask(String employeeCode);
-	
-	//업무 삭제
-	public int taskDelete(String taskCode);
 	
 	// 업무 추가
 	public int taskInsert(Project project);

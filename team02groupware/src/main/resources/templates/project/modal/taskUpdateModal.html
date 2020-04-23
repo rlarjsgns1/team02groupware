@@ -8,8 +8,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="editLayoutItemLabel">업무 수정</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
@@ -75,10 +74,8 @@
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
-					<th:block th:unless="${resultMap.get('code')} eq 'PR001' or ${resultMap.get('code')} eq 'PR002' or ${resultMap.get('code')} eq 'PR003' or ${resultMap.get('code')} eq 'PR004' or ${resultMap.get('code')} eq 'PR005' or ${resultMap.get('code')} eq 'PR006' or ${resultMap.get('code')} eq 'PR007'">
 					<button type="button" class="btn btn-primary">수정</button>
 					<button type="button" class="btn btn-danger project-delete-btn">삭제</button>
-					</th:block>
 				</div>
 			</div>
 		</div>

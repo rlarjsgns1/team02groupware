@@ -48,7 +48,37 @@ public class ProjectController {
 		return "project/taskCalendar";
 	}
 	
+	//업무 삭제 메서드
+	@PostMapping("/taskDelete")
+	@ResponseBody
+	public Map<String,Object> taskDelete(@RequestParam(value="taskCode")String taskCode) {
+		System.out.println("--------taskDelete");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("result", projectService.taskDelete(taskCode));
+		return resultMap;
+	}
 	
+	
+	//업무 수정 모달 
+	@GetMapping("/taskModalopen")
+	public String taskModal(Model model, @RequestParam(value="taskCode") String taskCode) {
+		System.out.println("binding test=" + taskCode);
+		Project resultProject=projectService.selectForTaskUpdate(taskCode);
+		
+		System.out.println("binding test2=" + resultProject.toString());
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("code", resultProject.getTaskCode());
+		resultMap.put("date", resultProject.getTaskDate());
+		resultMap.put("title", resultProject.getTaskTitle());
+		resultMap.put("desc", resultProject.getTaskDesc());
+		resultMap.put("start", resultProject.getTaskStart());
+		resultMap.put("dead", resultProject.getTaskDeadline());
+		resultMap.put("end", resultProject.getTaskEnd());
+		model.addAttribute("resultMap", resultMap);
+		System.out.println("위치테스트");
+		return "project/modal/taskUpdateModal";
+	}
+			
 	
 	//내 업무 상태 '완료'처리 메서드
 	@GetMapping("/taskSuccess")
@@ -151,9 +181,8 @@ public class ProjectController {
 	
 	
 	//프로젝트 수정 모달 
-		@GetMapping("/projectUpdateModal")
-		public String modalHtml(Model model
-				, @RequestParam(value="projectCode") String projectCode
+		@GetMapping("/projectModalopen")
+		public String projectModal(Model model, @RequestParam(value="projectCode") String projectCode
 		) {
 			
 			System.out.println("binding test=" + projectCode);

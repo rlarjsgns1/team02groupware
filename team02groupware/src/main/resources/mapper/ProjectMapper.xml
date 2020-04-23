@@ -28,77 +28,79 @@
 		<result property="tasklistCode" column="tasklist_code" />
 		<result property="tasklistName" column="tasklist_name" />
 	</resultMap>
+	
+	
+	<!-- 업무 삭제  -->
+	<delete id="taskDelete" parameterType="String">
+		DELETE
+		FROM
+			project_task_detail
+		WHERE
+			task_code=#{taskCode};
+	</delete>
+	
 	<!-- 내 업무 상태 완료 업데이트 -->
 	<update id="taskStatusUpdate" parameterType="String">
-	UPDATE project_task_detail
-	SET
-		task_status='완료'
-	WHERE 
-		task_code=#{taskcode};
-	
+		UPDATE project_task_detail
+		SET
+			task_status='완료'
+		WHERE 
+			task_code=#{taskcode};
 	</update>
 	
 	<!-- 내 업무 한 개 조회 -->
 	<select id="selectForTaskUpdate" parameterType="String" resultMap="projectResultMap">
-	SELECT
-		TD.*
-	FROM
-		project_task_detail AS TD
-	WHERE
-		TD.task_code=#{taskCode};
+		SELECT
+			TD.*
+		FROM
+			project_task_detail AS TD
+		WHERE
+			TD.task_code=#{taskCode};
 	</select>
 	
 	
 	<!-- 내 업무 조회 -->
 	<select id="selectMyTask" parameterType="String" resultMap="projectResultMap">
-	SELECT
-		TD.*
-		,PL.project_title
-		,TL.tasklist_name
-	FROM
-		project_employee_per_task AS EPT
-		INNER JOIN
-		project_task_detail AS TD
-		ON
-		EPT.task_code = TD.task_code
-		INNER JOIN
-		project_task_list AS TL
-		ON
-		TL.tasklist_code = TD.tasklist_code
-		INNER JOIN
-		project_list AS PL
-		ON
-		PL.project_code = TL.project_code
-	WHERE
-		EPT.employee_code='EE001'
-		AND
-		TD.task_status != '완료';
-	
+		SELECT
+			TD.*
+			,PL.project_title
+			,TL.tasklist_name
+		FROM
+			project_employee_per_task AS EPT
+			INNER JOIN
+			project_task_detail AS TD
+			ON
+			EPT.task_code = TD.task_code
+			INNER JOIN
+			project_task_list AS TL
+			ON
+			TL.tasklist_code = TD.tasklist_code
+			INNER JOIN
+			project_list AS PL
+			ON
+			PL.project_code = TL.project_code
+		WHERE
+			EPT.employee_code='EE001'
+			AND
+			TD.task_status != '완료';
 	</select>
 
-	<delete id="taskDelete" parameterType = "String">
-		DELETE
-		FROM
-			project_task_detail;
-		WHERE
-			task_code=#{taskCode};
-	</delete>
 	
 
 	<!-- 업무 추가 -->
 	<insert id="taskInsert" parameterType="Project">
-	<selectKey keyProperty="taskCode" resultType="String" order="BEFORE">
-		SELECT
+		<selectKey keyProperty="taskCode" resultType="String" order="BEFORE">
+			SELECT
 				CASE
 					WHEN
 						COUNT(1) > 1
-				THEN
-					CONCAT('PRT',
-							LPAD(CAST(REPLACE(MAX(task_code), 'PRT', '') AS SIGNED ) + 1,3,'0')
-			)
-				ELSE
-					ifnull (task_code, 'PRT001')
-				END AS taskCode
+					THEN
+						CONCAT('PRT',
+								LPAD(CAST(REPLACE(MAX(task_code), 'PRT', '') AS SIGNED ) + 1,3,'0')
+						)
+					ELSE
+						ifnull (task_code, 'PRT001')
+					END AS taskCode
 			FROM
 				project_task_detail
 		</selectKey>

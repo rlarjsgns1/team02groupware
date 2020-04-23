@@ -97,7 +97,7 @@
 				<div class="mytasklist col-md-8">
 				<th:block th:each="mtl : ${myTasklist}">
 					<div class="mytask-item list-item">
-						<div class="mytask-item card d-flex flex-row mb-3">
+						<div class="card d-flex flex-row mb-3">
 							<div class="custom-control custom-checkbox pl-1 align-self-center" style="margin-left:10px;">
 								<label class="custom-control custom-checkbox mb-0">
 									<input type="checkbox" class="task-checkbox custom-control-input">
@@ -111,18 +111,15 @@
 							</div>				
 							<div class="d-flex flex-grow-1 min-width-zero card-content">
 								<div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-									<a class="list-item-heading mb-1 truncate w-40 w-xs-100"
-										href="#editLayoutItem" data-toggle="modal"
-										data-target="#editLayoutItem" th:text="${mtl.taskTitle}">  </a>
+									<a class="task-title list-item-heading mb-1 truncate w-40 w-xs-100" th:text="${mtl.taskTitle}">  </a>
 									<p class="mb-1 text-muted text-small category w-15 w-xs-100" th:text="${mtl.taskDesc}"></p>
 									<span class="mb-1 text-muted text-small date w-15 w-xs-100" th:if="${mtl.taskDeadline} eq null" th:text="'마감일 없음'"></span>
 									<span class="mb-1 text-small date w-15 w-xs-100" th:if="${mtl.taskDeadline} neq null" th:text="${#dates.format(mtl.taskDeadline,'MM/dd hh:mm')}" style="color:red;"></span>
 								</div>
 								<div class="list-actions">
-									<a href="#editLayoutItem" data-toggle="modal"
-										data-target="#editLayoutItem"><i class="ik ik-eye"></i></a> <a
-										href="layout-edit-item.html"><i class="ik ik-edit-2"></i></a>
-									<a href="#" class="list-delete"><i class="ik ik-trash-2"></i></a>
+									<a class="list-view-btn"><i class="ik ik-eye"></i></a> <a
+										class="list-modal-btn"><i class=" ik ik-edit-2"></i></a>
+									<a href="#" class="list-delete-btn"><i class="ik ik-trash-2"></i></a>
 								</div>
 								
 							</div>
@@ -134,7 +131,7 @@
 						<div class="task-charts-card card" style="min-height: 422px;">
 							<div class="card-header"><h3>업무 현황</h3></div>
 							<div class="card-body">
-								<div id="c3-donut-chart" class="task-charts"></div>
+								<div id="task-status-chart" class="task-charts"></div>
 							</div>
 						</div>
 					</div>
@@ -142,78 +139,7 @@
 			</div>
 		</div>
 	
-		<!----------------------내 업무 설정(수정) 버튼 클릭시 모달창 start --------------------------->
-		<div class="modal fade edit-layout-modal" id="editLayoutItem"
-			tabindex="-1" role="dialog" aria-labelledby="editLayoutItemLabel"
-			aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="editLayoutItemLabel">업무 수정</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="row">
-							<div class="pr-update-modal card-body">
-								<form class="forms-sample" th:action="@{/projectUpdate}"
-									method="post">
-									<div class="form-group">
-										<label for="projectTitle">업무</label> <input type="text"
-											class="form-control" id="projectTitle" name=projectTitle>
-									</div>
-									<div class="form-group">
-										<label for="projectDesc">설명(선택사항)</label> <input type="text"
-											class="form-control" id="projectDesc" name=projectDesc>
-									</div>
-									<div class="form-group">
-										<label for="Date">마감일</label> <input type="text"
-											name="projectDeadline"
-											class="form-control datetimepicker-input" id="datepicker2"
-											data-toggle="datetimepicker" data-target="#datepicker2">
-									</div>
-									<div class="form-group">
-										<label>배정된 멤버</label>
-										<div>
-											<form class="sample-form">
-												<div class="add-btn-wrap">
-													<img class="member-update-btn"
-														src="/img/project/member_plus_btn.png">
-												</div>
-												<div class="update-member-select form-group">
-													<select class="form-control select2" id="update-select2"
-														multiple="multiple">
-														<option value="김연지" selected>김연지</option>
-														<option value="김건훈">김건훈</option>
-														<option value="김정훈">김정훈</option>
-														<option value="이원준">이원준</option>
-														<option value="김연지">김영훈</option>
-														<option value="김건훈">김곤지</option>
-														<option value="김정훈">김상훈</option>
-														<option value="이원준">이원영</option>
-													</select>
-												</div>
-											</form>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">취소</button>
-						<button type="button" class="btn btn-primary">수정</button>
-						<button type="button" class="btn btn-danger list-delete">삭제</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	<!--------------------------프로젝트 설정(수정) 버튼 클릭시 모달창 end --------------------------->
-
+		
 
 
 

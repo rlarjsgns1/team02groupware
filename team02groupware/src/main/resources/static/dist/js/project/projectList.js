@@ -105,7 +105,7 @@ $(function() {
 						console.log(projectCode);
 						
 						var request = $.ajax({
-							url: "/projectUpdateModal",
+							url: "/projectModalopen",
 							method:"GET",
 							data: {
 								'projectCode' : projectCode
