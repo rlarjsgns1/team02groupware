@@ -111,8 +111,8 @@
 							</div>				
 							<div class="d-flex flex-grow-1 min-width-zero card-content">
 								<div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-									<a class="task-title list-item-heading mb-1 truncate w-40 w-xs-100" th:text="${mtl.taskTitle}">  </a>
-									<p class="mb-1 text-muted text-small category w-15 w-xs-100" th:text="${mtl.taskDesc}"></p>
+									<a class="task-title list-item-heading mb-1 truncate w-40 w-xs-100" style="cursor:pointer;" th:text="${mtl.taskTitle}">  </a>
+									<p class="mb-1 text-muted text-small category w-15 w-xs-100" style="cursor:pointer;" th:text="${mtl.taskDesc}"></p>
 									<span class="mb-1 text-muted text-small date w-15 w-xs-100" th:if="${mtl.taskDeadline} eq null" th:text="'마감일 없음'"></span>
 									<span class="mb-1 text-small date w-15 w-xs-100" th:if="${mtl.taskDeadline} neq null" th:text="${#dates.format(mtl.taskDeadline,'MM/dd hh:mm')}" style="color:red;"></span>
 								</div>
