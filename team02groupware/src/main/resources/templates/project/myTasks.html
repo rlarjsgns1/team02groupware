@@ -14,8 +14,9 @@
 	<title>내 업무</title>
 </th:block>
 <th:block layout:fragment="customScript">
-	<script src="js/layouts.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="plugins/sweetalert/dist/sweetalert.min.js"></script>
+	<script src="dist/js/project/myTasks.js"></script>
     
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript">
@@ -51,6 +52,7 @@
 				</div>
 			</div>
 		</div>
+		
 		<div class="row">
 			<div class="col-md-12">
 				<div class="mb-2 clearfix">
@@ -59,9 +61,12 @@
 						aria-controls="displayOptions"> 옵션선택 <i
 						class="ik ik-chevron-down align-middle"></i>
 					</a>
-					<div class="collapse d-md-block display-options"
-						id="displayOptions">
-						<div class="d-block d-md-inline-block">
+					<div class="collapse d-md-block display-options" id="displayOptions">
+					<div class="col-md-8" style="float:left; padding-left:0; padding-right:0;">
+						<button type="button" class="task-add-btn btn btn-success btn-rounded"
+								data-toggle="modal" data-target="#exampleModalCenter" style="float:left;">새 업무 추가
+						</button>
+						<div class="d-block d-md-inline-block" style="float:right;">
 							<div class="btn-group float-md-left mr-1 mb-1">
 								<button class="btn btn-outline-dark btn-xs dropdown-toggle"
 									type="button" data-toggle="dropdown" aria-haspopup="true"
@@ -69,303 +74,78 @@
 									마감일순 <i class="ik ik-chevron-down mr-0 align-middle"></i>
 								</button>
 								<div class="dropdown-menu">
-									<a class="dropdown-item" href="#">마감일순</a> <a
-										class="dropdown-item" href="#">업데이트순</a>
+									<a class="dropdown-item" href="#">마감일순</a>
+									<a class="dropdown-item" href="#">업데이트순</a>
 								</div>
 							</div>
-							<div
-								class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+							<div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
 								<form action="">
-									<input type="text" class="form-control" placeholder="업무검색"
-										required>
+									<input type="text" class="form-control" placeholder="업무검색" required>
 									<button type="submit" class="btn btn-icon">
 										<i class="ik ik-search"></i>
-									</button>
-									<button type="button" id="adv_wrap_toggler"
-										class="adv-btn ik ik-chevron-down dropdown-toggle"
-										data-toggle="dropdown" aria-haspopup="true"
-										aria-expanded="false"></button>
-									<div class="adv-search-wrap dropdown-menu dropdown-menu-right"
-										aria-labelledby="adv_wrap_toggler">
-										<div class="form-group">
-											<input type="text" class="form-control"
-												placeholder="Full Name">
-										</div>
-										<div class="form-group">
-											<input type="email" class="form-control" placeholder="Email">
-										</div>
-										<button class="btn btn-theme">검색</button>
-									</div>
+									</button>								
 								</form>
 							</div>
-						</div>
-						<div class="float-md-right">
-							<span class="text-muted text-small mr-2">Displaying 1-10
-								of 210 items </span>
-							<button class="btn btn-outline-dark btn-xs dropdown-toggle"
-								type="button" data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false">
-								20 <i class="ik ik-chevron-down mr-0 align-middle"></i>
-							</button>
-							<div class="dropdown-menu dropdown-menu-right">
-								<a class="dropdown-item" href="#">10</a> <a
-									class="dropdown-item" href="#">20</a> <a class="dropdown-item"
-									href="#">30</a> <a class="dropdown-item" href="#">50</a> <a
-									class="dropdown-item" href="#">100</a>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="separator mb-20"></div>
-
-				<div class="row layout-wrap" id="layout-wrap">
-					<div class="col-12 list-item">
+			
+				<div class="task-row row layout-wrap" id="layout-wrap">
+				
+				<div class="mytasklist col-md-8">
+				<th:block th:each="mtl : ${myTasklist}">
+					<div class="mytask-item list-item">
 						<div class="card d-flex flex-row mb-3">
-							<a class="d-flex card-img" href="#editLayoutItem"
-								data-toggle="modal" data-target="#editLayoutItem"> <img
-								src="../img/portfolio-1.jpg"
-								alt="Donec sit amet est at sem iaculis aliquam."
-								class="list-thumbnail responsive border-0"> <span
-								class="badge badge-pill badge-primary position-absolute badge-top-left">New</span>
-								<span
-								class="badge badge-pill badge-secondary position-absolute badge-top-left-2">Trending</span>
-							</a>
+							<div class="custom-control custom-checkbox pl-1 align-self-center" style="margin-left:10px;">
+								<label class="custom-control custom-checkbox mb-0">
+									<input type="checkbox" class="task-checkbox custom-control-input">
+									<input type="hidden" name="taskCode" th:value="${mtl.taskCode}">
+									<span class="custom-control-label"></span>
+								</label>
+							</div>
+							<div style="font-size:0.9em; position:absolute; top:5px; left:57px; color:#8d919a;">
+								<a th:text="${mtl.projectTitle}"></a><i class="ik ik-chevron-right"></i>
+								<a th:text="${mtl.tasklistName}"></a>
+							</div>				
 							<div class="d-flex flex-grow-1 min-width-zero card-content">
-								<div
-									class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-									<a class="list-item-heading mb-1 truncate w-40 w-xs-100"
-										href="#editLayoutItem" data-toggle="modal"
-										data-target="#editLayoutItem"> Donec felis urna, commodo
-										eget velit interdum, malesuada lacinia eros. </a>
-									<p class="mb-1 text-muted text-small category w-15 w-xs-100">Art</p>
-									<p class="mb-1 text-muted text-small date w-15 w-xs-100">02.04.2018</p>
-									<div class="w-15 w-xs-100">
-										<span class="badge badge-pill badge-secondary">On Hold</span>
-									</div>
+								<div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+									<a class="task-title list-item-heading mb-1 truncate w-40 w-xs-100" style="cursor:pointer;" th:text="${mtl.taskTitle}">  </a>
+									<p class="mb-1 text-muted text-small category w-15 w-xs-100" style="cursor:pointer;" th:text="${mtl.taskDesc}"></p>
+									<span class="mb-1 text-muted text-small date w-15 w-xs-100" th:if="${mtl.taskDeadline} eq null" th:text="'마감일 없음'"></span>
+									<span class="mb-1 text-small date w-15 w-xs-100" th:if="${mtl.taskDeadline} neq null" th:text="${#dates.format(mtl.taskDeadline,'MM/dd hh:mm')}" style="color:red;"></span>
 								</div>
 								<div class="list-actions">
-									<a href="#editLayoutItem" data-toggle="modal"
-										data-target="#editLayoutItem"><i class="ik ik-eye"></i></a> <a
-										href="layout-edit-item.html"><i class="ik ik-edit-2"></i></a>
-									<a href="#" class="list-delete"><i class="ik ik-trash-2"></i></a>
+									<a class="list-view-btn"><i class="ik ik-eye"></i></a> <a
+										class="list-modal-btn"><i class=" ik ik-edit-2"></i></a>
+									<a href="#" class="list-delete-btn"><i class="ik ik-trash-2"></i></a>
 								</div>
-								<div
-									class="custom-control custom-checkbox pl-1 align-self-center">
-									<label class="custom-control custom-checkbox mb-0"> <input
-										type="checkbox" class="custom-control-input"> <span
-										class="custom-control-label"></span>
-									</label>
-								</div>
-
+								
 							</div>
 						</div>
 					</div>
-					<div class="col-12 list-item">
-						<div class="card d-flex flex-row mb-3">
-							<a class="d-flex card-img" href="#editLayoutItem"
-								data-toggle="modal" data-target="#editLayoutItem"> <img
-								src="../img/portfolio-2.jpg"
-								alt="Nullam porttitor elit rhoncus luctus volutpat."
-								class="list-thumbnail responsive border-0"> <span
-								class="badge badge-pill badge-primary position-absolute badge-top-left">New</span>
-								<span
-								class="badge badge-pill badge-secondary position-absolute badge-top-left-2">Trending</span>
-							</a>
-							<div class="d-flex flex-grow-1 min-width-zero card-content">
-								<div
-									class="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-									<a href="#editLayoutItem" data-toggle="modal"
-										data-target="#editLayoutItem" class="w-40 w-sm-100">
-										<p class="list-item-heading mb-1 truncate">Proin sit amet
-											augue lorem. Interdum et malesuada fames.</p>
-									</a>
-									<p class="mb-1 text-muted text-small category w-15 w-sm-100">Travel</p>
-									<p class="mb-1 text-muted text-small date  w-15 w-sm-100">21.03.2018</p>
-									<div class="w-15 w-sm-100">
-										<span class="badge badge-pill badge-primary">Processed</span>
-									</div>
-								</div>
-								<div class="list-actions">
-									<a href="#editLayoutItem" data-toggle="modal"
-										data-target="#editLayoutItem"><i class="ik ik-eye"></i></a> <a
-										href="layout-edit-item.html"><i class="ik ik-edit-2"></i></a>
-									<a href="#" class="list-delete"><i class="ik ik-trash-2"></i></a>
-								</div>
-								<div
-									class="custom-control custom-checkbox pl-1 align-self-center">
-									<label class="custom-control custom-checkbox mb-0"> <input
-										type="checkbox" class="custom-control-input"> <span
-										class="custom-control-label"></span>
-									</label>
-								</div>
-							</div>
-						</div>
+					</th:block>
 					</div>
-					<div class="col-12 list-item">
-						<div class="card d-flex flex-row mb-3">
-							<a class="d-flex card-img" href="#editLayoutItem"
-								data-toggle="modal" data-target="#editLayoutItem"> <img
-								src="../img/portfolio-7.jpg"
-								alt="Nullam porttitor elit rhoncus luctus volutpat."
-								class="list-thumbnail responsive border-0"> <span
-								class="badge badge-pill badge-primary position-absolute badge-top-left">New</span>
-								<span
-								class="badge badge-pill badge-secondary position-absolute badge-top-left-2">Trending</span>
-							</a>
-							<div class="d-flex flex-grow-1 min-width-zero card-content">
-								<div
-									class="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-									<a href="#editLayoutItem" data-toggle="modal"
-										data-target="#editLayoutItem" class="w-40 w-sm-100">
-										<p class="list-item-heading mb-1 truncate">Class aptent
-											taciti sociosqu ad litora torquent per conubia nostra.</p>
-									</a>
-									<p class="mb-1 text-muted text-small category w-15 w-sm-100">Design</p>
-									<p class="mb-1 text-muted text-small date  w-15 w-sm-100">19.02.2018</p>
-									<div class="w-15 w-sm-100">
-										<span class="badge badge-pill badge-secondary">On Hold</span>
-									</div>
-								</div>
-								<div class="list-actions">
-									<a href="#editLayoutItem" data-toggle="modal"
-										data-target="#editLayoutItem"><i class="ik ik-eye"></i></a> <a
-										href="layout-edit-item.html"><i class="ik ik-edit-2"></i></a>
-									<a href="#" class="list-delete"><i class="ik ik-trash-2"></i></a>
-								</div>
-								<div
-									class="custom-control custom-checkbox pl-1 align-self-center">
-									<label class="custom-control custom-checkbox mb-0"> <input
-										type="checkbox" class="custom-control-input"> <span
-										class="custom-control-label"></span>
-									</label>
-								</div>
-
-							</div>
-						</div>
-					</div>
-					<div class="col-12 list-item">
-						<div class="card d-flex flex-row mb-3">
-							<a class="d-flex card-img" href="#editLayoutItem"
-								data-toggle="modal" data-target="#editLayoutItem"> <img
-								src="../img/portfolio-8.jpg"
-								alt="Nullam porttitor elit rhoncus luctus volutpat."
-								class="list-thumbnail responsive border-0"> <span
-								class="badge badge-pill badge-primary position-absolute badge-top-left">New</span>
-								<span
-								class="badge badge-pill badge-secondary position-absolute badge-top-left-2">Trending</span>
-							</a>
-							<div class="d-flex flex-grow-1 min-width-zero card-content">
-								<div
-									class="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-									<a href="#editLayoutItem" data-toggle="modal"
-										data-target="#editLayoutItem" class="w-40 w-sm-100">
-										<p class="list-item-heading mb-1 truncate">Maecenas ut
-											felis iaculis, dapibus mi quis, cursus mi.</p>
-									</a>
-									<p class="mb-1 text-muted text-small category w-15 w-sm-100">Travel</p>
-									<p class="mb-1 text-muted text-small date  w-15 w-sm-100">14.02.2018</p>
-									<div class="w-15 w-sm-100">
-										<span class="badge badge-pill badge-primary">Processed</span>
-									</div>
-								</div>
-								<div class="list-actions">
-									<a href="#editLayoutItem" data-toggle="modal"
-										data-target="#editLayoutItem"><i class="ik ik-eye"></i></a> <a
-										href="layout-edit-item.html"><i class="ik ik-edit-2"></i></a>
-									<a href="#" class="list-delete"><i class="ik ik-trash-2"></i></a>
-								</div>
-								<div
-									class="custom-control custom-checkbox pl-1 align-self-center">
-									<label class="custom-control custom-checkbox mb-0"> <input
-										type="checkbox" class="custom-control-input"> <span
-										class="custom-control-label"></span>
-									</label>
-								</div>
-
+					<div class= "col-md-4">
+						<div class="task-charts-card card" style="min-height: 422px;">
+							<div class="card-header"><h3>업무 현황</h3></div>
+							<div class="card-body">
+								<div id="task-status-chart" class="task-charts"></div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!----------------------어설정(수정) 버튼 클릭시 모달창 start --------------------------->
-		<div class="modal fade edit-layout-modal" id="editLayoutItem"
-			tabindex="-1" role="dialog" aria-labelledby="editLayoutItemLabel"
-			aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="editLayoutItemLabel">업무 수정</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="row">
-							<div class="pr-update-modal card-body">
-								<form class="forms-sample" th:action="@{/projectUpdate}"
-									method="post">
-									<div class="form-group">
-										<label for="projectTitle">업무</label> <input type="text"
-											class="form-control" id="projectTitle" name=projectTitle>
-									</div>
-									<div class="form-group">
-										<label for="projectDesc">설명(선택사항)</label> <input type="text"
-											class="form-control" id="projectDesc" name=projectDesc>
-									</div>
-									<div class="form-group">
-										<label for="Date">마감일</label> <input type="text"
-											name="projectDeadline"
-											class="form-control datetimepicker-input" id="datepicker2"
-											data-toggle="datetimepicker" data-target="#datepicker2">
-									</div>
-									<div class="form-group">
-										<label>배정된 멤버</label>
-										<div>
-											<form class="sample-form">
-												<div class="add-btn-wrap">
-													<img class="member-update-btn"
-														src="/img/project/member_plus_btn.png">
-												</div>
-												<div class="update-member-select form-group">
-													<select class="form-control select2" id="update-select2"
-														multiple="multiple">
-														<option value="김연지" selected>김연지</option>
-														<option value="김건훈">김건훈</option>
-														<option value="김정훈">김정훈</option>
-														<option value="이원준">이원준</option>
-														<option value="김연지">김영훈</option>
-														<option value="김건훈">김곤지</option>
-														<option value="김정훈">김상훈</option>
-														<option value="이원준">이원영</option>
-													</select>
-												</div>
-											</form>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">취소</button>
-						<button type="button" class="btn btn-primary">수정</button>
-						<button type="button" class="btn btn-danger list-delete">삭제</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	<!--------------------------프로젝트 설정(수정) 버튼 클릭시 모달창 end --------------------------->
-
+	
+		
 
 
 
 </th:block>
 <th:block layout:fragment="customJs">
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	
 	<script>
 		window.jQuery
 				|| document
@@ -387,7 +167,7 @@
 	<script src="plugins/d3/dist/d3.min.js"></script>
 	<script src="plugins/c3/c3.min.js"></script>
 	<script src="js/tables.js"></script>
-	<script src="js/charts.js"></script>
+	<script src="dist/js/project/charts.js"></script>
 	<script src="dist/js/theme.min.js"></script>
 	<script src="js/form-picker.js"></script>
 	<script src="plugins/datedropper/datedropper.min.js"></script>

@@ -74,8 +74,10 @@
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
+					<th:block th:unless="${resultMap.get('code')} eq 'PR001' or ${resultMap.get('code')} eq 'PR002' or ${resultMap.get('code')} eq 'PR003' or ${resultMap.get('code')} eq 'PR004' or ${resultMap.get('code')} eq 'PR005' or ${resultMap.get('code')} eq 'PR006' or ${resultMap.get('code')} eq 'PR007'">
 					<button type="button" class="btn btn-primary">수정</button>
 					<button type="button" class="btn btn-danger project-delete-btn">삭제</button>
+					</th:block>
 				</div>
 			</div>
 		</div>

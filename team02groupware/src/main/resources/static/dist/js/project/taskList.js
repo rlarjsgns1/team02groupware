@@ -80,6 +80,8 @@ $(function() {
 				taskTitle.val('');
 			})
 
+	
+			
 	// 업무리스트추가 버튼 클릭이벤트
 	$(document).on('keydown','.tasklistName',function(key) {
 				if (key.keyCode == 13) {
@@ -124,6 +126,52 @@ $(function() {
 					}
 				}
 			})
+			
+	// 업무리스트 삭제 버튼 클릭 이벤트
+	
+	$(document).on('click','.tasklist-delete-btn',function() {
+            swal({
+                title: "해당 업무리스트를 삭제하시겠습니까?",
+                icon: "warning",
+                buttons: ["취소", "삭제"],
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                	console.log('삭제버튼클릭');
+
+            		var tasklistCode = $(this).siblings('.tasklist-code-input').val();
+            		var delTasklist = $(this).parent('.task-card-header').parent('.task-card');
+            		var request = $.ajax({
+            			url: "/tasklistDelete",
+            			method: "POST",
+            			data: { 'tasklistCode' : tasklistCode
+            			},
+            			dataType: "json"
+            		});
+            		
+            		request.done(function( data ) {
+            			if(data.result==1){
+            				console.log(data.result);
+            				delTasklist.remove();
+            			}
+            		});
+            		
+            		request.fail(function( jqXHR, textStatus ) {
+            			alert( "Request failed: " + textStatus );
+            		});
+                	
+                    swal({
+                        title: "업무리스트가 삭제되었습니다.",
+                        icon: "success",
+                    });
+                } else {
+                    swal("삭제가 취소되었습니다.");
+                }
+            });
+        });
+	
+			
 	// 업무리스트이름 취소버튼 클릭시 input value 공백 처리
 	$("#tasklist-cancel-btn").click(function() {
 		var tasklistName = $('input[name="tasklistName"]:last');

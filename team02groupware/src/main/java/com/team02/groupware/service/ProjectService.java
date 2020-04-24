@@ -1,6 +1,9 @@
 package com.team02.groupware.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,11 +21,31 @@ public class ProjectService {
 	@Autowired
 	private ProjectMapper projectMapper;
 
+	//업무 삭제
+	public int taskDelete(String taskCode) {
+		return projectMapper.taskDelete(taskCode);
+	}
+	
+	//내 업무 상태 완료 수정
+	public int taskStatusUpdate(String taskCode) {
+		return projectMapper.taskStatusUpdate(taskCode);
+	}
+	
+	//내 업무 1개 조회
+	public Project selectForTaskUpdate(String taskCode) {
+		return projectMapper.selectForTaskUpdate(taskCode);
+	}
+	
+	
+	//내 업무 조회
+	public List<Project> selectMyTask(String employeeCode) {
+		return projectMapper.selectMyTask(employeeCode);
+	}
+	
 	//업무 추가
 	public int taskInsert(Project project) {
 		return projectMapper.taskInsert(project);
 	}
-	
 	
 	//업무리스트별 업무상세정보 조회
 	public List<Project> getTaskdetail(String projectCode){
@@ -30,6 +53,12 @@ public class ProjectService {
 		taskDetail = projectMapper.getTaskdetail(projectCode);
 		return taskDetail;
 	}
+	
+	//업무리스트 삭제
+	public int tasklistDelete(String tasklistCode) {
+		return projectMapper.tasklistDelete(tasklistCode);
+	}
+	
 	
 	//업무리스트 추가
 	public int tasklistInsert(Project project) {
@@ -64,7 +93,23 @@ public class ProjectService {
 	
 	//프로젝트 한개 조회
 	public Project selectForProUpdate(String projectCode) {
-		return projectMapper.selectForProUpdate(projectCode);
+		Project resultProject=projectMapper.selectForProUpdate(projectCode);
+		String projectDate=resultProject.getProjectDate();
+		System.out.println(projectDate+"<------ yyyy-MM-dd 형태로 포맷변환 전 프로젝트 생성일");
+		
+		SimpleDateFormat  formatter04 = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date projectDateFormat =  formatter04.parse(projectDate);
+			System.out.println(projectDateFormat+"<------Date 타입 프로젝트 생성일");
+			
+			projectDate=formatter04.format(projectDateFormat);
+			System.out.println(projectDate+"<------yyyy-MM-dd 형태로 포맷변환 한 프로젝트 생성일");
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+		}
+		resultProject.setProjectDate(projectDate);
+		return resultProject;
 	}
 	
 	
