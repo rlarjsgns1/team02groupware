@@ -48,6 +48,13 @@ public class ElectronicApprovalDocument {
 	private String dEaRule; //사내 전자결재 규정
 	
 	/**
+	 * @brief 전자결재 결재양식 포맷 테이블 컬럼별 전역변수
+	 * @author 김건훈
+	 */
+	private String dApprovalFormatDetailContent; //결재양식 포맷 내용
+	
+	
+	/**
 	 * @brief 문서양식 테이블 컬럼별 전역변수 getters&setters
 	 * @author 김건훈
 	 */
@@ -208,6 +215,18 @@ public class ElectronicApprovalDocument {
 	}
 	
 	
+	/**
+	 * @brief 전자결재 결재양식 포맷 테이블 컬럼별 전역변수 getters&setters
+	 * @author 김건훈
+	 */
+	public String getdApprovalFormatDetailContent() {
+		return dApprovalFormatDetailContent;
+	}
+	public void setdApprovalFormatDetailContent(String dApprovalFormatDetailContent) {
+		this.dApprovalFormatDetailContent = dApprovalFormatDetailContent;
+	}
+	
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -259,11 +278,13 @@ public class ElectronicApprovalDocument {
 		builder.append(dDraftCancelUsage);
 		builder.append(", dEaRule=");
 		builder.append(dEaRule);
+		builder.append(", dApprovalFormatDetailContent=");
+		builder.append(dApprovalFormatDetailContent);
 		builder.append("]");
 		return builder.toString();
 	}
-	
 
+	
 	
 	
 }

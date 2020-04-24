@@ -59,6 +59,16 @@
 						$(this).parent().siblings('.dropdown-toggle').append(tag);
 					});
 					
+					/*
+					   * @brief 상세보기 화면으로 이동 Event
+					   * @author 김건훈
+					   */
+					   $('.ongoing-document-content').click(function(){
+						  //console.log('tr 클릭 이벤트'); 
+						  var docType = $(this).find('.ongoing-document-type').text();
+						  //console.log(docType);
+						  $(location).attr('href','/selectOngoingDocumentDetail?docType='+docType);
+					   });
 				});
 			</script>
 		</th:block>
@@ -66,13 +76,13 @@
 						<div class="page-header">
 					       <div class="row align-items-end">
 					           <div class="col-lg-8">
-					               <div class="page-header-title">
-					                   <i class="ik ik-credit-card bg-blue"></i>
-					                   <div class="d-inline">
-					                       <h5>그룹웨어</h5>
-					                       <span>(주)TEAM02</span>
-					                   </div>
-					               </div>
+					           <div class="page-header-title">
+							   	<i class="ik ik-file-text bg-blue"></i>
+								   <div class="d-inline">
+									 <h5>결재 중인 문서 예정</h5>
+									 <span>결재 진행 중인 문서 중 예정 상태의 문서가 쌓이는 곳입니다.</span>
+								   </div>
+								</div>
 					           </div>
 					           <div class="col-lg-4">
 					               <nav class="breadcrumb-container" aria-label="breadcrumb">
@@ -138,19 +148,19 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
+                                                    <tr class="ongoing-document-content">
                                                         <td>프로젝트사업기획-20200516-0007</td>
                                                         <td>PMS 개발 프로젝트 사업기획서</td>
                                                         <td>김연지</td>
                                                         <td>2020-05-16</td>
-                                                     	<td>결재</td>                                                                              
+                                                     	<td class="ongoing-document-type">결재</td>                                                                              
                                                     </tr> 
-                                                    <tr>
+                                                    <tr class="ongoing-document-content">
                                                         <td>프로젝트완료보고-20200616-0008</td>
                                                         <td>PMS 개발 프로젝트  완료보고서</td>
                                                         <td>김건훈</td>
                                                         <td>2020-06-16</td>
-                                                     	<td>결재</td> 
+                                                     	<td class="ongoing-document-type">결재</td> 
                                                     </tr>                                                                                                         
                                                 </tbody>
                                             </table>

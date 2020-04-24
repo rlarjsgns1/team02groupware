@@ -90,12 +90,6 @@
 						   $(window).on("beforeunload", function() {
 							    return "";
 							});
-						   
-						   //폼 제출후 바인딩 풀어주기
-								/*    $("해당 폼").on("submit", function (e) {
-						       		  $(window).off("beforeunload");
-						              return true;
-						    }); */
 					
 					   });
 					   	
@@ -110,10 +104,11 @@
 						   if(approvalFormatRadioVal=='EAAPF001'){
 							   $('#selected-approval-format-1').css('display','block');
 							   $('#approval-format-set-btn').text('변경');
+							   $(this).attr('data-dismiss','modal');
 							   
 						   }else{
-							   $('#selected-approval-format-1').css('display','none');
-							   $('#approval-format-set-btn').text('설정');
+							  
+							   $(this).removeAttr('data-dismiss');
 							   swal({
 				 					title: "해당 결재 양식은 준비 중 입니다.",
 				 					text: "다른 결재 양식을 선택해주세요.",
@@ -249,7 +244,14 @@
 							  request.done(function(data) {
 								  //console.log(data.result);
 								  $(window).unbind();
-								  location.href="/selectDocumentFormList";
+								  swal({
+									  title: "저장되었습니다.",
+		                               text: "문서 양식이 저장되었습니다.",
+		                               icon: "success",
+									})
+									.then((success) => {
+									  location.href="/selectDocumentFormList";
+									});
 							  });
 							   
 							  request.fail(function( jqXHR, textStatus ) {

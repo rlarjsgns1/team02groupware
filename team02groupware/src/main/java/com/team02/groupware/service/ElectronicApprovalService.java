@@ -44,15 +44,134 @@ public class ElectronicApprovalService {
 	 }
 	 
 	 /*
+	  * @method deleteDocumentForm()
+	  * @brief 관리자용 문서 양식 삭제 method
+	  * @author 김건훈
+	  */ 
+	 public int deleteDocumentForm(List<String> eaDocumentFormListCodeArr) {
+		 int result = eaMapper.deleteDocumentForm(eaDocumentFormListCodeArr);
+		 return result;		 
+	 }
+	 
+	 /*
+	  * @method updateDocumentForm()
+	  * @brief 관리자용 문서 양식 수정 method
+	  * @author 김건훈
+	  */
+	 public int updateDocumentForm(ElectronicApprovalDocument eaDto) {
+		 int result = eaMapper.updateDocumentForm(eaDto);
+		 return result;		 
+	 }
+	 
+	 /*
 	  * @method selectEaDocumentForm()
 	  * @brief 양식함관리 페이지 내 문서양식 테이블 조회 method
 	  * @author 김건훈
 	  */
-	 public List<ElectronicApprovalDocument> selectEaDocumentForm(){
+	 public Map<String, Object> selectEaDocumentForm(Map<String, Object> map){
 		
-		 List<ElectronicApprovalDocument> eaDocumentFormList = eaMapper.selectEaDocumentForm();
-		 return eaDocumentFormList;
+		 Map<String, Object> eaDocumentFormListMap = new HashMap<String,Object>();
+		
+		 //전체카운트 
+		double eaDocumentFormListCount = eaMapper.selectEaDocumentFormCount(map);
+	
+		//보여줄 행의 갯수
+		final int rowPerPage = 10;
+		
+		//보여줄 첫번째 페이지 번호
+		int startPageNum = (int)map.get("startPageNum");
+			
+		//보여줄 페이지 개수
+		int endPageNum = (int)map.get("endPageNum");
+		
+		//현재페이지번호
+		int currentPageNum = (int)map.get("currentPage");
+		
+		//System.out.println(startPageNum+"<------- 컨트롤러에서 넘어온 start page");
+		//System.out.println(endPageNum+"<------- 컨트롤러에서 넘어온 end page");
+		//System.out.println(currentPageNum+"<------- 컨트롤러에서 넘어온 current page");
+
+		//페이지 알고리즘
+		int startRowPerPage = (currentPageNum-1)*rowPerPage;
+			//System.out.println(startRowPerPage +"<------- 시작행");
+		Map<String,Object> pageMap = new HashMap<String,Object>();
+		
+		pageMap.put("startRowPerPage", startRowPerPage);
+		pageMap.put("rowPerPage", rowPerPage);
+		pageMap.put("sk", map.get("sk"));
+		pageMap.put("sv", map.get("sv"));
+			
+			
+			
+		//라스트페이지
+		int lastPage = (int)Math.ceil(eaDocumentFormListCount/rowPerPage);
+		//System.out.println(lastPage+"<-------last page");
+
+		//1-5, 6-10 패턴으로 페이징 작업
+		
+		//정방향 진행(5단위로 넘어갈때)
+		if(currentPageNum>endPageNum) {
+			startPageNum+=5;
+			endPageNum+=5;
+			// 마지막페이지와 마지막행이있는 페이지 일치
+			if(endPageNum>lastPage) {
+				endPageNum=lastPage;
+			}
+		}
+		
+		//역순 진행(5단위로 돌아갈때)
+		if(currentPageNum<startPageNum) {
+			//마지막페이지가 5단위로 안끝나는경우 강제로 픽스
+			endPageNum=startPageNum+4;
+			
+			startPageNum-=5;
+			endPageNum-=5;
+		}
+		
+		//맨 앞으로가기
+		if(currentPageNum==1) {
+			startPageNum=1;
+			//endPageNum=5;
+		}
+		
+		//맨 뒤로가기
+		if(currentPageNum>=lastPage) {
+			startPageNum=(lastPage-(lastPage%5))+1;
+			endPageNum=lastPage;
+			if(endPageNum==0) {
+				endPageNum=1;
+			}
+		}
+		
+		//System.out.println(startPageNum+"<------- 페이징 가공 후 start page");
+		//System.out.println(endPageNum+"<------- 페이징 가공 후  end page");
+		//System.out.println(lastPage+"<------- 페이징 가공 후  last page");
+		
+		//양식 수 int로 형변환
+		int intEaDocumentFormListCount = (int) eaDocumentFormListCount;
+		
+		eaDocumentFormListMap.put("eaDocumentFormList", eaMapper.selectEaDocumentForm(pageMap));
+		eaDocumentFormListMap.put("eaDocumentFormListCount",intEaDocumentFormListCount);
+		eaDocumentFormListMap.put("lastPage",lastPage);
+		eaDocumentFormListMap.put("startPageNum",startPageNum);
+		eaDocumentFormListMap.put("endPageNum",endPageNum);
+		eaDocumentFormListMap.put("currentPageNum",currentPageNum);
+		
+		return eaDocumentFormListMap;
 	 };
+	 
+	 /*
+	  * @method selectDocumentFormForDetail()
+	  * @brief 관리자용 문서양식 미리보기 위한 1개 정보조회 method
+	  * @author 김건훈
+	  */ 
+	 public ElectronicApprovalDocument selectDocumentFormForDetail(String dFormCode){
+		 ElectronicApprovalDocument eaDto = eaMapper.selectDocumentFormForDetail(dFormCode);
+		 String dApprovalFormatDetailContent = eaMapper.selectApprovalFormatInDocumentFormForDetail(eaDto.getdApprovalFormatCode());
+		 eaDto.setdApprovalFormatDetailContent(dApprovalFormatDetailContent);
+		 
+		 return eaDto;		 
+	 }
 	 
 	 /*
 	  * @method selectEaDocumentFormType()
@@ -233,4 +352,14 @@ public class ElectronicApprovalService {
 		//System.out.println("문서 번호 가공 후 결과값------>"+result);
 		 return result;
 	 };
+	 
+	 /*
+	  * @method selectDocumentFormTypeForInsertDocumentDraft()
+	  * @brief 문서 기안하기 페이지에서 문서 양식 종류 선택시 해당하는 분류들 가져오는 method
+	  * @author 김건훈
+	  */
+	 public List<ElectronicApprovalDocument> selectDocumentFormTypeForInsertDocumentDraft(String dFormTypeCode){
+		 List<ElectronicApprovalDocument> documentFormList = eaMapper.selectDocumentFormTypeForInsertDocumentDraft(dFormTypeCode);
+		 return documentFormList;
+	 }
 }

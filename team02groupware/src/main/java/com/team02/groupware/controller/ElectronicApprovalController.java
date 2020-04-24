@@ -3,6 +3,8 @@ package com.team02.groupware.controller;
 
 
 
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -186,14 +188,40 @@ public class ElectronicApprovalController {
 	  * @author 김건훈
 	  */
 	 @GetMapping("/selectDocumentFormList")
-	 public String selectDocumentFormList(Model model) {
-		 List<ElectronicApprovalDocument> eaDocumentFormList = eaService.selectEaDocumentForm();
+	 public String selectDocumentFormList(
+			 @RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
+			 @RequestParam(value = "startPageNum", required = false, defaultValue = "1") int startPageNum,
+			 @RequestParam(value = "endPageNum", required = false, defaultValue = "5") int endPageNum,
+			 @RequestParam(value = "sk", required = false) String sk,
+			 @RequestParam(value = "sv", required = false) String sv,
+			 Model model) {
+		 //logger.info("현재페이지 :: {}", currentPage);
+		 //logger.info("시작페이지 :: {}", startPageNum);
+		 //logger.info("끝페이지 :: {}", endPageNum);
+		 logger.info("검색키워드 :: {}", sk);
+		 logger.info("검색요청값 :: {}", sv);
+		 
+		 Map<String, Object> pageMap = new HashMap<String,Object>();
+		 pageMap.put("currentPage", currentPage);
+		 pageMap.put("startPageNum", startPageNum);
+		 pageMap.put("endPageNum", endPageNum);
+		 pageMap.put("sk", sk);
+		 pageMap.put("sv", sv);
+		 Map<String, Object> eaDocumentFormListMap = eaService.selectEaDocumentForm(pageMap);
 		 List<ElectronicApprovalDocument> eaDocumentFormTypeList = eaService.selectEaDocumentFormType();
 		 List<ElectronicApprovalDocument> eaDocumentSetting = eaService.selectEaDocumentSetting();
-		 //logger.info("문서 양식 테이블 조회 결과값 :: {}", eaDocumentFormList);
+		 //logger.info("문서 양식 테이블 조회 결과값 :: {}", eaDocumentFormListMap.get("eaDocumentFormList"));
+		 //logger.info("문서 양식 전체개수 결과값 :: {}", eaDocumentFormListMap.get("eaDocumentFormListCount"));
 		 //logger.info("문서 양식 분류 테이블 조회 결과값 :: {}", eaDocumentFormTypeList);
 		 //logger.info("전자결재 기본설정 테이블 조회 결과값 :: {}", eaDocumentSetting.toString());
-		 model.addAttribute("eaDocumentFormList", eaDocumentFormList);
+		 model.addAttribute("eaDocumentFormList", eaDocumentFormListMap.get("eaDocumentFormList"));
+		 model.addAttribute("eaDocumentFormListCount", eaDocumentFormListMap.get("eaDocumentFormListCount"));
+		 
+		 model.addAttribute("lastPage", eaDocumentFormListMap.get("lastPage"));
+		 model.addAttribute("startPageNum", eaDocumentFormListMap.get("startPageNum"));
+		 model.addAttribute("endPageNum", eaDocumentFormListMap.get("endPageNum"));
+		 model.addAttribute("currentPageNum", eaDocumentFormListMap.get("currentPageNum"));
+		 
 		 model.addAttribute("eaDocumentFormTypeList", eaDocumentFormTypeList);
 		 model.addAttribute("eaDocumentSetting", eaDocumentSetting);
 		 return "eaDocument/eaDocumentForSupervisor/documentFormList.html";
@@ -207,11 +235,12 @@ public class ElectronicApprovalController {
 	 @GetMapping("/insertDocumentForm")
 	 public String insertDocumentForm(Model model) {
 		 List<ElectronicApprovalDocument> eaDocumentFormTypeList = eaService.selectEaDocumentFormType();
-		 logger.info("문서 양식 분류 테이블 조회 결과값 :: {}", eaDocumentFormTypeList);
+		 //logger.info("문서 양식 분류 테이블 조회 결과값 :: {}", eaDocumentFormTypeList);
 		 model.addAttribute("eaDocumentFormTypeList", eaDocumentFormTypeList);
 		 
 		 return "eaDocument/eaDocumentForSupervisor/documentForm.html";
 	 }
+	 
 	 
 	 /*
 	  * @method insertDocumentFormPro()
@@ -230,7 +259,49 @@ public class ElectronicApprovalController {
 	 		resultMap.put("result", result);
 	 		return resultMap;
 		}
+	 	
+	 	
+ 	 /*
+	  * @method deleteDocumentFormPro()
+	  * @brief 관리자용 문서 양식 삭제 method
+	  * @author 김건훈
+	  */	
+	 	@PostMapping(value="/deleteDocumentFormPro",produces = "application/json")
+	 	@ResponseBody
+		public Map<String,Object> deleteDocumentFormPro(@RequestBody List<String> eaDocumentFormListCodeArr ){
+	 		//logger.info("문서 양식 삭제하기위한 문서양식코드 리스트 :: {}", eaDocumentFormListCodeArr);
+	 		
+	 		int result = eaService.deleteDocumentForm(eaDocumentFormListCodeArr);
+	 		
+	 		Map<String,Object> resultMap = new HashMap<String,Object>();
+	 		resultMap.put("result", result);
+	 		return resultMap;
+		}
+	 	
+	 	
 	 
+	 	
+	 	/*
+		  * @method ajaxSelectDocumentFormForDetail()
+		  * @brief 관리자용 문서 양식 미리보기 method
+		  * @author 김건훈
+		  */	
+		 	@PostMapping(value="/ajaxSelectDocumentFormForDetail",produces = "application/json")
+		 	@ResponseBody
+			public Map<String,Object> ajaxSelectDocumentFormForDetail(@RequestParam(value = "dFormCode") String dFormCode){
+		 		//logger.info("문서 양식 미리보기 위한 ajax로 넘겨진 문서양식코드 :: {}", dFormCode);
+		 		ElectronicApprovalDocument eaDto = eaService.selectDocumentFormForDetail(dFormCode);
+		 		//logger.info("문서 양식 미리보기 위한 문서양식 1개 정보조회 결과값 :: {}", eaDto);
+		 		//logger.info("문서 양식 미리보기 위한 문서양식 1개 정보중 포맷양식 결과값:: {}", eaDto.getdApprovalFormatDetailContent());
+		 		
+		 		Map<String,Object> resultMap = new HashMap<String,Object>();
+		 		resultMap.put("dFormCode", eaDto.getdFormCode());
+		 		resultMap.put("dFormName", eaDto.getdFormName());
+		 		resultMap.put("dFormDetailContent", eaDto.getdFormDetailContent());
+		 		resultMap.put("dApprovalFormatDetailContent", eaDto.getdApprovalFormatDetailContent());
+		 		
+		 		return resultMap;
+			}
 	 
 	 /*
 	  * @method selectDocumentFormDetail()
@@ -238,7 +309,16 @@ public class ElectronicApprovalController {
 	  * @author 김건훈
 	  */
 	 @GetMapping("/selectDocumentFormDetail")
-	 public String selectDocumentFormDetail() {
+	 public String selectDocumentFormDetail( @RequestParam(value = "dFormCode", required = false) String dFormCode,
+			 								 Model model) {
+		 //logger.info("문서 양식 상세보기 문서양식코드 리스트 :: {}", dFormCode);
+		 
+		 ElectronicApprovalDocument eaDto = eaService.selectDocumentFormForDetail(dFormCode);	 
+		 //logger.info("문서 양식 상세보기 위한 문서양식 1개 정보조회 결과값 :: {}", eaDto);
+		 //logger.info("문서 양식 상세보기 위한 문서양식 1개 정보 중 분류 결과값 :: {}", eaDto.getdFormType());
+		 //logger.info("문서 양식 미리보기 위한 문서양식 1개 정보중 포맷양식 결과값:: {}", eaDto.getdApprovalFormatDetailContent());
+		 
+		 model.addAttribute("eaDto", eaDto);
 		 return "eaDocument/eaDocumentForSupervisor/documentFormDetail.html";
 	 }
 	 
@@ -248,9 +328,34 @@ public class ElectronicApprovalController {
 	  * @author 김건훈
 	  */
 	 @GetMapping("/updateDocumentForm")
-	 public String updateDocumentForm() {
+	 public String updateDocumentForm(	@RequestParam(value = "dFormCode", required = false) String dFormCode,
+			 							Model model) {
+		 //logger.info("문서 양식 수정을 위한 문서양식코드 :: {}", dFormCode);
+		 ElectronicApprovalDocument eaDto = eaService.selectDocumentFormForDetail(dFormCode);
+		 List<ElectronicApprovalDocument> eaDocumentFormTypeList = eaService.selectEaDocumentFormType();
+		 
+		 model.addAttribute("eaDto", eaDto);
+		 model.addAttribute("eaDocumentFormTypeList", eaDocumentFormTypeList);
 		 return "eaDocument/eaDocumentForSupervisor/updateDocumentForm.html";
 	 }
+	 
+	 /*
+	  * @method updateDocumentFormPro()
+	  * @brief 관리자용 문서 양식 수정 method
+	  * @author 김건훈
+	  */	
+	 	@PostMapping(value="/updateDocumentFormPro",produces = "application/json")
+	 	@ResponseBody
+		public Map<String,Object> updateDocumentFormPro(@ModelAttribute ElectronicApprovalDocument eadto){
+	
+	 		logger.info("ajax로 보내진 문서양식수정 입력값  :: {}", eadto.toString());
+
+	 		int result=eaService.updateDocumentForm(eadto);
+	 		
+	 		Map<String,Object> resultMap = new HashMap<String,Object>();
+	 		resultMap.put("result", result);
+	 		return resultMap;
+		}
 	 
 	 
 	 /*
@@ -269,9 +374,51 @@ public class ElectronicApprovalController {
 	  * @author 김건훈
 	  */
 	 @GetMapping("/insertDocumentDraft")
-	 public String insertDocumentDraft() {
+	 public String insertDocumentDraft(Model model) {
+		
+		 List<ElectronicApprovalDocument> eaDocumentFormTypeList = eaService.selectEaDocumentFormType();
+		 //logger.info("문서 양식 분류 테이블 조회 결과값 :: {}", eaDocumentFormTypeList);
+		 model.addAttribute("eaDocumentFormTypeList", eaDocumentFormTypeList);
+		 
 		 return "eaDocument/draftDocument/documentDraft.html";
 	 }
+	 
+	 /*
+	  * @method selectDocumentFormTypeForInsertDocumentDraft()
+	  * @brief 문서 기안하기 페이지에서 문서 양식 종류 선택시 해당하는 분류들 가져오는 method
+	  * @author 김건훈
+	  */	
+	 	@PostMapping(value="/selectDocumentFormTypeForInsertDocumentDraft",produces = "application/json")
+	 	@ResponseBody
+		public Map<String,Object> selectDocumentFormTypeForInsertDocumentDraft(
+				@RequestParam(value = "dFormTypeCode", required = false) String dFormTypeCode,
+				@RequestParam(value = "dFormCode", required = false) String dFormCode
+				){
+	 		
+	 		
+	 		List<ElectronicApprovalDocument> documentFormList = new ArrayList<ElectronicApprovalDocument>();
+	 		
+	 		if(dFormTypeCode!=null&&dFormTypeCode!="") {
+	 			//logger.info("ajax로 보내진 문서양식 분류코드 :: {}", dFormTypeCode);
+	 			documentFormList = eaService.selectDocumentFormTypeForInsertDocumentDraft(dFormTypeCode);
+	 			//logger.info("문서양식 분류코드에 맞는 DB에서 꺼내온 문서양식 조회 결과값 :: {}", documentFormList.toString());
+	 		}
+	 		
+	 		if(dFormCode!=null&&dFormCode!="") {
+	 			//logger.info("ajax로 보내진 문서양식 코드 :: {}", dFormCode);
+	 			ElectronicApprovalDocument eaDto = eaService.selectDocumentFormForDetail(dFormCode);	 
+	 			//logger.info("문서양식코드에 맞는 문서양식 조회 결과값 :: {}", eaDto.toString());
+	 			documentFormList.add(eaDto);
+	 		}
+	 		
+	 		//logger.info("문서 번호 가공 후 결과값 :: {}", result);
+	 		
+	 		Map<String,Object> resultMap = new HashMap<String,Object>();
+	 		resultMap.put("result", documentFormList);
+	 		return resultMap;
+		}
+	 
+	 
 	 
 	
 	 /*

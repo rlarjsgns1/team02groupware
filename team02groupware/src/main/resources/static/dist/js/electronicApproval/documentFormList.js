@@ -29,25 +29,69 @@ $(function(){
 		$(this).css("color","black");
 	});
 	
-	$('.ik').on('mouseleave',function(){
+	$('.ik-help-circle').on('mouseleave',function(){
 		
 		$('.ruletip').css("display","none");
 		$(this).css("color","#bcc8d8");
 	});
 	
 	
-	/*
+	 /*
 	  * @brief 검색창 드롭다운 검색키워드 변경 이벤트
 	  * @author 김건훈
 	  */	
 	$('.dropdown-item').on('click',function(){
 		//console.log('드롭다운버튼클릭');
-		var searchType = $(this).text();
+		var searchType = $(this).text().trim();
 		var tag = "<i class=\"ik ik-chevron-down mr-0 align-middle\"></i>";
 		//console.log(searchType);
 		$(this).parent().siblings('.dropdown-toggle').text(searchType);
 		$(this).parent().siblings('.dropdown-toggle').append(tag);
 	});
+	
+	
+	/*
+	  * @brief 문서양식 검색 Event
+	  * @author 김건훈
+	  */
+	var documentFormSearchFn=  function(){
+		 var sk = $('.search-keyword-btn').text().trim();
+		 if(sk=='분류'){
+			 sk='d_form_type';
+		 }else if(sk=='양식명'){
+			 sk='d_form_name';
+		 }else if(sk=='약칭'){
+			 sk='d_form_abbreviation';
+		 }
+		 var sv = $('#document-form-search-input').val().trim();
+		 console.log(sk);
+		 console.log(sv);
+		 
+		 location.href="/selectDocumentFormList?sk="+sk+"&sv="+sv+"";
+	 };
+	 
+	 /*
+	  * @brief 문서양식 검색 Event (Enter키 입력 시)
+	  * @author 김건훈
+	  */
+	$('#document-form-search-input').keyup(function(key) {
+		 if (key.keyCode == 13){
+			 //console.log('검색이벤트')
+			 documentFormSearchFn();
+		 }	
+	});
+	
+	 /*
+	  * @brief 문서양식 검색 Event (검색버튼 클릭 시)
+	  * @author 김건훈
+	  */
+	$('#document-form-search-btn').click(function() {			
+			 documentFormSearchFn();
+	});
+		
+		
+		
+	
 	
 	 /*
 	  * @brief icheck plug-in 사용
@@ -60,9 +104,13 @@ $(function(){
 
 	});
 	 
-	 //페이지 로딩 시 체크박스 체크 초기화
+	//페이지 로딩 시 체크박스 체크 초기화
 	$('#all-ea-checkbox,.ea-checkbox').iCheck('uncheck');
 	
+	//문서양식리스트 행 개수
+	var eaDocumentFormListCount = $('.documentFormListTr').length;
+
+	 
 	 /*
 	  * @brief 각각 체크박스 체크 이벤트
 	  * @author 김건훈
@@ -70,9 +118,12 @@ $(function(){
 
 	  $('.ea-checkbox').on('ifChecked', function(event){
 		  //console.log('체크박스클릭');
+		  
+		  //console.log(eaDocumentFormListCount);
+		  
 		  var checkCount  = $('.ea-checkbox:checked').length;
-		  //console.log(checkCount);
-			  if(checkCount == 3){							
+		  //console.log(checkCount);	
+			  if(checkCount == eaDocumentFormListCount){							
 				 	 $('#all-ea-checkbox').iCheck('check');
 			  }else{
 				  	 $('#all-ea-checkbox').iCheck('uncheck');
@@ -89,7 +140,7 @@ $(function(){
 		  //console.log('체크박스클릭');
 		  var checkCount  = $('.ea-checkbox:checked').length;
 		  //console.log(checkCount);
-			  if(checkCount == 3){							
+			  if(checkCount == eaDocumentFormListCount){							
 				 	 $('#all-ea-checkbox').iCheck('check');
 			  }else{
 				  	 $('#all-ea-checkbox').iCheck('uncheck');
@@ -123,7 +174,7 @@ $(function(){
 		 
 		  var checkCount  = $('.ea-checkbox:checked').length;
 		  
-		  if(checkCount == 3){
+		  if(checkCount == eaDocumentFormListCount){
 		 		
 			  $('.ea-checkbox').iCheck('uncheck');
 		  }
@@ -160,6 +211,59 @@ $(function(){
 	   });
 	   
 	   
+	   /*
+	    * @brief 문서양식 삭제 Event
+	    * @author 김건훈
+	    */
+	   $('.ea-document-form-delete').on('click',function(){
+		   swal({
+	           title: "선택한 항목을 삭제하시겠습니까?",
+	           text: "선택한 양식을 삭제하시겠습니까?",
+	           icon: "warning",
+	           buttons: ["취소", "삭제"],
+	           dangerMode: true,
+	       })
+	       .then((willDelete) => {
+	           if (willDelete) {
+	        	   var eaDocumentFormListCodeArr = [];
+	        	   
+	        	   $('.ea-checkbox:checked').each(function(){
+	        		   eaDocumentFormListCodeArr.push($(this).val());
+	        		 });
+	        	   //console.log(eaDocumentFormListCodeArr);
+	        	   
+	        	   var request = $.ajax({
+					    url: "/deleteDocumentFormPro",
+					    method: "POST",
+					    data: JSON.stringify(eaDocumentFormListCodeArr),
+					    dataType: "json",
+					    contentType : 'application/json'
+					  });
+					   
+					  request.done(function(data) {
+					  	//console.log(data.result);
+						  
+						 swal({
+			                   title: "삭제되었습니다.",
+			                   text: "선택한 양식이	 삭제되었습니다.",
+			                   icon: "success",
+			                 })
+			                 .then((value) => {
+			                	 location.href="/selectDocumentFormList";
+								  });
+					  });
+					   
+		           }else{
+		               swal("삭제가 취소되었습니다.");
+		            }
+					  request.fail(function( jqXHR, textStatus ) {
+					    alert( "Request failed: " + textStatus );
+					  }); 
+	        	   
+	       });
+		   
+	   });
+	  
 	   /*
 	    * @brief 사내 전자결재 수정 완료 Event
 	    * @author 김건훈
@@ -520,5 +624,43 @@ $(function(){
 	    		}
 	    	}
 	    });
-
+	    
+	    
+	    /*
+		 * @brief 문서 양식 미리보기
+		 * @author 김건훈
+		 */
+	    
+	    $('.documentFormListTr').on('click', function(){
+	    	//console.log('문서양식 미리보기');
+	    	var dFormCode = $(this).find('.ea-checkbox').val();
+	    	//console.log(dFormCode);
+	    	
+	    	var request = $.ajax({
+				url: "/ajaxSelectDocumentFormForDetail",
+				method: "POST",
+				data: {	
+						dFormCode : dFormCode
+					  },
+				dataType: "json"
+			});
+			
+			request.done(function(data) {
+				//console.log(data.dFormDetailContent);
+				//console.log(data.dApprovalFormatDetailContent);
+				$('#document-form-modal-view-title').text(data.dFormName);
+				$('.modal-body-document-form-approval-format').html(data.dApprovalFormatDetailContent);
+				if(data.dFormDetailContent=='' || data.dFormDetailContent==null){
+					data.dFormDetailContent='작성된 문서양식 상세내용이 없습니다.'
+				};
+				$('.modal-body-document-form-detail-content').html(data.dFormDetailContent);
+				
+				$('#select-document-form-detail').attr('href','/selectDocumentFormDetail?dFormCode='+data.dFormCode+'')
+			});
+			
+			request.fail(function( jqXHR, textStatus ) {
+				alert( "Request failed: " + textStatus );
+			}); 
+	    	
+	    });
 });
