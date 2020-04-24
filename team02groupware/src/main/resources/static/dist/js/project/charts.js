@@ -2,15 +2,25 @@
 
 (function($) {
 
+	var noDL = $('.noDL').length;
+	var beDL = $('.yesDL').length;
+	
+	var countNoDL = $('.noDeadline');
+	var countBeDL = $('.beforeDeadline');
+	
+	countNoDL.text(noDL);
+	countBeDL.text(beDL);
+	
+	
 	
 	var c3DonutChart = c3.generate({
 		bindto : '#task-status-chart',
 		data : {
-			columns : [
+			columns : [	
 					[ "완료", 25.0 ],
 					[ "마감일 지남", 25.0 ],
-					[ "계획됨", 25.0 ],
-					[ "마감일 없음", 25.0 ],
+					[ "계획됨", beDL ],
+					[ "마감일 없음", noDL],
 			],
 			type : 'donut',
 			onclick : function(d, i) {
@@ -46,12 +56,9 @@
 		      columns: [
 		    	  [ "완료", 25.0 ],
 					[ "마감일 지남", 25.0 ],
-					[ "계획됨", 25.0 ],
-					[ "마감일 없음", 25.0 ],
+					[ "계획됨", beDL ],
+					[ "마감일 없음", noDL ],
 		      ]
 		    });
 		  }, 3000);
-
-	
-
 })(jQuery);

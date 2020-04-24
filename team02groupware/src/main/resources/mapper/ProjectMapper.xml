@@ -30,6 +30,7 @@
 	</resultMap>
 	
 	
+	
 	<!-- 업무 삭제  -->
 	<delete id="taskDelete" parameterType="String">
 		DELETE
