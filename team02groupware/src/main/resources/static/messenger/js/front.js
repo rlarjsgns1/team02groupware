@@ -119,6 +119,18 @@
 				console.log(data)
 				$('.chat-list-div').append(data)
 				
+				$('.chat-list-room:last').click();
+				var chatMessage = {
+			            
+			            content: '새로운 대화방이 생성되었습니다.',
+			            type: 'CREATE',
+			           
+			        };
+				setTimeout(function(){
+					
+					stompClient.send("/app/chat.createChatRoom", {}, JSON.stringify(chatMessage));
+				}, 300)
+				
 			});
 			 
 			request.fail(function( jqXHR, textStatus ) {

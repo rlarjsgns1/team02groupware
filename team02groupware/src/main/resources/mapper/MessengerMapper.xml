@@ -81,7 +81,7 @@
     	<result property="chatMsgUserId" column="chat_message_user_id"/>
     	<result property="chatMsgUserNickName" column="chat_message_user_nickname"/>
     	<result property="chatMsgContent" column="chat_message_content"/>
-    	
+    	<result property="chatMsgType" column="chat_message_type"/>
   	</resultMap>
   	
 	<!-- 채팅방 상세보기 select -->
@@ -92,6 +92,7 @@
 			,chat_message_user_id
 			,chat_message_content
 			,chat_message_user_nickname
+			,chat_message_type
 			
 		FROM 
 			chat_message_log
@@ -111,7 +112,8 @@
 			chat_message_user_id, 
 			chat_message_content, 
 			chat_room_code,
-			chat_message_user_nickname)
+			chat_message_user_nickname,
+			chat_message_type)
 			
 		VALUES 
 			(NULL, 
@@ -119,7 +121,8 @@
 			#{userId}, 
 			#{content}, 
 			${chatRoomCode},
-			#{userNickName})
+			#{userNickName},
+			'CHAT')
 		
 	</insert>		
 
@@ -174,14 +177,14 @@
 	
 	</select>
 	
-	
+	<!-- 새 대화방 등록 -->
 	<insert id="createChatRoom" parameterType="map">
 		
 		INSERT INTO 
 			chat_room_list
-			(chat_room_title, chat_room_user_count)
+			(chat_room_title, chat_room_user_count, chat_room_date)
 		VALUES 
-			(#{roomName}, ${roomCount});
+			(#{roomName}, ${roomCount}, NOW());
 		<selectKey resultType="int" keyProperty="roomCode" order="AFTER">
 			SELECT 
 				max(chat_room_code) as roomCode
@@ -192,6 +195,7 @@
 		
 	</insert>
 	
+	<!-- 채팅방 참여 유저 등록 -->
 	<insert id="insertUserChatRoom" parameterType="map">
 		
 		INSERT INTO 
@@ -204,6 +208,22 @@
 				${roomCode}
 			)
 			</foreach>
+		
+		
+	</insert>	
+	
+	<!-- 새 대화방 생성시 메시지 -->
+	<insert id="insertCreateChatMessage" parameterType="map">
+		
+		INSERT INTO 
+			chat_message_log
+			(chat_message_code, 
+			chat_message_date, 
+			chat_message_content, 
+			chat_room_code, 
+			chat_message_type)
+		VALUES 
+			(NULL, NOW(), '새로운 대화방이 생성되었습니다.', ${roomCode}, 'CREATE')
 		
 		
 	</insert>	

@@ -76,6 +76,7 @@ public class MessengerService {
 		int a = messengerMapper.createChatRoom(roomInfo);
 		System.out.println(roomInfo.get("roomCode") +" 셀렉트키 테스트");
 		messengerMapper.insertUserChatRoom(roomInfo);
+		messengerMapper.insertCreateChatMessage(roomInfo);
 		return roomInfo;
 		
 	}

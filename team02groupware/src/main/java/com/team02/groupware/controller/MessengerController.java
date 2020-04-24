@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -15,6 +16,7 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -33,6 +35,7 @@ public class MessengerController {
 	public String createChatRoomModal(Model model, HttpSession session){
 		
 		String userId = (String) session.getAttribute("userId");
+		System.out.println(userId+" 대화방 생성 모달 아이디 확인");
 		List<Map<String, String>> userList = messengerService.selectUserList(userId);
 		model.addAttribute("userList", userList);
 		
@@ -41,13 +44,13 @@ public class MessengerController {
 	
 	@GetMapping("/createChatRoom")
 	public String createChatRoom(Model model, @RequestParam("roomName") String roomName,
-		@RequestParam(value="roomMember[]", required = false) List<String> roomMember
-	){
+		@RequestParam(value="roomMember[]", required = false) List<String> roomMember,
+		HttpSession session){
 		
 		System.out.println("gdgd");
 		Map<String,Object> roomInfo = new HashMap<String,Object>();
 		System.out.println(roomName);
-		
+		roomMember.add((String) session.getAttribute("userId"));
 		if(roomMember != null) {
 			for(int i=0; i < roomMember.size(); i++) {				
 				System.out.println(roomMember.get(i));
@@ -71,6 +74,7 @@ public class MessengerController {
 		
 		return "messenger/modal/inviteUserModal";
 	}
+	
 	// 채팅방 리스트
 	@GetMapping("/selectChatRoomList")
 	public String selectChatRoomList(Model model, HttpSession session){
@@ -82,6 +86,7 @@ public class MessengerController {
 		model.addAttribute("chatRoomListMap", chatRoomListMap);
 		return "messenger/chatRoomList";
 	}
+	
 	// 채팅방 상세보기
 	@GetMapping("/chatRoomView")
 	public String chatRoomView(Model model,
@@ -94,8 +99,7 @@ public class MessengerController {
 		model.addAttribute("chatRoomLog", chatRoomLog);
 		model.addAttribute("userId", userId);
 		model.addAttribute("roomCode", roomCode);
-		
-		
+			
 		return "messenger/chatRoomView";
 	}
 	
@@ -109,9 +113,10 @@ public class MessengerController {
 	
 	
 	
-	@MessageMapping("/chat.sendMessage")
-    @SendTo("/topic/public2")
-    public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
+	@MessageMapping("/chat.sendMessage/{socketRoomCode}")
+    @SendTo("/topic/public/{socketRoomCode}")
+    public ChatMessage sendMessage(@Payload ChatMessage chatMessage, @DestinationVariable String socketRoomCode) {
+		
 		System.out.println(chatMessage.getContent());
 		System.out.println(chatMessage.getType());
 		System.out.println(chatMessage.getUserId());
@@ -132,6 +137,15 @@ public class MessengerController {
 		System.out.println(chatMessage.getType());
 		System.out.println(chatMessage.getContent());
         headerAccessor.getSessionAttributes().put("userid", chatMessage.getUserId());
+        return chatMessage;
+    }
+    
+    @MessageMapping("/chat.createChatRoom")
+    @SendTo("/topic/public2")
+    public ChatMessage createChatRoom(@Payload ChatMessage chatMessage){
+    	
+    	
+       
         return chatMessage;
     }
 	

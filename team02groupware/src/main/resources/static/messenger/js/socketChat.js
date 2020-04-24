@@ -6,11 +6,11 @@
 var stompClient = null;
 var userNickName = sessionStorage.getItem("userNickName");
 var userId = sessionStorage.getItem("userId");
-
+var socketRoomCode = 0;
 console.log(userNickName, userId);
 
 	// 채팅방 클릭
-	$(document).on('click','.chat-list-room',function(){
+	$(document).on('click','.chat-list-room',function(obj){
 		
 		$('.chat-list-room').css('background-color','#fff');
 		$(this).css('background-color','#cfe8fc');
@@ -30,12 +30,14 @@ console.log(userNickName, userId);
 			$(this).addClass('active')
 			
 			var roomCode = $(this).find('.chat-room-code').val();
+			socketRoomCode = roomCode;
 			
 			var roomInfo = {};
 			
 			roomInfo.title = $(this).find('.chat-list-title').text();
 			roomInfo.user = $(this).find('.chat-list-room-user').text();
 			
+			var obj = 1;
 			fn_connect(event);
 			fn_chatRoomView(roomCode, userId, roomInfo);
 			
@@ -81,15 +83,15 @@ console.log(userNickName, userId);
 		
 	}
 	// 소켓 접속
-	function fn_connect(event) {
+	function fn_connect(event, obj) {
 		console.log('소켓테스트 위치 확인1')
 		
         var socket = new SockJS('/ws');
-        console.log('소켓테스트 위치 확인2')
+        console.log('소켓테스트 위치 확인2', obj)
         
         stompClient = Stomp.over(socket);
         stompClient.connect({}, fn_onConnected, fn_onError);
-	       
+        
 	    event.preventDefault();
 	}
 	
@@ -109,7 +111,8 @@ console.log(userNickName, userId);
 	// 소켓 접속 후
 	function fn_onConnected() {
 	    // Subscribe to the Public Topic
-	    stompClient.subscribe('/topic/public2', fn_onMessageReceived);
+		console.log()
+	    stompClient.subscribe('/topic/public/'+socketRoomCode+'', fn_onMessageReceived);
 
 	    // Tell your username to the server
 	    stompClient.send("/app/chat.addUser",
@@ -126,8 +129,13 @@ console.log(userNickName, userId);
 		var msgContent = message.content;
 		var msgUserId = message.userId;
 		var msgUserNickName = message.userNickName;
+		var chatRoom = $('body').find('.chat-room');
 		
 		switch(msgType){
+		
+		case 'CREATE' :
+			fn_drawReceiveMsg(chatRoom, message)
+			break;
 		
 		case 'JOIN' :
 			console.log('JOIN')
@@ -141,7 +149,6 @@ console.log(userNickName, userId);
 			
 			if(userId != msgUserId){
 				
-				var chatRoom = $('body').find('.chat-room');
 				console.log('CHAT');
 				console.log(message);
 				console.log(chatRoom);
@@ -165,17 +172,41 @@ console.log(userNickName, userId);
 		var msgContent = message.content;
 		var msgUserNickName = message.userNickName;
 		var msgUserId = message.userId;
-		
+		var msgType = message.type;
 		var currentTime = fn_getTimeStamp();
 		
-		receivedChatClone.find('.msg p').text(msgContent);
-		receivedChatClone.find('.chat-room-name').text(msgUserNickName);
-		receivedChatClone.find('.msg-user img').attr('src','/img/users/'+msgUserId+'.jpg');
-		receivedChatClone.find('.msg-time').text(currentTime);
-		receivedChatClone.removeClass('received-chat-clone');
-		receivedChatClone.css('display', 'block');
-		chatRoomBody.append(receivedChatClone);
-		$('.chat-room-body').scrollTop(1000000);
+		switch(msgType){
+				
+				case 'CREATE' :
+					
+					
+					
+					break;
+				
+				case 'JOIN' :
+					
+					break;
+					
+				case 'LEAVE' :
+					console.log('LEAVE')
+					break;
+					
+				case 'CHAT' :
+					
+					receivedChatClone.find('.msg p').text(msgContent);
+					receivedChatClone.find('.chat-room-name').text(msgUserNickName);
+					receivedChatClone.find('.msg-user img').attr('src','/img/users/'+msgUserId+'.jpg');
+					receivedChatClone.find('.msg-time').text(currentTime);
+					receivedChatClone.removeClass('received-chat-clone');
+					receivedChatClone.css('display', 'block');
+					chatRoomBody.append(receivedChatClone);
+					$('.chat-room-body').scrollTop(1000000);
+				
+					break;
+					
+				default : break;
+					
+				}
 		
 	}
 	
@@ -214,7 +245,6 @@ console.log(userNickName, userId);
 		sendChatClone.removeClass('send-chat-clone');
 		sendChatClone.css('display', 'block');
 		chatRoomBody.append(sendChatClone);
-		
         var chatMessage = {
             userId: userId,
             userNickName: userNickName,
@@ -222,7 +252,7 @@ console.log(userNickName, userId);
             type: 'CHAT',
             chatRoomCode: chatRoomCode
         };
-        stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+        stompClient.send("/app/chat.sendMessage/"+chatRoomCode+"", {}, JSON.stringify(chatMessage));
 	}
 	
 	
