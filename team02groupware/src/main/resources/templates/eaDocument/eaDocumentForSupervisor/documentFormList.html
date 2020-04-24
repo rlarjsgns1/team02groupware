@@ -28,13 +28,13 @@
 						<div class="page-header">
 					       <div class="row align-items-end">
 					           <div class="col-lg-8">
-					               <div class="page-header-title">
-					                   <i class="ik ik-credit-card bg-blue"></i>
-					                   <div class="d-inline">
-					                       <h5>그룹웨어</h5>
-					                       <span>(주)TEAM02</span>
-					                   </div>
-					               </div>
+					              <div class="page-header-title">
+									<i class="ik ik-inbox bg-blue"></i>
+									<div class="d-inline">
+										<h5>문서 양식함</h5>
+										<span>문서 양식, 문서 양식 분류, 사내전자결재 규정을 설정할 수 있습니다.</span>
+									</div>
+								</div>
 					           </div>
 					           <div class="col-lg-4">
 					               <nav class="breadcrumb-container" aria-label="breadcrumb">
@@ -72,7 +72,7 @@
                                    <div class="table-nav">
                                    	<ul class="nav table-row-delete-nav" >
 	                                    <li class="nav-item">
-	                                      <button type="button" class="btn btn-outline-danger ea-list-delete">삭제</button> 
+	                                      <button type="button" class="btn btn-outline-danger ea-document-form-delete">삭제</button> 
 	                                    </li>
 	                                </ul>
                                     <div class="collapse d-md-block display-options float-md-right" id="displayOptions">
@@ -82,17 +82,16 @@
                                                     		항목선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                	<a class="dropdown-item">통합</a>
-                                                    <a class="dropdown-item">분류별</a>
+                                                    <a class="dropdown-item">분류</a>
                                                     <a class="dropdown-item">양식명</a>
                                                     <a class="dropdown-item">약칭</a>
                                                 </div>
                                             </div>
                                             <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                                                <form action="">
-                                                    <input type="text" class="form-control" placeholder="검색" required>
-                                                    <button type="submit" class="btn btn-icon"><i class="ik ik-search"></i></button>
-                                                </form>
+                                               
+                                                    <input type="text" id="document-form-search-input" class="form-control" placeholder="검색">
+                                                    <button class="btn btn-icon" id="document-form-search-btn"><i class="ik ik-search"></i></button>
+
                                             </div>
                                         </div>
                                     </div>      
@@ -113,53 +112,46 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr th:each="dfl:${eaDocumentFormList}">
+                                                    <tr th:each="dfl:${eaDocumentFormList}" class="documentFormListTr">
                                                     	<td> 
-                                                    		<input type="checkbox" class="ea-icheck ea-checkbox">
+                                                    		<input type="checkbox" class="ea-icheck ea-checkbox" th:value="${dfl.dFormCode}">
                                                     	</td>
-                                                        <td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormType}">프로젝트</td>
-                                                        <td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormName}">프로젝트사업기획서</td>
-                                                        <td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormAbbreviation}">프로젝트사업기획</td>
-                                                     	<td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormDetailExplanation}">프로젝트사업기획서다.</td>
+                                                        <td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormType}"></td>
+                                                        <td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormName}"></td>
+                                                        <td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormAbbreviation}"></td>
+                                                     	<td data-toggle="modal" data-target="#editLayoutItem" th:text="${dfl.dFormDetailExplanation}">.</td>
+                                                    </tr>
+                                                    <tr th:if="${eaDocumentFormList.size()} eq 0">
+                                                    	<td colspan="5">검색된 문서 양식이 없습니다.</td>
                                                     </tr>                                                                                                        
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <span class="contents-quantity">양식 수 : 3</span>
+                                        <span class="contents-quantity" th:text="|양식 수 : ${eaDocumentFormListCount}|"></span>
 	                                 	<nav aria-label="Page navigation example">
                                             <ul class="pagination mb-0 pagination-btn-group">
-                                                <li class="page-item">
-                                                    <a class="page-link first" href="#">
+                                                <li class="page-item" th:if="${currentPageNum > 1}">
+                                                    <a class="page-link first" th:href="@{/selectDocumentFormList}">
                                                         <i class="ik ik-chevrons-left"></i>
                                                     </a>
                                                 </li>
-                                                <li class="page-item">
-                                                    <a class="page-link prev" href="#">
+                                                <li class="page-item" th:if="${currentPageNum > 1}">
+                                                    <a class="page-link prev" th:href="@{/selectDocumentFormList(currentPage=${currentPageNum-1},startPageNum=${startPageNum},endPageNum=${endPageNum})}">
                                                         <i class="ik ik-chevron-left"></i>
                                                     </a>
                                                 </li>
-                                                <li class="page-item active">
-                                                    <a class="page-link" href="#">1</a>
+                                                <th:block th:each="pageNum:${#numbers.sequence(startPageNum,endPageNum)}">
+                                                <li class="page-item" th:classappend="${currentPageNum}==${pageNum}? active">
+                                                    <a class="page-link" th:href="@{/selectDocumentFormList(currentPage=${pageNum},startPageNum=${startPageNum},endPageNum=${endPageNum})}" th:text="${pageNum}" ></a>
                                                 </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">2</a>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">3</a>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">4</a>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#">5</a>
-                                                </li>
-                                                <li class="page-item">
-                                                    <a class="page-link next" href="#" aria-label="Next">
+                                                </th:block>
+                                                <li class="page-item" th:if="${currentPageNum < lastPage}">
+                                                    <a class="page-link next" th:href="@{/selectDocumentFormList(currentPage=${currentPageNum+1},startPageNum=${startPageNum},endPageNum=${endPageNum})}" aria-label="Next">
                                                         <i class="ik ik-chevron-right"></i>
                                                     </a>
                                                 </li>
-                                                <li class="page-item">
-                                                    <a class="page-link last" href="#">
+                                                <li class="page-item" th:if="${currentPageNum < lastPage}">
+                                                    <a class="page-link last" th:href="@{/selectDocumentFormList(currentPage=${lastPage})}">
                                                         <i class="ik ik-chevrons-right"></i>
                                                     </a>
                                                 </li>
@@ -179,19 +171,20 @@
 					                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					                    </div>
 					                    <div class="modal-body">
-					                        <p class="lead">문서양식  미리보기</p>
-					                        <p>문서양식</p>
-					                   
-					                        <div class="jumbotron pt-30 pb-30 mt-30">
-					                            <h2 class="mt-0">문서양식  미리보기</h2>
-					                            <p class="lead">문서양식  미리보기</p>
-					                        </div>
-					                        <p>문서양식  미리보기</p>
+					                      <h1 id=document-form-modal-view-title></h1>
+					                       
+			                              <div class="modal-body-document-form-approval-format">      
+			                             
+										 </div>
+										 
+										 <div class="modal-body-document-form-detail-content">
+										 
+										 </div>
+										     
 					                    </div>
 					                    <div class="modal-footer">
 					                        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-					                        <a th:href="@{/selectDocumentFormDetail}" class="btn btn-primary">상세보기</a>
-					                        <button type="button" class="btn btn-danger ea-list-delete">삭제</button>
+					                        <a id="select-document-form-detail" class="btn btn-primary">상세보기</a>
 					                    </div>
 					                </div>
 					            </div>

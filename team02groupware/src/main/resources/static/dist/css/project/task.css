@@ -31,11 +31,10 @@
 .scroller-layout {
 	display:flex;
 	user-select: none;
-	overflow-x:auto;
 	cursor: url('/img/project/hand-move.png'), move;
 	align-items:stretch;
-	overflow-y:hidden;
-	height:-webkit-fill-available;
+	overflow-x:auto;
+	min-height:500px;
 }
 .task-row {
 	flex-wrap: nowrap;
@@ -61,6 +60,14 @@
 
 .task-card-header h6 {
 	margin-top: .5rem;
+}
+.tasklist-delete-btn{
+	cursor:pointer;
+	list-style:none;
+	margin-left:10px;
+	}
+.tasklist-delete-btn .ik-x{
+	color:#8c8c8c;
 }
 
 .task-card-body {

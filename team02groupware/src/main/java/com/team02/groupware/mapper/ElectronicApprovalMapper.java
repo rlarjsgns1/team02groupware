@@ -6,6 +6,8 @@ package com.team02.groupware.mapper;
 * @author 김건훈
 */
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.team02.groupware.dto.ElectronicApprovalDocument;
@@ -18,7 +20,14 @@ public interface ElectronicApprovalMapper {
 	  * @brief 양식함관리 페이지 내 문서양식 테이블 조회 method
 	  * @author 김건훈
 	  */
-	 public List<ElectronicApprovalDocument> selectEaDocumentForm();
+	 public List<ElectronicApprovalDocument> selectEaDocumentForm(Map<String, Object> map);
+	 
+	 /*
+	  * @method selectEaDocumentFormCount()
+	  * @brief 양식함관리 페이지 내 문서양식 전체 개수 조회 method
+	  * @author 김건훈
+	  */
+	 public int selectEaDocumentFormCount(Map<String, Object> map);
 		
 	 /*
 	  * @method selectEaDocumentFormType()
@@ -97,4 +106,42 @@ public interface ElectronicApprovalMapper {
 	  */
 	 public int selectEaDocumentFormMaxCode();
 	 
-}
+	 /*
+	  * @method deleteDocumentForm()
+	  * @brief 관리자용 문서 양식 삭제 method
+	  * @author 김건훈
+	  */
+	 public int deleteDocumentForm(List<String> eaDocumentFormListCodeArr);
+	 
+	 /*
+	  * @method selectDocumentFormForDetail()
+	  * @brief 관리자용 문서양식 미리보기 위한 1개 정보조회 method
+	  * @author 김건훈
+	  */
+	 public ElectronicApprovalDocument selectDocumentFormForDetail(String dFormCode);
+
+
+	 /*
+	  * @method selectApprovalFormatInDocumentFormForDetail()
+	  * @brief 양식함관리 페이지 내 문서양식 미리보기 위한 1개 정보중 포맷양식 조회 method
+	  * @author 김건훈
+	  */
+	 public String selectApprovalFormatInDocumentFormForDetail(String dApprovalFormatCode);
+	 
+	 /*
+	  * @method updateDocumentForm()
+	  * @brief 관리자용 문서 양식 수정 method
+	  * @author 김건훈
+	  */
+	 public int updateDocumentForm(ElectronicApprovalDocument eaDto);
+	 
+	 /*
+	  * @method selectDocumentFormTypeForInsertDocumentDraft()
+	  * @brief 문서 기안하기 페이지에서 문서 양식 종류 선택시 해당하는 분류들 가져오는 method
+	  * @author 김건훈
+	  */
+	 public List<ElectronicApprovalDocument> selectDocumentFormTypeForInsertDocumentDraft(String dFormTypeCode);
+	 
+	 }
+
+	

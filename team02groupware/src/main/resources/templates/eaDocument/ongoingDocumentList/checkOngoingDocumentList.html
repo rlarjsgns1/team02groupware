@@ -138,6 +138,18 @@
 							  $('.ea-checkbox').iCheck('uncheck');
 						  }
 					  });
+					  
+					  
+					  /*
+					   * @brief 상세보기 화면으로 이동 Event
+					   * @author 김건훈
+					   */
+					   $('.ongoing-document-content').click(function(){
+						  //console.log('tr 클릭 이벤트'); 
+						  var docType = $(this).find('.ongoing-document-type').text();
+						  //console.log(docType);
+						  $(location).attr('href','/selectOngoingDocumentDetail?docType='+docType);
+					   });
 				});
 			</script>
 		</th:block>
@@ -145,13 +157,13 @@
 						<div class="page-header">
 					       <div class="row align-items-end">
 					           <div class="col-lg-8">
-					               <div class="page-header-title">
-					                   <i class="ik ik-credit-card bg-blue"></i>
-					                   <div class="d-inline">
-					                       <h5>그룹웨어</h5>
-					                       <span>(주)TEAM02</span>
-					                   </div>
-					               </div>
+					           <div class="page-header-title">
+							   	<i class="ik ik-file-text bg-blue"></i>
+								   <div class="d-inline">
+									 <h5>결재 중인 문서 확인</h5>
+									 <span>결재 진행 중인 문서 중 확인 상태의 문서가 쌓이는 곳입니다.</span>
+								   </div>
+								</div>
 					           </div>
 					           <div class="col-lg-4">
 					               <nav class="breadcrumb-container" aria-label="breadcrumb">
@@ -217,7 +229,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
+                                                    <tr class="ongoing-document-content">
                                                     	<td> 
                                                     		<input type="checkbox" class="ea-icheck ea-checkbox">
                                                     	</td>
@@ -225,10 +237,10 @@
                                                         <td>대학입시포털 프로젝트 사업기획서</td>
                                                         <td>김연지</td>
                                                         <td>2020-04-16</td>
-                                                     	<td>참조</td>
+                                                     	<td class="ongoing-document-type">참조</td>
                                                      	<td>승인</td>                                                                               
                                                     </tr> 
-                                                    <tr>
+                                                    <tr class="ongoing-document-content">
                                                     	<td> 
                                                     		<input type="checkbox" class="ea-icheck ea-checkbox">
                                                     	</td>
@@ -236,7 +248,7 @@
                                                         <td>대학입시포털 프로젝트  완료보고서</td>
                                                         <td>김건훈</td>
                                                         <td>2020-05-16</td>
-                                                     	<td>수신</td>
+                                                     	<td class="ongoing-document-type">수신</td>
                                                      	<td>승인</td> 
                                                     </tr>                                                                                                         
                                                 </tbody>

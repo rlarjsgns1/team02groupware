@@ -21,79 +21,19 @@
 		<!--  Script custom -->
 		<th:block layout:fragment="customScript">
 			<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-			<script type="text/javascript">
-				$(function(){
-				
-					 /*
-					  * @brief 옵션 선택 드롭다운 키워드 변경 이벤트
-					  * @author 김건훈
-					  */	
-					$('.dropdown-item').on('click',function(){
-						//console.log('드롭다운버튼클릭');
-						var searchType = $(this).text();
-						var tag = "<i class=\"ik ik-chevron-down mr-0 align-middle\"></i>";
-						//console.log(searchType);
-						$(this).parent().siblings('.dropdown-toggle').text(searchType);
-						$(this).parent().siblings('.dropdown-toggle').append(tag);
-					});
-					
-					
-					 
-					/*
-					  * @brief 기안하기 페이지 테이블 내 보존연한,보안등급 물음표 아이콘 Modal Event
-					  * @author 김건훈
-					  */	
-					$('.ik-help-circle').on('mouseover',function(e){
-						//console.log('마우스오버');
-						var ruleTipType = $(this).siblings().text()
-						console.log(ruleTipType)
-						if(ruleTipType=='보존 연한'){
-							$('#modal-content-type').text('문서양식의 초기값으로 설정 된 보존연한을 표시합니다. 보존 연한이 만료되면 삭제 문서 목록으로 이동합니다.');
-						}else if(ruleTipType=='보안 등급'){
-							$('#modal-content-type').text('문서의 초기값으로 설정 된 보안등급을 표시합니다. 보안 등급에 따라 열람 권한이 제한됩니다.');
-						}
-						var divLeft = e.pageX - 150
-						var divTop = e.pageY - 50
-							
-						$('.ruletip').css({display:"block", "top": divTop, "left": divLeft});
-						
-						$(this).css("color","black");
-						
-					});
-				
-					$('.ik-help-circle').on('mouseleave',function(){
-						
-						$('.ruletip').css("display","none");
-						$(this).css("color","#bcc8d8");
-					});
-					
-						/* summernote plug-in */
-					   $('#ea-summernote').summernote({
-				             height: 300,                 
-				             minHeight: null,             
-				             maxHeight: null,             
-				             focus: true,      
-				             lang: "ko-KR",
-				             popover: {
-				                 image: [],
-				                 link: [],
-				                 air: []
-				               }
-				     });
-				});
-			</script>
+			<script src="dist/js/electronicApproval/documentDraft.js"></script>
 		</th:block>
 		<th:block layout:fragment="customContents">
 						<div class="page-header">
 					       <div class="row align-items-end">
 					           <div class="col-lg-8">
-					               <div class="page-header-title">
-					                   <i class="ik ik-credit-card bg-blue"></i>
-					                   <div class="d-inline">
-					                       <h5>그룹웨어</h5>
-					                       <span>(주)TEAM02</span>
-					                   </div>
-					               </div>
+				               <div class="page-header-title">
+							   <i class="ik ik-edit bg-blue"></i>
+								   <div class="d-inline">
+										<h5>문서 기안하기</h5>
+										<span>문서를 기안 할 수 있는 곳입니다.</span>
+								   </div>
+								</div>
 					           </div>
 					           <div class="col-lg-4">
 					               <nav class="breadcrumb-container" aria-label="breadcrumb">
@@ -125,21 +65,21 @@
                                                         <td class="table-active document-form-table-td">문서 종류</td>
                                                         <td> 
                                                         	<div class="document-draft-btn">         
-                                                        	<button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-12" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        	<button id="draft-document-form-type-name-drop-down" class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-12" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     		분류 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                				</button>
 			                                                <div class="dropdown-menu">
-			                                                	<a class="dropdown-item">프로젝트</a>
+			                                                	<th:block th:each="dftl:${eaDocumentFormTypeList}">
+			                                                		<a class="dropdown-item document-form-type-dropdown-item" th:text="${dftl.dFormType}" th:value="${dftl.dFormTypeCode}"></a>
+			                                                	</th:block>
 			                                                </div>
 			                                                </div>
-			                                                <div class="document-draft-btn">
+			                                                <div class="document-draft-btn" id="draft-document-form-type-drop-down">
 			                                                <button class="btn btn-outline-dark btn-xs dropdown-toggle col-sm-12" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     		종류 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                				</button>
-			                                                <div class="dropdown-menu">
-			                                                	<a class="dropdown-item">프로젝트 사업기획서</a>
-			                                                    <a class="dropdown-item">프로젝트 업무보고서</a>
-			                                                    <a class="dropdown-item">프로젝트 완료보고서</a>
+			                                                <div class="dropdown-menu" id="draft-document-form-name-drop-down-menu">
+			                                                	<a class="dropdown-item draft-document-form-name-drop-down"></a>
 			                                                </div>
 			                                                </div>
                                               		  </td>
@@ -150,7 +90,7 @@
                                                         <td class="table-active document-form-table-td"><span>보존 연한</span><i class="ik ik-help-circle"></i></td>
                                                         <td> 	
                                                         	<button class="btn btn-outline-dark btn-xs dropdown-toggle document-draft-btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    			보존연한 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
+                                                    			<span id="draft-document-form-expiry-date">보존연한 선택</span><i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                				</button>
 			                                                <div class="dropdown-menu ">
 			                                                	<a class="dropdown-item">1년</a>
@@ -161,8 +101,9 @@
 			                                            </td>
                                                         <td class="table-active document-form-table-td"><span>보안 등급</span><i class="ik ik-help-circle"></i></td>
                                                         <td>
+                                                        <div class="document-draft-btn">       
                                                         	<button class="btn btn-outline-dark btn-xs dropdown-toggle document-draft-btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    		보안등급 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
+                                                    		<span id="draft-document-form-security-level">보안등급 선택</span><i class="ik ik-chevron-down mr-0 align-middle"></i>
                                                				</button>
 			                                                <div class="dropdown-menu">
 			                                                	<a class="dropdown-item">S등급</a>
@@ -170,6 +111,9 @@
 			                                                    <a class="dropdown-item">B등급</a>
 			                                                    <a class="dropdown-item">C등급</a>
 			                                                </div>
+			                                                </div>
+			                                                <div class="document-draft-btn">
+			                                                </div>       
 			                                           </td>
                                                     </tr>                                                                         
                                                 </tbody>
@@ -179,8 +123,14 @@
                                     </div>
                                  <!-- 문서 기안하기 기본설정 테이블  End -->
                                  
-                                 <!-- 문서 기안하기 결재선 지정 Start -->  
-                                    <div class="card-header d-block">                                   
+                                 
+                                 	<div id="draft-documnet-before">
+	                                 <div class="card-header d-block">                                   
+                                       <p>문서 종류 선택 시  상세내용이 노출됩니다.<p>
+	                                 </div>
+	                                </div>
+	                                <!-- 문서 기안하기 결재선 지정 Start -->  
+                                    <div class="card-header d-block" id="draft-approval-format-table-after">                                   
                                        <h6>결재선 </h6>
                                        <!-- <p>문서 종류 선택 시 결재선이 노출됩니다.</p> -->
                                        
@@ -374,7 +324,7 @@
                                  <!-- 문서 기안하기 결재선 지정 End -->
                                  
                                  <!-- 문서 기안하기 프로젝트 선택 Start --> 
-                                 <div class="card-header d-block">                                   
+                                 <div class="card-header d-block" id="project-document-section">                                   
                                        <h6>프로젝트</h6>
                                        <button class="btn btn-outline-dark btn-xs dropdown-toggle document-draft-btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   		프로젝트 선택<i class="ik ik-chevron-down mr-0 align-middle"></i>
@@ -387,6 +337,7 @@
                                  <!-- 문서 기안하기 프로젝트 선택 End -->
                                  
                                  <!-- 문서 기안하기 제목 Start --> 
+                                <div id="draft-documnet-contents">
                                  <div class="card-header d-block">                                   
                                        <h6>제목</h6>
                                        <input type="text" class="form-control document-draft-title" >
@@ -397,7 +348,7 @@
                                     <div class="card-body  table-border-style">
                                        <h6>상세 입력 </h6>
                                        <!-- <p>문서 종류 선택 시 상세 입력이 노출됩니다.</p> -->
-                                    	<textarea id="ea-summernote" rows="10" ></textarea>
+                                    	<textarea id="draft-document-summernote" rows="10" ></textarea>
                                     </div>
                                  <!-- 문서 기안하기 상세내용 summer note editor End --> 
                                     
@@ -420,6 +371,7 @@
                                     <div class="card-header d-block ea-submit-btn">                                   
                                         <button type="button" class="btn btn-primary">기안하기</button>
                                     </div>
+                                </div>
                                  	<!-- 기안하기 버튼  End -->
                                   </div>            
                         		</div>
