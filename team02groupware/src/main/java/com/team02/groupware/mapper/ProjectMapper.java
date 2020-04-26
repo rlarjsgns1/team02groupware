@@ -10,6 +10,8 @@ import com.team02.groupware.dto.Project;
 @Mapper
 public interface ProjectMapper {
 	
+	public Project selectForTaskChart(String userCode);
+	
 	// 업무 삭제
 	public int taskDelete(String taskCode);
 	
@@ -20,7 +22,7 @@ public interface ProjectMapper {
 	public Project selectForTaskUpdate(String taskCode);
 	
 	// 내업무 조회
-	public List<Project> selectMyTask(String employeeCode);
+	public List<Project> selectMyTask(String userCode);
 	
 	// 업무 추가
 	public int taskInsert(Project project);

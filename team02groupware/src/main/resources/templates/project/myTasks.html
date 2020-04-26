@@ -20,13 +20,24 @@
     
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript">
+	  
+	  
 		//멤버추가버튼 클릭시 셀렉트 활성화
 		$(function() {
 			$(".member-update-btn").click(function() {
 				$('#update-select2').select2('open');
 			})
 		})
+		//내 업무 차트 변수 선언
+		var taskSum = [[${taskSum}]];
+		var taskSuccess = [[${taskSuccess}]];
+		var taskNodeadline = [[${taskNodeadline}]];
+		var taskAfterDeadline = [[${taskAfterDeadline}]];
+		var taskPlanning = [[${taskPlanning}]];
+		  
+		  
 	</script>
+	<script src="dist/js/project/charts.js"></script>
 </th:block>
 <th:block layout:fragment="customContents">
 		<div class="page-header">
@@ -131,14 +142,12 @@
 						<div class="task-charts-card card" style="min-height: 422px;">
 							<div class="card-header"><h3>업무 현황</h3></div>
 							<div class="card-body">
+								<span th:text="${session.userNickName}"></span>님의 업무입니다
 								<div id="task-status-chart" class="task-charts"></div>
-								
-								<div class="beforeDeadline"></div>
-								<div class="afterDeadline"></div>
-								<div class="success"></div>
-								<div class="noDeadline"></div>
-								
-								
+								<div class="taskSuccess" th:text="${taskSuccess}"></div>
+								<div class="taskAfterDeadline"  th:text="${taskAfterDeadline}"></div>
+								<div class="taskPlanning" th:text="${taskPlanning}"></div>
+								<div class="taskNodeadline" th:text="${taskNodeadline}"></div>
 							</div>
 						</div>
 					</div>
@@ -175,7 +184,7 @@
 	<script src="plugins/c3/c3.min.js"></script>
 	<script src="js/tables.js"></script>
 
-	<script src="dist/js/project/charts.js"></script>
+	
 	<script src="dist/js/theme.min.js"></script>
 
 	<script src="js/form-picker.js"></script>

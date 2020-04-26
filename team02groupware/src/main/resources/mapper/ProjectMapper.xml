@@ -27,9 +27,40 @@
 		
 		<result property="tasklistCode" column="tasklist_code" />
 		<result property="tasklistName" column="tasklist_name" />
+		
+		<result property="taskSum" column="task_sum" />
+		<result property="taskSuccess" column="task_success" />
+		<result property="taskNodeadline" column="task_nodeadline" />
+		<result property="taskAfterDeadline" column="task_afterdeadline" />
+		<result property="taskPlanning" column="task_planning" />
+		
+		
 	</resultMap>
 	
 	
+	<!-- 업무 상태 조회(차트) -->
+	<select id="selectForTaskChart"  parameterType="String" resultMap="projectResultMap">
+
+	
+	SELECT
+		COUNT(1) AS task_sum
+		,COUNT(CASE WHEN TT.task_status = '완료' THEN 1 END) AS task_success
+		,COUNT(CASE WHEN TT.task_status = '진행중' AND TT.task_deadline IS NULL THEN 1 END) AS task_nodeadline
+		,COUNT(CASE WHEN TT.task_status = '진행중' AND TT.task_deadline > NOW() THEN 1 END) AS task_planning
+		,COUNT(CASE WHEN TT.task_status = '진행중' AND NOW() > TT.task_deadline THEN 1 END) AS task_afterdeadline
+	FROM
+		(SELECT
+			PET.employee_code	
+			,TD.*
+		FROM
+			project_employee_per_task AS PET
+			INNER JOIN
+			project_task_detail AS TD
+			ON
+			PET.task_code = TD.task_code)AS TT
+			WHERE
+				TT.employee_code = #{userCode};
+	</select>
 	
 	<!-- 업무 삭제  -->
 	<delete id="taskDelete" parameterType="String">
@@ -81,7 +112,7 @@
 			ON
 			PL.project_code = TL.project_code
 		WHERE
-			EPT.employee_code='EE001'
+			EPT.employee_code=#{userCode}
 			AND
 			TD.task_status != '완료';
 	</select>

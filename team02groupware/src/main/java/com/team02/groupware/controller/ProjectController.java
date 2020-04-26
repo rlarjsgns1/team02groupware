@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,26 +79,54 @@ public class ProjectController {
 		System.out.println("위치테스트");
 		return "project/modal/taskUpdateModal";
 	}
-			
-	
 	//내 업무 상태 '완료'처리 메서드
-	@GetMapping("/taskSuccess")
+		@GetMapping("/taskSuccess")
+		@ResponseBody
+		public Map<String, Object> taskSuccess(@RequestParam(value="taskCode")String taskCode) {
+			System.out.println("------taskSuccess");
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("result", projectService.taskStatusUpdate(taskCode));
+			return resultMap;
+		}
+		
+
+	//업무 현황 차트 메서드
+	@GetMapping("/taskChart")
 	@ResponseBody
-	public Map<String, Object> taskSuccess(@RequestParam(value="taskCode")String taskCode) {
-		System.out.println("------taskSuccess");
+	public Map<String, Object> selectForTaskChart(HttpSession session) {
+		System.out.println("------taskCharts");
+		String userCode = (String) session.getAttribute("userCode");
+		System.out.println(userCode+" 세션 회원코드 확인");
+		Project resultChart = projectService.selectForTaskChart(userCode);
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("result", projectService.taskStatusUpdate(taskCode));
+		resultMap.put("taskSuccess", resultChart.getTaskSuccess());
+		resultMap.put("taskNodeadline", resultChart.getTaskNodeadline());
+		resultMap.put("taskAfterDeadline", resultChart.getTaskAfterDeadline());
+		resultMap.put("taskPlanning", resultChart.getTaskPlanning());
+		System.out.println(resultMap);
 		return resultMap;
+		
 	}
+	
 	
 	//내 업무 조회 메서드
 	@GetMapping("/myTasks")
-	public String selectMyTask(Model model, String employeeCode) {
+	public String selectMyTask(Model model, HttpSession session) {
 		System.out.println("-------selectMyTask");
+		String userCode = (String) session.getAttribute("userCode");
+		System.out.println(userCode+" 세션 회원코드 확인");
 		List<Project> myTasklist = new ArrayList<Project>();
-		myTasklist = projectService.selectMyTask(employeeCode);
+		myTasklist = projectService.selectMyTask(userCode);
+		Project resultChart = projectService.selectForTaskChart(userCode);
 		System.out.println(myTasklist);
+		//System.out.println(resultChart.getTaskSuccess()+"<-----완료된업무");
 		model.addAttribute("myTasklist", myTasklist);
+		model.addAttribute("taskSum", resultChart.getTaskSum());
+		model.addAttribute("taskSuccess", resultChart.getTaskSuccess());
+		model.addAttribute("taskNodeadline", resultChart.getTaskNodeadline());
+		model.addAttribute("taskAfterDeadline", resultChart.getTaskAfterDeadline());
+		model.addAttribute("taskPlanning", resultChart.getTaskPlanning());
+		
 		return "project/myTasks";
 	}
 	

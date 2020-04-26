@@ -153,6 +153,44 @@ public class Project {
 	public void setTaskStatus(String taskStatus) {
 		this.taskStatus = taskStatus;
 	}
+	
+	private String taskSum;
+	private String taskSuccess;
+	private String taskNodeadline;
+	private String taskAfterDeadline;
+	private String taskPlanning;
+	
+	
+	public String getTaskSum() {
+		return taskSum;
+	}
+	public void setTaskSum(String taskSum) {
+		this.taskSum = taskSum;
+	}
+	public String getTaskSuccess() {
+		return taskSuccess;
+	}
+	public void setTaskSuccess(String taskSuccess) {
+		this.taskSuccess = taskSuccess;
+	}
+	public String getTaskNodeadline() {
+		return taskNodeadline;
+	}
+	public void setTaskNodeadline(String taskNodeadline) {
+		this.taskNodeadline = taskNodeadline;
+	}
+	public String getTaskAfterDeadline() {
+		return taskAfterDeadline;
+	}
+	public void setTaskAfterDeadline(String taskAfterDeadline) {
+		this.taskAfterDeadline = taskAfterDeadline;
+	}
+	public String getTaskPlanning() {
+		return taskPlanning;
+	}
+	public void setTaskPlanning(String taskPlanning) {
+		this.taskPlanning = taskPlanning;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
