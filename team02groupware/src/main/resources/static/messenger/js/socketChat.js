@@ -4,10 +4,52 @@
 'use strict'
 
 var stompClient = null;
+var stmopTest = null;
 var userNickName = sessionStorage.getItem("userNickName");
 var userId = sessionStorage.getItem("userId");
 var socketRoomCode = 0;
 console.log(userNickName, userId);
+	
+	fn_test();
+function fn_test(event) {
+	
+	console.log('fn_test')
+    var socket = new SockJS('/test');
+    
+    stmopTest = Stomp.over(socket);
+    stmopTest.connect({}, fn_test2, fn_onError);
+    
+    //event.preventDefault();
+}
+
+function fn_test2() {
+    // Subscribe to the Public Topic
+	console.log('fn_test2')
+    stmopTest.subscribe('/topic/public/'+userId+'', fn_test3);
+
+}
+function fn_test3(payload) {
+    
+    var message = JSON.parse(payload.body);
+    console.log('fn_test3',message)
+    alert('새로운 메시지가 도착했습니다.')
+
+}
+
+function fn_test4(msg, chatRoom){
+	
+	console.log('fn_test4')
+    var chatMessage = {
+        userId: userId,
+        userNickName: userNickName
+        
+    };
+    stmopTest.send("/app/chat.test/id004", {}, JSON.stringify(chatMessage));
+    stmopTest.send("/app/chat.test/id003", {}, JSON.stringify(chatMessage));
+    stmopTest.send("/app/chat.test/id002", {}, JSON.stringify(chatMessage));
+}
+
+	
 
 	// 채팅방 클릭
 	$(document).on('click','.chat-list-room',function(obj){
@@ -40,11 +82,11 @@ console.log(userNickName, userId);
 			var obj = 1;
 			fn_connect(event);
 			fn_chatRoomView(roomCode, userId, roomInfo);
+			fn_test4();
 			
 		}
 
 	});
-	
 	
 	
 	// 채팅방 상세보기
@@ -92,7 +134,7 @@ console.log(userNickName, userId);
         stompClient = Stomp.over(socket);
         stompClient.connect({}, fn_onConnected, fn_onError);
         
-	    event.preventDefault();
+	    //event.preventDefault();
 	}
 	
 	// 소켓 연결 끊기
@@ -129,8 +171,9 @@ console.log(userNickName, userId);
 		var msgContent = message.content;
 		var msgUserId = message.userId;
 		var msgUserNickName = message.userNickName;
+		var msgRoomCode = message.chatRoomCode;
 		var chatRoom = $('body').find('.chat-room');
-		
+		console.log(message)
 		switch(msgType){
 		
 		case 'CREATE' :
@@ -147,14 +190,19 @@ console.log(userNickName, userId);
 			
 		case 'CHAT' :
 			
+			
+			
 			if(userId != msgUserId){
 				
 				console.log('CHAT');
 				console.log(message);
 				console.log(chatRoom);
 				fn_drawReceiveMsg(chatRoom, message)
+				
 			}
-		
+			
+			fn_drawChatListMsg(chatRoom, message)
+			
 			break;
 			
 		default : break;
@@ -173,6 +221,7 @@ console.log(userNickName, userId);
 		var msgUserNickName = message.userNickName;
 		var msgUserId = message.userId;
 		var msgType = message.type;
+		var msgRoomCode = message.chatRoomCode;
 		var currentTime = fn_getTimeStamp();
 		
 		switch(msgType){
@@ -201,13 +250,26 @@ console.log(userNickName, userId);
 					receivedChatClone.css('display', 'block');
 					chatRoomBody.append(receivedChatClone);
 					$('.chat-room-body').scrollTop(1000000);
-				
+					
 					break;
 					
 				default : break;
 					
 				}
 		
+	}
+	
+	function fn_drawChatListMsg(chatRoom, message){
+		
+		var msgContent = message.content;
+		var msgUserNickName = message.userNickName;
+		var msgUserId = message.userId;
+		var msgType = message.type;
+		var msgRoomCode = message.chatRoomCode;
+		var currentTime = fn_getTimeStamp();
+		
+		$('.chat-list-room-'+msgRoomCode+'').find('.text-muted').text(msgContent)
+		$('.chat-list-room-'+msgRoomCode+'').find('.chat-list-time').text(currentTime)
 	}
 	
 	
@@ -253,6 +315,7 @@ console.log(userNickName, userId);
             chatRoomCode: chatRoomCode
         };
         stompClient.send("/app/chat.sendMessage/"+chatRoomCode+"", {}, JSON.stringify(chatMessage));
+        
 	}
 	
 	

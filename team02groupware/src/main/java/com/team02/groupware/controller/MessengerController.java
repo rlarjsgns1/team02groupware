@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.team02.groupware.dto.ChatMessage;
 import com.team02.groupware.service.MessengerService;
@@ -112,42 +113,6 @@ public class MessengerController {
 	
 	
 	
-	
-	@MessageMapping("/chat.sendMessage/{socketRoomCode}")
-    @SendTo("/topic/public/{socketRoomCode}")
-    public ChatMessage sendMessage(@Payload ChatMessage chatMessage, @DestinationVariable String socketRoomCode) {
-		
-		System.out.println(chatMessage.getContent());
-		System.out.println(chatMessage.getType());
-		System.out.println(chatMessage.getUserId());
-		System.out.println(chatMessage.getUserNickName());
-		System.out.println(chatMessage.getChatRoomCode());
-		
-		messengerService.insertChatMessage(chatMessage);
-		
-        return chatMessage;
-    }
-
-    @MessageMapping("/chat.addUser")
-    @SendTo("/topic/public2")
-    public ChatMessage addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor){
-    	
-    	System.out.println(chatMessage.getUserId());
-		System.out.println(chatMessage.getUserNickName());
-		System.out.println(chatMessage.getType());
-		System.out.println(chatMessage.getContent());
-        headerAccessor.getSessionAttributes().put("userid", chatMessage.getUserId());
-        return chatMessage;
-    }
-    
-    @MessageMapping("/chat.createChatRoom")
-    @SendTo("/topic/public2")
-    public ChatMessage createChatRoom(@Payload ChatMessage chatMessage){
-    	
-    	
-       
-        return chatMessage;
-    }
 	
 	
 
