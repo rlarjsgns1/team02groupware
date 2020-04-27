@@ -57,6 +57,9 @@ $(function() {
 				// 프로젝트 추가 모달
 					// submit 버튼 클릭시 프로젝트제목 유효성검사
 					$(".pr-submit-btn").click(function(checkInput) {
+						
+						
+						
 								if ($('[name="projectTitle"]').val() == '') {
 									$('[name="projectTitle"]').css("border",
 											"1px solid red");
@@ -70,6 +73,7 @@ $(function() {
 							})
 					// 멤버추가버튼 클릭시 셀렉트 활성화
 					$(".member-add-btn").click(function() {
+							
 						$('#add-select2').select2('open');
 					})
 

@@ -23,6 +23,7 @@ $(function() {
 			if(data.result==1){
 				delTask.slideUp();
 			}
+			
 		});
 		
 		request.fail(function( jqXHR, textStatus ) {
@@ -30,6 +31,12 @@ $(function() {
 		});
 	})
 
+	
+	//업무 추가 모달
+	$('.task-add-btn').click(function(){
+		console.log('업무추가버튼');
+		
+	})
 	
 	
 	
@@ -40,7 +47,7 @@ $(function() {
 	var taskModal = function(){
 		
 		var request = $.ajax({
-				url: "/taskModalopen",
+				url: "/taskUpdateModal",
 				method:"GET",
 				data: {
 					'taskCode' : taskCode

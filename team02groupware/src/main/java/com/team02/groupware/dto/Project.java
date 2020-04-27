@@ -7,6 +7,7 @@ public class Project {
 	//프로젝트
 	private String projectCode;	// 프로젝트코드
 	private String employeeCode;	// 사원번호
+	private String employeeName;	// 사원이름
 	private String projectTitle;	// 프로젝트제목
 	private String projectDate;	// 프로젝트작성일
 	private String projectDesc;	// 프로젝트설명
@@ -27,6 +28,14 @@ public class Project {
 	}
 	public void setEmployeeCode(String employeeCode) {
 		this.employeeCode = employeeCode;
+	}
+	
+	
+	public String getEmployeeName() {
+		return employeeName;
+	}
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
 	}
 	public String getProjectTitle() {
 		return projectTitle;
@@ -198,6 +207,8 @@ public class Project {
 		builder.append(projectCode);
 		builder.append(", employeeCode=");
 		builder.append(employeeCode);
+		builder.append(", employeeName=");
+		builder.append(employeeName);
 		builder.append(", projectTitle=");
 		builder.append(projectTitle);
 		builder.append(", projectDate=");
@@ -234,9 +245,20 @@ public class Project {
 		builder.append(taskEnd);
 		builder.append(", taskStatus=");
 		builder.append(taskStatus);
+		builder.append(", taskSum=");
+		builder.append(taskSum);
+		builder.append(", taskSuccess=");
+		builder.append(taskSuccess);
+		builder.append(", taskNodeadline=");
+		builder.append(taskNodeadline);
+		builder.append(", taskAfterDeadline=");
+		builder.append(taskAfterDeadline);
+		builder.append(", taskPlanning=");
+		builder.append(taskPlanning);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 	
 }

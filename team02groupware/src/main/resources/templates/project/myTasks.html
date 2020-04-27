@@ -106,48 +106,77 @@
 				<div class="task-row row layout-wrap" id="layout-wrap">
 				
 				<div class="mytasklist col-md-8">
-				<th:block th:each="mtl : ${myTasklist}">
-					<div class="mytask-item list-item">
-						<div class="card d-flex flex-row mb-3">
-							<div class="custom-control custom-checkbox pl-1 align-self-center" style="margin-left:10px;">
-								<label class="custom-control custom-checkbox mb-0">
-									<input type="checkbox" class="task-checkbox custom-control-input">
-									<input type="hidden" name="taskCode" th:value="${mtl.taskCode}">
-									<span class="custom-control-label"></span>
-								</label>
-							</div>
-							<div style="font-size:0.9em; position:absolute; top:5px; left:57px; color:#8d919a;">
-								<a th:text="${mtl.projectTitle}"></a><i class="ik ik-chevron-right"></i>
-								<a th:text="${mtl.tasklistName}"></a>
-							</div>				
-							<div class="d-flex flex-grow-1 min-width-zero card-content">
-								<div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-									<a class="task-title list-item-heading mb-1 truncate w-40 w-xs-100" style="cursor:pointer;" th:text="${mtl.taskTitle}">  </a>
-									<p class="mb-1 text-muted text-small category w-15 w-xs-100" style="cursor:pointer;" th:text="${mtl.taskDesc}"></p>
-									<span class="noDL mb-1 text-muted text-small date w-15 w-xs-100" th:if="${mtl.taskDeadline} eq null" th:text="'마감일 없음'"></span>
-									<span class="yesDL mb-1 text-small date w-15 w-xs-100" th:if="${mtl.taskDeadline} neq null" th:text="${#dates.format(mtl.taskDeadline,'MM/dd hh:mm')}" style="color:red;"></span>
+					<th:block th:each="mtl : ${myTasklist}">
+						<div class="mytask-item list-item">
+							<div class="card d-flex flex-row mb-3">
+								<div class="custom-control custom-checkbox pl-1 align-self-center" style="margin-left:10px;">
+									<label class="custom-control custom-checkbox mb-0">
+										<input type="checkbox" class="task-checkbox custom-control-input">
+										<input type="hidden" name="taskCode" th:value="${mtl.taskCode}">
+										<span class="custom-control-label"></span>
+									</label>
 								</div>
-								<div class="list-actions">
-									<a class="list-view-btn"><i class="ik ik-eye"></i></a> <a
-										class="list-modal-btn"><i class=" ik ik-edit-2"></i></a>
-									<a href="#" class="list-delete-btn"><i class="ik ik-trash-2"></i></a>
+								<div style="font-size:0.9em; position:absolute; top:5px; left:57px; color:#8d919a;">
+									<a th:text="${mtl.projectTitle}"></a><i class="ik ik-chevron-right"></i>
+									<a th:text="${mtl.tasklistName}"></a>
+								</div>				
+								<div class="d-flex flex-grow-1 min-width-zero card-content">
+									<div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+										<a class="task-title list-item-heading mb-1 truncate w-40 w-xs-100" style="cursor:pointer;" th:text="${mtl.taskTitle}">  </a>
+										<p class="mb-1 text-muted text-small category w-15 w-xs-100" style="cursor:pointer;" th:text="${mtl.taskDesc}"></p>
+										<span class="noDL mb-1 text-muted text-small date w-15 w-xs-100" th:if="${mtl.taskDeadline} eq null" th:text="'마감일 없음'"></span>
+										<span class="yesDL mb-1 text-small date w-15 w-xs-100" th:if="${mtl.taskDeadline} neq null" th:text="${#dates.format(mtl.taskDeadline,'MM/dd hh:mm')}" style="color:red;"></span>
+									</div>
+									<div class="list-actions">
+										<a class="list-view-btn"><i class="ik ik-eye"></i></a> <a
+											class="list-modal-btn"><i class=" ik ik-edit-2"></i></a>
+										<a href="#" class="list-delete-btn"><i class="ik ik-trash-2"></i></a>
+									</div>
+									
 								</div>
-								
 							</div>
 						</div>
-					</div>
-					</th:block>
+						</th:block>
 					</div>
 					<div class= "col-md-4">
 						<div class="task-charts-card card" style="min-height: 422px;">
-							<div class="card-header"><h3>업무 현황</h3></div>
 							<div class="card-body">
 								<span th:text="${session.userNickName}"></span>님의 업무입니다
 								<div id="task-status-chart" class="task-charts"></div>
-								<div class="taskSuccess" th:text="${taskSuccess}"></div>
-								<div class="taskAfterDeadline"  th:text="${taskAfterDeadline}"></div>
-								<div class="taskPlanning" th:text="${taskPlanning}"></div>
-								<div class="taskNodeadline" th:text="${taskNodeadline}"></div>
+								<div class="chart-data">
+									<div class="chart-legend">
+										<div class="chart-legend-name">
+											<div>완료</div>
+										</div>
+										<div class="taskSuccess chart-legend-data" >
+											<div th:text="${taskSuccess}"></div>
+										</div>
+									</div>
+									<div class="chart-legend">
+										<div class="chart-legend-name">
+											<div>마감일 지남</div>
+										</div>
+										<div class="taskAfterDeadline chart-legend-data">
+											<div th:text="${taskAfterDeadline}"></div>
+										</div>
+									</div>
+									<div class="chart-legend">
+										<div class="chart-legend-name">
+											<div>계획됨</div>
+										</div>
+										<div class="taskPlanning chart-legend-data">
+											<div th:text="${taskPlanning}"></div>
+										</div>
+									</div>
+									<div class="chart-legend">
+										<div class="chart-legend-name">
+											<div>마감일 없음</div>
+										</div>
+										<div class="taskNodeadline chart-legend-data">
+											<div th:text="${taskNodeadline}"></div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -208,13 +237,13 @@
 		ga('send', 'pageview');
 	</script>
 	<script src="plugins/select2/dist/js/select2.min.js"></script>
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 	<script>
 		$(function() {
 
 			$('.select2').select2();
 		});
 	</script>
+	
 </th:block>
 </html>

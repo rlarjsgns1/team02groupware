@@ -60,11 +60,21 @@ public class ProjectController {
 	}
 	
 	
+	//업무 추가 모달
+	/*
+	 * @GetMapping("/taskInsertModal")
+	 * 
+	 * @ResponseBody public String taskModal1(Httpsession session) {
+	 * 
+	 * }
+	 */
+	
+	
 	//업무 수정 모달 
-	@GetMapping("/taskModalopen")
+	@GetMapping("/taskUpdateModal")
 	public String taskModal(Model model, @RequestParam(value="taskCode") String taskCode) {
 		System.out.println("binding test=" + taskCode);
-		Project resultProject=projectService.selectForTaskUpdate(taskCode);
+		Project resultProject = projectService.selectForTaskUpdate(taskCode);
 		
 		System.out.println("binding test2=" + resultProject.toString());
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -136,15 +146,16 @@ public class ProjectController {
 	//업무 추가 ajax 메서드
 	@PostMapping("/taskInsert")
 	@ResponseBody
-	public Map<String,Object> taskInsert(Project project) {
+	public Map<String,Object> taskInsert(Project project, HttpSession session) {
 		System.out.println("---------taskInsert");
-		System.out.println(project.toString());
+		String userCode = (String) session.getAttribute("userCode");
+		project.setEmployeeCode(userCode);
 		int result = projectService.taskInsert(project);
 		System.out.println(result + "<-- 업무 추가 성공");
 		String tasklistCode = projectService.selectTasklistcode();
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		resultMap.put("tasklistCode", tasklistCode);
-		System.out.println(tasklistCode + "<---------tasklistCode확인");
+		
 		return resultMap;
 	}
 	
@@ -234,9 +245,9 @@ public class ProjectController {
 		
 	//프로젝트 추가 메서드
 	@PostMapping("/projectInsert")
-	public String projectInsert(Project project, RedirectAttributes model){
-
-		System.out.println(project.getProjectTitle()+"<------------프로젝트 추가시 넘길때 필요한 프로젝트 제목");
+	public String projectInsert(Project project, RedirectAttributes model, HttpSession session){
+		String userCode = (String) session.getAttribute("userCode");
+		project.setEmployeeCode(userCode);
 		int result = projectService.projectInsert(project);
 		String projectTitle = project.getProjectTitle();
 		String projectCode = project.getProjectCode();
@@ -249,13 +260,18 @@ public class ProjectController {
 		}
 		return "redirect:/projectInsert";
 	}
+
+	
 	
 	//프로젝트  리스트 조회 메서드
 	@GetMapping("/projectList")
 	public String getProjectList(@RequestParam(value="currentPage", required=false, defaultValue="1") int currentPage
-			,Model model) {
+			,HttpSession session, Model model) {
 		logger.info("currentPage :: {}", currentPage);
-		Map<String, Object> map = projectService.getProjectlist(currentPage);
+		String userCode = (String) session.getAttribute("userCode");
+		Map<String, Object> map = projectService.getProjectlist(currentPage, userCode);
+
+		model.addAttribute("employeeList", projectService.selectForAddEmployee());
 		model.addAttribute("projectList", map.get("projectList"));
 		model.addAttribute("currentPage", map.get("currentPage"));
 		model.addAttribute("lastPage", map.get("lastPage"));

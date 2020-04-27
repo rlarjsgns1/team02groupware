@@ -37,6 +37,15 @@
 		
 	</resultMap>
 	
+	<!-- 업무추가 (사원코드) -->
+	<insert id="taskInsert2"  parameterType="Project">
+		INSERT INTO
+			project_employee_per_task
+			(employee_code, task_code)
+		VALUES 
+			(#{employeeCode}, #{taskCode});
+	</insert>
+	
 	
 	<!-- 업무 상태 조회(차트) -->
 	<select id="selectForTaskChart"  parameterType="String" resultMap="projectResultMap">
@@ -114,7 +123,9 @@
 		WHERE
 			EPT.employee_code=#{userCode}
 			AND
-			TD.task_status != '완료';
+			TD.task_status != '완료'
+		ORDER BY
+			TD.task_date DESC;
 	</select>
 
 	
@@ -270,6 +281,24 @@
 	</select>
 
 
+	<!-- 프로젝트추가 (사원코드) -->
+	<insert id="projectInsert2"  parameterType="Project">
+		INSERT INTO
+			project_employee
+			(project_code, employee_code)
+		VALUES 
+			(#{projectCode}, #{employeeCode});
+	</insert>
+	
+
+	<!-- 프로젝트 추가 모달창 사원 조회 -->
+	<select id="selectForAddEmployee" parameterType = "String"  resultMap="projectResultMap">
+		SELECT
+			E.employee_name
+			,E.employee_code
+		FROM
+			employee AS E
+	</select>
 
 	<!-- 프로젝트 추가  -->
 	<insert id="projectInsert" parameterType="Project">
@@ -324,21 +353,27 @@
 
 	</select>
 	
-	
+	<!-- 프로젝트 리스트 조회 -->
 	<select id="getProjectlist" parameterType="map" resultType="Project">
 		SELECT
-			project_code AS projectCode
-			,employee_code AS employeeCode
-			,project_title AS projectTitle
-			,project_date AS projectDate
-			,project_desc AS projectDesc
-			,project_access AS projectAccess
-			,project_status AS projectStatus
-			,project_start AS projectStart
-			,project_deadline AS projectDeadline
-			,project_end AS projectEnd
+			PL.project_code AS projectCode
+			,PL.employee_code AS employeeCode
+			,PL.project_title AS projectTitle
+			,PL.project_date AS projectDate
+			,PL.project_desc AS projectDesc
+			,PL.project_access AS projectAccess
+			,PL.project_status AS projectStatus
+			,PL.project_start AS projectStart
+			,PL.project_deadline AS projectDeadline
+			,PL.project_end AS projectEnd
 		FROM
-			project_list
+			project_employee AS PE
+			INNER JOIN
+			project_list AS PL
+			ON
+			PE.project_code = PL.project_code
+		WHERE
+			PE.employee_code = #{userCode}
 		ORDER BY
 			projectDate DESC
 		<if test="list == 'list'">

@@ -49,7 +49,10 @@ public class ProjectService {
 	
 	//업무 추가
 	public int taskInsert(Project project) {
-		return projectMapper.taskInsert(project);
+		int result = 0;
+		result = projectMapper.taskInsert(project);
+		result = projectMapper.taskInsert2(project);
+		return result;
 	}
 	
 	//업무리스트별 업무상세정보 조회
@@ -78,11 +81,7 @@ public class ProjectService {
 	
 	//업무리스트조회
 	public List<Project> selectTasklist(String projectCode){
-		
-		List<Project> projectList = new ArrayList<Project>();
-		projectList = projectMapper.selectTasklist(projectCode);
-		
-		return projectList;
+		return projectMapper.selectTasklist(projectCode);
 		
 	}
 	
@@ -117,14 +116,22 @@ public class ProjectService {
 		return resultProject;
 	}
 	
+	//프로젝트 추가 모달창 사원 조회
+	public List<Project> selectForAddEmployee() {
+		return  projectMapper.selectForAddEmployee();
+	}
+	
 	
 	//프로젝트 추가
 	public int projectInsert(Project project) {
-		return projectMapper.projectInsert(project);
+		int result = 0;
+		result = projectMapper.projectInsert(project);
+		result = projectMapper.projectInsert2(project);
+		return result;
 	}
 	
 	//프로젝트 리스트 조회
-	public Map<String, Object> getProjectlist(int currentPage) {
+	public Map<String, Object> getProjectlist(int currentPage, String userCode) {
 		// 몇개의 행을 보여줄지
 		final int ROW_PER_PAGE = 10;
 
@@ -142,7 +149,7 @@ public class ProjectService {
 
 		// limit적용할 StartRow, 상수ROW_PER_PAGE(몇개행)
 		Map<String, Object> map = new HashMap<String, Object>();
-
+		map.put("userCode", userCode);
 	
 		// 페이지 알고리즘
 		int startRow = (currentPage - 1) * ROW_PER_PAGE;
@@ -167,6 +174,7 @@ public class ProjectService {
 		// controller에 전달할 페이지 관련 객체
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("projectList", projectMapper.getProjectlist(map));
+		resultMap.put("userCode", userCode);
 		resultMap.put("currentPage", currentPage);
 		resultMap.put("lastPage", lastPage);
 		resultMap.put("startPageNum", startPageNum);

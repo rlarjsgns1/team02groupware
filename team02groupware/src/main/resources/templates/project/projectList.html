@@ -48,21 +48,23 @@
 	</div>
 	<div class="pr-wrap">
 		<div class="pr-wrap-content">
-			<div class="pr-btn-wrap">
-				<button type="button" class="btn btn-success btn-rounded"
-					data-toggle="modal" data-target="#exampleModalCenter">새 프로젝트 추가</button>
-				<span class="info">기존 데이터는 수정 또는 삭제하실 수 없습니다.</span>	
-				<div class="collapse d-md-block display-options" id="displayOptions">
-					<span
-						class="mr-3 d-inline-block float-md-left dispaly-option-buttons">
-						<a href="#" class="mr-1 view-grid active"> <i
-							class="ik ik-grid view-icon"></i>
-					</a><a href="#" class="mr-1 view-list"> <i
-							class="ik ik-menu view-icon"></i>
-					</a>
-					</span>
+			<th:block th:if="${session.userCode} eq 'EE001' or ${session.userCode} eq 'EE004'">
+				<div class="pr-btn-wrap">
+					<button type="button" class="btn btn-success btn-rounded"
+						data-toggle="modal" data-target="#exampleModalCenter">새 프로젝트 추가</button>
+					<span class="info">기존 데이터는 수정 또는 삭제하실 수 없습니다.</span>	
+					<div class="collapse d-md-block display-options" id="displayOptions">
+						<span
+							class="mr-3 d-inline-block float-md-left dispaly-option-buttons">
+							<a href="#" class="mr-1 view-grid active"> <i
+								class="ik ik-grid view-icon"></i>
+						</a><a href="#" class="mr-1 view-list"> <i
+								class="ik ik-menu view-icon"></i>
+						</a>
+						</span>
+					</div>
 				</div>
-			</div>
+			</th:block>
 						<!--------------------------프로젝트 리스트 start --------------------------->
 			<div class="project-card card-group mb-4">
 				<div class="project-list-wrap" th:each="pl : ${projectList}">
@@ -186,11 +188,7 @@
 				<div class="pr-add-modal modal-body">
 					<form name="projectAddForm" method="post"
 						onsubmit="return checkInput()">
-						<div class="form-group">
-							<label for="employeeCode">사원 코드</label> <input type="text"
-								id="employeeCode" name="employeeCode" class="form-control"
-								placeholder="EE001~EE004">
-						</div>
+						
 						<div class="form-group">
 							<label for="add-projectTitle">프로젝트 제목</label> <input type="text"
 								id="add-projectTitle" name="projectTitle" class="form-control"
@@ -247,14 +245,10 @@
 								<div class="member-select-wrap form-group">
 									<select class="form-control select2" id="add-select2"
 										multiple="multiple">
-										<option value="김연지" selected>김연지</option>
-										<option value="김건훈">김건훈</option>
-										<option value="김정훈">김정훈</option>
-										<option value="이원준">이원준</option>
-										<option value="김연지">김영훈</option>
-										<option value="김건훈">김곤지</option>
-										<option value="김정훈">김상훈</option>
-										<option value="이원준">이원영</option>
+									<th:block th:each="el:${employeeList}">
+										<option th:value="${el.employeeCode}" th:text="${el.employeeName}">1</option>
+										
+									</th:block>
 									</select>
 								</div>
 							</form>

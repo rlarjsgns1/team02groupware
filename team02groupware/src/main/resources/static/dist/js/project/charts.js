@@ -7,7 +7,6 @@ $(function() {
 		data : {
 			columns : [ [ "완료", taskSuccess ], [ "마감일 지남", taskAfterDeadline ],
 					[ "계획됨", taskPlanning ], [ "마감일 없음", taskNodeadline ],
-
 			],
 			type : 'donut',
 			onclick : function(d, i) {
@@ -27,13 +26,12 @@ $(function() {
 		padding : {
 			top : 0,
 			right : 0,
-			bottom : 30,
+			bottom : 20,
 			left : 0,
 		},
 		donut : {
-			title : ["전체 업무", taskSum]
+			title : ["Total: "  + taskSum]
 		}
-
 	});
 
 	
