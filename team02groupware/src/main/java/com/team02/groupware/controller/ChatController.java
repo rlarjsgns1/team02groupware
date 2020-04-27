@@ -6,6 +6,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team02.groupware.dto.ChatMessage;
@@ -17,10 +18,12 @@ public class ChatController {
 	@Autowired
 	private MessengerService messengerService;
 	
-	@MessageMapping("/chat.sendMessage/{socketRoomCode}")
-    @SendTo("/topic/public/{socketRoomCode}")
-    public ChatMessage sendMessage(@Payload ChatMessage chatMessage, @DestinationVariable String socketRoomCode) {
+	// 채팅방 메시지 전송
+	@MessageMapping("/chat.sendMessage/{userId}")
+    @SendTo("/topic/public/{userId}")
+    public ChatMessage sendMessage(@Payload ChatMessage chatMessage, @DestinationVariable String userId) {
 		
+		System.out.println("채팅 컨트롤러 유저아이디 : " + userId);
 		System.out.println(chatMessage.getContent());
 		System.out.println(chatMessage.getType());
 		System.out.println(chatMessage.getUserId());
@@ -32,6 +35,7 @@ public class ChatController {
         return chatMessage;
     }
 	
+	//테스트
 	@MessageMapping("/chat.test/{userId}")
     @SendTo("/topic/public/{userId}")
     public ChatMessage sendMessage2(@Payload ChatMessage chatMessage, @DestinationVariable String userId) {
@@ -59,6 +63,7 @@ public class ChatController {
         return chatMessage;
     }
     
+    // 채팅방 생성 메시지
     @MessageMapping("/chat.createChatRoom")
     @SendTo("/topic/public2")
     public ChatMessage createChatRoom(@Payload ChatMessage chatMessage){

@@ -96,11 +96,13 @@ public class MessengerController {
 		
 		List<Map<String,Object>> chatRoomLog = new ArrayList<Map<String,Object>>();
 		chatRoomLog = messengerService.chatRoomView(roomCode);
+		List<Map<String,Object>> chatRoomMember = new ArrayList<Map<String,Object>>();
+		chatRoomMember = messengerService.chatRoomMember(roomCode);
 		System.out.println(chatRoomLog.toString());
 		model.addAttribute("chatRoomLog", chatRoomLog);
 		model.addAttribute("userId", userId);
 		model.addAttribute("roomCode", roomCode);
-			
+		model.addAttribute("chatRoomMember", chatRoomMember);
 		return "messenger/chatRoomView";
 	}
 	

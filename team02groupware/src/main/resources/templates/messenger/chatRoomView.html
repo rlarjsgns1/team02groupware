@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<!-- 채팅방 상세보기 Start-->
-	<div class="card chat-card col-md-6 chat-room" style="display:none">
+	<div class="card chat-card col-md-6 chat-room" th:classappend="|chat-room-${roomCode}|" style="display:none">
 	
 		<!-- 채팅방 헤더 Start -->
 		<div class="chat-room-header card-header row">
@@ -16,7 +16,10 @@
 			</div>
 			
 			<input type="hidden" class="chat-room-view-code" th:value="${roomCode}">
-		
+			
+			<th:block th:each="m:${chatRoomMember}">
+				<input type="hidden" class="chat-room-member" th:value="${m.chatRoomMember}">
+			</th:block>
 			<!-- 취소 버튼 -->
 			<div class="col-md-4" style="padding: 0;">
 			

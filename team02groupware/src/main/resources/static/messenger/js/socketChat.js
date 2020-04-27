@@ -8,46 +8,52 @@ var stmopTest = null;
 var userNickName = sessionStorage.getItem("userNickName");
 var userId = sessionStorage.getItem("userId");
 var socketRoomCode = 0;
+var newMessage = sessionStorage.getItem("newMessage");
 console.log(userNickName, userId);
+
+	if(newMessage == "true"){
+		$('.new-message-notice').text('!')
+	}
+
+	fn_connect();
+	function fn_test(event) {
+		
+		console.log('fn_test')
+	    var socket = new SockJS('/test');
+	    
+	    stmopTest = Stomp.over(socket);
+	    stmopTest.connect({}, fn_test2, fn_onError);
+	    
+	    //event.preventDefault();
+	}
 	
-	fn_test();
-function fn_test(event) {
+	function fn_test2() {
+	    // Subscribe to the Public Topic
+		console.log('fn_test2')
+	    stmopTest.subscribe('/topic/public/'+userId+'', fn_test3);
 	
-	console.log('fn_test')
-    var socket = new SockJS('/test');
-    
-    stmopTest = Stomp.over(socket);
-    stmopTest.connect({}, fn_test2, fn_onError);
-    
-    //event.preventDefault();
-}
-
-function fn_test2() {
-    // Subscribe to the Public Topic
-	console.log('fn_test2')
-    stmopTest.subscribe('/topic/public/'+userId+'', fn_test3);
-
-}
-function fn_test3(payload) {
-    
-    var message = JSON.parse(payload.body);
-    console.log('fn_test3',message)
-    alert('새로운 메시지가 도착했습니다.')
-
-}
-
-function fn_test4(msg, chatRoom){
+	}
+	function fn_test3(payload) {
+	    
+	    var message = JSON.parse(payload.body);
+	    console.log('fn_test3',message)
+	    $('.new-message-notice').text('!')
+	    sessionStorage.setItem("newMessage", "true");
 	
-	console.log('fn_test4')
-    var chatMessage = {
-        userId: userId,
-        userNickName: userNickName
-        
-    };
-    stmopTest.send("/app/chat.test/id004", {}, JSON.stringify(chatMessage));
-    stmopTest.send("/app/chat.test/id003", {}, JSON.stringify(chatMessage));
-    stmopTest.send("/app/chat.test/id002", {}, JSON.stringify(chatMessage));
-}
+	}
+	
+	function fn_test4(msg, chatRoom){
+		
+		console.log('fn_test4')
+	    var chatMessage = {
+	        userId: userId,
+	        userNickName: userNickName
+	        
+	    };
+	    stmopTest.send("/app/chat.test/id004", {}, JSON.stringify(chatMessage));
+	    stmopTest.send("/app/chat.test/id003", {}, JSON.stringify(chatMessage));
+	    
+	}
 
 	
 
@@ -67,7 +73,8 @@ function fn_test4(msg, chatRoom){
 		}else{
 			
 			$('.chat-room').remove();
-			fn_disconnect();
+			//fn_disconnect();
+			
 			$('.chat-list-room').removeClass('active')
 			$(this).addClass('active')
 			
@@ -80,10 +87,16 @@ function fn_test4(msg, chatRoom){
 			roomInfo.user = $(this).find('.chat-list-room-user').text();
 			
 			var obj = 1;
-			fn_connect(event);
+			//fn_connect(event);
 			fn_chatRoomView(roomCode, userId, roomInfo);
-			fn_test4();
-			
+			//fn_test4();
+			if($(this).hasClass('new')){
+				$(this).removeClass('new');
+				$(this).find('.chat-list-room-badge').text('')
+				if($('.chat-list-room').hasClass('new') == false){
+					$('.new-message-notice').text('')
+				}
+			}
 		}
 
 	});
@@ -109,7 +122,6 @@ function fn_test4(msg, chatRoom){
 				chatRoom.find('.chat-room-user').text(roomInfo.user);
 				chatRoom.find('.chat-room-menu .menu-item').css('display', 'none');
 
-				
 				chatRoom.css('display', 'block');
 				
 				$('.chat-room-body').scrollTop(1000000);
@@ -126,7 +138,7 @@ function fn_test4(msg, chatRoom){
 	}
 	// 소켓 접속
 	function fn_connect(event, obj) {
-		console.log('소켓테스트 위치 확인1')
+		console.log('fn_connect')
 		
         var socket = new SockJS('/ws');
         console.log('소켓테스트 위치 확인2', obj)
@@ -152,9 +164,8 @@ function fn_test4(msg, chatRoom){
 	
 	// 소켓 접속 후
 	function fn_onConnected() {
-	    // Subscribe to the Public Topic
-		console.log()
-	    stompClient.subscribe('/topic/public/'+socketRoomCode+'', fn_onMessageReceived);
+	    console.log('fn_onConnected')
+	    stompClient.subscribe('/topic/public/'+userId+'', fn_onMessageReceived);
 
 	    // Tell your username to the server
 	    stompClient.send("/app/chat.addUser",
@@ -165,15 +176,18 @@ function fn_test4(msg, chatRoom){
 	}
 	// 메시지 수신
 	function fn_onMessageReceived(payload) {
-		console.log('위치 확인')
+		console.log('fn_onMessageReceived')
+		
 	    var message = JSON.parse(payload.body);
 		var msgType = message.type;
 		var msgContent = message.content;
 		var msgUserId = message.userId;
 		var msgUserNickName = message.userNickName;
 		var msgRoomCode = message.chatRoomCode;
-		var chatRoom = $('body').find('.chat-room');
+		var chatRoom = $('body').find('.chat-room-'+msgRoomCode+'');
+		var chatListRoom = $('body').find('.chat-list-room-'+msgRoomCode+'');
 		console.log(message)
+		
 		switch(msgType){
 		
 		case 'CREATE' :
@@ -190,18 +204,30 @@ function fn_test4(msg, chatRoom){
 			
 		case 'CHAT' :
 			
-			
-			
 			if(userId != msgUserId){
 				
 				console.log('CHAT');
 				console.log(message);
 				console.log(chatRoom);
-				fn_drawReceiveMsg(chatRoom, message)
+				if(chatRoom.css('display') == 'block'){
+					
+					fn_drawReceiveMsg(chatRoom, message)
+					
+				}else{
+					
+					$('.new-message-notice').text('!')
+					//sessionStorage.setItem("newMessage", "true");
+					chatListRoom.find('.chat-list-room-badge').text('new')
+					chatListRoom.addClass('new');
+					
+				}
+				
+				
 				
 			}
 			
 			fn_drawChatListMsg(chatRoom, message)
+			
 			
 			break;
 			
@@ -259,6 +285,7 @@ function fn_test4(msg, chatRoom){
 		
 	}
 	
+	// 수신메시지 채팅방리스트에 그리기
 	function fn_drawChatListMsg(chatRoom, message){
 		
 		var msgContent = message.content;
@@ -271,7 +298,6 @@ function fn_test4(msg, chatRoom){
 		$('.chat-list-room-'+msgRoomCode+'').find('.text-muted').text(msgContent)
 		$('.chat-list-room-'+msgRoomCode+'').find('.chat-list-time').text(currentTime)
 	}
-	
 	
 	// 채팅방 input 버튼 클릭시
 	$(document).on('click','.chat-room-input-btn', function(){
@@ -293,20 +319,21 @@ function fn_test4(msg, chatRoom){
 		
 	})
 	
-	// 메시지 전송 함수
+	// 메시지 전송
 	function fn_doSend(msg, chatRoom){
 		
 		var chatRoomCode = chatRoom.find('.chat-room-view-code').val();
 		var chatRoomBody = chatRoom.find('.chat-room-body');
 		var sendChatClone = chatRoom.find('.send-chat-clone').clone();
 		var currentTime = fn_getTimeStamp();
-		
+		var chatRoomMember = chatRoom.find('.chat-room-member');
 		
 		sendChatClone.find('.msg p').text(msg);
 		sendChatClone.find('.msg-time').text(currentTime);
 		sendChatClone.removeClass('send-chat-clone');
 		sendChatClone.css('display', 'block');
 		chatRoomBody.append(sendChatClone);
+		
         var chatMessage = {
             userId: userId,
             userNickName: userNickName,
@@ -314,8 +341,15 @@ function fn_test4(msg, chatRoom){
             type: 'CHAT',
             chatRoomCode: chatRoomCode
         };
-        stompClient.send("/app/chat.sendMessage/"+chatRoomCode+"", {}, JSON.stringify(chatMessage));
         
+        // 채팅방에 속한 멤버들에게만 메시지 발신
+        chatRoomMember.each(function(){
+        	
+        	var memberId = $(this).val();
+        	stompClient.send("/app/chat.sendMessage/"+memberId+"", {}, JSON.stringify(chatMessage));
+        })
+        
+        console.log('fn_doSend')
 	}
 	
 	

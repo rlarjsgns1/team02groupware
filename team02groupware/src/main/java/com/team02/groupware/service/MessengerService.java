@@ -80,6 +80,13 @@ public class MessengerService {
 		return roomInfo;
 		
 	}
+
+	public List<Map<String, Object>> chatRoomMember(String roomCode) {
+		
+		List<Map<String,Object>> chatRoomMember = new ArrayList<Map<String,Object>>();
+		chatRoomMember = messengerMapper.chatRoomMember(roomCode);
+		return chatRoomMember;
+	}
 	
 	
 

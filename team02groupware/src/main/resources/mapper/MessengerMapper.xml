@@ -226,7 +226,24 @@
 			(NULL, NOW(), '새로운 대화방이 생성되었습니다.', ${roomCode}, 'CREATE')
 		
 		
-	</insert>	
+	</insert>
+	
+	<select id="chatRoomMember" parameterType="String" resultMap="chatRoomMember">
+		SELECT 
+			chat_user_id
+		FROM 
+			chat_room_per_user
+		WHERE 
+			chat_room_code = ${roomCode}
+	
+	</select>
+	
+	<resultMap id="chatRoomMember" type="map">
+	
+    	<result property="chatRoomMember" column="chat_user_id"/>
+    	
+    	
+  	</resultMap>	
 
 
 </mapper>

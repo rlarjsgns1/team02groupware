@@ -26,5 +26,7 @@ public interface MessengerMapper {
 	public void insertUserChatRoom(Map<String, Object> roomInfo);
 
 	public void insertCreateChatMessage(Map<String, Object> roomInfo);
+
+	public List<Map<String, Object>> chatRoomMember(String roomCode);
 	
 }
