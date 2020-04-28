@@ -5,6 +5,7 @@
 	
 	<resultMap type="com.team02.groupware.dto.Project" id="projectResultMap">
 		<result property="employeeCode" column="employee_code" />
+		<result property="employeeName" column="employee_name" />
 		
 		<result property="projectCode" column="project_code" />
 		<result property="projectStatus" column="project_status" />
@@ -37,14 +38,6 @@
 		
 	</resultMap>
 	
-	<!-- 업무추가 (사원코드) -->
-	<insert id="taskInsert2"  parameterType="Project">
-		INSERT INTO
-			project_employee_per_task
-			(employee_code, task_code)
-		VALUES 
-			(#{employeeCode}, #{taskCode});
-	</insert>
 	
 	
 	<!-- 업무 상태 조회(차트) -->
@@ -169,15 +162,19 @@
 			, #{taskDeadline}
 			, #{taskStart}
 			, #{taskEnd}
-			, '진행중')
+			, '진행중');
+			
+		INSERT INTO
+			project_employee_per_task
+			(employee_code, task_code)
+		VALUES 
+			(#{employeeCode}, #{taskCode});
 	</insert>
 	
 	<!-- 업무 상세정보 조회 -->
 	<select id="getTaskdetail" parameterType="String" resultMap="projectResultMap">
 			SELECT
-				TD.tasklist_code,
-				TD.task_title,
-				TD.task_code
+				TD.*
 			FROM
 				project_task_detail AS TD
 			WHERE
@@ -281,21 +278,13 @@
 	</select>
 
 
-	<!-- 프로젝트추가 (사원코드) -->
-	<insert id="projectInsert2"  parameterType="Project">
-		INSERT INTO
-			project_employee
-			(project_code, employee_code)
-		VALUES 
-			(#{projectCode}, #{employeeCode});
-	</insert>
-	
+
 
 	<!-- 프로젝트 추가 모달창 사원 조회 -->
 	<select id="selectForAddEmployee" parameterType = "String"  resultMap="projectResultMap">
 		SELECT
-			E.employee_name
-			,E.employee_code
+			E.employee_code
+			,E.employee_name
 		FROM
 			employee AS E
 	</select>
@@ -341,7 +330,14 @@
 			,#{projectDeadline}
 			,#{projectStart}
 			,#{projectEnd}
-			)
+			);
+			
+			
+		INSERT INTO
+			project_employee
+			(project_code, employee_code)
+		VALUES 
+			(#{projectCode}, #{employeeCode});
 	</insert>
 
 	<!-- 프로젝트 개수 조회 -->

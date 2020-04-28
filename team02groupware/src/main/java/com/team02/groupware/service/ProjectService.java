@@ -49,10 +49,7 @@ public class ProjectService {
 	
 	//업무 추가
 	public int taskInsert(Project project) {
-		int result = 0;
-		result = projectMapper.taskInsert(project);
-		result = projectMapper.taskInsert2(project);
-		return result;
+		return projectMapper.taskInsert(project);
 	}
 	
 	//업무리스트별 업무상세정보 조회
@@ -124,10 +121,8 @@ public class ProjectService {
 	
 	//프로젝트 추가
 	public int projectInsert(Project project) {
-		int result = 0;
-		result = projectMapper.projectInsert(project);
-		result = projectMapper.projectInsert2(project);
-		return result;
+		
+		return projectMapper.projectInsert(project);
 	}
 	
 	//프로젝트 리스트 조회

@@ -5,6 +5,27 @@
 
 $(function() {
 
+	
+	var clicked = false, clickX;
+	$(document).on({
+	    'mousemove': function(e) {
+	        clicked && updateScrollPos(e);
+	    },
+	    'mousedown': function(e) {
+	        clicked = true;
+	        clickX = e.pageX;
+	    },
+	    'mouseup': function() {
+	        clicked = false;
+	        $('html').css('cursor', 'auto');
+	    }
+	});
+
+	var updateScrollPos = function(e) {
+	    $(window).scrollTop($(window).scrollTop() + (clickX - e.pageX));
+	}
+	
+	
 	var projectCode = $('input[name="projectCode"]').val();
 	
 	

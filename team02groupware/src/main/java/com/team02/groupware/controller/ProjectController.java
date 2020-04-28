@@ -254,6 +254,7 @@ public class ProjectController {
 		System.out.println(result);
 		
 		if(result > 0 ) {
+			
 			model.addAttribute("projectCode", projectCode);
 			model.addAttribute("projectTitle", projectTitle);
 			return "redirect:/taskList";

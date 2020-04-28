@@ -10,13 +10,10 @@ $(function() {
 			],
 			type : 'donut',
 			onclick : function(d, i) {
-				console.log("onclick", d, i);
 			},
 			onmouseover : function(d, i) {
-				console.log("onmouseover", d, i);
 			},
 			onmouseout : function(d, i) {
-				console.log("onmouseout", d, i);
 			}
 		},
 		color : {
@@ -68,6 +65,6 @@ $(function() {
 			alert("Request failed: " + textStatus);
 		});
 
-	}, 3000);
+	}, 60000);
 
 });

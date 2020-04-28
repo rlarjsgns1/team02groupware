@@ -233,27 +233,29 @@
 								</div>
 							</div>
 						</div>
-					</form>
-					<div class="form-group">
-						<label>프로젝트 멤버(선택사항)</label>
-						<div>
-							<form class="sample-form">
-								<div class="add-btn-wrap">
-									<img class="member-add-btn"
-										src="/img/project/member_plus_btn.png">
-								</div>
-								<div class="member-select-wrap form-group">
-									<select class="form-control select2" id="add-select2"
-										multiple="multiple">
-									<th:block th:each="el:${employeeList}">
-										<option th:value="${el.employeeCode}" th:text="${el.employeeName}">1</option>
-										
-									</th:block>
-									</select>
-								</div>
-							</form>
+						<div class="form-group">
+							<label>마감일(선택사항)</label>
+							<input type="text" name="projectDeadline" class="form-control datetimepicker-input" id="datepicker2"
+									data-toggle="datetimepicker" data-target="#datepicker2">
 						</div>
-					</div>
+						<div class="form-group">
+							<label>프로젝트 멤버(선택사항)</label>
+							<div>
+									<div class="add-btn-wrap">
+										<img class="member-add-btn"
+											src="/img/project/member_plus_btn.png">
+									</div>
+									<div class="member-select-wrap form-group">
+										<select class="form-control select2" id="add-select2"
+											multiple="multiple" name="employeeCode">
+										<th:block th:each="el:${employeeList}">
+											<option th:value="${el.employeeCode}" th:text="${el.employeeName}"></option>
+										</th:block>
+										</select>
+									</div>
+							</div>
+						</div>
+					</form>
 				</div>
 
 

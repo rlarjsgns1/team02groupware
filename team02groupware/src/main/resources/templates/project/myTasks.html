@@ -75,20 +75,9 @@
 					<div class="collapse d-md-block display-options" id="displayOptions">
 					<div class="col-md-8" style="float:left; padding-left:0; padding-right:0;">
 						<button type="button" class="task-add-btn btn btn-success btn-rounded"
-								data-toggle="modal" data-target="#exampleModalCenter" style="float:left;">새 업무 추가
+								data-toggle="modal" data-target="#taskInsertModal" style="float:left;">새 업무 추가
 						</button>
 						<div class="d-block d-md-inline-block" style="float:right;">
-							<div class="btn-group float-md-left mr-1 mb-1">
-								<button class="btn btn-outline-dark btn-xs dropdown-toggle"
-									type="button" data-toggle="dropdown" aria-haspopup="true"
-									aria-expanded="false">
-									마감일순 <i class="ik ik-chevron-down mr-0 align-middle"></i>
-								</button>
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="#">마감일순</a>
-									<a class="dropdown-item" href="#">업데이트순</a>
-								</div>
-							</div>
 							<div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
 								<form action="">
 									<input type="text" class="form-control" placeholder="업무검색" required>
@@ -96,6 +85,17 @@
 										<i class="ik ik-search"></i>
 									</button>								
 								</form>
+							</div>
+							<div class="btn-group float-md-left mr-1 mb-1">
+								<button class="btn btn-outline-dark btn-xs dropdown-toggle"
+									type="button" data-toggle="dropdown" aria-haspopup="true"
+									aria-expanded="false">
+									업데이트순 <i class="ik ik-chevron-down mr-0 align-middle"></i>
+								</button>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="#">마감일순</a>
+									<a class="dropdown-item" href="#">업데이트순</a>
+								</div>
 							</div>
 							</div>
 						</div>
@@ -108,7 +108,7 @@
 				<div class="mytasklist col-md-8">
 					<th:block th:each="mtl : ${myTasklist}">
 						<div class="mytask-item list-item">
-							<div class="card d-flex flex-row mb-3">
+							<div class="mytask-card card d-flex flex-row mb-3">
 								<div class="custom-control custom-checkbox pl-1 align-self-center" style="margin-left:10px;">
 									<label class="custom-control custom-checkbox mb-0">
 										<input type="checkbox" class="task-checkbox custom-control-input">
@@ -116,20 +116,20 @@
 										<span class="custom-control-label"></span>
 									</label>
 								</div>
-								<div style="font-size:0.9em; position:absolute; top:5px; left:57px; color:#8d919a;">
+								<div class="project-tasklist">
+									<input type="hidden" class="project-code-input" th:value="${mtl.projectCode}">
 									<a th:text="${mtl.projectTitle}"></a><i class="ik ik-chevron-right"></i>
 									<a th:text="${mtl.tasklistName}"></a>
 								</div>				
 								<div class="d-flex flex-grow-1 min-width-zero card-content">
-									<div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+									<div class="task-card-body card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
 										<a class="task-title list-item-heading mb-1 truncate w-40 w-xs-100" style="cursor:pointer;" th:text="${mtl.taskTitle}">  </a>
 										<p class="mb-1 text-muted text-small category w-15 w-xs-100" style="cursor:pointer;" th:text="${mtl.taskDesc}"></p>
 										<span class="noDL mb-1 text-muted text-small date w-15 w-xs-100" th:if="${mtl.taskDeadline} eq null" th:text="'마감일 없음'"></span>
-										<span class="yesDL mb-1 text-small date w-15 w-xs-100" th:if="${mtl.taskDeadline} neq null" th:text="${#dates.format(mtl.taskDeadline,'MM/dd hh:mm')}" style="color:red;"></span>
+										<span class="yesDL mb-1 text-small date w-15 w-xs-100" th:if="${mtl.taskDeadline} neq null" th:text="${#dates.format(mtl.taskDeadline,'MM/dd hh:mm')}" style="color:rgba(237, 28, 36);"></span>
 									</div>
 									<div class="list-actions">
-										<a class="list-view-btn"><i class="ik ik-eye"></i></a> <a
-											class="list-modal-btn"><i class=" ik ik-edit-2"></i></a>
+									<a href=# class="list-modal-btn"><i class=" ik ik-edit-2"></i></a>
 										<a href="#" class="list-delete-btn"><i class="ik ik-trash-2"></i></a>
 									</div>
 									
@@ -184,7 +184,92 @@
 			</div>
 		</div>
 	
-		
+	<!------------------내 업무 추가 버튼 클릭시 모달창 start --------------------->
+	<div class="modal fade" id="taskInsertModal" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalCenterLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalCenterLabel">새 업무</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="pr-add-modal modal-body">
+					<form name="projectAddForm" method="post"
+						onsubmit="return checkInput()">
+						<div class="form-group">
+							
+						
+						</div>
+						<div class="form-group">
+							<label for="add-projectTitle">업무 제목</label> <input type="text"
+								id="add-projectTitle" name="projectTitle" class="form-control"
+								placeholder="예) 웹사이트 개발">
+						</div>
+						<div class="form-group">
+							<label for="projectDesc">업무 설명(선택사항)</label> <input type="text"
+								id="projectDesc" name="projectDesc" class="form-control">
+						</div>
+					
+						<div class="form-group">
+							<label for="date">마감일</label>
+							<div>
+								<div style="width:50%; float:left; display:inline-block; padding-right:5px;" >
+									<input type="text"
+									class="date-form-control form-control datetimepicker-input"
+									id="datepicker" data-toggle="datetimepicker"
+									data-target="#datepicker" >
+								</div>
+								<div style="width:50%; display:inline-block;">
+									<input type="text" 
+									class="date-form-control form-control datetimepicker-input" 
+									id="timepicker" data-toggle="datetimepicker" 
+									data-target="#timepicker" >
+								</div>
+                        	</div>
+                        </div>
+                        
+						<div class="form-group">
+							<label>업무 멤버(선택사항)</label>
+							<div>
+								<div class="add-btn-wrap">
+									<img class="member-add-btn"
+										src="/img/project/member_plus_btn.png">
+								</div>
+								<div class="member-select-wrap form-group">
+									<select class="form-control select2" id="add-select2"
+										multiple="multiple">
+										<option value="김연지" selected>김연지</option>
+										<option value="김건훈">김건훈</option>
+										<option value="김정훈">김정훈</option>
+										<option value="이원준">이원준</option>
+										<option value="김연지">김영훈</option>
+										<option value="김건훈">김곤지</option>
+										<option value="김정훈">김상훈</option>
+										<option value="이원준">이원영</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</form>
+					
+				</div>
+
+
+				<div class="project-add-btn modal-footer">
+					<button type="button" class="btn btn-light"
+						data-dismiss="modal">취소</button>
+					<button type="submit" class="pr-submit-btn btn btn-primary">추가하기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-------------------------내 업무 추가 버튼 클릭시 모달창 end --------------------------->
 
 
 

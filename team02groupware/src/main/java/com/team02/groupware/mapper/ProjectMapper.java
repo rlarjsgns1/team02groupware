@@ -25,8 +25,6 @@ public interface ProjectMapper {
 	// 내업무 조회
 	public List<Project> selectMyTask(String userCode);
 	
-	//업무 추가2 (업무 별 사원)
-	public int taskInsert2(Project project);
 	
 	// 업무 추가
 	public int taskInsert(Project project);
@@ -58,8 +56,7 @@ public interface ProjectMapper {
 	//프로젝트 추가모달창 사원 조회
 	public List<Project> selectForAddEmployee();
 	
-	//프로젝트 추가2(추가한 사원을 project_employee 에 추가)
-	public int projectInsert2(Project project);
+	
 	
 	//프로젝트 추가
 	public int projectInsert(Project project);
