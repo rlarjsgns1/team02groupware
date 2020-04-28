@@ -14,49 +14,11 @@ console.log(userNickName, userId);
 	if(newMessage == "true"){
 		$('.new-message-notice').text('!')
 	}
-
+	
+	// 웹소켓 연결
 	fn_connect();
-	function fn_test(event) {
-		
-		console.log('fn_test')
-	    var socket = new SockJS('/test');
-	    
-	    stmopTest = Stomp.over(socket);
-	    stmopTest.connect({}, fn_test2, fn_onError);
-	    
-	    //event.preventDefault();
-	}
 	
-	function fn_test2() {
-	    // Subscribe to the Public Topic
-		console.log('fn_test2')
-	    stmopTest.subscribe('/topic/public/'+userId+'', fn_test3);
 	
-	}
-	function fn_test3(payload) {
-	    
-	    var message = JSON.parse(payload.body);
-	    console.log('fn_test3',message)
-	    $('.new-message-notice').text('!')
-	    sessionStorage.setItem("newMessage", "true");
-	
-	}
-	
-	function fn_test4(msg, chatRoom){
-		
-		console.log('fn_test4')
-	    var chatMessage = {
-	        userId: userId,
-	        userNickName: userNickName
-	        
-	    };
-	    stmopTest.send("/app/chat.test/id004", {}, JSON.stringify(chatMessage));
-	    stmopTest.send("/app/chat.test/id003", {}, JSON.stringify(chatMessage));
-	    
-	}
-
-	
-
 	// 채팅방 클릭
 	$(document).on('click','.chat-list-room',function(obj){
 		
@@ -67,8 +29,8 @@ console.log(userNickName, userId);
 			
 			$(this).removeClass('active')
 			$(this).css('background-color','#fff');
-			
-			fn_chatRoomClose();
+			var chatRoomCode = $(this).find('.chat-room-code').val();
+			fn_chatRoomClose(chatRoomCode);
 			
 		}else{
 			
@@ -86,16 +48,21 @@ console.log(userNickName, userId);
 			roomInfo.title = $(this).find('.chat-list-title').text();
 			roomInfo.user = $(this).find('.chat-list-room-user').text();
 			
-			var obj = 1;
-			//fn_connect(event);
 			fn_chatRoomView(roomCode, userId, roomInfo);
-			//fn_test4();
-			if($(this).hasClass('new')){
-				$(this).removeClass('new');
-				$(this).find('.chat-list-room-badge').text('')
-				if($('.chat-list-room').hasClass('new') == false){
-					$('.new-message-notice').text('')
-				}
+			
+			// 새로운 메시지가 있을경우
+			if($(this).find('.chat-list-room-badge').hasClass('new')){
+				var $this = $(this);
+				$(this).find('.chat-list-room-badge').removeClass('new');
+				
+				setTimeout(function(){
+					
+					$this.find('.chat-list-room-badge').text('')
+					if($('.chat-list-room').hasClass('new') == false){
+						$('.new-message-notice').text('')
+					}
+					
+				}, 100)
 			}
 		}
 
@@ -186,7 +153,7 @@ console.log(userNickName, userId);
 		var msgRoomCode = message.chatRoomCode;
 		var chatRoom = $('body').find('.chat-room-'+msgRoomCode+'');
 		var chatListRoom = $('body').find('.chat-list-room-'+msgRoomCode+'');
-		console.log(message)
+		console.log(message, 'fn_onMessageReceived')
 		
 		switch(msgType){
 		
@@ -203,7 +170,7 @@ console.log(userNickName, userId);
 			break;
 			
 		case 'CHAT' :
-			
+			console.log('fn_onMessageReceived 챗')
 			if(userId != msgUserId){
 				
 				console.log('CHAT');
@@ -211,18 +178,17 @@ console.log(userNickName, userId);
 				console.log(chatRoom);
 				if(chatRoom.css('display') == 'block'){
 					
+					console.log('fn_onMessageReceived 디스플레이 블락')
 					fn_drawReceiveMsg(chatRoom, message)
 					
 				}else{
-					
+					console.log('fn_onMessageReceived 디스플레이 블락 X')
 					$('.new-message-notice').text('!')
 					//sessionStorage.setItem("newMessage", "true");
 					chatListRoom.find('.chat-list-room-badge').text('new')
 					chatListRoom.addClass('new');
 					
 				}
-				
-				
 				
 			}
 			
@@ -234,6 +200,7 @@ console.log(userNickName, userId);
 		default : break;
 			
 		}
+		console.log('fn_onMessageReceived 하단')
 
 	}
 	
@@ -341,6 +308,9 @@ console.log(userNickName, userId);
             type: 'CHAT',
             chatRoomCode: chatRoomCode
         };
+        console.log(JSON.stringify(chatMessage))
+        
+        
         
         // 채팅방에 속한 멤버들에게만 메시지 발신
         chatRoomMember.each(function(){
@@ -348,6 +318,24 @@ console.log(userNickName, userId);
         	var memberId = $(this).val();
         	stompClient.send("/app/chat.sendMessage/"+memberId+"", {}, JSON.stringify(chatMessage));
         })
+        
+        // 채팅메시지 DB에 insert
+        var request3 = $.ajax({
+        	url: '/insertChatMessage',
+        	method: "POST",
+        	contentType: 'application/json',
+        	data: JSON.stringify(chatMessage)
+        });
+        
+        request3.done(function( data ) {
+        	console.log(data, '인서트 ajax')
+        	
+        });
+        
+        request3.fail(function( jqXHR, textStatus ) {
+        	alert( "Request failed: " + textStatus );
+        }); 
+        
         
         console.log('fn_doSend')
 	}

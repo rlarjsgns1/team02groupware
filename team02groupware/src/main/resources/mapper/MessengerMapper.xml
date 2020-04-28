@@ -16,18 +16,20 @@
     	<result property="chatMsgDate" column="chat_message_date"/>
     	<result property="chatMsgContent" column="chat_message_content"/>
     	<result property="chatMsgCode" column="chat_message_code"/>
+    	<result property="unReadMsgCount" column="unReadMsgCount"/>
     	
   	</resultMap>
 	
 	<!-- 채팅방 리스트 select -->
-	<select id="selectChatRoomList" resultMap="selectChatRoomList" parameterType="String">
+	<select id="selectChatRoomList" resultMap="selectChatRoomList" parameterType="Object">
 		SELECT
 			crl.chat_room_code,
 			crl.chat_room_title,
 			crl.chat_room_user_count,
 			date_format(msg.chat_message_date,'%Y-%m-%d %H:%i') as chat_message_date,
 			msg.chat_message_content,
-			msg.chat_message_code
+			msg.chat_message_code,
+			(msg.chat_message_code - tb1.last_chat_message_code) AS unReadMsgCount
 		FROM
 			(SELECT
 				*
@@ -73,7 +75,25 @@
 	
 	</select>
 	
-	<!-- 채팅방 상세보기 resultMap  -->
+	<!-- 채팅방 마지막 읽은 메시지 select -->
+	<select id="selectUnReadMessageCount" resultType="String" parameterType="String">
+	
+		SELECT 
+			(count(cl.chat_message_code)-1) AS unReadMessageCount
+		FROM 
+			chat_message_log AS cl
+		WHERE
+			cl.chat_room_code = ${chatRoomCode} 
+			AND 
+			cl.chat_message_code >= ${chatMsgCode}
+	
+	</select>
+	
+	
+	
+	
+	
+	<!-- 채팅방 상세보기 resultMap -->
 	<resultMap id="selectChatRoomView" type="map">
 	
     	<result property="chatMsgCode" column="chat_message_code"/>
@@ -228,6 +248,7 @@
 		
 	</insert>
 	
+	<!-- 채팅방 멤버 select -->
 	<select id="chatRoomMember" parameterType="String" resultMap="chatRoomMember">
 		SELECT 
 			chat_user_id
@@ -238,12 +259,32 @@
 	
 	</select>
 	
+	<!-- 채팅방 멤버 select -->
 	<resultMap id="chatRoomMember" type="map">
 	
     	<result property="chatRoomMember" column="chat_user_id"/>
     	
     	
-  	</resultMap>	
+  	</resultMap>
+  	
+  	<update id="updateLastChatMessage" parameterType="String">
+  		UPDATE 
+  			chat_room_per_user AS cr
+		SET
+			last_chat_message_code
+			= 
+			(SELECT
+				MAX(chat_message_code)
+			FROM 
+				chat_message_log AS cml
+			WHERE
+				cml.chat_room_code = ${chatRoomCode})
+		WHERE
+			cr.chat_user_id = #{userId}
+			and
+			cr.chat_room_code = ${chatRoomCode}
+  	
+  	</update>	
 
 
 </mapper>

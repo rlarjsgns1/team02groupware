@@ -10,6 +10,12 @@ public class ChatMessage {
 
 	    
 
+		@Override
+		public String toString() {
+			return "ChatMessage [type=" + type + ", content=" + content + ", userId=" + userId + ", chatRoomCode="
+					+ chatRoomCode + ", userNickName=" + userNickName + "]";
+		}
+
 		public String getUserId() {
 			return userId;
 		}

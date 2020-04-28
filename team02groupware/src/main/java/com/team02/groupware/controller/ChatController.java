@@ -30,7 +30,6 @@ public class ChatController {
 		System.out.println(chatMessage.getUserNickName());
 		System.out.println(chatMessage.getChatRoomCode());
 		
-		messengerService.insertChatMessage(chatMessage);
 		
         return chatMessage;
     }

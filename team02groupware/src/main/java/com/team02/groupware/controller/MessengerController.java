@@ -17,8 +17,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team02.groupware.dto.ChatMessage;
@@ -106,6 +110,17 @@ public class MessengerController {
 		return "messenger/chatRoomView";
 	}
 	
+	// 채팅메시지 insert
+	@RequestMapping(value="/insertChatMessage", method=RequestMethod.POST)
+	public @ResponseBody String insertChatMessage(Model model, @RequestBody ChatMessage chatMessage){
+		
+		System.out.println("채팅 인서트 테스트 : " + chatMessage.toString());
+		
+		messengerService.insertChatMessage(chatMessage);
+		
+		return null;
+	}
+	
 	@GetMapping("/chatTest")
 	public String chatTest(Model model) {
 		
@@ -113,6 +128,16 @@ public class MessengerController {
 		return "messenger/chatTest";
 	}
 	
+	// 마지막으로 읽은 채팅메시지 update
+	@GetMapping("/updateLastChatMessage")
+	public @ResponseBody String updateLastChatMessage(HttpSession session, @RequestParam(value="chatRoomCode") String chatRoomCode){
+		
+		System.out.println("업데이트라스트챗메시지 챗룸코드 : " + chatRoomCode);
+		String userId = (String) session.getAttribute("userId");
+		messengerService.updateLastChatMessage(userId, chatRoomCode);
+		
+		return null;
+	}
 	
 	
 	

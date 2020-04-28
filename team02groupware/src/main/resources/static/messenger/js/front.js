@@ -18,7 +18,8 @@
 		
 		e.preventDefault();
 		$('.chat-list-room').css('background-color','#fff');
-		fn_chatRoomClose();
+		var chatRoomCode = $(this).closest('.chat-room').find('.chat-room-view-code').val();
+		fn_chatRoomClose(chatRoomCode);
 	})
 	
 	// 새로운 대화방 생성 Modal에서 참여자 버튼 클릭
@@ -79,11 +80,31 @@
 	
 	
 	// 채팅방 close
-	function fn_chatRoomClose(){
+	function fn_chatRoomClose(chatRoomCode){
 		
 		var chatRoom = $('.chat-room');
 		chatRoom.css('display', 'none')
 		chatRoom.remove();
+		
+		console.log(chatRoomCode, '챗룸클로즈')
+		var request4 = $.ajax({
+		
+			url:'/updateLastChatMessage',
+			method:'GET',
+			data: {chatRoomCode: chatRoomCode}
+		})
+		
+		request4.done(function( data ) {
+			
+			console.log(data, '업데이트라스트메시지')
+			
+		});
+		 
+		request4.fail(function( jqXHR, textStatus ) {
+		  alert( "Request failed: " + textStatus );
+		});
+		
+		
 		
 	}
 	

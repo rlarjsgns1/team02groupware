@@ -28,5 +28,9 @@ public interface MessengerMapper {
 	public void insertCreateChatMessage(Map<String, Object> roomInfo);
 
 	public List<Map<String, Object>> chatRoomMember(String roomCode);
+
+	public void updateLastChatMessage(String userId, String chatRoomCode);
+
+	public String selectUnReadMessageCount(Object chatMsgCode, Object chatRoomCode);
 	
 }

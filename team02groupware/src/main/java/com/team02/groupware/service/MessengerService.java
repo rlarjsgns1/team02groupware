@@ -24,7 +24,9 @@ public class MessengerService {
 		List<Map<String,Object>> chatRoomListMap = new ArrayList<Map<String,Object>>();
 		chatRoomListMap = messengerMapper.selectChatRoomList(userId);
 		
+		System.out.println("채팅방리스트 투스트링 : " + chatRoomListMap.toString());
 		System.out.println("시간 테스트 서비스단 : " + (String)chatRoomListMap.get(0).get("chatMsgDate"));
+		
 		return chatRoomListMap;
 	}
 	
@@ -80,12 +82,19 @@ public class MessengerService {
 		return roomInfo;
 		
 	}
-
+	
+	// 채팅방 멤버 리스트 select
 	public List<Map<String, Object>> chatRoomMember(String roomCode) {
 		
 		List<Map<String,Object>> chatRoomMember = new ArrayList<Map<String,Object>>();
 		chatRoomMember = messengerMapper.chatRoomMember(roomCode);
 		return chatRoomMember;
+	}
+	
+	// 마지막으로 읽은 채팅메시지 update
+	public void updateLastChatMessage(String userId, String chatRoomCode) {
+		
+		messengerMapper.updateLastChatMessage(userId, chatRoomCode);
 	}
 	
 	
