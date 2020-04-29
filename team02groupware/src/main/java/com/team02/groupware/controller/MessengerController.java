@@ -85,8 +85,8 @@ public class MessengerController {
 	public String selectChatRoomList(Model model, HttpSession session){
 		
 		String userId = (String) session.getAttribute("userId");
-		List<Map<String,Object>> chatRoomListMap = new ArrayList<Map<String,Object>>();
-		chatRoomListMap = messengerService.selectChatRoomList(userId);
+		List<Map<String,Object>> chatRoomListMap = messengerService.selectChatRoomList(userId);
+		
 		System.out.println("시간 테스트 : " + chatRoomListMap.get(0).get("chatMsgDate"));
 		model.addAttribute("chatRoomListMap", chatRoomListMap);
 		return "messenger/chatRoomList";
@@ -95,13 +95,16 @@ public class MessengerController {
 	// 채팅방 상세보기
 	@GetMapping("/chatRoomView")
 	public String chatRoomView(Model model,
-			@RequestParam(value="userId") String userId,
+			HttpSession session,
 			@RequestParam(value="roomCode") String roomCode){
 		
 		List<Map<String,Object>> chatRoomLog = new ArrayList<Map<String,Object>>();
 		chatRoomLog = messengerService.chatRoomView(roomCode);
 		List<Map<String,Object>> chatRoomMember = new ArrayList<Map<String,Object>>();
 		chatRoomMember = messengerService.chatRoomMember(roomCode);
+		String userId = (String) session.getAttribute("userId");
+		messengerService.updateLastChatMessage(userId, roomCode);
+		
 		System.out.println(chatRoomLog.toString());
 		model.addAttribute("chatRoomLog", chatRoomLog);
 		model.addAttribute("userId", userId);

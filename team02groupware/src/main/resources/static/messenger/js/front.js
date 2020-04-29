@@ -85,7 +85,8 @@
 		var chatRoom = $('.chat-room');
 		chatRoom.css('display', 'none')
 		chatRoom.remove();
-		
+		var chatListRoom = $('body').find('.chat-list-room-'+chatRoomCode+'');
+		chatListRoom.find('.unread-message-count').val('');
 		console.log(chatRoomCode, '챗룸클로즈')
 		var request4 = $.ajax({
 		
@@ -97,6 +98,7 @@
 		request4.done(function( data ) {
 			
 			console.log(data, '업데이트라스트메시지')
+			
 			
 		});
 		 

@@ -52,10 +52,9 @@ public class MainController {
 		if (!"ok".equals(session.getAttribute("login"))) {
 
 			System.out.println("인덱스 세션 실행 테스트 ****");
-			EmployeeDto empDto = new EmployeeDto();
+			EmployeeDto empDto = loginService.selectEmployee(eDto);
 			System.out.println("로그인체크" + eDto.toString());
 
-			empDto = loginService.selectEmployee(eDto);
 			System.out.println("로그인 체크 후" + empDto.toString());
 			session.setAttribute("userId", empDto.getUserId());
 			session.setAttribute("userName", empDto.getUserName());

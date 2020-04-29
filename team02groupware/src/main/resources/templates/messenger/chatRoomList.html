@@ -37,8 +37,10 @@
 	                       	<p class="text-muted mb-0" th:text="${cl.chatMsgContent}">	<!-- 대화방 최근 메시지 -->
                         	</p>
                         	
-                        	<span class="badge bg-success chat-list-room-badge" th:classappend="${cl.unReadMsgCount} == 0 ? '' : new" th:text="${cl.unReadMsgCount} == 0 ? '' : ${cl.unReadMsgCount}"></span>	<!-- 안읽은 메시지 개수 -->
-	                       
+                        	<span class="badge bg-success chat-list-room-badge" 
+		                        	th:classappend="${cl.unReadMsgCount} == 0 ? '' : new" 
+		                        	th:text="${cl.unReadMsgCount} == 0 ? '' : ${cl.unReadMsgCount}"></span>	<!-- 안읽은 메시지 개수 -->
+	                       	<input type="hidden" class="unread-message-count" th:value="${cl.unReadMsgCount}">
 	                       	<span class="chat-list-time status deactive text-mute" th:text="${cl.chatMsgDate}">	<!-- 최근 메시지 시간 표시 -->
 	                       		
 	                       	</span>

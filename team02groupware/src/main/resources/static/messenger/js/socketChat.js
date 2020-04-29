@@ -56,9 +56,19 @@ console.log(userNickName, userId);
 				$(this).find('.chat-list-room-badge').removeClass('new');
 				
 				setTimeout(function(){
+					var hasNewCount = 0;
 					
 					$this.find('.chat-list-room-badge').text('')
-					if($('.chat-list-room').hasClass('new') == false){
+					$this.find('.unread-message-count').val('')
+					
+					$('.chat-list-room').each(function(){
+						
+						if($(this).find('.chat-list-room-badge').hasClass('new')){
+							hasNewCount++;
+						}
+					})
+					
+					if(hasNewCount == 0){
 						$('.new-message-notice').text('')
 					}
 					
@@ -171,29 +181,34 @@ console.log(userNickName, userId);
 			
 		case 'CHAT' :
 			console.log('fn_onMessageReceived 챗')
+			
 			if(userId != msgUserId){
 				
 				console.log('CHAT');
 				console.log(message);
 				console.log(chatRoom);
+				
+				// 메시지 수신시 해당 채팅방 display 상태에 따른 화면 표현
 				if(chatRoom.css('display') == 'block'){
-					
+					 
 					console.log('fn_onMessageReceived 디스플레이 블락')
 					fn_drawReceiveMsg(chatRoom, message)
 					
 				}else{
+					
+					var unReadMsgCount = chatListRoom.find('.unread-message-count').val();
+					unReadMsgCount++;
 					console.log('fn_onMessageReceived 디스플레이 블락 X')
 					$('.new-message-notice').text('!')
 					//sessionStorage.setItem("newMessage", "true");
-					chatListRoom.find('.chat-list-room-badge').text('new')
-					chatListRoom.addClass('new');
+					chatListRoom.find('.chat-list-room-badge').text(unReadMsgCount);
+					chatListRoom.find('.unread-message-count').val(unReadMsgCount);
+					chatListRoom.find('.chat-list-room-badge').addClass('new');
 					
 				}
-				
 			}
 			
 			fn_drawChatListMsg(chatRoom, message)
-			
 			
 			break;
 			
@@ -297,6 +312,7 @@ console.log(userNickName, userId);
 		
 		sendChatClone.find('.msg p').text(msg);
 		sendChatClone.find('.msg-time').text(currentTime);
+		sendChatClone.find('.msg-time').text(currentTime);
 		sendChatClone.removeClass('send-chat-clone');
 		sendChatClone.css('display', 'block');
 		chatRoomBody.append(sendChatClone);
@@ -309,13 +325,13 @@ console.log(userNickName, userId);
             chatRoomCode: chatRoomCode
         };
         console.log(JSON.stringify(chatMessage))
-        
-        
+        console.log(chatRoomMember)
         
         // 채팅방에 속한 멤버들에게만 메시지 발신
         chatRoomMember.each(function(){
         	
         	var memberId = $(this).val();
+        	console.log(memberId)
         	stompClient.send("/app/chat.sendMessage/"+memberId+"", {}, JSON.stringify(chatMessage));
         })
         

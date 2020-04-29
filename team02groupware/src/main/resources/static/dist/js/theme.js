@@ -146,6 +146,29 @@
         $(".right-sidebar-toggle").on("click",function(e) {
         	
         	if(this.classList.contains('active')){
+        		
+        		if($('.chat-room').css('display') == 'block'){
+        			
+        			var chatRoomCode = $('.chat-room').find('.chat-room-view-code').val();
+        			
+        			var request = $.ajax({
+                		  url: '/updateLastChatMessage',
+                		  method: "GET",
+                		  data:{chatRoomCode: chatRoomCode}
+                		});
+                		
+                		request.done(function( data ) {
+                			console.log(data, '사이드 채팅리스트 ajax')
+                			
+                			
+                			
+                		});
+                		 
+                		request.fail(function( jqXHR, textStatus ) {
+                		  alert( "Request failed: " + textStatus );
+                		}); 
+        			
+        		}
         		$('.right-sidebar').html('');
         	
         	}else{

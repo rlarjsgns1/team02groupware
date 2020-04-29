@@ -21,7 +21,8 @@
   	</resultMap>
 	
 	<!-- 채팅방 리스트 select -->
-	<select id="selectChatRoomList" resultMap="selectChatRoomList" parameterType="Object">
+	<select id="selectChatRoomList" resultMap="selectChatRoomList" parameterType="String">
+		
 		SELECT
 			crl.chat_room_code,
 			crl.chat_room_title,
@@ -29,7 +30,7 @@
 			date_format(msg.chat_message_date,'%Y-%m-%d %H:%i') as chat_message_date,
 			msg.chat_message_content,
 			msg.chat_message_code,
-			(msg.chat_message_code - tb1.last_chat_message_code) AS unReadMsgCount
+			(msg.chat_message_code - tb1.last_chat_message_code) as unReadMsgCount
 		FROM
 			(SELECT
 				*
@@ -62,20 +63,24 @@
 					cc.chat_message_code
 					=
 					ccc.msc) AS msg
-			on
-			tb1.chat_room_code
-			=
-			msg.chat_room_code
-			INNER join
-			chat_room_list AS crl
-			on
-			tb1.chat_room_code
-			=
-			crl.chat_room_code
-	
+					
+					on
+					tb1.chat_room_code
+					=
+					msg.chat_room_code
+					
+					INNER join
+					
+					chat_room_list AS crl
+					on
+					tb1.chat_room_code
+					=
+					crl.chat_room_code
+			
 	</select>
 	
-	<!-- 채팅방 마지막 읽은 메시지 select -->
+	
+	<!-- 채팅방 마지막 읽은 메시지
 	<select id="selectUnReadMessageCount" resultType="String" parameterType="String">
 	
 		SELECT 
@@ -87,10 +92,7 @@
 			AND 
 			cl.chat_message_code >= ${chatMsgCode}
 	
-	</select>
-	
-	
-	
+	</select> -->
 	
 	
 	<!-- 채팅방 상세보기 resultMap -->
@@ -267,6 +269,7 @@
     	
   	</resultMap>
   	
+  	<!-- 마지막으로 읽은 메시지 update -->
   	<update id="updateLastChatMessage" parameterType="String">
   		UPDATE 
   			chat_room_per_user AS cr

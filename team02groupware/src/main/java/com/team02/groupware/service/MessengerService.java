@@ -21,8 +21,7 @@ public class MessengerService {
 	// 채팅방 리스트 조회
 	public List<Map<String,Object>> selectChatRoomList(String userId) {
 		
-		List<Map<String,Object>> chatRoomListMap = new ArrayList<Map<String,Object>>();
-		chatRoomListMap = messengerMapper.selectChatRoomList(userId);
+		List<Map<String,Object>> chatRoomListMap = messengerMapper.selectChatRoomList(userId);
 		
 		System.out.println("채팅방리스트 투스트링 : " + chatRoomListMap.toString());
 		System.out.println("시간 테스트 서비스단 : " + (String)chatRoomListMap.get(0).get("chatMsgDate"));
@@ -66,8 +65,6 @@ public class MessengerService {
 			prevGroupName = currentGroupName;
 			System.out.println(userList.get(i).get("check")+"리스트 셀렉트 테스트 ");
 		}
-		
-		
 		
 		return userList;
 	}
