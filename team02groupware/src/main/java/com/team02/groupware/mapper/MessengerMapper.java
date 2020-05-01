@@ -32,5 +32,9 @@ public interface MessengerMapper {
 	public void updateLastChatMessage(String userId, String chatRoomCode);
 
 	public String selectUnReadMessageCount(Object chatMsgCode, Object chatRoomCode);
+
+	public Map<String, Object> selectNewChatRoom(String chatRoomCode);
+
+	public void updateNewChatRoomMsg(String userId, String chatRoomCode);
 	
 }

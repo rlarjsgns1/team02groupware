@@ -142,6 +142,18 @@ public class MessengerController {
 		return null;
 	}
 	
+	//
+	@GetMapping("/selectNewChatRoom")
+	public String selectNewChatRoom(Model model, HttpSession session, @RequestParam(value="chatRoomCode") String chatRoomCode){
+		
+		System.out.println("selectNewChatRoom");
+		Map<String,Object> roomInfo = messengerService.selectNewChatRoom(chatRoomCode);
+		String userId = (String) session.getAttribute("userId");
+		messengerService.updateNewChatRoomMsg(userId, chatRoomCode);
+		model.addAttribute("roomInfo", roomInfo);
+		return "messenger/newChatRoom";
+	}
+	
 	
 	
 	

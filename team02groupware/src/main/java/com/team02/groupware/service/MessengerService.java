@@ -42,7 +42,7 @@ public class MessengerService {
 	public void insertChatMessage(ChatMessage chatMessage) {
 		
 		messengerMapper.insertChatMessage(chatMessage);
-		
+		messengerMapper.updateLastChatMessage(chatMessage.getUserId(), chatMessage.getChatRoomCode());
 	}
 	
 	// 유저 리스트 Select
@@ -92,6 +92,20 @@ public class MessengerService {
 	public void updateLastChatMessage(String userId, String chatRoomCode) {
 		
 		messengerMapper.updateLastChatMessage(userId, chatRoomCode);
+	}
+	
+	// selectNewChatRoom
+	public Map<String, Object> selectNewChatRoom(String chatRoomCode) {
+			
+		Map<String,Object> roomInfo = messengerMapper.selectNewChatRoom(chatRoomCode);
+		
+		return roomInfo;
+	}
+	
+	// 채팅방 생성시 읽은 메시지 업데이트
+	public void updateNewChatRoomMsg(String userId, String chatRoomCode) {
+		
+		messengerMapper.updateNewChatRoomMsg(userId, chatRoomCode);
 	}
 	
 	

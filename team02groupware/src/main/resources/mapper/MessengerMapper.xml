@@ -236,7 +236,6 @@
 	
 	<!-- 새 대화방 생성시 메시지 -->
 	<insert id="insertCreateChatMessage" parameterType="map">
-		
 		INSERT INTO 
 			chat_message_log
 			(chat_message_code, 
@@ -245,7 +244,17 @@
 			chat_room_code, 
 			chat_message_type)
 		VALUES 
-			(NULL, NOW(), '새로운 대화방이 생성되었습니다.', ${roomCode}, 'CREATE')
+			(NULL, NOW(), '', ${roomCode}, 'CREATE');
+			
+		INSERT INTO 
+			chat_message_log
+			(chat_message_code, 
+			chat_message_date, 
+			chat_message_content, 
+			chat_room_code, 
+			chat_message_type)
+		VALUES 
+			(NULL, NOW(), '새로운 대화방입니다.', ${roomCode}, 'CREATE');
 		
 		
 	</insert>
@@ -287,7 +296,44 @@
 			and
 			cr.chat_room_code = ${chatRoomCode}
   	
-  	</update>	
-
+  	</update>
+  	
+  	<!-- 마지막으로 읽은 메시지 update 채팅방 생성시 -->
+  	<update id="updateNewChatRoomMsg" parameterType="String">
+  		UPDATE 
+  			chat_room_per_user AS cr
+		SET
+			last_chat_message_code
+			= 
+			(SELECT
+				MAX(chat_message_code) -1
+			FROM 
+				chat_message_log AS cml
+			WHERE
+				cml.chat_room_code = ${chatRoomCode})
+		WHERE
+			cr.chat_user_id = #{userId}
+			and
+			cr.chat_room_code = ${chatRoomCode}
+  	
+  	</update>
+  	
+  	<!-- selectNewChatRoom -->	
+	<select id="selectNewChatRoom" resultMap="selectNewChatRoom" parameterType="String">
+		SELECT 
+			chat_room_code, chat_room_title, chat_room_user_count, chat_room_date
+		FROM 
+			chat_room_list AS cl
+		WHERE
+			cl.chat_room_code = ${chatRoomCode}
+	
+	</select>
+	
+	<resultMap type="map" id="selectNewChatRoom">
+		<result property="roomCode" column="chat_room_code"/>
+		<result property="roomName" column="chat_room_title"/>
+		<result property="roomCount" column="chat_room_user_count"/>
+		
+	</resultMap>
 
 </mapper>

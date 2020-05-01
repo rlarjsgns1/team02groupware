@@ -141,18 +141,25 @@
 				
 				console.log(data)
 				$('.chat-list-div').append(data)
-				
+				var chatRoomCode = $('.chat-list-room:last').find('.chat-room-code').val();
 				$('.chat-list-room:last').click();
 				var chatMessage = {
 			            
-			            content: '새로운 대화방이 생성되었습니다.',
+						userId: userId,
+			            content: '새로운 대화방입니다.',
 			            type: 'CREATE',
+			            chatRoomCode: chatRoomCode
 			           
 			        };
-				setTimeout(function(){
-					
-					stompClient.send("/app/chat.createChatRoom", {}, JSON.stringify(chatMessage));
-				}, 300)
+				
+				memberTag.each(function(){
+			
+					var memberId = $(this).val();
+					stompClient.send("/app/chat.sendMessage/"+memberId+"", {}, JSON.stringify(chatMessage));
+				
+				})
+				stompClient.send("/app/chat.sendMessage/"+userId+"", {}, JSON.stringify(chatMessage));
+				
 				
 			});
 			 

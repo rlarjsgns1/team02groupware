@@ -162,13 +162,58 @@ console.log(userNickName, userId);
 		var msgUserNickName = message.userNickName;
 		var msgRoomCode = message.chatRoomCode;
 		var chatRoom = $('body').find('.chat-room-'+msgRoomCode+'');
+		var chatRoomCode = chatRoom.find('.chat-room-view-code').val();
 		var chatListRoom = $('body').find('.chat-list-room-'+msgRoomCode+'');
 		console.log(message, 'fn_onMessageReceived')
 		
 		switch(msgType){
 		
 		case 'CREATE' :
-			fn_drawReceiveMsg(chatRoom, message)
+			
+			var request = $.ajax({
+	        	url: '/selectNewChatRoom',
+	        	method: "GET",
+	        	data: {chatRoomCode: msgRoomCode}
+	        });
+	        
+	        request.done(function( data ) {
+	        	
+	        	if(userId != msgUserId){
+	        		
+	        		$('.new-message-notice').text('!')
+	        		
+	        		if($('.right-sidebar-toggle').hasClass('active')){
+	        			
+	        			$('.chat-list-div').append(data)
+	        			
+	        			var chatListRoom = $('body').find('.chat-list-room-'+msgRoomCode+'');
+	        			chatListRoom.find('.chat-list-room-badge').addClass('new');
+	        		}
+	        	}else {
+	        		
+	        		var request3 = $.ajax({
+			        	url: '/updateLastChatMessage',
+			        	method: "GET",
+			        	data: {chatRoomCode: msgRoomCode}
+			        });
+			        
+			        request3.done(function( data ) {
+			        	console.log(data, '채팅방 켜져있을때 메시지 수신시 업데이트')
+			        	
+			        });
+			        
+			        request3.fail(function( jqXHR, textStatus ) {
+			        	alert( "Request failed: " + textStatus );
+			        });
+	        	}
+	        	
+	        	
+	        });
+	        
+	        request.fail(function( jqXHR, textStatus ) {
+	        	alert( "Request failed: " + textStatus );
+	        });
+			
 			break;
 		
 		case 'JOIN' :
@@ -194,6 +239,20 @@ console.log(userNickName, userId);
 					console.log('fn_onMessageReceived 디스플레이 블락')
 					fn_drawReceiveMsg(chatRoom, message)
 					
+					var request = $.ajax({
+			        	url: '/updateLastChatMessage',
+			        	method: "GET",
+			        	data: {chatRoomCode: chatRoomCode}
+			        });
+			        
+			        request.done(function( data ) {
+			        	console.log(data, '채팅방 켜져있을때 메시지 수신시 업데이트')
+			        	
+			        });
+			        
+			        request.fail(function( jqXHR, textStatus ) {
+			        	alert( "Request failed: " + textStatus );
+			        }); 
 				}else{
 					
 					var unReadMsgCount = chatListRoom.find('.unread-message-count').val();
