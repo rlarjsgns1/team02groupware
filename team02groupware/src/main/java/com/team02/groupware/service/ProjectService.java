@@ -47,6 +47,11 @@ public class ProjectService {
 		return projectMapper.selectMyTask(userCode);
 	}
 	
+	//업무리스트코드 수정(칸반)
+	public int updateTasklistcode() {
+		return projectMapper.updateTasklistcode();
+	}
+	
 	//업무 추가
 	public int taskInsert(Project project) {
 		return projectMapper.taskInsert(project);
@@ -54,9 +59,7 @@ public class ProjectService {
 	
 	//업무리스트별 업무상세정보 조회
 	public List<Project> getTaskdetail(String projectCode){
-		List<Project> taskDetail = new ArrayList<Project>();
-		taskDetail = projectMapper.getTaskdetail(projectCode);
-		return taskDetail;
+		return projectMapper.getTaskdetail(projectCode);
 	}
 	
 	//업무리스트 삭제

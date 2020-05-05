@@ -18,6 +18,7 @@
 		<result property="projectEnd" column="project_end" />
 		
 		<result property="taskCode" column="task_code" />
+		<result property="taskOrder" column="task_order" />
 		<result property="taskTitle" column="task_title" />
 		<result property="taskDesc" column="task_desc" />
 		<result property="taskDate" column="task_date" />
@@ -121,6 +122,14 @@
 			TD.task_date DESC;
 	</select>
 
+	<update id="updateTasklistcode" parameterType="String">
+		UPDATE project_task_detail
+		SET
+			tasklist_code= #{tasklistCode}
+		WHERE
+			task_code = #{taskCode};
+	
+	</update>
 	
 
 	<!-- 업무 추가 -->
@@ -140,11 +149,18 @@
 			FROM
 				project_task_detail
 		</selectKey>
+		<!-- <selectKey keyProperty="taskOrder" resultType="String" order="BEFORE">
+			SELECT
+				MAX(task_order) + 1
+			FROM
+				project_task_detail
+		</selectKey> -->
 		INSERT INTO
 			project_task_detail(
 			task_code
 			, project_code
 			, tasklist_code
+			, task_order
 			, task_title
 			, task_desc
 			, task_date
@@ -156,6 +172,13 @@
 			#{taskCode}
 			, #{projectCode}
 			, #{tasklistCode}
+			, (SELECT
+				MAX(TD.task_order) + 1
+				FROM
+				project_task_detail AS TD
+				WHERE
+				TD.tasklist_code=#{tasklistCode}
+				)
 			, #{taskTitle}
 			, #{taskDesc}
 			, NOW()
@@ -178,7 +201,9 @@
 			FROM
 				project_task_detail AS TD
 			WHERE
-				TD.project_code=#{projectCode};
+				TD.project_code=#{projectCode}
+			ORDER BY
+				TD.task_order;
 	</select>
 
 	
@@ -253,6 +278,7 @@
 			PL.project_code=#{projectCode};
 	</select>
 
+	<!-- 프로젝트 삭제 -->
 	<delete id="projectDelete" parameterType = "String">
 		DELETE
 		FROM
@@ -262,9 +288,6 @@
 		
 	</delete>
 	
-
-
-
 
 	<!-- 프로젝트 한개 상세정보 조회-->
 	<select id="selectForProUpdate" parameterType="String" resultMap="projectResultMap">

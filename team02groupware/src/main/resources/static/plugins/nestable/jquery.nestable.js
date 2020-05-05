@@ -84,89 +84,7 @@
                 }
             });
             
-            //업무 업데이트 모달창 열기
-            $(".task-dd-item").on('click', function() {
-				
-				event.stopPropagation();
-				
-				//var delTask = $(this).
-				var taskCode = $(this).find('input').val();
-				var delTask = $(this);
-					
-				var request = $.ajax({
-					url: "/taskUpdateModal",
-					method:"GET",
-					data: {
-						'taskCode' : taskCode
-					},
-					dataType: "html"
-				})
-						request.done(function(data) {
-							// console.log('성공');
-							console.log(data);
-							if($('#editLayoutItem').length > 0){				
-								$('#editLayoutItem').remove();
-							}
-							$('body').append(data);
-							
-							$('.select2').select2();
-								
-							$(".member-update-btn").click(function() {
-								$('#update-select2').select2('open');
-							})
-							
-							$('#editLayoutItem').modal({
-								backdrop : 'static'
-				
-							})
-						
-							var taskDelete = $('.task-delete-btn');
-				           	 	taskDelete.on('click', function() {
-				                swal({
-				                    title: "해당 업무를 삭제하시겠습니까?",
-				                    icon: "warning",
-				                    buttons: ["취소", "삭제"],
-				                    dangerMode: true,
-				                })
-				                .then((willDelete) => {
-				                    if (willDelete) {
-				                    	console.log('삭제버튼클릭');
-				                    	var request = $.ajax({
-				                    	  url: "/taskDelete",
-				                    	  method: "POST",
-				                    	  data: { 'taskCode' : taskCode },
-				                    	  dataType: "json"
-				                    	});
-				                    	 
-				                    	request.done(function( data ) {
-				                    		console.log('삭제');
-				                    		console.log(data.result);
-				                    		if(data.result==1){
-				                    			delTask.remove();
-				                    		}
-				                    		$('.close').click();
-				                    		
-				                    		
-				                    	});
-				                    	 
-				                    	request.fail(function( jqXHR, textStatus ) {
-				                    	  alert( "Request failed: " + textStatus );
-				                    	});
-				                    	
-				                        swal({
-				                            title: "업무가 삭제되었습니다.",
-				                            icon: "success",
-				                        });
-				                    } else {
-				                        swal("삭제가 취소되었습니다.");
-				                    }
-				                });
-				            });
-						});
-						request.fail(function( jqXHR, textStatus ) {
-							alert( "Request failed: " + textStatus );
-						}); 
-			})
+            
 			
 			
 			
@@ -208,6 +126,7 @@
                 if (list.dragEl) {
                     e.preventDefault();
                     list.dragStop(e.touches ? e.touches[0] : e);
+                    
                 }
             };
 
@@ -221,7 +140,7 @@
             list.el.on('mousedown', onStartEvent);
             list.w.on('mousemove', onMoveEvent);
             list.w.on('mouseup', onEndEvent);
-
+            
             
             
 
@@ -491,7 +410,7 @@
             }
             this.pointEl = $(document.elementFromPoint(e.pageX - document.body.scrollLeft, e.pageY - (window.pageYOffset || document.documentElement.scrollTop)));
             if (!hasPointerEvents) {
-                this.dragEl[0].style.visibility = 'visible';
+                this.dragEl[0].style.visibility = 'visible'; 
             }
             if (this.pointEl.hasClass(opt.handleClass)) {
                 this.pointEl = this.pointEl.parent(opt.itemNodeName);

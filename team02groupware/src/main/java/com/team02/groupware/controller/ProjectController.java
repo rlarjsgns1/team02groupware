@@ -141,6 +141,7 @@ public class ProjectController {
 	}
 	
 	
+	//업무리스트코드 수정 메서드
 	
 	
 	//업무 추가 ajax 메서드
@@ -170,7 +171,11 @@ public class ProjectController {
 		System.out.println(resultMap);
 		return resultMap;
 	}
-	
+	/*
+	//칸반보드 업무 이동 ajax메서드
+	@PostMapping("/taskKanban")
+	@ResponseBody
+	*/
 	
 	//업무리스트 추가 ajax 메서드
 	@PostMapping("/tasklistInsert")
