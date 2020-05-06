@@ -10,13 +10,20 @@
 	<select id="selectEmployee" resultMap="selectEmployee" parameterType="EmployeeDto">
 	
 		SELECT 
-			employee_name, 
-			employee_id, 
-			employee_pw, 
-			employee_nickname,
-			employee_code
+			e.employee_name as employee_name, 
+			e.employee_id as employee_id, 
+			e.employee_pw as employee_pw, 
+			e.employee_nickname as employee_nickname,
+			e.employee_code as employee_code,
+			ea.auth_name as employee_level
 		FROM 
 			employee AS e
+			INNER join
+			employee_authority AS ea
+			on
+			e.auth_code
+			=
+			ea.auth_code
 		WHERE
 			e.employee_id = #{userId}
 			and
@@ -32,6 +39,7 @@
     	<result property="userName" column="employee_name"/>
     	<result property="userNickName" column="employee_nickname"/>
     	<result property="userCode" column="employee_code"/>
+    	<result property="userLevel" column="employee_level"/>
     	
   	</resultMap>	
 

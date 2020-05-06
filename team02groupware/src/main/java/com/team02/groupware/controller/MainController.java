@@ -1,5 +1,7 @@
 package com.team02.groupware.controller;
 
+import java.lang.ProcessBuilder.Redirect;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,29 +51,45 @@ public class MainController {
 	@RequestMapping("/index")
 	public String index(Model model, HttpSession session, EmployeeDto eDto) {
 
-		if (!"ok".equals(session.getAttribute("login"))) {
+		
+				
+		
+		return "index";
+	}
+	
+	// 로그인 체크
+	@RequestMapping("/loginCheck")
+	public String loginCheck(Model model, HttpSession session, EmployeeDto eDto, RedirectAttributes redirectA) {
 
-			System.out.println("인덱스 세션 실행 테스트 ****");
-			EmployeeDto empDto = loginService.selectEmployee(eDto);
-			System.out.println("로그인체크" + eDto.toString());
-
-			System.out.println("로그인 체크 후" + empDto.toString());
+		String returnURL = "";
+		EmployeeDto empDto = loginService.selectEmployee(eDto);
+		
+		if(empDto != null) {		// 로그인 성공시
+			
 			session.setAttribute("userId", empDto.getUserId());
 			session.setAttribute("userName", empDto.getUserName());
 			session.setAttribute("userNickName", empDto.getUserNickName());
+			session.setAttribute("userLevel", empDto.getUserLevel());
 			session.setAttribute("userCode", empDto.getUserCode());
 			session.setAttribute("login", "ok");
-
-			model.addAttribute("userId", empDto.getUserId());
-			model.addAttribute("userName", empDto.getUserName());
-			model.addAttribute("userNickName", empDto.getUserNickName());
-			model.addAttribute("userCode", empDto.getUserCode());
-
+			/*
+			 * redirectA.addAttribute("userId", empDto.getUserId());
+			 * redirectA.addAttribute("userName", empDto.getUserName());
+			 * redirectA.addAttribute("userNickName", empDto.getUserNickName());
+			 * redirectA.addAttribute("userCode", empDto.getUserCode());
+			 * redirectA.addAttribute("userLevel", empDto.getUserLevel());
+			 */
+			
+			returnURL = "redirect:/index";
+			
+		}else {		// 로그인 실패시
+			returnURL = "redirect:/loginPage";
 		}
-
-		return "index";
+		
+		return returnURL;
 	}
-
+	
+	
 	@GetMapping("/loginPage")
 	public String loginPage() {
 
@@ -84,8 +102,6 @@ public class MainController {
 		session.invalidate();
 		return "redirect:/loginPage";
 	}
-
-	
 
 	@GetMapping("/test")
 	public String test() {

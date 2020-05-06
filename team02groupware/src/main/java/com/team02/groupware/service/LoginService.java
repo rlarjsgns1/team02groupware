@@ -18,8 +18,7 @@ public class LoginService {
 	
 	public EmployeeDto selectEmployee(EmployeeDto eDto) {
 		
-		EmployeeDto empDto = new EmployeeDto();
-		empDto = EmployeeMapper.selectEmployee(eDto);
+		EmployeeDto empDto = EmployeeMapper.selectEmployee(eDto);
 		
 		return empDto;
 	

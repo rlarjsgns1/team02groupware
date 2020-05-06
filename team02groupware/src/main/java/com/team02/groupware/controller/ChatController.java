@@ -46,7 +46,6 @@ public class ChatController {
 		System.out.println(chatMessage.getChatRoomCode());
 		
 		
-		
         return chatMessage;
     }
 

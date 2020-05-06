@@ -110,6 +110,7 @@ public class MessengerController {
 		model.addAttribute("userId", userId);
 		model.addAttribute("roomCode", roomCode);
 		model.addAttribute("chatRoomMember", chatRoomMember);
+		
 		return "messenger/chatRoomView";
 	}
 	
