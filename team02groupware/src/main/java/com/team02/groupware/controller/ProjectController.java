@@ -226,9 +226,11 @@ public class ProjectController {
 		) {
 			
 			System.out.println("binding test=" + projectCode);
-			Project resultProject=projectService.selectForProUpdate(projectCode);
+			Project resultProject = projectService.selectForProUpdate(projectCode);
 			
 			System.out.println("binding test2=" + resultProject.toString());
+		
+			/*
 			Map<String, Object> resultMap = new HashMap<String, Object>();
 			resultMap.put("code", resultProject.getProjectCode());
 			resultMap.put("date", resultProject.getProjectDate());
@@ -237,7 +239,8 @@ public class ProjectController {
 			resultMap.put("start", resultProject.getProjectStart());
 			resultMap.put("dead", resultProject.getProjectDeadline());
 			resultMap.put("end", resultProject.getProjectEnd());
-			model.addAttribute("resultMap", resultMap);
+			*/
+			model.addAttribute("resultProject", resultProject);
 			System.out.println("위치테스트");
 			return "project/modal/projectUpdateModal";
 		}

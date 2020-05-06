@@ -13,9 +13,9 @@ public class Project {
 	private String projectDesc;	// 프로젝트설명
 	private String projectAccess;	// 프로젝트공개범위
 	private String projectStatus;	// 프로젝트상태
-	private Date projectStart;	// 프로젝트시작일
-	private Date projectEnd;	// 프로젝트실제완료일
-	private Date projectDeadline;	// 프로젝트마감일
+	private String projectStart;	// 프로젝트시작일
+	private String projectEnd;	// 프로젝트실제완료일
+	private String projectDeadline;	// 프로젝트마감일
 	
 	public String getProjectCode() {
 		return projectCode;
@@ -61,22 +61,22 @@ public class Project {
 	public void setProjectStatus(String projectStatus) {
 		this.projectStatus = projectStatus;
 	}
-	public Date getProjectStart() {
+	public String getProjectStart() {
 		return projectStart;
 	}
-	public void setProjectStart(Date projectStart) {
+	public void setProjectStart(String projectStart) {
 		this.projectStart = projectStart;
 	}
-	public Date getProjectEnd() {
+	public String getProjectEnd() {
 		return projectEnd;
 	}
-	public void setProjectEnd(Date projectEnd) {
+	public void setProjectEnd(String projectEnd) {
 		this.projectEnd = projectEnd;
 	}
-	public Date getProjectDeadline() {
+	public String getProjectDeadline() {
 		return projectDeadline;
 	}
-	public void setProjectDeadline(Date projectDeadline) {
+	public void setProjectDeadline(String projectDeadline) {
 		this.projectDeadline = projectDeadline;
 	}
 	public String getProjectDate() {

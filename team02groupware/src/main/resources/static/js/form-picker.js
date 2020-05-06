@@ -95,6 +95,7 @@
             inline: true,
             sideBySide: true
         });
+       
         $('#datepicker').datetimepicker({
             format: 'L'
         });
