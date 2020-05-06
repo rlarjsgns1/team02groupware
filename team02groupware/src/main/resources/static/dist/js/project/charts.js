@@ -65,6 +65,6 @@ $(function() {
 			alert("Request failed: " + textStatus);
 		});
 
-	}, 60000);
+	}, 3000);
 
 });
