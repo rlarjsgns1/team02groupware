@@ -114,7 +114,7 @@
 					
 							<ol class="task-dd-list dd-list">
 								<th:block th:each="td:${taskDetail}" th:if="${td.tasklistCode}==${tl.tasklistCode}">
-									<li class="task-dd-item dd-item" data-id="1">
+									<li class="task-dd-item dd-item" th:data-id="${td.taskOrder}">
 										<input type="hidden" th:value="${td.taskCode}">
 										<div class="task-dd-handle dd-handle">
 											<p class="tasktitleClone" th:text="${td.taskTitle}"></p>
@@ -166,7 +166,7 @@
 	<script src="dist/js/theme.min.js"></script>
 	<script src="plugins/sweetalert/dist/sweetalert.min.js"></script>
 
-	<script src="js/taskboard.js"></script>
+
 	<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 	<script>
 		(

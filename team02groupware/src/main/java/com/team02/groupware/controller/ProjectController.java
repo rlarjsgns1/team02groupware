@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,11 +60,21 @@ public class ProjectController {
 	}
 	
 	
+	//업무 추가 모달
+	/*
+	 * @GetMapping("/taskInsertModal")
+	 * 
+	 * @ResponseBody public String taskModal1(Httpsession session) {
+	 * 
+	 * }
+	 */
+	
+	
 	//업무 수정 모달 
-	@GetMapping("/taskModalopen")
+	@GetMapping("/taskUpdateModal")
 	public String taskModal(Model model, @RequestParam(value="taskCode") String taskCode) {
 		System.out.println("binding test=" + taskCode);
-		Project resultProject=projectService.selectForTaskUpdate(taskCode);
+		Project resultProject = projectService.selectForTaskUpdate(taskCode);
 		
 		System.out.println("binding test2=" + resultProject.toString());
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -78,44 +89,74 @@ public class ProjectController {
 		System.out.println("위치테스트");
 		return "project/modal/taskUpdateModal";
 	}
-			
-	
 	//내 업무 상태 '완료'처리 메서드
-	@GetMapping("/taskSuccess")
+		@GetMapping("/taskSuccess")
+		@ResponseBody
+		public Map<String, Object> taskSuccess(@RequestParam(value="taskCode")String taskCode) {
+			System.out.println("------taskSuccess");
+			Map<String, Object> resultMap = new HashMap<String, Object>();
+			resultMap.put("result", projectService.taskStatusUpdate(taskCode));
+			return resultMap;
+		}
+		
+
+	//업무 현황 차트 메서드
+	@GetMapping("/taskChart")
 	@ResponseBody
-	public Map<String, Object> taskSuccess(@RequestParam(value="taskCode")String taskCode) {
-		System.out.println("------taskSuccess");
+	public Map<String, Object> selectForTaskChart(HttpSession session) {
+		System.out.println("------taskCharts");
+		String userCode = (String) session.getAttribute("userCode");
+		System.out.println(userCode+" 세션 회원코드 확인");
+		Project resultChart = projectService.selectForTaskChart(userCode);
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("result", projectService.taskStatusUpdate(taskCode));
+		resultMap.put("taskSuccess", resultChart.getTaskSuccess());
+		resultMap.put("taskNodeadline", resultChart.getTaskNodeadline());
+		resultMap.put("taskAfterDeadline", resultChart.getTaskAfterDeadline());
+		resultMap.put("taskPlanning", resultChart.getTaskPlanning());
+		System.out.println(resultMap);
 		return resultMap;
+		
 	}
+	
 	
 	//내 업무 조회 메서드
 	@GetMapping("/myTasks")
-	public String selectMyTask(Model model, String employeeCode) {
+	public String selectMyTask(Model model, HttpSession session) {
 		System.out.println("-------selectMyTask");
+		String userCode = (String) session.getAttribute("userCode");
+		System.out.println(userCode+" 세션 회원코드 확인");
 		List<Project> myTasklist = new ArrayList<Project>();
-		myTasklist = projectService.selectMyTask(employeeCode);
+		myTasklist = projectService.selectMyTask(userCode);
+		Project resultChart = projectService.selectForTaskChart(userCode);
 		System.out.println(myTasklist);
+		//System.out.println(resultChart.getTaskSuccess()+"<-----완료된업무");
 		model.addAttribute("myTasklist", myTasklist);
+		model.addAttribute("taskSum", resultChart.getTaskSum());
+		model.addAttribute("taskSuccess", resultChart.getTaskSuccess());
+		model.addAttribute("taskNodeadline", resultChart.getTaskNodeadline());
+		model.addAttribute("taskAfterDeadline", resultChart.getTaskAfterDeadline());
+		model.addAttribute("taskPlanning", resultChart.getTaskPlanning());
+		
 		return "project/myTasks";
 	}
 	
 	
+	//업무리스트코드 수정 메서드
 	
 	
 	//업무 추가 ajax 메서드
 	@PostMapping("/taskInsert")
 	@ResponseBody
-	public Map<String,Object> taskInsert(Project project) {
+	public Map<String,Object> taskInsert(Project project, HttpSession session) {
 		System.out.println("---------taskInsert");
-		System.out.println(project.toString());
+		String userCode = (String) session.getAttribute("userCode");
+		project.setEmployeeCode(userCode);
 		int result = projectService.taskInsert(project);
 		System.out.println(result + "<-- 업무 추가 성공");
 		String tasklistCode = projectService.selectTasklistcode();
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		resultMap.put("tasklistCode", tasklistCode);
-		System.out.println(tasklistCode + "<---------tasklistCode확인");
+		
 		return resultMap;
 	}
 	
@@ -130,7 +171,11 @@ public class ProjectController {
 		System.out.println(resultMap);
 		return resultMap;
 	}
-	
+	/*
+	//칸반보드 업무 이동 ajax메서드
+	@PostMapping("/taskKanban")
+	@ResponseBody
+	*/
 	
 	//업무리스트 추가 ajax 메서드
 	@PostMapping("/tasklistInsert")
@@ -186,9 +231,11 @@ public class ProjectController {
 		) {
 			
 			System.out.println("binding test=" + projectCode);
-			Project resultProject=projectService.selectForProUpdate(projectCode);
+			Project resultProject = projectService.selectForProUpdate(projectCode);
 			
 			System.out.println("binding test2=" + resultProject.toString());
+		
+			/*
 			Map<String, Object> resultMap = new HashMap<String, Object>();
 			resultMap.put("code", resultProject.getProjectCode());
 			resultMap.put("date", resultProject.getProjectDate());
@@ -197,7 +244,8 @@ public class ProjectController {
 			resultMap.put("start", resultProject.getProjectStart());
 			resultMap.put("dead", resultProject.getProjectDeadline());
 			resultMap.put("end", resultProject.getProjectEnd());
-			model.addAttribute("resultMap", resultMap);
+			*/
+			model.addAttribute("resultProject", resultProject);
 			System.out.println("위치테스트");
 			return "project/modal/projectUpdateModal";
 		}
@@ -205,28 +253,34 @@ public class ProjectController {
 		
 	//프로젝트 추가 메서드
 	@PostMapping("/projectInsert")
-	public String projectInsert(Project project, RedirectAttributes model){
-
-		System.out.println(project.getProjectTitle()+"<------------프로젝트 추가시 넘길때 필요한 프로젝트 제목");
+	public String projectInsert(Project project, RedirectAttributes model, HttpSession session){
+		String userCode = (String) session.getAttribute("userCode");
+		project.setEmployeeCode(userCode);
 		int result = projectService.projectInsert(project);
 		String projectTitle = project.getProjectTitle();
 		String projectCode = project.getProjectCode();
 		System.out.println(result);
 		
 		if(result > 0 ) {
+			
 			model.addAttribute("projectCode", projectCode);
 			model.addAttribute("projectTitle", projectTitle);
 			return "redirect:/taskList";
 		}
 		return "redirect:/projectInsert";
 	}
+
+	
 	
 	//프로젝트  리스트 조회 메서드
 	@GetMapping("/projectList")
 	public String getProjectList(@RequestParam(value="currentPage", required=false, defaultValue="1") int currentPage
-			,Model model) {
+			,HttpSession session, Model model) {
 		logger.info("currentPage :: {}", currentPage);
-		Map<String, Object> map = projectService.getProjectlist(currentPage);
+		String userCode = (String) session.getAttribute("userCode");
+		Map<String, Object> map = projectService.getProjectlist(currentPage, userCode);
+
+		model.addAttribute("employeeList", projectService.selectForAddEmployee());
 		model.addAttribute("projectList", map.get("projectList"));
 		model.addAttribute("currentPage", map.get("currentPage"));
 		model.addAttribute("lastPage", map.get("lastPage"));

@@ -4,12 +4,12 @@
  * */
 
 $(function() {
+	
 	// 업무 체크박스 클릭시 사라짐
 	$(document).on('click','.task-checkbox',function(){
 		var taskCode = $(this).siblings('input[name="taskCode"]').val();
 		var delTask = $(this).parents('.mytask-item');
-		console.log('체크박스 클릭');
-		console.log(taskCode);
+		
 		var request = $.ajax({
 			url: "/taskSuccess",
 			method: "GET",
@@ -19,10 +19,10 @@ $(function() {
 		});
 		
 		request.done(function( data ) {
-			console.log("done");
 			if(data.result==1){
 				delTask.slideUp();
 			}
+			
 		});
 		
 		request.fail(function( jqXHR, textStatus ) {
@@ -30,6 +30,12 @@ $(function() {
 		});
 	})
 
+	
+	//업무 추가 모달
+	$('.task-add-btn').click(function(){
+		console.log('업무추가버튼');
+		
+	})
 	
 	
 	
@@ -40,7 +46,7 @@ $(function() {
 	var taskModal = function(){
 		
 		var request = $.ajax({
-				url: "/taskModalopen",
+				url: "/taskUpdateModal",
 				method:"GET",
 				data: {
 					'taskCode' : taskCode
@@ -127,7 +133,7 @@ $(function() {
 	})
 	
 	
-	$(document).on('click', '.task-title',function() {
+	$(document).on('click', '.task-card-body',function() {
 			
 		delTask = $(this).parents('.mytask-item');
 		taskCode = $(this).parents('.mytask-item').find('input[name="taskCode"]').val();
@@ -135,5 +141,22 @@ $(function() {
 		console.log(taskCode);
 		taskModal();
 	})
+	
+	
+	//내 업무리스트 프로젝트명 클릭시 해당 taskList화면으로 이동
+	$(".project-tasklist").on('click',function() {
+		console.log('업무리스트로 이동');
+		var projectCode = $(this).find('.project-code-input').val();
+		var projectTitle = $(this).find('.projectTitle').text();
 		
+		console.log(projectCode);
+		console.log(projectTitle);
+		
+		location.href = '/taskList?projectCode='
+				+ projectCode + '&projectTitle='
+				+ projectTitle + '';
+
+	})
+	
+	
 });

@@ -5,6 +5,7 @@
 	
 	<resultMap type="com.team02.groupware.dto.Project" id="projectResultMap">
 		<result property="employeeCode" column="employee_code" />
+		<result property="employeeName" column="employee_name" />
 		
 		<result property="projectCode" column="project_code" />
 		<result property="projectStatus" column="project_status" />
@@ -17,6 +18,7 @@
 		<result property="projectEnd" column="project_end" />
 		
 		<result property="taskCode" column="task_code" />
+		<result property="taskOrder" column="task_order" />
 		<result property="taskTitle" column="task_title" />
 		<result property="taskDesc" column="task_desc" />
 		<result property="taskDate" column="task_date" />
@@ -27,8 +29,41 @@
 		
 		<result property="tasklistCode" column="tasklist_code" />
 		<result property="tasklistName" column="tasklist_name" />
+		
+		<result property="taskSum" column="task_sum" />
+		<result property="taskSuccess" column="task_success" />
+		<result property="taskNodeadline" column="task_nodeadline" />
+		<result property="taskAfterDeadline" column="task_afterdeadline" />
+		<result property="taskPlanning" column="task_planning" />
+		
+		
 	</resultMap>
 	
+	
+	
+	<!-- 업무 상태 조회(차트) -->
+	<select id="selectForTaskChart"  parameterType="String" resultMap="projectResultMap">
+
+	
+	SELECT
+		COUNT(1) AS task_sum
+		,COUNT(CASE WHEN TT.task_status = '완료' THEN 1 END) AS task_success
+		,COUNT(CASE WHEN TT.task_status = '진행중' AND TT.task_deadline IS NULL THEN 1 END) AS task_nodeadline
+		,COUNT(CASE WHEN TT.task_status = '진행중' AND TT.task_deadline > NOW() THEN 1 END) AS task_planning
+		,COUNT(CASE WHEN TT.task_status = '진행중' AND NOW() > TT.task_deadline THEN 1 END) AS task_afterdeadline
+	FROM
+		(SELECT
+			PET.employee_code	
+			,TD.*
+		FROM
+			project_employee_per_task AS PET
+			INNER JOIN
+			project_task_detail AS TD
+			ON
+			PET.task_code = TD.task_code)AS TT
+			WHERE
+				TT.employee_code = #{userCode};
+	</select>
 	
 	<!-- 업무 삭제  -->
 	<delete id="taskDelete" parameterType="String">
@@ -80,11 +115,21 @@
 			ON
 			PL.project_code = TL.project_code
 		WHERE
-			EPT.employee_code='EE001'
+			EPT.employee_code=#{userCode}
 			AND
-			TD.task_status != '완료';
+			TD.task_status != '완료'
+		ORDER BY
+			TD.task_date DESC;
 	</select>
 
+	<update id="updateTasklistcode" parameterType="String">
+		UPDATE project_task_detail
+		SET
+			tasklist_code= #{tasklistCode}
+		WHERE
+			task_code = #{taskCode};
+	
+	</update>
 	
 
 	<!-- 업무 추가 -->
@@ -104,11 +149,18 @@
 			FROM
 				project_task_detail
 		</selectKey>
+		<!-- <selectKey keyProperty="taskOrder" resultType="String" order="BEFORE">
+			SELECT
+				MAX(task_order) + 1
+			FROM
+				project_task_detail
+		</selectKey> -->
 		INSERT INTO
 			project_task_detail(
 			task_code
 			, project_code
 			, tasklist_code
+			, task_order
 			, task_title
 			, task_desc
 			, task_date
@@ -120,25 +172,38 @@
 			#{taskCode}
 			, #{projectCode}
 			, #{tasklistCode}
+			, (SELECT
+				MAX(TD.task_order) + 1
+				FROM
+				project_task_detail AS TD
+				WHERE
+				TD.tasklist_code=#{tasklistCode}
+				)
 			, #{taskTitle}
 			, #{taskDesc}
 			, NOW()
 			, #{taskDeadline}
 			, #{taskStart}
 			, #{taskEnd}
-			, '진행중')
+			, '진행중');
+			
+		INSERT INTO
+			project_employee_per_task
+			(employee_code, task_code)
+		VALUES 
+			(#{employeeCode}, #{taskCode});
 	</insert>
 	
 	<!-- 업무 상세정보 조회 -->
 	<select id="getTaskdetail" parameterType="String" resultMap="projectResultMap">
 			SELECT
-				TD.tasklist_code,
-				TD.task_title,
-				TD.task_code
+				TD.*
 			FROM
 				project_task_detail AS TD
 			WHERE
-				TD.project_code=#{projectCode};
+				TD.project_code=#{projectCode}
+			ORDER BY
+				TD.task_order;
 	</select>
 
 	
@@ -213,6 +278,7 @@
 			PL.project_code=#{projectCode};
 	</select>
 
+	<!-- 프로젝트 삭제 -->
 	<delete id="projectDelete" parameterType = "String">
 		DELETE
 		FROM
@@ -222,9 +288,6 @@
 		
 	</delete>
 	
-
-
-
 
 	<!-- 프로젝트 한개 상세정보 조회-->
 	<select id="selectForProUpdate" parameterType="String" resultMap="projectResultMap">
@@ -238,6 +301,16 @@
 	</select>
 
 
+
+
+	<!-- 프로젝트 추가 모달창 사원 조회 -->
+	<select id="selectForAddEmployee" parameterType = "String"  resultMap="projectResultMap">
+		SELECT
+			E.employee_code
+			,E.employee_name
+		FROM
+			employee AS E
+	</select>
 
 	<!-- 프로젝트 추가  -->
 	<insert id="projectInsert" parameterType="Project">
@@ -280,7 +353,14 @@
 			,#{projectDeadline}
 			,#{projectStart}
 			,#{projectEnd}
-			)
+			);
+			
+			
+		INSERT INTO
+			project_employee
+			(project_code, employee_code)
+		VALUES 
+			(#{projectCode}, #{employeeCode});
 	</insert>
 
 	<!-- 프로젝트 개수 조회 -->
@@ -292,21 +372,27 @@
 
 	</select>
 	
-	
+	<!-- 프로젝트 리스트 조회 -->
 	<select id="getProjectlist" parameterType="map" resultType="Project">
 		SELECT
-			project_code AS projectCode
-			,employee_code AS employeeCode
-			,project_title AS projectTitle
-			,project_date AS projectDate
-			,project_desc AS projectDesc
-			,project_access AS projectAccess
-			,project_status AS projectStatus
-			,project_start AS projectStart
-			,project_deadline AS projectDeadline
-			,project_end AS projectEnd
+			PL.project_code AS projectCode
+			,PL.employee_code AS employeeCode
+			,PL.project_title AS projectTitle
+			,PL.project_date AS projectDate
+			,PL.project_desc AS projectDesc
+			,PL.project_access AS projectAccess
+			,PL.project_status AS projectStatus
+			,PL.project_start AS projectStart
+			,PL.project_deadline AS projectDeadline
+			,PL.project_end AS projectEnd
 		FROM
-			project_list
+			project_employee AS PE
+			INNER JOIN
+			project_list AS PL
+			ON
+			PE.project_code = PL.project_code
+		WHERE
+			PE.employee_code = #{userCode}
 		ORDER BY
 			projectDate DESC
 		<if test="list == 'list'">

@@ -57,17 +57,18 @@ $(function() {
 				// 프로젝트 추가 모달
 					// submit 버튼 클릭시 프로젝트제목 유효성검사
 					$(".pr-submit-btn").click(function(checkInput) {
-								if ($('[name="projectTitle"]').val() == '') {
-									$('[name="projectTitle"]').css("border",
-											"1px solid red");
-									$('[name="projectTitle"]').focus();
-									return false;
-								}
-								
-								projectAddForm.action = "/projectInsert";
-								projectAddForm.submit();
+												
+						if ($('[name="projectTitle"]').val() == '') {
+							$('[name="projectTitle"]').css("border",
+									"1px solid red");
+							$('[name="projectTitle"]').focus();
+							return false;
+						}
+						
+						projectAddForm.action = "/projectInsert";
+						projectAddForm.submit();
 
-							})
+					})
 					// 멤버추가버튼 클릭시 셀렉트 활성화
 					$(".member-add-btn").click(function() {
 						$('#add-select2').select2('open');
@@ -80,6 +81,7 @@ $(function() {
 								
 								console.log(projectCode);
 								console.log(projectTitle);
+								
 								location.href = '/taskList?projectCode='
 										+ projectCode + '&projectTitle='
 										+ projectTitle + '';
@@ -97,13 +99,11 @@ $(function() {
 						// console.log('프로젝트 수정 버튼 클릭')
 					// 프로젝트 모달 바깥 영역 클릭X
 						event.stopPropagation();
-						/*
-						 * $('#editLayoutItem').modal({ backdrop : 'static' });
-						 */
+					
+						 
 						var delProject = $(this).parents('.project-list-wrap');
-						var projectCode = $(this).parents(".pr-header").find('.project-code-input').val();
-						console.log(projectCode);
-						
+						var projectCode = $(this).parent().parent('.pr-ikon').parents(".pr-header").find('.project-code-input').val();
+							console.log(projectCode);						
 						var request = $.ajax({
 							url: "/projectModalopen",
 							method:"GET",
@@ -111,71 +111,76 @@ $(function() {
 								'projectCode' : projectCode
 							},
 							dataType: "html"
-						})
-								request.done(function(data) {
-									// console.log('성공');
-									console.log(data);
-									if($('#editLayoutItem').length > 0){				
-										$('#editLayoutItem').remove();
-									}
-									$('body').append(data);
-									
-									$('.select2').select2();
-										
-									$(".member-update-btn").click(function() {
-										$('#update-select2').select2('open');
-									})
-									
-									$('#editLayoutItem').modal({
-										backdrop : 'static'
+						});
 						
-									})
+						
+						request.done(function(data) {									
+							
+							if($('#editLayoutItem').length > 0){				
+								$('#editLayoutItem').remove();
+							}							
+							
+							$('#editLayoutItem').modal({ backdrop : 'static' });
+							$('body').append(data);
 								
-									var listDelete = $('.project-delete-btn');
-						            listDelete.on('click', function() {
-						                swal({
-						                    title: "해당 프로젝트를 삭제하시겠습니까?",
-						                    icon: "warning",
-						                    buttons: ["취소", "삭제"],
-						                    dangerMode: true,
-						                })
-						                .then((willDelete) => {
-						                    if (willDelete) {
-						                    	console.log('삭제버튼클릭');
-						                    	var request = $.ajax({
-						                    	  url: "/projectDelete",
-						                    	  method: "POST",
-						                    	  data: { 'projectCode' : projectCode },
-						                    	  dataType: "json"
-						                    	});
-						                    	 
-						                    	request.done(function( data ) {
-						                    		console.log('삭제');
-						                    		console.log(data.result);
-						                    		if(data.result==1){
-						                    			delProject.remove();
-						                    		}
-						                    		$('.close').click();
-						                    		
-						                    		
-						                    	});
-						                    	 
-						                    	request.fail(function( jqXHR, textStatus ) {
-						                    	  alert( "Request failed: " + textStatus );
-						                    	});
-						                    	
-						                        swal({
-						                            title: "프로젝트가 삭제되었습니다.",
-						                            icon: "success",
-						                        });
-						                    } else {
-						                        swal("삭제가 취소되었습니다.");
-						                    }
-						                });
-						            });
-								});
-								request.fail(function( jqXHR, textStatus ) {
-									alert( "Request failed: " + textStatus );
-								}); 
+							$('.select2').select2();
+							
+							$(".member-update-btn").click(function() {
+								$('#update-select2').select2('open');
+							})
+							
+						
+													
+							$('#editLayoutItem').modal({
+								backdrop : 'static'
+							})
+						
+							var listDelete = $('.project-delete-btn');
+				            listDelete.on('click', function() {
+				                swal({
+				                    title: "해당 프로젝트를 삭제하시겠습니까?",
+				                    icon: "warning",
+				                    buttons: ["취소", "삭제"],
+				                    dangerMode: true,
+				                })
+				                .then((willDelete) => {
+				                    if (willDelete) {
+				                    	console.log('삭제버튼클릭');
+				                    	var request = $.ajax({
+				                    	  url: "/projectDelete",
+				                    	  method: "POST",
+				                    	  data: { 'projectCode' : projectCode },
+				                    	  dataType: "json"
+				                    	});
+				                    	 
+				                    	request.done(function( data ) {
+				                    		console.log('삭제');
+				                    		console.log(data.result);
+				                    		if(data.result==1){
+				                    			delProject.remove();
+				                    		}
+				                    		$('.close').click();
+				                    		
+				                    		
+				                    	});
+				                    	 
+				                    	request.fail(function( jqXHR, textStatus ) {
+				                    	  alert( "Request failed: " + textStatus );
+				                    	});
+				                    	
+				                        swal({
+				                            title: "프로젝트가 삭제되었습니다.",
+				                            icon: "success",
+				                        });
+				                    } else {
+				                        swal("삭제가 취소되었습니다.");
+				                    }
+				                });
+				            });
+						});
+						request.fail(function( jqXHR, textStatus ) {
+							alert( "Request failed: " + textStatus );
+						}); 
+						
 					})
 				})

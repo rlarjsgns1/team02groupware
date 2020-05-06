@@ -7,14 +7,15 @@ public class Project {
 	//프로젝트
 	private String projectCode;	// 프로젝트코드
 	private String employeeCode;	// 사원번호
+	private String employeeName;	// 사원이름
 	private String projectTitle;	// 프로젝트제목
 	private String projectDate;	// 프로젝트작성일
 	private String projectDesc;	// 프로젝트설명
 	private String projectAccess;	// 프로젝트공개범위
 	private String projectStatus;	// 프로젝트상태
-	private Date projectStart;	// 프로젝트시작일
-	private Date projectEnd;	// 프로젝트실제완료일
-	private Date projectDeadline;	// 프로젝트마감일
+	private String projectStart;	// 프로젝트시작일
+	private String projectEnd;	// 프로젝트실제완료일
+	private String projectDeadline;	// 프로젝트마감일
 	
 	public String getProjectCode() {
 		return projectCode;
@@ -27,6 +28,14 @@ public class Project {
 	}
 	public void setEmployeeCode(String employeeCode) {
 		this.employeeCode = employeeCode;
+	}
+	
+	
+	public String getEmployeeName() {
+		return employeeName;
+	}
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
 	}
 	public String getProjectTitle() {
 		return projectTitle;
@@ -52,22 +61,22 @@ public class Project {
 	public void setProjectStatus(String projectStatus) {
 		this.projectStatus = projectStatus;
 	}
-	public Date getProjectStart() {
+	public String getProjectStart() {
 		return projectStart;
 	}
-	public void setProjectStart(Date projectStart) {
+	public void setProjectStart(String projectStart) {
 		this.projectStart = projectStart;
 	}
-	public Date getProjectEnd() {
+	public String getProjectEnd() {
 		return projectEnd;
 	}
-	public void setProjectEnd(Date projectEnd) {
+	public void setProjectEnd(String projectEnd) {
 		this.projectEnd = projectEnd;
 	}
-	public Date getProjectDeadline() {
+	public String getProjectDeadline() {
 		return projectDeadline;
 	}
-	public void setProjectDeadline(Date projectDeadline) {
+	public void setProjectDeadline(String projectDeadline) {
 		this.projectDeadline = projectDeadline;
 	}
 	public String getProjectDate() {
@@ -85,6 +94,7 @@ public class Project {
 	
 	//업무상세정보
 	private String taskCode;
+	private String taskOrder;
 	private String taskTitle;
 	private String taskDesc;
 	private String taskDate;
@@ -110,6 +120,13 @@ public class Project {
 	}
 	public void setTaskCode(String taskCode) {
 		this.taskCode = taskCode;
+	}
+	
+	public String getTaskOrder() {
+		return taskOrder;
+	}
+	public void setTaskOrder(String taskOrder) {
+		this.taskOrder = taskOrder;
 	}
 	public String getTaskTitle() {
 		return taskTitle;
@@ -153,6 +170,44 @@ public class Project {
 	public void setTaskStatus(String taskStatus) {
 		this.taskStatus = taskStatus;
 	}
+	
+	private String taskSum;
+	private String taskSuccess;
+	private String taskNodeadline;
+	private String taskAfterDeadline;
+	private String taskPlanning;
+	
+	
+	public String getTaskSum() {
+		return taskSum;
+	}
+	public void setTaskSum(String taskSum) {
+		this.taskSum = taskSum;
+	}
+	public String getTaskSuccess() {
+		return taskSuccess;
+	}
+	public void setTaskSuccess(String taskSuccess) {
+		this.taskSuccess = taskSuccess;
+	}
+	public String getTaskNodeadline() {
+		return taskNodeadline;
+	}
+	public void setTaskNodeadline(String taskNodeadline) {
+		this.taskNodeadline = taskNodeadline;
+	}
+	public String getTaskAfterDeadline() {
+		return taskAfterDeadline;
+	}
+	public void setTaskAfterDeadline(String taskAfterDeadline) {
+		this.taskAfterDeadline = taskAfterDeadline;
+	}
+	public String getTaskPlanning() {
+		return taskPlanning;
+	}
+	public void setTaskPlanning(String taskPlanning) {
+		this.taskPlanning = taskPlanning;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -160,6 +215,8 @@ public class Project {
 		builder.append(projectCode);
 		builder.append(", employeeCode=");
 		builder.append(employeeCode);
+		builder.append(", employeeName=");
+		builder.append(employeeName);
 		builder.append(", projectTitle=");
 		builder.append(projectTitle);
 		builder.append(", projectDate=");
@@ -196,9 +253,20 @@ public class Project {
 		builder.append(taskEnd);
 		builder.append(", taskStatus=");
 		builder.append(taskStatus);
+		builder.append(", taskSum=");
+		builder.append(taskSum);
+		builder.append(", taskSuccess=");
+		builder.append(taskSuccess);
+		builder.append(", taskNodeadline=");
+		builder.append(taskNodeadline);
+		builder.append(", taskAfterDeadline=");
+		builder.append(taskAfterDeadline);
+		builder.append(", taskPlanning=");
+		builder.append(taskPlanning);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 	
 }

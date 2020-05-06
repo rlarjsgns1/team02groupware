@@ -18,29 +18,29 @@
 							<form class="forms-sample" method="post">
 								<div class="form-group">
 									<label for="projectTitle">제목</label> <input type="text"
-										class="form-control" id="updateTitle" name="projectTitle" th:value="${resultMap.get('title')}">
+										class="form-control" id="updateTitle" name="projectTitle" th:value="${resultProject.projectTitle}">
 								</div>
 								<div class="form-group">
 									<label for="projectDesc">설명(선택사항)</label> <input type="text"
-										class="form-control" id="updateDesc" name="projectDesc" th:value="${resultMap.get('desc')}">
+										class="form-control" id="updateDesc" name="projectDesc" th:value="${resultProject.projectDesc}">
 								</div>
 								<div class="form-group">
-									<label for="datepicker1">시작일</label> <input type="text"
+									<label for="datepicker2">시작일</label> <input type="text"
 										name="projectStart" class="form-control datetimepicker-input"
-										id="datepicker1" data-toggle="datetimepicker"
-										data-target="#datepicker1" th:value="${resultMap.get('start')}">
+										id="datepicker2" data-toggle="datetimepicker"
+										data-target="#datepicker2" th:value="${resultProject.projectStart}">
 								</div>
 								<div class="form-group">
-									<label for="datepicker2">마감일</label> <input type="text"
+									<label for="datepicker3">마감일</label> <input type="text"
 										name="projectDeadline"
-										class="form-control datetimepicker-input" id="datepicker2"
-										data-toggle="datetimepicker" data-target="#datepicker2" th:value="${resultMap.get('dead')}">
+										class="form-control datetimepicker-input" id="datepicker3"
+										data-toggle="datetimepicker" data-target="#datepicker3" th:value="${resultProject.projectDeadline}">
 								</div>
 								<div class="form-group">
-									<label for="datepicker3">실제 완료일</label> <input type="text"
+									<label for="datepicker4">실제 완료일</label> <input type="text"
 										name="projectEnd" class="form-control datetimepicker-input"
-										id="datepicker3" data-toggle="datetimepicker"
-										data-target="#datepicker3" th:value="${resultMap.get('end')}">
+										id="datepicker4" data-toggle="datetimepicker"
+										data-target="#datepicker4" th:value="${resultProject.projectEnd}">
 								</div>
 								<div class="form-group">
 									<label>프로젝트 멤버(선택사항)</label>
@@ -73,10 +73,10 @@
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
-					
+					<th:block th:unless="${resultProject.projectCode} eq 'PR001' or ${resultProject.projectCode} eq 'PR002' or ${resultProject.projectCode} eq 'PR003' or ${resultProject.projectCode} eq 'PR004' or ${resultProject.projectCode} eq 'PR005' or ${resultProject.projectCode} eq 'PR006' or ${resultProject.projectCode} eq 'PR007'">
 					<button type="button" class="btn btn-primary">수정</button>
 					<button type="button" class="btn btn-danger project-delete-btn">삭제</button>
-					
+					</th:block>
 				</div>
 			</div>
 		</div>

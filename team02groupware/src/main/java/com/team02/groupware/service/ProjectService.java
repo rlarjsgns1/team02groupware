@@ -21,6 +21,11 @@ public class ProjectService {
 	@Autowired
 	private ProjectMapper projectMapper;
 
+	
+	public Project selectForTaskChart(String userCode) {
+		return projectMapper.selectForTaskChart(userCode);
+	}
+	
 	//업무 삭제
 	public int taskDelete(String taskCode) {
 		return projectMapper.taskDelete(taskCode);
@@ -38,8 +43,13 @@ public class ProjectService {
 	
 	
 	//내 업무 조회
-	public List<Project> selectMyTask(String employeeCode) {
-		return projectMapper.selectMyTask(employeeCode);
+	public List<Project> selectMyTask(String userCode) {
+		return projectMapper.selectMyTask(userCode);
+	}
+	
+	//업무리스트코드 수정(칸반)
+	public int updateTasklistcode() {
+		return projectMapper.updateTasklistcode();
 	}
 	
 	//업무 추가
@@ -49,9 +59,7 @@ public class ProjectService {
 	
 	//업무리스트별 업무상세정보 조회
 	public List<Project> getTaskdetail(String projectCode){
-		List<Project> taskDetail = new ArrayList<Project>();
-		taskDetail = projectMapper.getTaskdetail(projectCode);
-		return taskDetail;
+		return projectMapper.getTaskdetail(projectCode);
 	}
 	
 	//업무리스트 삭제
@@ -73,11 +81,7 @@ public class ProjectService {
 	
 	//업무리스트조회
 	public List<Project> selectTasklist(String projectCode){
-		
-		List<Project> projectList = new ArrayList<Project>();
-		projectList = projectMapper.selectTasklist(projectCode);
-		
-		return projectList;
+		return projectMapper.selectTasklist(projectCode);
 		
 	}
 	
@@ -93,33 +97,23 @@ public class ProjectService {
 	
 	//프로젝트 한개 조회
 	public Project selectForProUpdate(String projectCode) {
-		Project resultProject=projectMapper.selectForProUpdate(projectCode);
-		String projectDate=resultProject.getProjectDate();
-		System.out.println(projectDate+"<------ yyyy-MM-dd 형태로 포맷변환 전 프로젝트 생성일");
-		
-		SimpleDateFormat  formatter04 = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			Date projectDateFormat =  formatter04.parse(projectDate);
-			System.out.println(projectDateFormat+"<------Date 타입 프로젝트 생성일");
-			
-			projectDate=formatter04.format(projectDateFormat);
-			System.out.println(projectDate+"<------yyyy-MM-dd 형태로 포맷변환 한 프로젝트 생성일");
-		} catch (ParseException e) {
-			
-			e.printStackTrace();
-		}
-		resultProject.setProjectDate(projectDate);
-		return resultProject;
+		return projectMapper.selectForProUpdate(projectCode);
+	}
+	
+	//프로젝트 추가 모달창 사원 조회
+	public List<Project> selectForAddEmployee() {
+		return  projectMapper.selectForAddEmployee();
 	}
 	
 	
 	//프로젝트 추가
 	public int projectInsert(Project project) {
+		
 		return projectMapper.projectInsert(project);
 	}
 	
 	//프로젝트 리스트 조회
-	public Map<String, Object> getProjectlist(int currentPage) {
+	public Map<String, Object> getProjectlist(int currentPage, String userCode) {
 		// 몇개의 행을 보여줄지
 		final int ROW_PER_PAGE = 10;
 
@@ -137,7 +131,7 @@ public class ProjectService {
 
 		// limit적용할 StartRow, 상수ROW_PER_PAGE(몇개행)
 		Map<String, Object> map = new HashMap<String, Object>();
-
+		map.put("userCode", userCode);
 	
 		// 페이지 알고리즘
 		int startRow = (currentPage - 1) * ROW_PER_PAGE;
@@ -162,6 +156,7 @@ public class ProjectService {
 		// controller에 전달할 페이지 관련 객체
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("projectList", projectMapper.getProjectlist(map));
+		resultMap.put("userCode", userCode);
 		resultMap.put("currentPage", currentPage);
 		resultMap.put("lastPage", lastPage);
 		resultMap.put("startPageNum", startPageNum);
