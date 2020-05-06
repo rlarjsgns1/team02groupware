@@ -94,6 +94,7 @@ public class Project {
 	
 	//업무상세정보
 	private String taskCode;
+	private String taskOrder;
 	private String taskTitle;
 	private String taskDesc;
 	private String taskDate;
@@ -119,6 +120,13 @@ public class Project {
 	}
 	public void setTaskCode(String taskCode) {
 		this.taskCode = taskCode;
+	}
+	
+	public String getTaskOrder() {
+		return taskOrder;
+	}
+	public void setTaskOrder(String taskOrder) {
+		this.taskOrder = taskOrder;
 	}
 	public String getTaskTitle() {
 		return taskTitle;

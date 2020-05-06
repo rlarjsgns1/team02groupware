@@ -25,6 +25,8 @@ public interface ProjectMapper {
 	// 내업무 조회
 	public List<Project> selectMyTask(String userCode);
 	
+	//업무리스트코드 수정(칸반)
+	public int updateTasklistcode();
 	
 	// 업무 추가
 	public int taskInsert(Project project);

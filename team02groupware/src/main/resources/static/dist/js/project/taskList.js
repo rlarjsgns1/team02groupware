@@ -6,28 +6,10 @@
 $(function() {
 
 	
-	var clicked = false, clickX;
-	$(document).on({
-	    'mousemove': function(e) {
-	        clicked && updateScrollPos(e);
-	    },
-	    'mousedown': function(e) {
-	        clicked = true;
-	        clickX = e.pageX;
-	    },
-	    'mouseup': function() {
-	        clicked = false;
-	        $('html').css('cursor', 'auto');
-	    }
-	});
 
-	var updateScrollPos = function(e) {
-	    $(window).scrollTop($(window).scrollTop() + (clickX - e.pageX));
-	}
 	
 	
 	var projectCode = $('input[name="projectCode"]').val();
-	
 	
 	// 업무 추가 - 엔터 키 복제 이벤트
 	$(document).on('keydown','.tasklistTitle',function(key) {
@@ -202,4 +184,26 @@ $(function() {
 	$(".back-btn").click(function() {
 		location.href = "/projectList";
 	})
+	
+	
+	$('.dd').nestable();
+
+    $('.dd').on('change', function () {
+        var $this = $(this);
+        var serializedData = window.JSON.stringify($($this).nestable('serialize'));
+        var tasklistCode = $(this).parent().siblings('.task-card-header').find('.tasklist-code-input');
+        $this.parents('div.body').find('textarea').val(serializedData);
+        console.log(tasklistCode.val());
+    });
+
+    $('.dd4').nestable();
+
+    $('.dd4').on('change', function () {
+        var $this = $(this);
+        var serializedData = window.JSON.stringify($($this).nestable('serialize'));
+        
+    });
+	
+	
+   
 });
