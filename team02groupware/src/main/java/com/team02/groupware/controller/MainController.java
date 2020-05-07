@@ -51,9 +51,6 @@ public class MainController {
 	@RequestMapping("/index")
 	public String index(Model model, HttpSession session, EmployeeDto eDto) {
 
-		
-				
-		
 		return "index";
 	}
 	

@@ -1,0 +1,11 @@
+.service{
+	text-align:center;
+}
+.skill-title{
+	margin-top:20px;
+}
+
+.service>img{
+	width:100px;
+	height:100px;
+}
