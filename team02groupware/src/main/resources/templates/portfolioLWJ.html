@@ -2,11 +2,11 @@
 
 <html lang="en">
   <head>
-    <title>김건훈 포트폴리오</title>
+    <title>이원준 포트폴리오</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="kimgeonhoon_portfolio_static/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="kimgeonhoon_portfolio_static/css/animate.css">
@@ -25,14 +25,131 @@
     
     <style type="text/css">
     	@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+    	@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+    	
     	*{
-    	 	font-family: 'Noto Sans KR', sans-serif; 
+    	 	font-family: 'Noto Sans KR', sans-serif;
     	 }
     	 .resume-wrap{
-    	 	border-bottom: unset; !imporatant
+    	 	border-bottom: unset; 
     	 }
     	 .ftco-footer{
     	 	padding: 3em;
+    	 }
+    	 .lwj{
+			width: 100%;
+		    height: 100%;
+		    max-width: 300px;
+		    max-height: 300px;
+		    min-width: 200px;
+		    min-height: 200px;
+		    border-radius: 50%;
+		    border: 1px solid #eee;    	 
+    	 }
+    	 #about-section{
+    	 	padding: 20px;
+    	 }
+    	 #about-section *{
+    	 	text-align:center;
+    	 }
+    	 .about-name {
+    	 	font-size: 24px;
+    	 	font-weight: 700;
+    	 	color: #46506E;
+    	 	margin-top: 10px;
+    	 }
+    	 .about-name-eng{
+    	 	font-weight: 600;
+    	 	color: rgba(70,80,110,.7);
+    	 }
+    	 .about-social{
+    	 	margin-top: 30px;
+    	 }
+    	 .about-social-item a{
+    	 	color: rgba(70,80,110,.7);
+    	 	font-weight: 700;
+    	 }
+    	 .about-social .icon{
+    	 	margin-right: 3px;
+    	 }
+    	 .career{
+    	 	padding: 0;
+    	 }
+    	 .career-line{
+    	 	list-style-type: none;
+		    width: 6px;
+		    margin: auto;
+		    padding: 2rem 0;
+		    background-color: #cadff9;
+    	 }
+    	 .career-line:after{
+    	 	content: " ";
+		    display: block;
+		    height: 100%;
+		    clear: both;
+		    visibility: hidden;
+    	 }
+    	 .career-item{
+   	 	    position: relative;
+		    width: 300px;
+		    padding-left:0;
+		     
+		    float: left;
+		    text-align: left;
+    	 }
+    	 .career *{
+    	 	font-family: 'Do Hyeon', sans-serif !important;
+    	 }
+    	 .career-item-left{
+    	 	position: relative;
+		    width: 300px;
+		    padding-left: 0;
+		    float: right;
+		    text-align: left;
+    	 }
+    	 
+    	 .career-item:before{
+   	 	    content: "";
+		    position: absolute;
+		    display: block;
+		    top: 25px;
+		    width: 16px;
+		    height: 16px;
+		    border-radius: 50%;
+		    background-color: #408cea;
+		    left: -5px;
+    	 }
+    	 .career-item-left:before{
+   	 	    content: "";
+		    position: absolute;
+		    display: block;
+		    top: 25px;
+		    width: 16px;
+		    height: 16px;
+		    border-radius: 50%;
+		    background-color: #408cea;
+		    right: -5px;
+    	 }
+    	 
+    	 .career-item-title{
+    	 	margin-bottom: 0;
+    		word-break: keep-all;
+    		font-size: 24px;
+    	 }
+    	 .career-item-date{
+    	 	margin-top: 0;
+    		color: #939dba;
+    		margin-bottom: 5px;
+    		
+    	 }
+    	 .career-item-content{
+    	 	color: #505b7e;
+    	 }
+    	 .project{
+    	 	height: 400px;
+    	 }
+    	 .project-tag a{
+    	 	font-family: 'Noto Sans KR', sans-serif !important;
     	 }
     </style>
   </head>
@@ -50,264 +167,258 @@
 	        <ul class="navbar-nav nav ml-auto" style="font-weight: 300;">
 	          <li class="nav-item"><a href="#home-section" class="nav-link"><span>Home</span></a></li>
 	          <li class="nav-item"><a href="#about-section" class="nav-link"><span>About</span></a></li>
-	          <li class="nav-item"><a href="#skills-section" class="nav-link"><span>Skills</span></a></li>
+	          <li class="nav-item"><a href="#contact-section" class="nav-link"><span>Career</span></a></li>
 	          <li class="nav-item"><a href="#projects-section" class="nav-link"><span>Project</span></a></li>
-	          <li class="nav-item"><a href="#contact-section" class="nav-link"><span>Contact</span></a></li>
+	          <li class="nav-item"><a href="#skills-section" class="nav-link"><span>Skills</span></a></li>
 	        </ul>
 	      </div>
 	    </div>
 	  </nav>
-	  <section class="hero-wrap js-fullheight" style="background-image: url(kimgeonhoon_portfolio_static/images/coding-wallpaper.jpg);">
-      <div class="container">
-        <div class="row no-gutters slider-text js-fullheight justify-content-center align-items-center">
-          <div class="col-lg-12 col-md-12 ftco-animate d-flex align-items-center">
-          	<div  class="text text-center">
-		  		<h1 style="font-size: 80px; color: white; font-weight: 700;" class="txt-rotate" data-period="500" data-rotate='["Developer LeeWonJun" ]'></h1>
-			</div>
-            </div>
-          </div>
-        </div>
-      <div class="mouse">
+	  
+	  <section class="hero-wrap " style="background-color: #408CEA; position:relative; width: 100%; height: 300px;">
+	      <div class="container" style="position:absolute; top:15%; left: 50%; transform: translate(-50%, 50%)">
+	      	<div class="row no-gutters slider-text  justify-content-center align-items-center" >
+	          <div class="col-lg-12 col-md-12 ftco-animate d-flex align-items-center">
+	          	<div class="text text-center" style="text-align:center;">
+			  		<h1 style="font-size: 40px; color: white; font-weight: 700;" class="txt-rotate" data-period="700" data-rotate='["Developer LeeWonJun" ]'></h1>
+				</div>
+				
+	          </div>
+	          <div style="margin-top:20px;">
+	          	<p style="font-size: 15px;">Programming is My Life</p>
+	          </div>
+	        </div>
+	      </div>
+      <!-- <div class="mouse">
 				<a href="#" class="mouse-icon">
 					<div class="mouse-wheel"><span class="ion-ios-arrow-round-down"></span></div>
 				</a>
-			</div>
+			</div> -->
     </section>
 
-    <section class="ftco-section ftco-no-pb goto-here" id="about-section">
-    	<div class="container">
-    		<div class="row">
-    			<div class="col-md-3">
-				    <nav id="navi">
-					    <ul style="font-weight: 300;">
-					      <li><a href="#page-1">About</a></li>
-					      <li><a href="#page-2">Skills</a></li>
-					      <li><a href="#page-3">Project</a></li>
-					      <li><a href="#page-4">Contact</a></li>
-					    </ul>
-					  </nav>
+    <section class="ftco-section ftco-no-pb goto-here row" id="about-section">
+    	<div class="container" style="width:800px;">
+    				
+				  <div id="page-1" class= "page one">
+				  	<img class="lwj" alt="lwj" src="kimgeonhoon_portfolio_static/images/leewonjun3.jpg">
+					<div class="about-name">이원준</div>
+					<div class="about-name-eng">WonJun Lee</div>
+					<div class="about-social">
+						<div class="about-social-item"><span class="icon icon-envelope"></span><a href="mailto:dldnjswns516@gmail.com">dldnjswns516@gmail.com</a></div>
+						<div class="about-social-item"><span class="icon icon-github" style="font-size:16px;"></span><a href="https://github.com/dldnjswns516" target="_blank">dldnjswns516</a></div>
+						<div class="about-social-item" style="margin-top: 20px;"><span class="icon icon-cloud"></span><a href="https://blog.naver.com/dldnjswns516" target="_blank">열정열매 블로그</a></div>
 					</div>
-					<div class="col-md-9">
-					  <div id="page-1" class= "page one">
-					  	<h2 class="heading" style="font-weight: 900; margin-bottom: 50px;">About Me</h2>
-		    					<h2 style="font-weight: 600; margin-bottom: 30px;">어디를 가든지 마음을 다해 가라.&emsp;-&nbsp;공자</h2>	
-		    					<p>한때 세계적인 회계사 '김건훈'을 꿈꾸며 힘든 해외 유학 생활에도 끊임없이 전진했습니다. 비록 이루지 못했지만,<br/>
-			    					<span style="color: black; font-weight: 600;">세계적인 개발자 '김건훈'</span>
-			    					은 꼭 이루고 싶습니다. 공자 말씀처럼
-			    					<span style="color: black; font-weight: 600;">도전정신</span>
-			    					, 
-			    					<span style="color: black; font-weight: 600;">끈기</span>
-			    					, 
-			    					<span style="color: black; font-weight: 600;">집념</span>, 
-			    					<span style="color: black; font-weight: 600;">성실성</span>
-			    					으로 무장하여 <br/>
-			    					<span style="color: black; font-weight: 600;">경영진의 마인드를 가진 경력자 같은 신입 개발자</span>
-			    					로서 수익창출에 기여하고 싶습니다. 이러한 경험들을 쌓아<br/>  
-			    					뛰어난 개척 능력을 갖추어 새로운 환경을 개척하고, 팀원과 후배를 이끄는 
-			    					<span style="color: black; font-weight: 600;">IT 인재로 성장하고 싶습니다.</span>
-		    					</p>
-					  </div>
-					  <div id="skills-section">
-					  <div id="page-2" class= "page two">
-					  	<h2 class="heading" style="font-weight: 900;">Skills</h2>
-					   
+				  </div>
+				  
+				  <div id="contact-section" style="margin-bottom: 140px;">
+				  <div id="page-4" class= "page four">
+				    <h2 class="heading" style="font-weight: 900; margin-bottom: 50px; color:#46506e">&lt Career &gt</h2>
+				  	<ul class="career">
+				  		<li class="career-line">
+				  			<div data-v-0c4175e8="" class="career-item">
+				  				
+					  			<h2 data-v-0c4175e8="" class="career-item-title">한국스마트정보교육원</h2>
+					  			<p data-v-0c4175e8="" class="career-item-date">2019.11 ~ 2020.05</p>
+					  			<div data-v-0c4175e8="" class="career-item-content">Web개발 교육 이수</div>
+				  			</div>
+				  			
+				  		
+				  		</li>
+				  		<li class="career-line">
+				  			<div data-v-0c4175e8="" class="career-item-left">
+					  			<h2 data-v-0c4175e8="" class="career-item-title">군산대학교 컴퓨터정보공학과</h2>
+					  			<p data-v-0c4175e8="" class="career-item-date">2010.03 ~ 2017.02</p>
+					  			<div data-v-0c4175e8="" class="career-item-content"> 전공 교육 이수 </div>
+				  			</div>
+				  		</li>
+				  	</ul>
+               
+               
+               
+				  </div>
+				  
+				  </div>
+				  
+				  <div id="projects-section" style="margin-bottom: 152px; text-align:center" >
+				  <div id="page-3" class= "page three">
+				  	<h2 class="heading" style="font-weight: 900; color:#46506e">&lt Project &gt</h2>
+				  	
+	    				<div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(kimgeonhoon_portfolio_static/images/project-index.png);">
+	    					 <div class="overlay"></div>
+		    				<div class="text text-center p-4">
+		    					<!-- <h3 style="color: white; font-weight: 900;">Team Project</h3>
+		    					<h3 style="color: white; ">그룹웨어 기반 IT 기업 업무</h3>
+		    					<h3 style="color: white;"> 효율을 증진 시키는 업무관리시스템</h3><br/> -->
+		    					<h3 style="color: white; font-weight: 900;"> 담당 기능</h3>
+		    					<h3 style="color: white;"> 게시판 & 메신저</h3>
 		    					
-		    					<div class="row">
-									<div class="col-md-4 text-center d-flex">
-										<div class="services-1 shadow">
-										<span>
-											<img src="kimgeonhoon_portfolio_static/images/java.png" style="width: 100px; height: 100px;">
-										</span>
-										<div class="desc" style="margin-top: 15px;">
-											<h3 class="mb-5">JAVA</h3>
-											<p style="font-weight: 700; color: black;">Intermediate</p>
-										</div>
-										</div>
+		    				</div> 
+	    				</div>
+	    				<div class="project-tag" style="margin-top: 15px;">
+		    				<a class="btn btn-primary py-3 px-3" href="https://www.youtube.com/watch?v=hjLi2E0IutY&t=0s" target="_blank">시연 영상 View</a>
+		    				<a href="/loginPage" target="_blank" class="btn btn-primary py-3 px-3">프로젝트 View</a>
+		    				<a href="https://github.com/rlarjsgns1/team02groupware" target="_blank" class="btn btn-primary py-3 px-3">소스코드 View</a>
+	    				</div>
+	  			
+				  
+				  </div>
+				  </div>
+				  
+				  <div id="skills-section" style="text-align:center">
+				  <div id="page-2" class= "page two">
+				  	<h2 class="heading" style="font-weight: 900; color:#46506e"> &lt Skills &gt</h2>
+				   
+	    					
+	    					<div class="row">
+								<div class="col-md-4 text-center d-flex">
+									<div class="services-1 shadow">
+									<span>
+										<img src="kimgeonhoon_portfolio_static/images/java.png" style="width: 100px; height: 100px;">
+									</span>
+									<div class="desc" style="margin-top: 15px;">
+										<h3 class="mb-5">JAVA</h3>
 									</div>
-									<div class="col-md-4 text-center d-flex">
-										<div class="services-1 shadow">
-										<span>
-											<img src="kimgeonhoon_portfolio_static/images/spring.png" style="width: 100px; height: 100px;">
-										</span>
-										<div class="desc" style="margin-top: 15px;">
-											<h3 class="mb-5">spring framework</h3>
-											<p style="font-weight: 700; color: black;">Intermediate</p>
-										</div>
-										</div>
-									</div>
-									<div class="col-md-4 text-center d-flex">
-										<div class="services-1 shadow">
-										<span>
-											<img src="kimgeonhoon_portfolio_static/images/jsp.jpg" style="width: 100px; height: 100px;">
-										</span>
-										<div class="desc" style="margin-top: 15px;">
-											<h3 class="mb-5">jsp</h3>
-											<p style="font-weight: 700; color: black;">Intermediate</p>
-										</div>
-										</div>
-									</div>
-									<div class="col-md-4 text-center d-flex">
-										<div class="services-1 shadow">
-										<span>
-											<img src="kimgeonhoon_portfolio_static/images/mysql.png" style="width: 100px; height: 100px;">
-										</span>
-										<div class="desc" style="margin-top: 15px;">
-											<h3 class="mb-5">MySQL</h3>
-											<p style="font-weight: 700; color: black;">Intermediate</p>
-										</div>
-										</div>
-									</div>
-									<div class="col-md-4 text-center d-flex">
-										<div class="services-1 shadow">
-										<span>
-											<img src="kimgeonhoon_portfolio_static/images/oracle.png" style="width: 100px; height: 100px;">
-										</span>
-										<div class="desc" style="margin-top: 15px;">
-											<h3 class="mb-5">oracle</h3>
-											<p style="font-weight: 700; color: black;">Intermediate</p>
-										</div>
-										</div>
-									</div>						
-									<div class="col-md-4 text-center d-flex">
-										<div class="services-1 shadow">
-										<span>
-											<img src="kimgeonhoon_portfolio_static/images/html5.png" style="width: 100px; height: 100px;">
-										</span>
-										<div class="desc" style="margin-top: 15px;">
-											<h3 class="mb-5">HTML5</h3>
-											<p style="font-weight: 700; color: black;">Basic</p>
-										</div>
-										</div>
-									</div>
-									<div class="col-md-4 text-center d-flex">
-										<div class="services-1 shadow">
-										<span>
-											<img src="kimgeonhoon_portfolio_static/images/css.png" style="width: 100px; height: 100px;">
-										</span>
-										<div class="desc" style="margin-top: 15px;">
-											<h3 class="mb-5">CSS3</h3>
-											<p style="font-weight: 700; color: black;">Basic</p>
-										</div>
-										</div>
-									</div>
-									<div class="col-md-4 text-center d-flex">
-										<div class="services-1 shadow">
-										<span>
-											<img src="kimgeonhoon_portfolio_static/images/JS.png" style="width: 100px; height: 100px;">
-										</span>
-										<div class="desc" style="margin-top: 15px;">
-											<h3 class="mb-5">JAVASCRIPT</h3>
-											<p style="font-weight: 700; color: black;">Intermediate</p>
-										</div>
-										</div>
-									</div>
-									<div class="col-md-4 text-center d-flex">
-										<div class="services-1 shadow">
-										<span>
-											<img src="kimgeonhoon_portfolio_static/images/jquery.jpg" style="width: 100px; height: 100px;">
-										</span>
-										<div class="desc" style="margin-top: 15px;">
-											<h3 class="mb-5">jquery</h3>
-											<p style="font-weight: 700; color: black;">Intermediate</p>
-										</div>
-										</div>
-									</div>
-									<div class="col-md-4 text-center d-flex">
-										<div class="services-1 shadow">
-										<span>
-											<img src="kimgeonhoon_portfolio_static/images/bootstrap.png" style="width: 100px; height: 100px;">
-										</span>
-										<div class="desc" style="margin-top: 15px;">
-											<h3 class="mb-5">bootstrap</h3>
-											<p style="font-weight: 700; color: black;">Basic</p>
-										</div>
-										</div>
-									</div>
-									<div class="col-md-4 text-center d-flex">
-										<div class="services-1 shadow">
-										<span>
-											<img src="kimgeonhoon_portfolio_static/images/thymeleaf.png" style="width: 100px; height: 100px;">
-										</span>
-										<div class="desc" style="margin-top: 15px;">
-											<h3 class="mb-5">thymeleaf</h3>
-											<p style="font-weight: 700; color: black;">Intermediate</p>
-										</div>
-										</div>
-									</div>
-									<div class="col-md-4 text-center d-flex">
-										<div class="services-1 shadow">
-										<span>
-											<img src="kimgeonhoon_portfolio_static/images/mybatis.png" style="width: 100px; height: 100px;">
-										</span>
-										<div class="desc" style="margin-top: 15px;">
-											<h3 class="mb-5">mybatis</h3>
-											<p style="font-weight: 700; color: black;">Basic</p>
-										</div>
-										</div>
-									</div>
-									<div class="col-md-4 text-center d-flex">
-										<div class="services-1 shadow">
-										<span>
-											<img src="kimgeonhoon_portfolio_static/images/log.png" style="width: 100px; height: 100px;">
-										</span>
-										<div class="desc" style="margin-top: 15px;">
-											<h3 class="mb-5">log4j</h3>
-											<p style="font-weight: 700; color: black;">Basic</p>
-										</div>
-										</div>
-									</div>
-									<div class="col-md-4 text-center d-flex">
-										<div class="services-1 shadow">
-										<span>
-											<img src="kimgeonhoon_portfolio_static/images/github.png" style="width: 100px; height: 100px;">
-										</span>
-										<div class="desc" style="margin-top: 15px;">
-											<h3 class="mb-5">git</h3>
-											<p style="font-weight: 700; color: black;">Intermediate</p>
-										</div>
-										</div>
 									</div>
 								</div>
+								<div class="col-md-4 text-center d-flex">
+									<div class="services-1 shadow">
+									<span>
+										<img src="kimgeonhoon_portfolio_static/images/spring.png" style="width: 100px; height: 100px;">
+									</span>
+									<div class="desc" style="margin-top: 15px;">
+										<h3 class="mb-5">spring framework</h3>
+									</div>
+									</div>
 								</div>
-	
-	    				
-					  </div>
-					  <div id="projects-section" style="margin-bottom: 152px;">
-					  <div id="page-3" class= "page three">
-					  	<h2 class="heading" style="font-weight: 900;">Project</h2>
-					  	
-		    				<div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(kimgeonhoon_portfolio_static/images/groupware.png);">
-		    					<div class="overlay"></div>
-			    				<div class="text text-center p-4">
-			    					<h3 style="color: white;">팀 프로젝트</h3><br/>
-			    					<h2 style="color: white; font-weight: 900;">그룹웨어 기반 IT 기업 업무</h2><h2 style="color: white; font-weight: 900;"> 효율을 증진 시키는 업무관리시스템</h2>
-			    					<span>개발기간 : 2020.02~ 2020.04 (2개월)</span><br/><br/>
-			    					<span>1. 전자결재 DB설계(eXerd, MYSQL)</span><br/>
-			    					<span>2. 전자결재 화면 디자인 및 구현(HTML5, CSS3, JQUERY, BOOTSTRAP)</span><br/>
-			    					<span>3. 전자결재 기능 구현(JAVA, SPRING FRAMEWORK, MYBATIS, GIT, THYMELEAF)</span><br/>
-			    				</div>
-		    				</div>
-		    				<div style="margin-top: 15px;">
-		    				<a href="/loginPage" class="btn btn-primary py-3 px-3">프로젝트 보러가기</a>
-		    				<a href="https://github.com/rlarjsgns1/team02groupware" class="btn btn-primary py-3 px-3">소스코드 보러가기</a>
-		    				</div>
-		  			
-					  
-					  </div>
-					  </div>
-					  <div id="contact-section" style="margin-bottom: 140px;">
-					  <div id="page-4" class= "page four">
-					    <h2 class="heading" style="font-weight: 900; margin-bottom: 50px;">Contact Me!</h2>
-					  
-	               
-	                <h3 style="margin-bottom: 15px;"><span class="icon icon-phone"></span><span class="text"> 010-5144-4808</span></h3>
-	                <h3><span class="icon icon-envelope"></span><span class="text"> rlarjsgns1@gmail.com</span></h3>
-					  </div>
-					  
-					  </div>
-					</div>
-			  </div>
-    	</div>
+								<div class="col-md-4 text-center d-flex">
+									<div class="services-1 shadow">
+									<span>
+										<img src="kimgeonhoon_portfolio_static/images/jsp.jpg" style="width: 100px; height: 100px;">
+									</span>
+									<div class="desc" style="margin-top: 15px;">
+										<h3 class="mb-5">jsp</h3>
+									</div>
+									</div>
+								</div>
+								<div class="col-md-4 text-center d-flex">
+									<div class="services-1 shadow">
+									<span>
+										<img src="kimgeonhoon_portfolio_static/images/mysql.png" style="width: 100px; height: 100px;">
+									</span>
+									<div class="desc" style="margin-top: 15px;">
+										<h3 class="mb-5">MySQL</h3>
+									</div>
+									</div>
+								</div>
+								<div class="col-md-4 text-center d-flex">
+									<div class="services-1 shadow">
+									<span>
+										<img src="kimgeonhoon_portfolio_static/images/oracle.png" style="width: 100px; height: 100px;">
+									</span>
+									<div class="desc" style="margin-top: 15px;">
+										<h3 class="mb-5">oracle</h3>
+									</div>
+									</div>
+								</div>						
+								<div class="col-md-4 text-center d-flex">
+									<div class="services-1 shadow">
+									<span>
+										<img src="kimgeonhoon_portfolio_static/images/html5.png" style="width: 100px; height: 100px;">
+									</span>
+									<div class="desc" style="margin-top: 15px;">
+										<h3 class="mb-5">HTML5</h3>
+									</div>
+									</div>
+								</div>
+								<div class="col-md-4 text-center d-flex">
+									<div class="services-1 shadow">
+									<span>
+										<img src="kimgeonhoon_portfolio_static/images/css.png" style="width: 100px; height: 100px;">
+									</span>
+									<div class="desc" style="margin-top: 15px;">
+										<h3 class="mb-5">CSS3</h3>
+									</div>
+									</div>
+								</div>
+								<div class="col-md-4 text-center d-flex">
+									<div class="services-1 shadow">
+									<span>
+										<img src="kimgeonhoon_portfolio_static/images/JS.png" style="width: 100px; height: 100px;">
+									</span>
+									<div class="desc" style="margin-top: 15px;">
+										<h3 class="mb-5">JAVASCRIPT</h3>
+									</div>
+									</div>
+								</div>
+								<div class="col-md-4 text-center d-flex">
+									<div class="services-1 shadow">
+									<span>
+										<img src="kimgeonhoon_portfolio_static/images/jquery.jpg" style="width: 100px; height: 100px;">
+									</span>
+									<div class="desc" style="margin-top: 15px;">
+										<h3 class="mb-5">jquery</h3>
+									</div>
+									</div>
+								</div>
+								<div class="col-md-4 text-center d-flex">
+									<div class="services-1 shadow">
+									<span>
+										<img src="kimgeonhoon_portfolio_static/images/bootstrap.png" style="width: 100px; height: 100px;">
+									</span>
+									<div class="desc" style="margin-top: 15px;">
+										<h3 class="mb-5">bootstrap</h3>
+									</div>
+									</div>
+								</div>
+								<div class="col-md-4 text-center d-flex">
+									<div class="services-1 shadow">
+									<span>
+										<img src="kimgeonhoon_portfolio_static/images/thymeleaf.png" style="width: 100px; height: 100px;">
+									</span>
+									<div class="desc" style="margin-top: 15px;">
+										<h3 class="mb-5">thymeleaf</h3>
+									</div>
+									</div>
+								</div>
+								<div class="col-md-4 text-center d-flex">
+									<div class="services-1 shadow">
+									<span>
+										<img src="kimgeonhoon_portfolio_static/images/mybatis.png" style="width: 100px; height: 100px;">
+									</span>
+									<div class="desc" style="margin-top: 15px;">
+										<h3 class="mb-5">mybatis</h3>
+									</div>
+									</div>
+								</div>
+								<div class="col-md-4 text-center d-flex">
+									<div class="services-1 shadow">
+									<span>
+										<img src="kimgeonhoon_portfolio_static/images/log.png" style="width: 100px; height: 100px;">
+									</span>
+									<div class="desc" style="margin-top: 15px;">
+										<h3 class="mb-5">log4j</h3>
+									</div>
+									</div>
+								</div>
+								<div class="col-md-4 text-center d-flex">
+									<div class="services-1 shadow">
+									<span>
+										<img src="kimgeonhoon_portfolio_static/images/github.png" style="width: 100px; height: 100px;">
+									</span>
+									<div class="desc" style="margin-top: 15px;">
+										<h3 class="mb-5">git</h3>
+									</div>
+									</div>
+								</div>
+							</div>
+							</div>
+
+    				
+				  </div>
+				  
+				  
+				</div>
+    	
     </section>
 
     <footer class="ftco-footer ftco-section">
@@ -315,12 +426,8 @@
         <div class="row">
           <div class="col-md-12	">
 			<div class="ftco-footer-widget text-center">
-              <h2 style="font-size: 40px;">Links</h2>
-              <ul class="list-unstyled" style="font-size: 20px;">
-                <li><a href="https://blog.naver.com/helendavid0104/221763257500"><span class="icon-long-arrow-right mr-2"></span>Naver Blog</a></li>
-                <li><a href="https://github.com/rlarjsgns1"><span class="icon-long-arrow-right mr-2"></span>GitHub</a></li>
-                <li><a href="/index"><span class="icon-long-arrow-right mr-2"></span>팀프로젝트(그룹웨어)</a></li>
-              </ul>
+              
+              
             </div>
           </div>
         </div>
